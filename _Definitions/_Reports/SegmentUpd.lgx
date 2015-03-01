@@ -1,0 +1,709 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="Segment Update Form"
+	ID="SegmentUpd"
+	>
+	<StyleSheet
+		ID="themeTransit"
+		StyleSheet="extraTheme.css"
+		Theme="Transit"
+	/>
+	<DefaultRequestParams
+		adver="0"
+		Mode="View"
+		rowNo="1"
+	/>
+	<ReportCenterItem
+		ReportCenterFolder="Interfaces"
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Segment Update Form"
+				Class="ThemeHeaderLarger"
+			/>
+			<HR/>
+		</Division>
+		<Division
+			ID="hMenu"
+			>
+			<Label
+				Caption=" // "
+			/>
+			<Label
+				Caption="Home"
+				>
+				<Action
+					ID="actHome"
+					Type="Report"
+					>
+					<Target
+						FrameID="Self"
+						Report="ReportMenuCenter"
+						Type="Report"
+					/>
+				</Action>
+			</Label>
+			<Label
+				Caption=" // "
+			/>
+			<Label
+				Caption="Pixel/data collection creation tool"
+				>
+				<Action
+					ID="actPix"
+					Type="Report"
+					>
+					<Target
+						FrameID="Self"
+						Report="Pixel_UI"
+						Type="Report"
+					/>
+				</Action>
+			</Label>
+			<Label
+				Caption=" // "
+			/>
+			<HR/>
+		</Division>
+	</ReportHeader>
+	<Body>
+		<Division>
+			<ResponsiveRow
+				CollisionBehavior="Wrap"
+				>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="2"
+					ColspanLargeScreen="2"
+					ColspanMediumScreen="2"
+					ColspanSmallScreen="2"
+					>
+					<FieldsetBox
+						Caption="Advertiser List"
+						>
+						<InputSelectList
+							DefaultValue="@Request.adver~"
+							ID="adver"
+							InputRows="10"
+							OptionCaptionColumn="Advertiser"
+							OptionValueColumn="advertiser_id"
+							>
+							<DataLayer
+								ConnectionID="OpenDSP"
+								ID="SQLDataLayer2"
+								Source="SELECT adv.name Advertiser,
+adv.advertiser_id
+FROM opendsp.ld_advertiser adv
+Order by adv.name;"
+								Type="SQL"
+							/>
+							<EventHandler
+								DhtmlEvent="onchange"
+								ID="ehChange"
+								>
+								<Action
+									ElementID="dtEntry, tab1"
+									ID="actRefAdvName"
+									RequestForwarding="True"
+									Type="RefreshElement"
+									>
+									<WaitPage/>
+								</Action>
+							</EventHandler>
+						</InputSelectList>
+					</FieldsetBox>
+				</ResponsiveColumn>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="3"
+					ColspanLargeScreen="3"
+					ColspanMediumScreen="3"
+					ColspanSmallScreen="3"
+					>
+					<FieldsetBox
+						Caption="Segment Update form"
+						>
+						<InputHidden
+							ID="inpSegm"
+						/>
+						<InputHidden
+							ID="inpExpiry"
+						/>
+						<InputHidden
+							ID="inpDesc"
+						/>
+						<DataTable
+							ID="dtEntry"
+							SortArrows="True"
+							>
+							<DataLayer
+								ConnectionID="OpenDSP"
+								ID="dlEntry"
+								Source="Select adv.advertiser_id,
+  adv.name Advertiser,
+  seg.first_party_audience_segment_id As ID,
+  seg.name Segment,
+  seg.description,
+  seg.expiry_days expiration
+From opendsp.ld_first_party_audience_segment seg
+  Join opendsp.ld_advertiser adv On seg.advertiser_id = adv.advertiser_id
+Where adv.advertiser_id = &apos;@Request.adver~&apos;"
+								Type="SQL"
+								>
+								<SequenceColumn
+									ID="rowNo"
+								/>
+							</DataLayer>
+							<DataTableColumn
+								Header="Advertiser"
+								ID="colAdvertiser"
+								>
+								<Label
+									Caption="@Data.Advertiser~"
+									ID="lblAdvertiser"
+								/>
+								<DataColumnSort
+									DataColumn="Advertiser"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="ID"
+								ID="colID"
+								>
+								<Label
+									Caption="@Data.ID~"
+									ID="lblID"
+								/>
+								<DataColumnSort
+									DataColumn="ID"
+									DataType="Number"
+								/>
+								<InputText
+									Class="ThemeHidden"
+									DefaultValue="@Data.ID~"
+									ID="fpasID"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Segment"
+								ID="colSegment"
+								>
+								<Division
+									Condition="&quot;@Request.Mode~&quot; = &quot;View&quot; Or @Request.rowNo~ &lt;&gt; @Data.rowNo~ "
+									ID="divView"
+									>
+									<Label
+										Caption="@Data.Segment~"
+										ID="lblSegment"
+									/>
+								</Division>
+								<Division
+									Condition="@Request.rowNo~ = @Data.rowNo~ And &quot;@Request.Mode~&quot; = &quot;Edit&quot;"
+									ID="divEdit"
+									>
+									<InputText
+										DefaultValue="@Data.Segment~"
+										ID="newSegName"
+										InputMaxLength="50"
+										>
+										<Validation
+											Class="ThemeTextNegative"
+											ErrorMsg="Segment name can not exceed 50 characters"
+											MaxLength="50"
+											Type="Length"
+										/>
+									</InputText>
+								</Division>
+								<DataColumnSort
+									DataColumn="Segment"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="expiration"
+								ID="colexpiration"
+								>
+								<Division
+									Condition="&quot;@Request.Mode~&quot; = &quot;View&quot; Or @Request.rowNo~ &lt;&gt; @Data.rowNo~ "
+									ID="divView"
+									>
+									<Label
+										Caption="@Data.expiration~"
+										ID="lblexpiration"
+									/>
+								</Division>
+								<Division
+									Condition="@Request.rowNo~ = @Data.rowNo~ And &quot;@Request.Mode~&quot; = &quot;Edit&quot;"
+									ID="divEdit"
+									>
+									<InputText
+										DefaultValue="@Data.expiration~"
+										ID="newExpiration"
+										InputMaxLength="4"
+										InputSize="3"
+										>
+										<Validation
+											Class="ThemeTextNegative"
+											ErrorMsg="Value should be Numeric (Count of days of expiration)"
+											Type="Numeric"
+										/>
+									</InputText>
+								</Division>
+								<DataColumnSort
+									DataColumn="expiration"
+									DataType="Number"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="description"
+								ID="coldescription"
+								>
+								<Division
+									Condition="&quot;@Request.Mode~&quot; = &quot;View&quot; Or @Request.rowNo~ &lt;&gt; @Data.rowNo~ "
+									ID="divView"
+									>
+									<Label
+										Caption="@Data.description~"
+										ID="lbldescription"
+									/>
+								</Division>
+								<Division
+									Condition="@Request.rowNo~ = @Data.rowNo~ And &quot;@Request.Mode~&quot; = &quot;Edit&quot;"
+									ID="divEdit"
+									>
+									<InputTextArea
+										DefaultValue="@Data.description~"
+										ID="itaDescript"
+										InputRows="5"
+										>
+										<Validation
+											Class="ThemeTextNegative"
+											ErrorMsg="Description can not exceed 256 characters"
+											MaxLength="256"
+											Type="Length"
+										/>
+									</InputTextArea>
+								</Division>
+							</DataTableColumn>
+							<DataTableColumn
+								Class="ThemeAlignCenter"
+								Header="Action"
+								ID="colButton"
+								>
+								<Division
+									Condition="&quot;@Request.Mode~&quot; = &quot;View&quot; Or @Request.rowNo~ &lt;&gt; @Data.rowNo~ "
+									ID="divView"
+									>
+									<Button
+										Caption="Edit"
+										Class="ThemeTextSmall"
+										ID="btnEdit"
+										>
+										<Action
+											Type="Report"
+											>
+											<Target
+												Report="SegmentUpd"
+												Type="Report"
+											/>
+											<LinkParams
+												Mode="Edit"
+												rowNo="@Data.rowNo~"
+											/>
+										</Action>
+									</Button>
+								</Division>
+								<Division
+									Condition="@Request.rowNo~ = @Data.rowNo~ And &quot;@Request.Mode~&quot; = &quot;Edit&quot;"
+									ID="divEdit"
+									>
+									<Button
+										Caption="Save"
+										Class="ThemeTextSmall"
+										ID="btnSave"
+										>
+										<Action
+											ID="actProcUpdate"
+											Process="SegmentUpdate"
+											TaskID="updateTask"
+											Type="Process"
+											Validate="True"
+											>
+											<LinkParams
+												fpasID="@Data.ID~"
+											/>
+											<WaitPage
+												Caption="Please wait, uploading new data . . ."
+											/>
+										</Action>
+										<EventHandler
+											DhtmlEvent="onMouseDown"
+											ID="evhMouseDown"
+											>
+											<Note
+												Note="Stuff new value into Input Hidden"
+											/>
+											<Action
+												ID="actUpdateJS"
+												Javascript="document.getElementById(&apos;inpSegm&apos;).value = document.getElementById(&apos;newSegName_Row@Data.rowNo~&apos;).value;
+document.getElementById(&apos;inpDesc&apos;).value = document.getElementById(&apos;itaDescript_Row@Data.rowNo~&apos;).value;
+document.getElementById(&apos;inpExpiry&apos;).value = document.getElementById(&apos;newExpiration_Row@Data.rowNo~&apos;).value;"
+												Type="Javascript"
+											/>
+										</EventHandler>
+									</Button>
+								</Division>
+							</DataTableColumn>
+						</DataTable>
+					</FieldsetBox>
+				</ResponsiveColumn>
+			</ResponsiveRow>
+			<ResponsiveRow>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="6"
+					ColspanLargeScreen="5"
+					ColspanMediumScreen="5"
+					ColspanSmallScreen="6"
+					>
+					<FieldsetBox
+						Caption="Data collections List"
+						>
+						<Rows>
+							<Row>
+								<Column
+									Class="ThemeAlignTopLeft"
+									ID="colLbl"
+									>
+									<Label
+										Caption="Associate with existing Data Collection:"
+									/>
+								</Column>
+								<Column
+									RowSpan="2"
+									>
+									<InputSelectList
+										DefaultValue="@Request.adver~"
+										ID="DataColl"
+										InputRows="13"
+										MultiSelect="False"
+										OptionCaptionColumn="name"
+										OptionValueColumn="data_collection_id"
+										>
+										<DataLayer
+											ConnectionID="OpenDSP"
+											ID="dlDataColl"
+											Source="SELECT dc.data_collection_id,
+dc.name
+FROM opendsp.ld_data_collection dc
+order by dc.data_collection_id desc;"
+											Type="SQL"
+										/>
+										<EventHandler
+											DhtmlEvent="onchange"
+											ID="ehChange"
+											>
+											<Action
+												ElementID="dtEntry, tab1"
+												ID="actRefAdvName"
+												RequestForwarding="True"
+												Type="RefreshElement"
+												>
+												<WaitPage/>
+											</Action>
+										</EventHandler>
+									</InputSelectList>
+								</Column>
+							</Row>
+							<Row>
+								<Column
+									Class="ThemeAlignBottomLeft"
+									>
+									<Label
+										Caption="Create new Pixel/Data Collection"
+									/>
+									<LineBreak/>
+									<Button
+										Caption="Create new"
+										ID="createDC"
+										>
+										<Action
+											ID="actPix"
+											Type="Report"
+											>
+											<Target
+												FrameID="NewWindow"
+												Report="Pixel_UI"
+												Type="Report"
+											/>
+										</Action>
+									</Button>
+								</Column>
+							</Row>
+						</Rows>
+					</FieldsetBox>
+				</ResponsiveColumn>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="6"
+					ColspanLargeScreen="4"
+					ColspanMediumScreen="4"
+					ColspanSmallScreen="6"
+					>
+					<FieldsetBox
+						Caption="Add new Segment form"
+						>
+						<Rows
+							ID="dataEntry"
+							>
+							<Row>
+								<Column>
+									<Label
+										Caption="Changes for Advertiser:"
+									/>
+								</Column>
+								<Column>
+									<DataTable
+										ID="tab1"
+										>
+										<DataLayer
+											ConnectionID="OpenDSP"
+											ID="SQLDataLayer3"
+											MaxRows="1"
+											Source="SELECT adv.name,
+adv.advertiser_id
+FROM opendsp.ld_advertiser adv
+where adv.advertiser_id = &apos;@Request.adver~&apos;"
+											Type="SQL"
+										/>
+										<DataTableColumn
+											ColumnHeaderClass="ThemeHidden"
+											ID="colAdvertiser"
+											>
+											<Label
+												Caption="@Data.name~"
+												Class="ThemeContainerBordered"
+												ID="lblAdv"
+											/>
+										</DataTableColumn>
+									</DataTable>
+								</Column>
+							</Row>
+							<Row>
+								<Column>
+									<Label
+										Caption="New Segment Name:"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="newSegName1"
+									/>
+								</Column>
+							</Row>
+							<Row>
+								<Column>
+									<Label
+										Caption="Expiration time (days):"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										DefaultValue="30"
+										ID="newExpiration1"
+										>
+										<Validation
+											Class="ThemeTextNegative"
+											ErrorMsg="Value should be Numeric (Count of days of expiration)"
+											Type="Numeric"
+										/>
+									</InputText>
+								</Column>
+							</Row>
+							<Row>
+								<Column>
+									<Label
+										Caption="Description:"
+									/>
+								</Column>
+								<Column>
+									<InputTextArea
+										DefaultValue="Input description here..."
+										ID="itaDescript1"
+										InputRows="5"
+										>
+										<Validation
+											Class="ThemeTextNegative"
+											ErrorMsg="Description can not exceed 256 characters"
+											MaxLength="256"
+											Type="Length"
+										/>
+									</InputTextArea>
+								</Column>
+							</Row>
+						</Rows>
+						<HR/>
+						<Button
+							Caption="Insert Data "
+							ID="btnInsert"
+							>
+							<Action
+								ID="actProcInsert"
+								Process="SegmentUpdate"
+								TaskID="insertTask"
+								Type="Process"
+								Validate="True"
+								>
+								<LinkParams
+									adver="@Request.adver~"
+									DataColl="@Request.DataColl~"
+									itaDescript="@Request.itaDescript1~"
+									newEpiration="@Request.newExpiration1~"
+									newSegName="@Request.newSegName1~"
+								/>
+							</Action>
+						</Button>
+					</FieldsetBox>
+				</ResponsiveColumn>
+			</ResponsiveRow>
+		</Division>
+		<LineBreak/>
+		<DataTable
+			ID="DataTable1"
+			SortArrows="True"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="SQLDataLayer1"
+				Source="Select seg.first_party_audience_segment_id As ID,
+  adv.name Advertiser,
+  Concat(seg.first_party_audience_segment_id, &apos;:fp:&apos;, seg.advertiser_id)
+  SegmentID,
+  seg.name Segment,
+  ifnull(dc.name,&apos;n/a&apos;) DataCollect,
+  seg.description,
+  seg.expiry_days expiration
+From opendsp.ld_first_party_audience_segment seg
+  Join opendsp.ld_advertiser adv On seg.advertiser_id = adv.advertiser_id
+  left join opendsp.ld_segment_rule_data_collection srdc on seg.first_party_audience_segment_id = srdc.first_party_audience_segment_id
+  left join opendsp.ld_data_collection dc on srdc.data_collection_id = dc.data_collection_id"
+				Type="SQL"
+			/>
+			<DataTableColumn
+				Header="ID"
+				ID="colID"
+				>
+				<Label
+					Caption="@Data.ID~"
+					ID="lblID"
+				/>
+				<DataColumnSort
+					DataColumn="ID"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Advertiser"
+				ID="colAdvertiser"
+				>
+				<Label
+					Caption="@Data.Advertiser~"
+					ID="lblAdvertiser"
+				/>
+				<DataColumnSort
+					DataColumn="Advertiser"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Segment ID"
+				ID="colSegmentID"
+				>
+				<Label
+					Caption="@Data.SegmentID~"
+					ID="lblSegmentID"
+				/>
+				<DataColumnSort
+					DataColumn="SegmentID"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Segment"
+				ID="colSegment"
+				>
+				<Label
+					Caption="@Data.Segment~"
+					ID="lblSegment"
+				/>
+				<DataColumnSort
+					DataColumn="Segment"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Data Collection"
+				ID="colDataCollect"
+				>
+				<Label
+					Caption="@Data.DataCollect~"
+					ID="lblDataCollect"
+					>
+					<ConditionalClass
+						Class="ThemeTextNegative"
+						Condition="&quot;@Data.DataCollect~&quot; == &quot;n/a&quot;"
+					/>
+				</Label>
+				<DataColumnSort
+					DataColumn="DataCollect"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="expiration"
+				ID="colexpiration"
+				>
+				<Label
+					Caption="@Data.expiration~"
+					ID="lblexpiration"
+				/>
+				<DataColumnSort
+					DataColumn="expiration"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="description"
+				ID="coldescription"
+				>
+				<Label
+					Caption="@Data.description~"
+					ID="lbldescription"
+				/>
+				<DataColumnSort
+					DataColumn="description"
+				/>
+			</DataTableColumn>
+			<InteractivePaging
+				CaptionType="Image"
+				HideWhenOnePage="True"
+				Location="Both"
+				PageRowCount="30"
+				ShowPageNumber="True"
+			/>
+		</DataTable>
+		<Spaces
+			Size="5"
+		/>
+		<Label
+			Caption="* last added on top"
+			Class="ThemeTextSmaller"
+		/>
+	</Body>
+	<ideTestParams
+		adver="0"
+		DataColl=""
+		itaDescript1=""
+		Mode=""
+		newExpiration1=""
+		newSegName1=""
+		rowNo=""
+	/>
+</Report>

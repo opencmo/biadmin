@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="by Client"
+	ID="Reports.MetricsByClient"
+	>
+	<ReportCenterItem
+		ReportCenterFolder="Metrics Reports"
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<StyleSheet
+		ID="themeTransit"
+		Theme="Transit"
+	/>
+	<DefaultRequestParams
+		cid="0"
+		crid="0"
+		dateFrom="@Date.ThisMonthStart~"
+		dateTo="@Date.ThisMonthEnd~"
+		exIds="0"
+		groupby="DATE(rbs.report_datetime),rbs.targeting_strategy_id"
+		sspIds="0"
+		tsid="0"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Metrics by Client"
+				Class="ThemeHeaderLarger"
+			/>
+		</Division>
+		<HR/>
+	</ReportHeader>
+	<Body>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			ID="DatePickRRow"
+			>
+			<ResponsiveColumn
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="6"
+				ColspanSmallScreen="4"
+				>
+				<FieldsetBox
+					Caption="Filter by Date"
+					>
+					<IncludeSharedElement
+						DefinitionFile="SharedElements"
+						SharedElementID="DatePickerAC"
+					/>
+				</FieldsetBox>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<Division
+			Class="ThemeAlignRight"
+			HtmlDiv="True"
+			ID="expRow"
+			>
+			<Button
+				Caption="Export to Excel"
+				Class="ThemeContainerShadedAndBordered"
+				ID="exportBtn"
+				>
+				<Action
+					ID="actExport"
+					Type="NativeExcel"
+					>
+					<Target
+						ExcelOutputFormat="Excel2007"
+						ExportDataTableID="dtMetrics"
+						ExportFilename="Stats by Client @Request.dateFrom~_@Request.dateTo~"
+						ShowGridlines="True"
+						Type="NativeExcel"
+					/>
+				</Action>
+			</Button>
+		</Division>
+		<DataTable
+			AjaxPaging="True"
+			ID="dtMetrics"
+			Layout="Auto"
+			SortArrows="True"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="dlMetrics"
+				Source="Select 
+	ifnull(cli.name, &apos;- n/a -&apos;) Client,
+    ifnull(sum(rbs.bid), 0) Bids,
+    ifnull(sum(rws.win), 0) Wins,
+    ifnull(sum(ris.impression), 0) Impressions,
+    ifnull(sum(rcs.click), 0) Clicks,
+    ifnull(sum(rcs.click) / sum(ris.impression), 0) CTR, 
+    ifnull(sum(rws.microWinningPrice / 1000000), 0) Spend,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(impression) * 1000, 0) CPM
+
+from stat.report_bid_summary rbs
+    left join stat.report_win_summary rws ON rws.targeting_strategy_id = rbs.targeting_strategy_id
+        and rbs.creative_id = rws.creative_id
+        and rbs.report_datetime = rws.report_datetime
+        and rbs.exchange_name = rws.exchange_name
+        and rbs.ssp_name = rws.ssp_name
+    left join stat.report_impression_summary ris ON rbs.targeting_strategy_id = ris.targeting_strategy_id
+        and rbs.creative_id = ris.creative_id
+        and rbs.report_datetime = ris.report_datetime
+        and rbs.exchange_name = ris.exchange_name
+        and rbs.ssp_name = ris.ssp_name
+	left join stat.report_click_summary rcs ON rbs.targeting_strategy_id = rcs.targeting_strategy_id
+        and rbs.creative_id = rcs.creative_id
+        and rbs.report_datetime = rcs.report_datetime
+        and rbs.exchange_name = rcs.exchange_name
+        and rbs.ssp_name = rcs.ssp_name
+	join opendsp.ld_targeting_strategy ts ON rbs.targeting_strategy_id = ts.targeting_strategy_id
+    left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+	left join opendsp.ld_campaign c on cl.campaign_id = c.campaign_id 
+	left join opendsp.ld_advertiser adv ON c.advertiser_id=adv.advertiser_id
+	left join opendsp.ld_client cli On adv.client_id = cli.client_id
+
+Where DATE(rbs.report_datetime) between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and ((rws.microWinningPrice!=0 and rws.exchange_name=&apos;adx&apos;)or(rws.exchange_name!=&apos;adx&apos;))
+group by adv.client_id
+order by adv.client_id;"
+				Type="SQL"
+			/>
+			<DataTableColumn
+				Header="Client"
+				ID="colClient"
+				>
+				<Label
+					Caption="@Data.Client~"
+					ID="lblClient"
+				/>
+				<DataColumnSort
+					DataColumn="Client"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Bids"
+				ID="colBids"
+				>
+				<Label
+					Caption="@Data.Bids~"
+					Format="###,###,##0"
+					ID="lblBids"
+				/>
+				<DataColumnSort
+					DataColumn="Bids"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Bids"
+					Function="Sum"
+					ID="sumBids"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Wins"
+				ID="colWins"
+				>
+				<Label
+					Caption="@Data.Wins~"
+					Format="###,###,##0"
+					ID="lblWins"
+				/>
+				<DataColumnSort
+					DataColumn="Wins"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Wins"
+					Function="Sum"
+					ID="sumWins"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Impressions"
+				ID="colImpressions"
+				>
+				<Label
+					Caption="@Data.Impressions~"
+					Format="###,###,##0"
+					ID="lblImpressions"
+				/>
+				<DataColumnSort
+					DataColumn="Impressions"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Impressions"
+					Function="Sum"
+					ID="sumImps"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Clicks"
+				ID="colClicks"
+				>
+				<Label
+					Caption="@Data.Clicks~"
+					Format="###,###,##0"
+					ID="lblClicks"
+				/>
+				<DataColumnSort
+					DataColumn="Clicks"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Clicks"
+					Function="Sum"
+					ID="sumClicks"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CTR"
+				ID="colCTR"
+				>
+				<Label
+					Caption="@Data.CTR~"
+					Format="Percent"
+					ID="lblCTR"
+				/>
+				<DataColumnSort
+					DataColumn="CTR"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Spend"
+				ID="colSpend"
+				>
+				<Label
+					Caption="@Data.Spend~"
+					Format="$###,###,##0.00"
+					ID="lblSpend"
+				/>
+				<DataColumnSort
+					DataColumn="Spend"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Spend"
+					Function="Sum"
+					ID="sumSpend"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CPM"
+				ID="colCPM"
+				>
+				<Label
+					Caption="@Data.CPM~"
+					Format="$###,###,##0.00"
+					ID="lblCPM"
+				/>
+				<DataColumnSort
+					DataColumn="CPM"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Spend"
+					Function="Sum"
+					ID="sumCPM"
+				/>
+			</DataTableColumn>
+			<SummaryRow
+				Caption="Total"
+			/>
+			<InteractivePaging
+				CaptionType="Image"
+				HideWhenOnePage="True"
+				Location="Both"
+				PageRowCount="100"
+				ShowPageNumber="True"
+			/>
+		</DataTable>
+		<Division
+			HtmlDiv="True"
+			ID="divChart1BasicSQL"
+			>
+			<LineBreak
+				LineCount="3"
+			/>
+			<AnalysisChart
+				ChartHeight="350"
+				ChartWidth="640"
+				Class="centerSuperEle"
+				ControlPanelLocation="Left"
+				ID="Chart1Basic"
+				>
+				<DataLayer
+					ConnectionID="OpenDSP"
+					ID="dlMetricsAC"
+					Source="Select 
+	ifnull(cli.name, &apos;- n/a -&apos;) Client,
+    ifnull(sum(rbs.bid), 0) Bids,
+    ifnull(sum(rws.win), 0) Wins,
+    ifnull(sum(ris.impression), 0) Impressions,
+    ifnull(sum(rcs.click), 0) Clicks,
+    ifnull(sum(rcs.click) / sum(ris.impression), 0) CTR, 
+    ifnull(sum(rws.microWinningPrice / 1000000), 0) Spend,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(impression) * 1000, 0) CPM
+
+from stat.report_bid_summary rbs
+    left join stat.report_win_summary rws ON rws.targeting_strategy_id = rbs.targeting_strategy_id
+        and rbs.creative_id = rws.creative_id
+        and rbs.report_datetime = rws.report_datetime
+        and rbs.exchange_name = rws.exchange_name
+        and rbs.ssp_name = rws.ssp_name
+    left join stat.report_impression_summary ris ON rbs.targeting_strategy_id = ris.targeting_strategy_id
+        and rbs.creative_id = ris.creative_id
+        and rbs.report_datetime = ris.report_datetime
+        and rbs.exchange_name = ris.exchange_name
+        and rbs.ssp_name = ris.ssp_name
+	left join stat.report_click_summary rcs ON rbs.targeting_strategy_id = rcs.targeting_strategy_id
+        and rbs.creative_id = rcs.creative_id
+        and rbs.report_datetime = rcs.report_datetime
+        and rbs.exchange_name = rcs.exchange_name
+        and rbs.ssp_name = rcs.ssp_name
+	join opendsp.ld_targeting_strategy ts ON rbs.targeting_strategy_id = ts.targeting_strategy_id
+    left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+	left join opendsp.ld_campaign c on cl.campaign_id = c.campaign_id 
+	left join opendsp.ld_advertiser adv ON c.advertiser_id=adv.advertiser_id
+	left join opendsp.ld_client cli On adv.client_id = cli.client_id
+
+Where DATE(rbs.report_datetime) between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+group by adv.client_id
+order by adv.client_id;"
+					Type="SQL"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Client"
+					DataType="Text"
+					Header="Client"
+					ID="colClient"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Bids"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="Bids"
+					ID="colBids"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Wins"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="Wins"
+					ID="colWins"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Clicks"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="Clicks"
+					ID="colClicks"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Impressions"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="Impressions"
+					ID="colImpressions"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Spend"
+					DataType="Number"
+					Format="$###,###,##0.00"
+					Header="Spend"
+					ID="colSpend"
+				/>
+				<AnalysisChartColumn
+					DataColumn="CPM"
+					DataType="Number"
+					Format="$###,###,##0.00"
+					Header="CPM"
+					ID="colCPM"
+				/>
+				<AnalysisChartColumn
+					DataColumn="CTR"
+					DataType="Number"
+					Format="Percent"
+					Header="CTR"
+					ID="colCTR"
+				/>
+			</AnalysisChart>
+		</Division>
+	</Body>
+	<ReportFooter/>
+	<ideTestParams
+		dateFrom="2015-06-10"
+		dateTo="2015-06-30"
+	/>
+</Report>

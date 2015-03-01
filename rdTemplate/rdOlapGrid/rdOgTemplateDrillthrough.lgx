@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report ID="OlapGrid.rdOgTemplateDrillthrough" >
+	<Body>
+		<Rows ID="rowsOlapGrid" CellSpacing="4" Class="rdOg rdOgPanel">
+			<Row ID="rowOgDrillthroughTitle" Class="rdOgCaptionRow">
+				<Column ID="colOgDrillthroughTitle" ColSpan="2">
+					<Label ID="lblOgDrillthroughTitle" Caption="Drillthrough"/>
+				</Column>
+			</Row>
+			<Row ID="rowTable" Class="rdOgContentRow">
+				<Column ColSpan="2">
+					<Division ID="divAxes">
+						<Rows>
+							<Row>
+								<Column Width="20"/>
+								<Column>
+									<Label Caption="Left:" ID="lblLeft"/>
+								</Column>
+								<Column>
+									<Label Caption="@Request.rdLeftAxis~" Class="rdOgContentHeading" ID="lblLeftAxis"/>
+								</Column>
+							</Row>
+							<Row>
+								<Column Width="20"/>
+								<Column>
+									<Label Caption="Top:" ID="lblTop"/>
+								</Column>
+								<Column>
+									<Label Caption="@Request.rdTopAxis~" Class="rdOgContentHeading" ID="lblTopAxis"/>
+								</Column>
+							</Row>
+							<Row ID="rowExport">
+								<Column Width="20"/>
+								<Column>
+									<Label Caption="Export: " ID="lblExport"/>
+								</Column>
+								<Column>
+									<Label Caption="Excel" ID="lblExportExcel" Class="rdOgCommand">
+										<Action Type="NativeExcel">
+											<Target Type="NativeExcel" ExportDataTableID="dtDrillthrough"/>
+										</Action>
+									</Label>
+								</Column>
+							</Row>
+						</Rows>
+					</Division>
+          <LineBreak Lines="2"/>
+					<DataTable CellSpacing="1" Class="rdOgOlapTable" TableBorder="0" ID="dtDrillthrough" ColumnHeaderClass="rdOgPositionCellYAxis">
+						<DataLayer Type="OlapMdx" ID="dlDrillthrough" MaxRows="1000"/>
+						<AutoColumns Class="rdOgDataCell"/>
+            <Remark>
+              <InteractivePaging ShowPageNumber="True"    Class="rdOgPaging" IDnotSupportedHere="pagingTable"                                                                                PageRowCount="1000" HideWhenOnePage="True" Location="Top" CaptionType="Image" />
+              <InteractivePaging ShowPageNumber="False"   Class="rdOgPaging" IDnotSupportedHere="pagingTableFalse"                                          HideShowPrevNextCaptions="True"  PageRowCount="1000" HideWhenOnePage="True" Location="Top" CaptionType="Image" />
+						</Remark>
+            <InteractivePaging  ShowPageNumber="Numbered" Class="rdOgPaging" IDnotSupportedHere="pagingTableNumbered" CurrentPageClass="rdOgContentHeading" HideShowPrevNextCaptions="False" PageRowCount="1000" HideWhenOnePage="True" Location="Top" CaptionType="Image"  />
+					</DataTable>
+				</Column>
+			</Row>
+		</Rows>
+	</Body>	
+</Report>

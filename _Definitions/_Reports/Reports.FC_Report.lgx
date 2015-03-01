@@ -1,0 +1,499 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="FC Report"
+	ID="Reports.FC_Report"
+	>
+	<DefaultRequestParams
+		camid="0"
+		dateFrom="@Date.ThisWeekStart~"
+		dateTo="@Date.ThisWeekEnd~"
+		tsid="0"
+	/>
+	<ReportCenterItem
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<StyleSheet
+		ID="themeTransit"
+		Theme="Transit"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="FC Report"
+				Class="ThemeHeaderLarger"
+			/>
+		</Division>
+		<HR/>
+		<IncludeSharedElement
+			DefinitionFile="SharedElements"
+			SharedElementID="DatePicker"
+		/>
+		<LineBreak
+			LineCount="2"
+		/>
+	</ReportHeader>
+	<Body>
+		<Tabs
+			ID="tabs"
+			TabbingStyle="Static"
+			>
+			<TabPanel
+				Caption="Campaign"
+				ID="camp_tab"
+				>
+				<Rows>
+					<Row>
+						<Column>
+							<DataTable
+								AjaxPaging="True"
+								ID="dlCamp"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="rs"
+									ID="red_camp"
+									Source="select res.campaign_id, res.view_count, count(*) user_count,
+res.view_count*count(*) total 
+
+from 
+(
+    select  res.campaign_id, res.user_id, count(*) view_count
+    from    research_stats_impression_campaign_targeting_strategy_user res
+    where   res.date_time between&apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~ 23:59:59&apos;
+	and (0 in (&apos;@Request.camid~&apos;) or res.campaign_id in (@Request.camid~))
+    group by  res.campaign_id, res.user_id
+) res
+group by  res.campaign_id, res.view_count
+order by  res.campaign_id, res.view_count
+;"
+									Type="SQL"
+									>
+									<Join
+										ID="joinID"
+										JoinType="LeftOuterJoin"
+										>
+										<MatchCondition
+											DataType="Number"
+											LeftDataColumn="campaign_id"
+											RightDataColumn="campaign_id"
+										/>
+										<DataLayer
+											ConnectionID="OpenDSP.JDBC"
+											ID="dlCamps"
+											Source="Select c.campaign_id, c.name Campaign From ld_campaign c"
+											Type="SQL"
+										/>
+									</Join>
+								</DataLayer>
+								<DataTableColumn
+									Header="Campaign"
+									ID="colname"
+									>
+									<Label
+										Caption="@Data.name~"
+										ErrorResult="n/a"
+										ID="lblname"
+									/>
+									<DataColumnSort
+										DataColumn="name"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Class="ThemeAlignRight"
+									Header="Count of Impressions"
+									ID="colview_count"
+									>
+									<Label
+										Caption="@Data.view_count~"
+										Format="###,###,##0"
+										ID="lblview_count"
+									/>
+									<DataColumnSort
+										DataColumn="view_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Class="ThemeAlignRight"
+									Header="User Count"
+									ID="coluser_count"
+									>
+									<Label
+										Caption="@Data.user_count~"
+										Format="###,###,##0"
+										ID="lbluser_count"
+									/>
+									<DataColumnSort
+										DataColumn="user_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Class="ThemeAlignRight"
+									Header="Total Imps"
+									ID="coltotal"
+									ShowModes="None"
+									>
+									<Label
+										Caption="@Data.total~"
+										Format="###,###,##0"
+										ID="lbltotal"
+									/>
+									<DataColumnSort
+										DataColumn="total"
+										DataType="Number"
+									/>
+									<DataColumnSummary
+										DataColumn="total"
+										DataType="Number"
+										Function="Sum"
+										ID="sumTl"
+									/>
+								</DataTableColumn>
+								<SummaryRow
+									Caption="Total Impressions"
+								/>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Both"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</Column>
+						<Column
+							Class="ThemeAlignTopLeft"
+							>
+							<LineBreak/>
+							<Label
+								Caption="Campaigns filter"
+							/>
+							<LineBreak/>
+							<InputSelectList
+								DefaultValue="@Request.camid~"
+								ID="camid"
+								InputRows="8"
+								MultiSelect="False"
+								OptionCaptionColumn="name"
+								OptionValueColumn="campaign_id"
+								SaveInCookie="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="camidSql"
+									Source="Select Distinct c.campaign_id, 
+concat(c.campaign_id,&apos; - &apos;,c.name) name
+From opendsp.ld_campaign c
+join opendsp.ld_campaign_lineitem cl on c.campaign_id=cl.campaign_id
+join opendsp.ld_targeting_strategy ts on cl.campaign_lineitem_id = ts.campaign_lineitem_id
+Where c.start_date &gt; &apos;2015-06-01&apos;
+Order By c.campaign_id desc"
+									Type="SQL"
+								/>
+								<EventHandler
+									DhtmlEvent="onchange"
+									>
+									<Action
+										ElementID="dlCamp"
+										ID="actRefCamId"
+										RequestForwarding="True"
+										Type="RefreshElement"
+										>
+										<WaitPage/>
+									</Action>
+								</EventHandler>
+							</InputSelectList>
+							<LineBreak
+								LineCount="2"
+							/>
+							<Division
+								Class="ThemeAlignLeft"
+								HtmlDiv="True"
+								ID="expRow"
+								>
+								<Label
+									Caption="Reset search"
+									>
+									<Action
+										ID="actRef"
+										Type="Report"
+										>
+										<LinkParams
+											camid="0"
+											dateFrom="@Request.dateFrom~"
+											dateTo="@Request.dateTo~"
+											tsid="0"
+										/>
+										<Target
+											Type="Report"
+											>
+											<WaitPage/>
+										</Target>
+									</Action>
+								</Label>
+								<Spaces
+									Size="10"
+								/>
+								<Button
+									Caption="Export to Excel"
+									Class="ThemeContainerShadedAndBordered"
+									ID="btnExport"
+									>
+									<Action
+										ID="actExport"
+										Type="NativeExcel"
+										>
+										<Target
+											ExcelOutputFormat="Excel2007"
+											ExportDataTableID="dlCamp"
+											ExportFilename="FC_Campaigns_@Request.dateFrom~_@Request.dateTo~"
+											ShowGridlines="True"
+											Type="NativeExcel"
+										/>
+									</Action>
+								</Button>
+								<LineBreak
+									LineCount="2"
+								/>
+							</Division>
+						</Column>
+					</Row>
+				</Rows>
+			</TabPanel>
+			<TabPanel
+				Caption="Targeting Strategy"
+				ID="ts_tab"
+				>
+				<Rows>
+					<Row>
+						<Column>
+							<DataTable
+								AjaxPaging="True"
+								ID="dlTS"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="rs"
+									ID="red_TS"
+									Source="select a.targeting_strategy_id, a.view_count, count(*) user_count,
+a.view_count*count(*) total 
+from 
+(
+    select  res.targeting_strategy_id, res.user_id, count(*) view_count
+    from    research_stats_impression_campaign_targeting_strategy_user res
+    where   res.date_time between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~ 23:59:59&apos;
+	and (0 in (&apos;@Request.tsid~&apos;) or res.targeting_strategy_id in (@Request.tsid~))
+    group by  res.targeting_strategy_id, res.user_id
+) a
+group by  a.targeting_strategy_id, a.view_count
+order by  a.targeting_strategy_id, a.view_count
+;"
+									Type="SQL"
+									>
+									<Join
+										ID="joinID"
+										JoinType="LeftOuterJoin"
+										>
+										<MatchCondition
+											DataType="Number"
+											LeftDataColumn="targeting_strategy_id"
+											RightDataColumn="targeting_strategy_id"
+										/>
+										<DataLayer
+											ConnectionID="OpenDSP.JDBC"
+											ID="dlTSs"
+											Source="Select ts.targeting_strategy_id,
+  ts.name
+From ld_targeting_strategy ts
+where ts.targeting_strategy_id&gt;500"
+											Type="SQL"
+										/>
+									</Join>
+								</DataLayer>
+								<DataTableColumn
+									Header="Targeting Strategy"
+									ID="colname"
+									>
+									<Label
+										Caption="@Data.name~"
+										ID="lblname"
+									/>
+									<DataColumnSort
+										DataColumn="name"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Class="ThemeAlignRight"
+									Header="Count of Impressions"
+									ID="colview_count"
+									>
+									<Label
+										Caption="@Data.view_count~"
+										Format="###,###,##0"
+										ID="lblview_count"
+									/>
+									<DataColumnSort
+										DataColumn="view_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Class="ThemeAlignRight"
+									Header="User Count"
+									ID="coluser_count"
+									>
+									<Label
+										Caption="@Data.user_count~"
+										Format="###,###,##0"
+										ID="lbluser_count"
+									/>
+									<DataColumnSort
+										DataColumn="user_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Class="ThemeAlignRight"
+									Header="Total Imps"
+									ID="coltotal"
+									ShowModes="None"
+									>
+									<Label
+										Caption="@Data.total~"
+										Format="###,###,##0"
+										ID="lbltotal"
+									/>
+									<DataColumnSort
+										DataColumn="total"
+										DataType="Number"
+									/>
+									<DataColumnSummary
+										DataColumn="total"
+										Function="Sum"
+										ID="sumTl"
+									/>
+								</DataTableColumn>
+								<SummaryRow
+									Caption="Total Impressions"
+								/>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Both"
+									PageRowCount="100"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</Column>
+						<Column
+							Class="ThemeAlignTop"
+							>
+							<LineBreak/>
+							<Label
+								Caption="Targeting Strategies filter"
+							/>
+							<LineBreak/>
+							<InputSelectList
+								DefaultValue="@Request.tsid~"
+								ID="tsid"
+								InputRows="8"
+								MultiSelect="False"
+								OptionCaptionColumn="name"
+								OptionValueColumn="targeting_strategy_id"
+								SaveInCookie="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="tsidSql"
+									Source="Select ts.targeting_strategy_id, 
+concat(ts.targeting_strategy_id,&apos; - &apos;,ts.name) name
+From opendsp.ld_targeting_strategy ts
+left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+Where ts.targeting_strategy_id &gt; 500
+Order By ts.targeting_strategy_id Desc"
+									Type="SQL"
+								/>
+								<EventHandler
+									DhtmlEvent="onchange"
+									>
+									<Action
+										ElementID="dlTS"
+										ID="actRefTSid"
+										RequestForwarding="True"
+										Type="RefreshElement"
+										>
+										<WaitPage/>
+									</Action>
+								</EventHandler>
+							</InputSelectList>
+							<LineBreak
+								LineCount="2"
+							/>
+							<Division
+								Class="ThemeAlignLeft"
+								HtmlDiv="True"
+								ID="expRow"
+								>
+								<Label
+									Caption="Reset search"
+									>
+									<Action
+										ID="actRef"
+										Type="Report"
+										>
+										<LinkParams
+											camid="0"
+											dateFrom="@Request.dateFrom~"
+											dateTo="@Request.dateTo~"
+											tsid="0"
+										/>
+										<Target
+											Type="Report"
+											>
+											<WaitPage/>
+										</Target>
+									</Action>
+								</Label>
+								<Spaces
+									Size="10"
+								/>
+								<Button
+									Caption="Export to Excel"
+									Class="ThemeContainerShadedAndBordered"
+									ID="btnExport"
+									>
+									<Action
+										ID="actExport"
+										Type="NativeExcel"
+										>
+										<Target
+											ExcelOutputFormat="Excel2007"
+											ExportDataTableID="dlTS"
+											ExportFilename="FC_TS_@Request.dateFrom~_@Request.dateTo~"
+											ShowGridlines="True"
+											Type="NativeExcel"
+										/>
+									</Action>
+								</Button>
+								<LineBreak
+									LineCount="2"
+								/>
+							</Division>
+						</Column>
+					</Row>
+				</Rows>
+			</TabPanel>
+		</Tabs>
+	</Body>
+	<ideTestParams
+		camid="0"
+		dateFrom="2016-05-10"
+		dateTo="2016-05-12"
+		tsid="1797"
+	/>
+</Report>

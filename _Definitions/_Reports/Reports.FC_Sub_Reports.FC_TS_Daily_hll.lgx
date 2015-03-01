@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	ID="Reports.FC_Sub_Reports.FC_TS_Daily_hll"
+	>
+	<DefaultRequestParams
+		dateFrom="@Date.ThisMonthStart~"
+		dateTo="@Date.ThisMonthEnd~"
+		tsid="0"
+	/>
+	<StyleSheet
+		ID="themeTransit"
+		Theme="Transit"
+	/>
+	<Body>
+		<Button
+			Caption="Export to Excel"
+			Class="ThemeContainerShadedAndBordered"
+			ID="btnExport"
+			>
+			<Action
+				ID="actExport"
+				Type="NativeExcel"
+				>
+				<Target
+					ExcelOutputFormat="Excel2007"
+					ExportDataTableID="dtTSDaily"
+					ExportFilename="UU_TSDaily_@Request.dateFrom~_@Request.dateTo~"
+					ShowGridlines="True"
+					Type="NativeExcel"
+				/>
+			</Action>
+		</Button>
+		<LineBreak
+			LineCount="2"
+		/>
+		<DataTable
+			Caption="Daily"
+			ID="dtTSDaily"
+			SortArrows="True"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="dlTSDaily"
+				Source="Select Date(tsd.report_date) report_datetime,
+  ts.name,
+  tsd.user_count
+From stat.impression_unique_user_hll_campaign_targeting_strategy_daily tsd
+  left join opendsp.ld_targeting_strategy ts ON tsd.targeting_strategy_id = ts.targeting_strategy_id
+Where tsd.targeting_strategy_id&gt;500
+and tsd.report_date between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (0 in (&apos;@Request.tsid~&apos;) or tsd.targeting_strategy_id in (@Request.tsid~))"
+				Type="SQL"
+			/>
+			<DataTableColumn
+				Header="Date"
+				ID="colreport_datetime"
+				>
+				<Label
+					Caption="@Data.report_datetime~"
+					Format="Short Date"
+					ID="lblreport_datetime"
+				/>
+				<DataColumnSort
+					DataColumn="report_datetime"
+					DataType="Date"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Targeting Strategy"
+				ID="colname"
+				>
+				<Label
+					Caption="@Data.name~"
+					ID="lblname"
+				/>
+				<DataColumnSort
+					DataColumn="name"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="User Count"
+				ID="coluser_count"
+				>
+				<Label
+					Caption="@Data.user_count~"
+					Format="###,###,##0"
+					ID="lbluser_count"
+				/>
+				<DataColumnSort
+					DataColumn="user_count"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<InteractivePaging
+				CaptionType="Image"
+				HideWhenOnePage="True"
+				Location="Bottom"
+				PageRowCount="50"
+				ShowPageNumber="True"
+			/>
+		</DataTable>
+	</Body>
+	<ideTestParams
+		dateFrom="2015-12-01"
+		dateTo="2015-12-15"
+		tsid="0"
+	/>
+</Report>

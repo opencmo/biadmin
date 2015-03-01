@@ -1,0 +1,730 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="Scheduler Management Console"
+	ID="Scheduler.Management_Console"
+	>
+	<ReportCenterItem/>
+	<RefreshElementTimer
+		ElementID="dtScheduledTasks"
+		ID="refreshTimer"
+		RefreshInterval="30"
+	/>
+	<StyleSheet
+		StyleSheet="extraTheme.css"
+		Theme="Transit"
+	/>
+	<DefaultRequestParams
+		inpProcessFile="ProcessSendEmail"
+		Mode="0"
+		rdProcessParams_TaskSchedule="@Local.ProcessParams~"
+	/>
+	<LocalData
+		Condition="&quot;@Request.TaskID~&quot; &lt;&gt; &quot;&quot;"
+		>
+		<DataLayer
+			ConnectionID="connScheduler"
+			ID="dlSchedulerTask"
+			SchedulerTaskID="@Request.TaskID~"
+			Type="Scheduler"
+			>
+			<CalculatedColumn
+				Formula="IIF(&quot;@Data.IsDisabled~&quot; = &quot;False&quot;, &quot;1&quot;, &quot;0&quot;)"
+				ID="IsEnabled"
+			/>
+		</DataLayer>
+	</LocalData>
+	<Note
+		Note="Load any process parameter data into a special request variable recognized by the Schedule element:"
+	/>
+	<Note
+		Note="rdProcessParams_&lt;ID&gt;, where &lt;ID&gt; = Schedule element ID"
+	/>
+	<ReportHeader
+		Class="ThemeAlignTopLeft"
+		>
+		<Image
+			Caption="SchedulerBanner.png"
+			ID="imgBanner"
+			Width="980"
+		/>
+	</ReportHeader>
+	<Body>
+		<Division
+			HtmlDiv="True"
+			ID="divOuterContainer"
+			>
+			<Division
+				Condition="@Request.Mode~ &gt; 0"
+				ID="divDataEntryForm"
+				>
+				<Rows
+					CellSpacing="0"
+					Class="fontA10"
+					TableBorder="0"
+					>
+					<Row
+						Class="bgWhite"
+						ID="rowMyInputGrid"
+						>
+						<Column
+							Class="pad20, ThemeAlignTopLeft"
+							ID="colInputsLeft"
+							>
+							<InputGrid
+								Class="ThemeAlignLeft"
+								>
+								<InputCheckbox
+									Caption="* Task enabled: "
+									CheckedValue="1"
+									DefaultValue="@Local.IsEnabled~"
+									ID="chkEnabled"
+									Tooltip="Determines if task will be run or not"
+								/>
+								<InputText
+									Caption="* Task name: "
+									DefaultValue="@Local.TaskName~"
+									ID="inpTaskName"
+									InputSize="30"
+									Tooltip="Arbitrary Scheduler task name, allows you to easily recognize it in the list of tasks. Ex: Daily Sales Report"
+									>
+									<Validation
+										ErrorMsg="Task Name is required."
+										Type="Required"
+									/>
+								</InputText>
+								<InputSelectList
+									Caption="* Process type: "
+									DefaultValue="@Local.ProcessFile~"
+									ID="inpProcessFile"
+									MultiSelect="False"
+									OptionCaptionColumn="Name"
+									OptionValueColumn="id"
+									Tooltip="Name of the Process definition file that contains the process task to run. Do not include the .lgx file extension. Ex: MyProcessDef"
+									>
+									<DataLayer
+										ID="StaticDataLayer1"
+										Type="Static"
+										>
+										<StaticDataRow
+											id="ProcessSendEmail"
+											Name="Process Send Email"
+										/>
+										<StaticDataRow
+											id="SchedulingTasks"
+											Name="Admin Scheduling Tasks"
+										/>
+									</DataLayer>
+									<EventHandler
+										DhtmlEvent="onChange"
+										>
+										<Action
+											ElementID="inpProcessTask"
+											ID="refProcessTask"
+											RequestForwarding="True"
+											Type="RefreshElement"
+											Validate="True"
+											>
+											<WaitPage/>
+										</Action>
+									</EventHandler>
+									<Validation
+										Type="Required"
+									/>
+								</InputSelectList>
+								<InputSelectList
+									Caption="* Process Task:"
+									DefaultValue="@Local.ProcessTaskID~"
+									ID="inpProcessTask"
+									OptionCaptionColumn="Name"
+									OptionValueColumn="id"
+									Tooltip="The element ID of the process task to run. Must exist in the Process definition file specified above. Ex: MyProcessTask"
+									>
+									<Validation
+										Type="Required"
+									/>
+									<DataLayer
+										Type="Static"
+										>
+										<StaticDataRow
+											id="t_MMR_XLSX"
+											Name="Main Metrics Report (Excel)"
+											Task="ProcessSendEmail"
+										/>
+										<StaticDataRow
+											id="t_MMR_CSV"
+											Name="Main Metrics Report (CSV)"
+											Task="ProcessSendEmail"
+										/>
+										<StaticDataRow
+											id="t_MMR_PDF"
+											Name="Main Metrics Report (PDF)"
+											Task="ProcessSendEmail"
+										/>
+										<StaticDataRow
+											id="mohawkgp_XLSX"
+											Name="Mahawk daily (Excel)"
+											Task="ProcessSendEmail"
+										/>
+										<StaticDataRow
+											id="mohawkgp_domain"
+											Name="Mahawk domain daily (Excel)"
+											Task="ProcessSendEmail"
+										/>
+										<Remark>
+											<StaticDataRow
+												id="t_SLI_HK_PDF"
+												Name="SLI HK (PDF)"
+												Task="ProcessSendEmail"
+											/>
+										</Remark>
+										<Remark>
+											<StaticDataRow
+												id="taskSendAsPDF"
+												Name="TEST Report As PDF Attachment"
+												Task="ProcessSendEmail"
+											/>
+										</Remark>
+										<Remark>
+											<StaticDataRow
+												id="BackupSchedulerDB"
+												Name="Backup Scheduler DB"
+												Task="SchedulingTasks"
+											/>
+										</Remark>
+										<ContainFilter
+											DataColumn="Task"
+											SearchString="@Request.inpProcessFile~"
+										/>
+									</DataLayer>
+								</InputSelectList>
+								<Remark>
+									<InputText
+										Caption="Web App URL: "
+										DefaultValue="@Local.ProcessUrl~"
+										ID="inpProcessUrl"
+										InputSize="50"
+										Tooltip="Real URL of the Logi application that contains the process task to run. Leave blank for current Logi application. Ex: http://myServer/myLogiApp"
+										>
+										<Validation
+											ErrorMsg="Warning: The Process Url is too long for the database; the maximum valid length is 50 characters."
+											MaxLength="60"
+											Type="Length"
+										/>
+									</InputText>
+								</Remark>
+								<InputHidden
+									DefaultValue="@Local.ProcessUrl~"
+									ID="inpProcessUrl"
+								/>
+							</InputGrid>
+						</Column>
+						<Column
+							Class="pad20, ThemeAlignTopLeft"
+							ID="colSchedule"
+							>
+							<Schedule
+								Format=""
+								ID="TaskSchedule"
+								Orientation=""
+								ScheduleOrientation="Vertical"
+								ScheduleXml="@Local.ScheduleXml~"
+								ShowMonths=""
+								ShowProcessFilename="True"
+								ShowProcessParameters="True"
+								ShowProcessTaskID="True"
+								ShowScheduleXml="False"
+								TemplateModifierFile=""
+								Width="100"
+								WidthScale="%"
+							/>
+							<LineBreak/>
+							<Division
+								Condition="@Request.Mode~ = 1"
+								ID="divAdd"
+								>
+								<Label
+									Caption="Save"
+									Class="ThemeLinkButtonSmall"
+									ID="lblSave"
+									>
+									<Action
+										ID="actSave"
+										Process="SchedulingTasks"
+										TaskID="SaveScheduledTask"
+										Type="Process"
+										Validate="True"
+										>
+										<LinkParams
+											TaskID="0"
+										/>
+									</Action>
+								</Label>
+							</Division>
+							<Division
+								Condition="@Request.Mode~ = 2"
+								ID="divEdit"
+								>
+								<Label
+									Caption="Save"
+									Class="ThemeLinkButtonSmall"
+									ID="lblSave"
+									>
+									<Action
+										ID="actSave"
+										Process="SchedulingTasks"
+										TaskID="SaveScheduledTask"
+										Type="Process"
+										Validate="True"
+										>
+										<LinkParams
+											TaskID="@Request.TaskID~"
+										/>
+									</Action>
+								</Label>
+							</Division>
+							<Spaces
+								Size="3"
+							/>
+							<Label
+								Caption="Cancel"
+								Class="ThemeLinkButtonSmall"
+								ID="lblCancel"
+								>
+								<Action
+									ElementID="divOuterContainer"
+									ID="actRefresh"
+									RequestForwarding="True"
+									Type="RefreshElement"
+									>
+									<LinkParams
+										Mode="0"
+									/>
+								</Action>
+							</Label>
+						</Column>
+						<Column
+							Class="ThemeAlignTopLeft"
+							>
+							<Spaces
+								Size="5"
+							/>
+							<Label
+								Caption="Editing Additional Parameters
+&lt;ol&gt;
+&lt;li&gt;Press &quot;&lt;font color=&quot;blue&quot;&gt;+&lt;/font&gt;&quot; (plus) next to &quot;Additional Parameters&quot;&lt;/li&gt;
+&lt;li&gt;Enter a name for the parameter&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;email&lt;/b&gt; - for adding e-mail address.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;camid&lt;/b&gt; - for adding campaign ID.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;li&gt;Enter parameter value&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &quot; , &quot; (comma) for adding multiple addresses or campaigns&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/ol&gt;
+
+"
+								Format="HTML"
+							/>
+						</Column>
+					</Row>
+				</Rows>
+			</Division>
+			<Division
+				Condition="@Request.Mode~ = 0"
+				ID="divAddButton"
+				>
+				<Label
+					Caption=" Add new task... "
+					Class="ThemeLinkButtonSmall"
+					ID="lblAddNewButton"
+					>
+					<Action
+						ID="actref"
+						Type="Report"
+						>
+						<Target
+							Type="Report"
+						/>
+						<LinkParams
+							Mode="1"
+						/>
+					</Action>
+				</Label>
+			</Division>
+			<LineBreak
+				LineCount="2"
+			/>
+			<DataTable
+				AjaxPaging="True"
+				AltRowClass="ThemeAlternatingRow TD"
+				Class="fontA10, bgWhite"
+				ID="dtScheduledTasks"
+				RememberSort="True"
+				Width="900"
+				WidthScale="px"
+				>
+				<DataLayer
+					ConnectionID="connScheduler"
+					ID="dlListScheduledTasks"
+					Type="Scheduler"
+					>
+					<CalculatedColumn
+						Formula="IIF(&quot;@Data.IsDisabled~&quot; = &quot;False&quot;, 1, 0)"
+						ID="IsDisabledBit"
+					/>
+					<CalculatedColumn
+						Formula="IIF(&quot;@Data.IsDisabled~&quot; = &quot;False&quot;, &quot;1&quot;, &quot;0&quot;)"
+						ID="IsEnabled"
+					/>
+					<CalculatedColumn
+						Formula="IIF(&quot;@Data.IsRunning~&quot; = &quot;True&quot;, 1, 0)"
+						ID="IsRunningBit"
+					/>
+					<CalculatedColumn
+						Formula="IIF(&quot;@Data.WasSuccessfulLastRun~&quot; = &quot;True&quot;, 1, 0)"
+						ID="WasSuccessfulLastRunBit"
+					/>
+					<CalculatedColumn
+						Formula="IIF(&quot;@Data.WasSuccessfulLastRun~&quot; = &quot;True&quot;, &quot;Succeeded&quot;, &quot;Failed&quot;)"
+						ID="LastRunStatus"
+					/>
+					<SortFilter
+						DataType="Number"
+						SortColumn="TaskID"
+						SortSequence="Ascending"
+					/>
+					<DataLayerLink
+						ID="dllListScheduledTasks"
+					/>
+				</DataLayer>
+				<DataTableColumn
+					Class="ThemeAlignCenter"
+					Header="Enabled"
+					ID="colEnabled"
+					Tooltip="Enabled"
+					Width="50"
+					WidthScale="px"
+					>
+					<Division
+						Condition="&quot;@Data.IsEnabled~&quot; = &quot;1&quot;"
+						ID="divEnabled"
+						>
+						<Image
+							Caption="Checkmark.gif"
+						/>
+					</Division>
+					<DataColumnSort
+						DataColumn="IsEnabled"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Class="ThemeAlignLeft"
+					Header="Task Name"
+					ID="colTaskName"
+					>
+					<Label
+						Caption="=IIF(Len(&quot;@Data.TaskName~&quot;) &gt; 40, Left(&quot;@Data.TaskName~&quot;, 40) &amp; &quot;...&quot;, &quot;@Data.TaskName~&quot;)"
+						ID="lblTaskName"
+						>
+						<Action
+							ElementID="miTaskDetail"
+							ID="actDetail"
+							Type="ShowElement"
+						/>
+					</Label>
+					<DataColumnSort
+						DataColumn="TaskName"
+					/>
+				</DataTableColumn>
+				<MoreInfoRow
+					ID="miTaskDetail"
+					ShowModes="None"
+					>
+					<SubDataTable
+						ID="sdtTaskDetail"
+						Width="100"
+						WidthScale="%"
+						>
+						<SubDataLayer
+							ID="sdlTaskDetail"
+							>
+							<DataLayer
+								ID="dlTaskDetail"
+								LinkedDataLayerID="dllListScheduledTasks"
+								Type="Linked"
+							/>
+							<SubDataLayerRelationColumn
+								ChildColumn="TaskID"
+								ID="sdlrcTaskID"
+								ParentColumn="TaskID"
+							/>
+						</SubDataLayer>
+						<DataTableColumn
+							Class="ThemeAlignLeft"
+							ID="colDescription"
+							>
+							<LineBreak/>
+							<Spaces
+								Size="4"
+							/>
+							<Label
+								Caption="Process Task ID: @Data.TaskID~"
+								ID="lblTaskID"
+							/>
+							<LineBreak/>
+							<Spaces
+								Size="4"
+							/>
+							<Label
+								Caption="Process Task: @Data.ProcessUrl~/rdProcess.aspx?rdProcess=@Data.ProcessFile~&amp;rdTaskID=@Data.ProcessTaskID~"
+								ID="lblWebAppURL"
+							/>
+							<LineBreak/>
+							<Spaces
+								Size="4"
+							/>
+							<Label
+								Caption="Scheduled: @Data.ScheduleDescription~"
+								ID="lblDescription"
+							/>
+							<LineBreak/>
+							<Spaces
+								Size="4"
+							/>
+							<Label
+								Caption="@Data.ProcessParams~"
+								ID="lblXML"
+							/>
+							<Division
+								Condition="&quot;@Data.RunAs~&quot; &lt;&gt; &quot;&quot;"
+								ID="divRunAs"
+								>
+								<LineBreak/>
+								<Spaces
+									Size="4"
+								/>
+								<Label
+									Caption="To be run as: @Data.RunAs~"
+									ID="lblRunAs"
+								/>
+							</Division>
+						</DataTableColumn>
+					</SubDataTable>
+				</MoreInfoRow>
+				<DataTableColumn
+					Class="ThemeAlignCenter"
+					Header="Running"
+					ID="colRunnig"
+					>
+					<Label
+						Caption="@Data.IsRunningBit~"
+						Format="Yes/No"
+						ID="lblRunning"
+					/>
+					<DataColumnSort
+						DataColumn="IsEnabled"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Class="ThemeAlignCenter, alignMiddle"
+					Header="Last Run"
+					ID="colLastRun"
+					>
+					<Division
+						Condition="&quot;@Data.TimeLastRun~&quot; = &quot;&quot;"
+						ID="divIfNeverRun"
+						>
+						<Label
+							Caption="Never"
+							ID="lblNeverRun"
+						/>
+					</Division>
+					<Division
+						Condition="&quot;@Data.TimeLastRun~&quot; &lt;&gt; &quot;&quot;"
+						ID="divIfRun"
+						>
+						<Label
+							Caption="@Data.TimeLastRun~"
+							Format="dd MMM yyyy hh:mm tt"
+							ID="lblTimeLastRun"
+						/>
+						<Spaces
+							Size="3"
+						/>
+						<Division
+							Condition="@Data.WasSuccessfulLastRunBit~ = 1"
+							ID="divSuccess"
+							>
+							<Image
+								Caption="SuccessIcon.gif"
+								ID="imgSuccess"
+								Tooltip="Click for details"
+								>
+								<Action
+									FrameID="NewWindow"
+									ID="lnkLastRunResults"
+									Process="SchedulingTasks"
+									TaskID="FetchTaskResults"
+									Type="Process"
+									>
+									<LinkParams
+										TaskID="@Data.TaskID~"
+										TaskResults="@Data.TaskResults~"
+									/>
+								</Action>
+							</Image>
+						</Division>
+						<Division
+							Condition="@Data.WasSuccessfulLastRunBit~ = 0"
+							ID="divError"
+							>
+							<Image
+								Caption="WarningIcon.gif"
+								ID="imgError"
+								Tooltip="Click for details"
+								>
+								<Action
+									FrameID="NewWindow"
+									ID="lnkLastRunResults"
+									Process="SchedulingTasks"
+									TaskID="FetchTaskResults"
+									Type="Process"
+									>
+									<LinkParams
+										TaskID="@Data.TaskID~"
+										TaskResults="@Data.TaskResults~"
+									/>
+								</Action>
+							</Image>
+						</Division>
+					</Division>
+					<DataColumnSort
+						DataColumn="TimeNextRun"
+						DataType="Date"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Class="ThemeAlignCenter"
+					Header="Next Run"
+					ID="colNextRun"
+					>
+					<Label
+						Caption="@Data.TimeNextRun~"
+						Format="dd MMM yyyy hh:mm tt"
+						ID="lblTimeNextRun"
+					/>
+					<DataColumnSort
+						DataColumn="TimeNextRun"
+						DataType="Date"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Actions"
+					ID="colActions"
+					>
+					<Label
+						Caption="Run"
+						Class="ThemeLinkButtonSmall"
+						ID="lblRun"
+						Tooltip="Run this task now"
+						>
+						<Action
+							ConfirmMessage="Run the task &quot;@Data.TaskName~&quot; now?"
+							ID="actRunNow"
+							Process="SchedulingTasks"
+							TaskID="RunScheduledTask"
+							Type="Process"
+							>
+							<LinkParams
+								TaskID="@Data.TaskID~"
+							/>
+						</Action>
+					</Label>
+					<Spaces
+						Size="2"
+					/>
+					<Label
+						Caption="Edit"
+						Class="ThemeLinkButtonSmall"
+						ID="lblEdit"
+						Tooltip="Edit this task"
+						>
+						<Action
+							ID="actEditTask"
+							Type="Report"
+							>
+							<Target
+								Report="Scheduler.Management_Console"
+								Type="Report"
+							/>
+							<LinkParams
+								Mode="2"
+								TaskID="@Data.TaskID~"
+							/>
+						</Action>
+					</Label>
+					<Spaces
+						Size="2"
+					/>
+					<Label
+						Caption="Del"
+						Class="ThemeLinkButtonSmall"
+						ID="lblDelete"
+						Tooltip="Delete this task"
+						>
+						<Action
+							ConfirmMessage="Delete the task &quot;@Data.TaskName~&quot;?"
+							ID="actDeleteTask"
+							Process="SchedulingTasks"
+							TaskID="DeleteScheduledTask"
+							Type="Process"
+							>
+							<LinkParams
+								TaskID="@Data.TaskID~"
+							/>
+						</Action>
+					</Label>
+				</DataTableColumn>
+			</DataTable>
+			<Label
+				Caption="&lt;br/&gt; Click Task Name to show/hide scheduling details, click icon for Last Run details"
+				Class="ThemeTextSmall"
+				Format="HTML"
+				ID="lblInstr"
+			/>
+		</Division>
+	</Body>
+	<ReportFooter>
+		<Division
+			Class="PullRight"
+			HtmlDiv="True"
+			ID="divLgxVersion"
+			>
+			<Label
+				Caption="Engine: "
+			/>
+			<Label
+				ID="lblLgxVersion"
+			/>
+		</Division>
+		<IncludeScript
+			ID="inclGetLogiVersion"
+			IncludedScript="var lgxVersion = document.getElementById(&apos;lblLgxVersion&apos;);
+var metas = document.getElementsByTagName(&apos;meta&apos;);
+for (var x = 0, y = metas.length; x &lt; y; x++) {
+   if (metas[x].name.toLowerCase() == &apos;lgxver&apos;) {
+      lgxVersion.innerHTML = &apos;v&apos; + metas[x].content;
+  }
+}
+"
+		/>
+	</ReportFooter>
+	<ideTestParams
+		inpProcessFile=""
+		Mode=""
+		TaskID=""
+	/>
+</Report>

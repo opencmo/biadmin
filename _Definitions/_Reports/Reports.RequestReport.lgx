@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="Request Report"
+	ID="Reports.RequestReport"
+	>
+	<StyleSheet
+		ID="themeTransit"
+		StyleSheet="extraTheme.css"
+		Theme="Transit"
+	/>
+	<DefaultRequestParams
+		dateFrom="@Date.ThisMonthStart~"
+		dateTo="@Date.ThisMonthEnd~"
+		groupby="DATE(rrs.report_datetime),rrs.exchange_name,rrs.ssp_name"
+	/>
+	<ReportCenterItem
+		ReportCenterFolder="Metrics Reports"
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Request Report"
+				Class="ThemeHeaderLarger"
+			/>
+		</Division>
+		<HR/>
+	</ReportHeader>
+	<Body>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			ID="DatePickRRow"
+			>
+			<ResponsiveColumn
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="6"
+				ColspanSmallScreen="4"
+				>
+				<FieldsetBox
+					Caption="Filter by Date"
+					>
+					<IncludeSharedElement
+						DefinitionFile="SharedElements"
+						SharedElementID="DatePicker"
+					/>
+				</FieldsetBox>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			ID="GoupRRow"
+			>
+			<ResponsiveColumn
+				ColspanLargeScreen="5"
+				ColspanMediumScreen="5"
+				ColspanSmallScreen="4"
+				ID="GroupByRCol"
+				>
+				<FieldsetBox
+					Caption="Group by"
+					>
+					<InputCheckboxList
+						CheckboxListDropdown="True"
+						Class="ThemeAlignLeft"
+						DefaultValue="@Request.groupby~"
+						ID="groupby"
+						MultiSelect="True"
+						OptionCaptionColumn="Name"
+						OptionValueColumn="value"
+						>
+						<DataLayer
+							Type="Static"
+							>
+							<StaticDataRow
+								Name="Date"
+								value="DATE(rrs.report_datetime)"
+							/>
+							<StaticDataRow
+								Name="Hour"
+								value="HOUR(rrs.report_datetime)"
+							/>
+							<StaticDataRow
+								Name="Exchange"
+								value="rrs.exchange_name"
+							/>
+							<StaticDataRow
+								Name="SSP"
+								value="rrs.ssp_name"
+							/>
+						</DataLayer>
+					</InputCheckboxList>
+				</FieldsetBox>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<LineBreak/>
+		<DataTable
+			ID="dtRequest"
+			SortArrows="True"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="dlRequest"
+				Source="Select DATE(rrs.report_datetime) Date,
+  Time(rrs.report_datetime) Hour,
+  ifnull(rrs.exchange_name, &apos;- n/a -&apos;) Exchange,
+  ifnull(rrs.ssp_name, &apos;- n/a -&apos;) SSP,
+  SUM(rrs.request) request
+From report_request_summary rrs
+Where rrs.report_datetime between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+Group By @Request.groupby~
+Order By @Request.groupby~
+"
+				Type="SQL"
+			/>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;DATE(rrs.report_datetime)&apos;) &gt; -1"
+				Header="Date"
+				ID="colDate"
+				>
+				<Label
+					Caption="@Data.Date~"
+					Format="Short Date"
+					ID="lblDate"
+				/>
+				<DataColumnSort
+					DataColumn="Date"
+					DataType="Date"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;HOUR(rrs.report_datetime)&apos;)&gt;-1"
+				Header="Hour"
+				ID="colHour"
+				>
+				<Label
+					Caption="@Data.Hour~"
+					Format="Short Time"
+					ID="lblHour"
+				/>
+				<DataColumnSort
+					DataColumn="Hour"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rrs.exchange_name&apos;) &gt; -1"
+				Header="Exchange"
+				ID="colExchange"
+				>
+				<Label
+					Caption="@Data.Exchange~"
+					ID="lblExchange"
+				/>
+				<DataColumnSort
+					DataColumn="Exchange"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rrs.ssp_name&apos;) &gt; -1"
+				Header="SSP"
+				ID="colSSP"
+				>
+				<Label
+					Caption="@Data.SSP~"
+					ID="lblSSP"
+				/>
+				<DataColumnSort
+					DataColumn="SSP"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Request"
+				ID="colrequest"
+				>
+				<Label
+					Caption="@Data.request~"
+					Format="###,###,##0"
+					ID="lblrequest"
+				/>
+				<DataColumnSort
+					DataColumn="request"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="request"
+					Function="Sum"
+					ID="sumRequest"
+				/>
+			</DataTableColumn>
+			<SummaryRow
+				Caption="Total"
+			/>
+			<InteractivePaging
+				CaptionType="Image"
+				HideWhenOnePage="True"
+				Location="Both"
+				PageRowCount="100"
+				ShowPageNumber="True"
+			/>
+		</DataTable>
+	</Body>
+	<ReportFooter/>
+	<ideTestParams
+		dateFrom="2015-05-01"
+		dateTo="2015-05-08"
+		groupby="DATE(rrs.report_datetime),rrs.exchange_name,rrs.ssp_name"
+	/>
+</Report>

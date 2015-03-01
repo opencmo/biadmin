@@ -1,0 +1,297 @@
+.rdDashboard, .rdDashboard table
+{
+	font-size: 11px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.rdDashboard a:link,
+.rdDashboard a:visited,
+.rdDashboard a:active,
+.rdDashboard a:hover
+{
+	text-decoration:none;
+}
+
+.rdDashboardTabsMenu a:link,
+.rdDashboardPanelsMenu a:link
+{
+	text-decoration:none;
+	/*color: black;*/
+}
+
+.rdDashboard img {
+	border-style:none;
+}
+
+.rdDashboardPanelContainer
+{
+	background-repeat:repeat-x;
+	background-color: #ECECEC;
+	vertical-align: top;
+}
+
+.rdDashboardColumn
+{
+	vertical-align:top;
+	padding-left:5px;
+	padding-right:5px;
+	padding-bottom:0px;
+}
+.rdDashboardPanel
+{
+	border-style:solid;
+	border-color: #ccc;
+	border-width:1px;
+	background-color:white;
+	font-weight:normal;
+	/*overflow: hidden;*/
+}
+
+.rdDashboardPanel
+{
+    border-style:none;
+    border-width:0px;
+}
+
+.freeformPanelContainer .rdDashboardPanel {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 1;
+}
+
+.panelBody {
+	overflow: hidden;
+	padding: 0 5px;
+	margin: 0 0 10px;
+}
+
+td.rdDashboardTitle
+{
+	background-color: #f1f1f1;
+}
+.rdDashboardTitleCaption
+{
+	font-weight:bolder;
+}
+
+td.rdDashboardControl
+{
+	text-align:right;
+}
+
+.rdDashboardListAdded
+{
+	color:Gray;
+}
+
+.rdDashboardParams,
+td.rdDashboardParams
+{
+	background-color: #ececec;
+}
+
+td.rdDashboardParamsSave
+{
+	vertical-align:bottom;
+	text-align:right;
+	background-color: #ececec;
+	padding-right: 3px;
+	padding-left: 3px;
+}
+
+.rdDashboardMenu
+{
+	padding:0;
+}
+
+.rdDashboardCommand
+{
+	font-weight: normal;
+	color: #555;
+	text-decoration: none;
+	background-color: #f1f1f1;
+	border: 1px solid #bebebe;
+	margin-left: 3px;
+	padding: 2px 3px;
+	line-height: 24px;
+	white-space: nowrap;
+}
+.rdDashboardCommand a
+{
+	color:#555555;
+}
+
+.rdDashboardDropZone
+{
+	height:15px;
+}
+.rdDashboardDropZoneActive
+{
+	background-color: #dcdcdc;
+	height:15px;
+}
+
+.rdDashboardTabs
+{
+	font-weight:normal;
+}
+
+.rdDashboardDropTabActive
+{
+	font-size:larger;
+	font-weight:bolder;
+}
+
+td.rdDashboardPanelDescription
+{
+	vertical-align:top;
+}
+
+td.rdDashboardPanelImageColumn
+{
+	width:200px;
+}
+
+.rdDashboardHidden
+{
+	display:none;
+}
+
+/* Tabs */
+.yui-nav a {
+	color: #555555;
+}
+
+.yui-nav a:link
+{
+	text-decoration: none;
+	background-image: url(rdTabBg.png);
+}
+
+.yui-nav a:hover {
+	background-image: url(rdTabBgOn.png);
+}
+
+.yui-navset .yui-nav .selected a {
+	background-image: url(rdTabBgOn.png);
+}
+
+.yui-navset .yui-nav li {
+	border-top: 0px solid #8EC4DC;
+	border-right: 0px solid #8EC4DC;
+	background-color: transparent;
+}
+
+/* Hide tab background for the "new tab" tab */
+.yui-nav li a.hide-tab,
+.yui-nav li a:hover.hide-tab {
+	background-color: transparent !important;
+	border: 0px solid transparent !important;
+	background-image: none !important;
+}
+.yui-nav .hide-tab em {
+	padding: '0px 0px 1px 1px';
+}
+
+
+.rdAgKPIColor1{
+	background-color:#A61C00 !important;
+	cursor:pointer;
+}
+.rdAgKPIColor2{
+	background-color:#CC0000 !important;
+	cursor:pointer;
+}
+.rdAgKPIColor3{
+	background-color:#E69138 !important;
+	cursor:pointer;
+}
+.rdAgKPIColor4{
+	background-color:#F1C232 !important;
+	cursor:pointer;
+}
+.rdAgKPIColor5{
+	background-color:#6AA84F !important;
+	cursor:pointer;
+}
+.rdAgKPIColor6{
+	background-color:#45818E !important;
+	cursor:pointer;
+}
+.rdAgKPIColor7{
+	background-color:#3C78D8 !important;
+	cursor:pointer;
+}
+.rdAgKPIColor8{
+	background-color:#674EA7 !important;
+	cursor:pointer;
+}
+.rdAgKPIColor9{
+	background-color:#A64D79 !important;
+	cursor:pointer;
+}
+
+.rdPointerCursor
+{
+	cursor: pointer;
+}
+
+#rdTabs .yui3-dd-drop.selected a {
+	font-weight: bold;
+	cursor: move;
+	padding-right: 16px;
+}
+
+#rdSettingsCog a.rdThemePopupMenu,
+#rdDashboardControl a.rdThemePopupMenu {
+	background-color: inherit;
+}
+
+#PopupPanelContent {
+	margin: 10px;
+}
+
+.rdDashboardParams {
+	padding: 10px;
+}
+
+#PopupPanelContent td.rdDashboardControl {
+	padding-top: 10px;
+}
+
+.highcharts-tooltip table.rdquicktip-table {
+	background-color: inherit;
+}
+
+.rdPopupMenu .yuimenuitemlabel {
+	font-size: 100%;
+}
+
+/* Icons */
+
+/*img#rdTabSettingsCog,
+img#rdAddNewTabCog,
+#rdDashboardControl img {
+	height: 16px;
+	width: 16px;
+}*/
+
+/* Visual Gallery */
+
+.rdNewAnalysisText {
+	font-size: 1.25em;
+}
+.rdPopupContent a span.rdNewAnalysisLink {
+	color: #0000ee;
+}
+.rdPopupContent a:hover span.rdNewAnalysisLink {
+	color: #3366ff;
+}
+
+.rdAddPanelFind {
+	background-color: #ECECEC;
+	font-size: 1.5em;
+}
+.rdAddPanelFind span{
+	margin-left: 5px;
+}

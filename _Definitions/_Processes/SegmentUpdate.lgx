@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Process
+	ID="SegmentUpdate"
+	>
+	<Task
+		ID="updateTask"
+		>
+		<Procedure
+			ConnectionID="OpenDSP.JDBC"
+			ID="updSql"
+			SqlCommand="UPDATE opendsp.ld_first_party_audience_segment 
+SET name = &apos;@Request.inpSegm~&apos;,
+expiry_days = @Request.inpExpiry~,
+description = &apos;@Request.inpDesc~&apos;
+WHERE first_party_audience_segment_id = @Request.fpasID~;"
+			Type="SQL"
+		/>
+		<Response
+			Type="Report"
+			>
+			<Target
+				Report="SegmentUpd"
+				Type="Report"
+			/>
+			<LinkParams
+				adver="@Request.adver~"
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="insertTask"
+		>
+		<Procedure
+			ConnectionID="OpenDSP.JDBC"
+			ID="insrSql"
+			SqlCommand="INSERT INTO opendsp.ld_first_party_audience_segment
+(name,advertiser_id,description,expiry_days)
+VALUES
+(&apos;@Request.newSegName1~&apos;,
+@Request.adver~,
+&apos;@Request.itaDescript1~&apos;,
+@Request.newExpiration1~
+);
+
+SELECT LAST_INSERT_ID() INTO @lastSegment;
+
+INSERT INTO ld_segment_rule_data_collection (data_collection_id,first_party_audience_segment_id) 
+VALUES (@Request.DataColl~, @lastSegment);"
+			Type="SQL"
+		/>
+		<Response
+			Type="Report"
+			>
+			<Target
+				Report="SegmentUpd"
+				Type="Report"
+			/>
+			<LinkParams
+				adver="@Request.adver~"
+			/>
+		</Response>
+	</Task>
+	<ideTestParams
+		adver="1"
+		DataColl=""
+		fpasID=""
+		inpDesc=""
+		inpExpiry=""
+		inpSegm=""
+		itaDescript1=""
+		newExpiration1=""
+		newSegName1=""
+		rdTaskID="updateTask"
+	/>
+</Process>

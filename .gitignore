@@ -1,0 +1,11 @@
+*~
+#*#
+*.lic
+TeamDevelopment/
+_rdLivePreview*.lgx
+rdDataCache/
+rdDownload/
+rdErrorLog/
+LogiBackups/
+Temp/
+_Definitions/_Settings.lgx

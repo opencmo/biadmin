@@ -1,0 +1,194 @@
+<SharedElement ID="AddPanelsGallery">
+	<PopupPanel ID="ppAddPanels" Caption="Add Panels" PopupModal="True" Draggable="True" PopupPanelLocation="Center" Width="75" WidthScale="%" >
+		<Rows TableBorder="0" CellSpacing="2" Width="100" WidthScale="%">
+			<Row ID="rdDashboardList">
+				<Column Class="rdDashboard">
+					<Rows TableBorder="0" CellSpacing="2" Width="100" WidthScale="%">
+						<Row ID="rowPanelList">
+							<Column>
+								<Rows Class="rdDashboardPanel" Width="100" WidthScale="%" ID="rdDashboardListTable">
+									<Row>
+										<Column>
+											<Division ID="divAddPanelsSearch" HtmlDiv="True" Class="rdAddPanelSearch">
+												<Label Caption="Sort By " ID="lblAddPanelsSort" Class="rdDashboardTitleCaption"/>
+												<InputSelectList ID="rdInputAddPanelSort" OptionValueColumn="SortColumn" OptionCaptionColumn="SortDescription">
+													<DataLayer Type="Static">
+														<StaticDataRow SortColumn="Caption" SortDirection="Ascending" SortDescription="Title" />
+														<StaticDataRow SortColumn="SaveTime" SortDirection="Descending" SortDescription="Newest" />
+														<StaticDataRow SortColumn="SaveTime-" SortDirection="Ascending" SortDescription="Oldest" />
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="RefreshElement" ElementID="dtPanelList" ID="actAddPanelSort" >
+															<LinkParams rdRefreshDashboard="True" rdRefreshAddPanelsList="True" />
+														</Action>
+													</EventHandler>
+												</InputSelectList>
+
+												<Label Caption="Find " ID="lblAddPanelsFind" Class="rdDashboardTitleCaption"/>
+												<InputText ID="rdInputAddPanelFind" Placeholder="Type to search...">
+													<EventHandler DhtmlEvent="onkeyup" >
+														<Action Type="RefreshElement"  ElementID="rdAddPanelsList" ID="actAddPanelFind" >
+															<LinkParams  EnterKeyDefault="True" rdRefreshDashboard="True" rdRefreshAddPanelsList="True"/>
+														</Action>
+													</EventHandler>
+												</InputText>
+											</Division>
+
+											<Division HtmlDiv="True" Class="rdScrollableList" ID="rdAddPanelsList">
+												<Division Condition="0@Data.PanelListRowCount~ == 0">
+													<LineBreak LineCount="2"/>
+													<Label Caption="No panels." />
+												</Division>
+												<DataMultiColumnList ID="dtPanelList" CellSpacing="15" Width="100" WidthScale="%" MultiListColumns="1" MultiListDirection="Across" Layout="Fixed">
+													<DataLayer Type="Static" ID="rdPanelListDataLayer">
+														<CompareFilter DataColumn="Caption" ID="compareIsFind" CompareType="Contains" DataType="Text" CaseSensitive="False" CompareValue="@Request.rdInputAddPanelFind~" IncludeCondition="&quot;@Request.rdInputAddPanelFind~&quot;.length &gt; 0" />
+														<SwitchColumn DataColumn="SaveTime" ID="SaveTime">
+															<SwitchIf NewValue="1999-01-01" />
+														</SwitchColumn>
+														<AggregateColumn AggregateFunction="Count" AggregateColumn="Caption" ID="PanelListRowCount" />
+														<SortFilter ID="rdPanelListSortFilter" SortColumn="Caption"/>
+													</DataLayer>
+													<Rows WidthScale="%" Width="100">
+														<Row>
+															<Column ID="rdDashboardPanelImageColumn" Class="rdDashboardPanelImageColumn" >
+																<Division ID="divImage" Condition="@Data.HasImage~">
+																	<Image Caption="=&quot;@Data.Image~&quot;" Class="rdDashboardPanelImage"/>
+																</Division>
+															</Column>
+															<Column Class="rdDashboardPanelDescription" >
+																<removedInputCheckbox CheckedValue="True" DefaultValue="@Data.PanelAdded~" ID="chkAddPanel">
+																	<EventHandler DhtmlEvent="onClick">
+																		<Action Type="Link" ID="actionCheckPanel">
+																			<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.set('rdAddedRemovedPanels', LogiXML.Dashboard.pageDashboard..get('rdAddedRemovedPanels') + &quot;,@Data.PanelID~&quot;);"/>
+																		</Action>
+																	</EventHandler>
+																</removedInputCheckbox>
+																<Label Caption="@Data.Caption~" ID="lblCaption" Class="rdDashboardTitleCaption" />
+																<LineBreak/>
+																<Division Condition="&quot;@Data.SaveTime~&quot; != &quot;1999-01-01&quot;">
+																	<Label Caption="Created: " ID="lblSaveTimeCaption" />
+																	<Label Caption="@Data.SaveTime~" ID="lblSaveDate" Format="Short Date" />
+																	<Spaces />
+																	<Label Caption="@Data.SaveTime~" ID="lblSaveTime" Format="Short Time" />
+																	<LineBreak/>
+																</Division>
+																<Division ID="divDescription" Condition="&quot;@Data!Js.Description~&quot;.length &lt;&gt; 0">
+																	<Label Caption="@Data.Description~" ID="lblDescription" Class="rdDashboardText"/>
+																	<LineBreak />
+																</Division>
+																<LineBreak />
+																<Label Caption="Add" ID="lblAddPanel" Class="rdDashboardCommand">
+																	<ConditionalClass Condition="@Data.PanelInstanceCnt~ &gt; 0 and &quot;@Data.PanelMultiInstance~&quot; = &quot;False&quot;" Class="rdDashboardHidden" />
+																	<Action Type="Link" ID="actionAddPanel">
+																		<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdAddDashboardPanel('@Data.PanelID~','@Function.RowNumber~');"/>
+																	</Action>
+																</Label>
+																<Division ID="divCount" Class="rdDashboardHidden">
+																	<ConditionalClass Condition="@Data.PanelInstanceCnt~ &lt;&gt; 0 and &quot;@Data.PanelMultiInstance~&quot; = &quot;True&quot;" Class="" />
+																	<Spaces Size="2" />
+																	<Label Caption="@Data.PanelInstanceCnt~" ID="lblCount" />
+																</Division>
+																<Division ID="divAdded">
+																	<ConditionalClass Condition="@Data.PanelInstanceCnt~ == 0" Class="rdDashboardHidden" />
+																	<Label Caption=" Added" ID="lblCountLabel" />
+																	<Label Caption=" to this tab." ID="lblCountLabelTab" />
+																	<InputHidden ID="hiddenMultiInstance" DefaultValue="@Data.PanelMultiInstance~"/>
+																</Division>
+																<Spaces Size="5"/>
+																<Label Caption="Delete from List" ID="lblDeletePanel" Class="rdDashboardCommand">
+																	<ConditionalClass Condition="&quot;@Data.rdCustomDashboardPanel~&quot; = &quot;False&quot;" Class="rdDashboardHidden" />
+																	<Action Type="Javascript" ConfirmMessage="Delete?  Are you sure?"
+																			Javascript="rdRemoveBookmark('np', document.getElementById('rdDashboardDefinition').value, '@Data.BookmarksCollection~', '@Data.BookmarkId~');
+						LogiXML.Dashboard.pageDashboard.rdDeleteCustomDashboardPanel('@Data.PanelID~','@Function.RowNumber~');"
+																			ID="actionDeletePanel" />
+																</Label>
+															</Column>
+														</Row>
+													</Rows>
+													<HR />
+												</DataMultiColumnList>
+											</Division>
+										</Column>
+										<Column>
+											<Division HtmlDiv="True" Class="rdScrollableList" ID="rdAddPanelsList">
+												<Note Note="This Column element is specific to Mobile Dashboards, almost similar to the Column element above with a few changes. The one above gets replaced with this one in Dashboard.vb code." />
+												<DataMultiColumnList ID="dtMobilePanelList" CellSpacing="15" Width="100" WidthScale="%" MultiListColumns="1" MultiListDirection="Across" Layout="Fixed">
+													<DataLayer Type="Static" ID="rdPanelListDataLayer">
+														<SortFilter SortColumn="Caption"/>
+													</DataLayer>
+													<Rows WidthScale="%" Width="100">
+														<Row>
+															<Column Width="99" WidthScale="%">
+																<Label Caption="@Data.Caption~" ID="lblCaption" Class="rdDashboardTitleCaption">
+																</Label>
+																<LineBreak/>
+																<Label Caption="@Data.Description~" ID="lblDescription" Class="rdDashboardText"/>
+																<LineBreak LineCount="2"/>
+															</Column>
+															<Column ID="rdDashboardPanelImageColumn" RowSpan="2" Width="1" WidthScale="%">
+																<Division ID="divImage" Condition="@Data.HasImage~">
+																	<Image Caption="=&quot;@Data.Image~&quot;" Class="rdDashboardPanelImage" Width="66" WidthScale="%"/>
+																</Division>
+															</Column>
+														</Row>
+														<Row>
+															<Column Class="rdDashboardPanelDescription" >
+																<removedInputCheckbox CheckedValue="True" DefaultValue="@Data.PanelAdded~" ID="chkAddPanel">
+																	<EventHandler DhtmlEvent="onClick">
+																		<Action Type="Link" ID="actionCheckPanel">
+																			<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdAddedRemovedPanels = rdAddedRemovedPanels + &quot;,@Data.PanelID~&quot;;"/>
+																		</Action>
+																	</EventHandler>
+																</removedInputCheckbox>
+																<Label Caption="Add Now" ID="lblAddPanel" Class="rdDashboardCommand">
+																	<ConditionalClass Condition="@Data.PanelInstanceCnt~ &gt; 0 and &quot;@Data.PanelMultiInstance~&quot; = &quot;False&quot;" Class="rdDashboardHidden" />
+																	<Action Type="Link" ID="actionAddPanel">
+																		<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdAddDashboardPanel('@Data.PanelID~','@Function.RowNumber~');"/>
+																	</Action>
+																</Label>
+																<Division ID="divCount" Class="rdDashboardHidden">
+																	<ConditionalClass Condition="@Data.PanelInstanceCnt~ &lt;&gt; 0 and &quot;@Data.PanelMultiInstance~&quot; = &quot;True&quot;" Class="" />
+																	<LineBreak LineCount="2" />
+																	<Label Caption="@Data.PanelInstanceCnt~" ID="lblCount" />
+																</Division>
+																<Division ID="divAdded" Class="rdDashboardHidden">
+																	<ConditionalClass Condition="@Data.PanelInstanceCnt~ &lt;&gt; 0" Class="" />
+																	<Label Caption=" Added" ID="lblCountLabel" />
+																	<Label Caption=" to this tab." ID="lblCountLabelTab" />
+																	<InputHidden ID="hiddenMultiInstance" DefaultValue="@Data.PanelMultiInstance~"/>
+																</Division>
+																<Division ID="divDeletePanel" >
+																	<ConditionalClass Condition="&quot;@Data.rdCustomDashboardPanel~&quot; = &quot;False&quot;" Class="rdDashboardHidden" />
+																	<LineBreak LineCount="2" />
+																	<Label Caption="Delete from List" ID="lblDeletePanel" Class="rdDashboardCommand">
+																		<Action Type="Link" ID="actionDeletePanel" ConfirmMessage="Delete?  Are you sure?">
+																			<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdDeleteCustomDashboardPanel('@Data.PanelID~','@Function.RowNumber~');"/>
+																		</Action>
+																	</Label>
+																</Division>
+															</Column>
+														</Row>
+													</Rows>
+													<HR />
+												</DataMultiColumnList>
+											</Division>
+										</Column>
+									</Row>
+								</Rows>
+							</Column>
+						</Row>
+					</Rows>
+					<Rows Width="100" WidthScale="%">
+						<Row ID="rowButtonList">
+							<Column Width="100" WidthScale="%" Class="rdDashboardControl" ID="ppAddPanelsDone">
+								<Label Caption="Done" Class="rdDashboardCommand rdDashboardControl"  ID="ppDoneButton">
+									<Action Type="Javascript" ID="actAddDashboardPanels" Javascript="LogiXML.Dashboard.pageDashboard.rdAddDashboardPanels();" />
+								</Label>
+							</Column>
+						</Row>
+					</Rows>
+				</Column>
+			</Row>
+		</Rows>
+	</PopupPanel>
+</SharedElement>

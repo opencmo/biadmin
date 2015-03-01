@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Action Type="ShowElement" ElementID="" ID="showSharing" />
+  <PopupPanel ID="popupSharing" PopupModal="True" Caption="" Draggable="True" rdNoElementShowHistory="True" PopupPanelLocation="Center" Class="ThemeAlignLeft" CloseButtonClass="ThemeHidden" CloseButtonCaption="">
+    <IncludeFrame ID="frameShareFolder" FrameBorder="False" Scrolling="False" Width="550" WidthScale="px">
+      <Target Type="IncludeFrameReport" Report="rdDownloadLink" />
+      <LinkParams rdBookmarkCollection="" rdFolderID="" rdBookmarkID="" rdPopupID="" rdSharingCollectionColumn="" />
+    </IncludeFrame>
+
+    <LineBreak LineCount="2" />
+    <Division HtmlDiv="True" Width="100" WidthScale="%" Class="ThemeAlignRight">
+    <Label ID="lblHidePopupPanel" Caption="Close" Class="ThemeLinkButton ThemeAlignBottomRight">
+      <Action Type="RefreshElement" ElementID="" ID="actClosePopup" FeedbackHideElementID="popupSharing" >
+        <LinkParams rdDontUndoFeedback="True" />
+      </Action>
+    </Label>
+    </Division>
+    <LineBreak />   
+  </PopupPanel>
+</Root>

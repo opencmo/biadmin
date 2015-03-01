@@ -1,0 +1,126 @@
+IMG
+{
+	border:0;
+}
+IMG.rdDataCalendarImage
+{
+	padding-bottom: 3px;
+    padding-left: 3px;
+    vertical-align: middle;
+}
+.rdDataCalendar
+{
+	font-size: 11px;
+	font-family: arial, sans-serif;
+	background-color: #CCCCCC;
+	text-decoration:none;
+}
+.rdDataCalendar TABLE
+{
+	font-size: 11px;
+	font-family: arial, sans-serif;
+	text-decoration:none;
+}
+
+.rdDataCalendarCaption
+{
+	text-align:center;
+	background-color:#F8F8F8;
+	font-weight:bold;
+	white-space:nowrap;
+	color:#555555;
+}
+
+.rdDataCalendarWeekdayCaption
+{
+	text-align:center;
+	background-color:#ECECEC;
+	font-weight:bold;
+	color:#555555;
+}
+
+.rdDataCalendarDayCaption
+{
+	font-weight:bold;
+}
+
+.rdDataCalendarDay
+{
+	vertical-align:top;
+	background-color:#F8F8F8;
+	text-decoration:none;
+	width:22px;
+	padding:3px;
+	cursor: pointer;
+}
+
+.rdDataCalendarToday
+{
+	background-color:#E8E8E8;
+	cursor: pointer;
+}
+
+.rdDataCalendarDate
+{
+}
+
+
+.rdDataCalendarDayOutsideMonth
+{
+	background-color:#F0F0F0;
+	height:24px;
+}
+
+.rdDataCalendarRows
+{
+	width:100%;
+}
+
+.rdDataCalendarPagingLabel
+{
+	text-decoration:none;
+}
+
+.rdDataCalendarDayLabel
+{
+	text-decoration:none;
+	text-align:center;
+	font-size: 11px;
+	font-family: arial, sans-serif;
+}
+
+.rdDataCalendarDayLabelHighlight
+{
+	background-color:#D8D8D8;
+	/*padding:-5px;	//#13600.
+	border-width:-5px;*/
+	padding:3px;
+	width:22px;
+	vertical-align:top;
+	cursor: pointer;
+}
+
+
+.rdDataCalendarDropdown
+{
+	background-color:#FDFDFD;
+	font-size: 11px;
+	font-family: arial, sans-serif;
+	color:#555555;
+}
+
+.rdDataCalendarPopUp
+{
+	font-size: 11px;
+	font-family: arial, sans-serif;
+	white-space:nowrap;
+	color:#555555;
+}
+ 
+.rdHidden
+{
+	 display:none;
+}
+select.rdDataCalendarDropdown{
+	margin: 1px;
+}

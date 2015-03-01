@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	ID="Scheduler.e_reps.emRequstRep"
+	>
+	<Body>
+		<DataTable
+			ID="dtRequest"
+			SortArrows="True"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="dlRequest"
+				Source="Select DATE(rrs.report_datetime) Date,
+  Time(rrs.report_datetime) Hour,
+  ifnull(rrs.exchange_name, &apos;- n/a -&apos;) Exchange,
+  ifnull(rrs.ssp_name, &apos;- n/a -&apos;) SSP,
+  SUM(rrs.request) request
+From report_request_summary rrs
+Where rrs.report_datetime between &apos;2016-01-01&apos; and &apos;2016-01-10&apos;
+Group By DATE(rrs.report_datetime),rrs.exchange_name,rrs.ssp_name
+Order By DATE(rrs.report_datetime),rrs.exchange_name,rrs.ssp_name
+"
+				Type="SQL"
+			/>
+			<DataTableColumn
+				Header="Date"
+				ID="colDate"
+				>
+				<Label
+					Caption="@Data.Date~"
+					Format="Short Date"
+					ID="lblDate"
+				/>
+				<DataColumnSort
+					DataColumn="Date"
+					DataType="Date"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Hour"
+				ID="colHour"
+				>
+				<Label
+					Caption="@Data.Hour~"
+					Format="Short Time"
+					ID="lblHour"
+				/>
+				<DataColumnSort
+					DataColumn="Hour"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Exchange"
+				ID="colExchange"
+				>
+				<Label
+					Caption="@Data.Exchange~"
+					ID="lblExchange"
+				/>
+				<DataColumnSort
+					DataColumn="Exchange"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="SSP"
+				ID="colSSP"
+				>
+				<Label
+					Caption="@Data.SSP~"
+					ID="lblSSP"
+				/>
+				<DataColumnSort
+					DataColumn="SSP"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Request"
+				ID="colrequest"
+				>
+				<Label
+					Caption="@Data.request~"
+					Format="###,###,##0"
+					ID="lblrequest"
+				/>
+				<DataColumnSort
+					DataColumn="request"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="request"
+					Function="Sum"
+					ID="sumRequest"
+				/>
+			</DataTableColumn>
+			<SummaryRow
+				Caption="Total"
+			/>
+		</DataTable>
+	</Body>
+	<ideTestParams/>
+</Report>

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="ReportAuthorDev.Templates.ColorPickerEditorTemplate" SavedBy="AGILEENGINE-PAV\NewUser" SavedAt="8/28/2014 1:33:44 PM" EngineVersion="8.2.26">
+  <StyleSheet />
+  <Body>
+    <Division ID="ColorPickerWraper_rdElementID">
+      <InputHidden ID="chosenColor_rdElementID" DefaultValue="" />
+      <PopupPanel ID="ppColors_rdElementID">
+        <Rows>
+          <Row>
+            <Column Class="rdAgKPIColor1" ID="colColor1">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor1" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClickColor" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+            <Column Class="rdAgKPIColor2" ID="colColor2">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor2" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+            <Column Class="rdAgKPIColor3" ID="colColor3">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor3" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+            <Column Class="rdAgKPIColor3" ID="colColor10">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor10" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+          </Row>
+          <Row>
+            <Column Class="rdAgKPIColor4" ID="colColor4">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor4" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClickColor" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+            <Column Class="rdAgKPIColor5" ID="colColor5">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor5" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+            <Column Class="rdAgKPIColor6" ID="colColor6">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor6" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+            <Column Class="rdAgKPIColor6" ID="colColor11">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor11" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+          </Row>
+          <Row>
+            <Column Class="rdAgKPIColor7" ID="colColor7">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor7" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClickColor" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+            <Column Class="rdAgKPIColor8" ID="colColor8">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor8" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+            <Column Class="rdAgKPIColor9" ID="colColor9">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor9" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+            <Column Class="rdAgKPIColor9" ID="colColor12">
+              <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor12" BorderThickness="0" />
+              <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+              </EventHandler>
+            </Column>
+          </Row>
+        </Rows>
+      </PopupPanel>
+      <Rows>
+        <Row>
+          <Column>
+            <Rectangle ID="rectColor_rdElementID" Height="10" Width="10" BorderThickness="0" BackgroundColor="#6AA84F" />
+          </Column>
+          <Column>
+            <Image Caption="rdTemplate/rdAnalysisGrid/ColorPicker.png" ID="colorPicker_rdElementID" Tooltip="Pick Color.">
+              <EventHandler DhtmlEvent="onclick">
+                <Action Type="Javascript" ID="actClickColor" Javascript="ShowElement(this.id,'ppColors_rdElementID','Toggle'); GetColorPicker('colorPickerValue_rdElementID', this);" />
+              </EventHandler>
+            </Image>
+          </Column>
+        </Row>
+      </Rows>
+    </Division>
+    <IncludeScriptFile IncludedScriptFile="../rdTemplate/rdReportAuthor/rdRaScript.js" ID="rdrascript" />
+    <IncludeScript ID="includerdRaStyle" IncludedScript=" document.write('&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;rdTemplate/rdREportAuthor/rdRaStyle.css&quot;&gt;');" />
+  </Body>
+</Report>

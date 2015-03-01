@@ -1,0 +1,1531 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption=" MAIN Metrics Report"
+	ID="Reports.Default"
+	>
+	<ReportCenterItem
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<StyleSheet
+		ID="themeTransit"
+		StyleSheet="extraTheme.css"
+		Theme="Transit"
+	/>
+	<DefaultRequestParams
+		camid="0"
+		crid="0"
+		dateFrom="@Date.Today~"
+		dateTo="@Date.Today~"
+		exIds="0"
+		groupby="DATE(rbs.report_datetime),rbs.targeting_strategy_id"
+		sspIds="0    "
+		tsid="0"
+	/>
+	<ReportHeader>
+		<Division
+			Class="PullRight"
+			HtmlDiv="True"
+			ID="repHelp"
+			>
+			<Label
+				Caption="Help on Metrics"
+				>
+				<Action
+					ID="lnkHelp"
+					Type="Link"
+					>
+					<Target
+						FrameID="NewWindow"
+						ID="tglHelp"
+						Link="https://baatoot.atlassian.net/wiki/pages/viewpage.action?pageId=14975008"
+						Type="Link"
+					/>
+				</Action>
+			</Label>
+		</Division>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Metrics Report"
+				Class="ThemeHeaderLarger"
+			/>
+		</Division>
+		<HR/>
+	</ReportHeader>
+	<Body>
+		<Division
+			HtmlDiv="True"
+			>
+			<Division
+				Class="PullRight"
+				HtmlDiv="True"
+				ID="expRow"
+				>
+				<Button
+					Caption="Export to Excel"
+					ID="btnExp"
+					>
+					<Action
+						ID="actExport"
+						Type="NativeExcel"
+						>
+						<Target
+							ExcelOutputFormat="Excel2007"
+							ExportDataTableID="dtExport"
+							ExportFilename="Metrics_for_@Request.dateFrom~_@Request.dateTo~"
+							ID="tgtNativeExcel"
+							ReportShowModes="rdExport"
+							RequestForwarding="True"
+							ShowGridlines="True"
+							Type="NativeExcel"
+							>
+							<WaitPage/>
+						</Target>
+					</Action>
+				</Button>
+			</Division>
+			<IncludeHtml
+				Html="&lt;a href=&quot;a1&quot; class = &quot;spoilerButton&quot;&gt;Show/Hide Filters&lt;/a&gt;"
+				ID="htmlHideFilters"
+			/>
+			<Division
+				Class="spoiler"
+				HtmlDiv="True"
+				ID="a1"
+				>
+				<ResponsiveRow
+					CollisionBehavior="Wrap"
+					ID="DatePickRRow"
+					>
+					<ResponsiveColumn
+						ColspanExtraSmallScreen="12"
+						ColspanLargeScreen="6
+"
+						ColspanMediumScreen="8"
+						ColspanSmallScreen="12"
+						>
+						<Rows>
+							<Row>
+								<Column>
+									<FieldsetBox
+										Caption="Filter by Date"
+										>
+										<IncludeSharedElement
+											DefinitionFile="SharedElements"
+											SharedElementID="DatePicker"
+										/>
+									</FieldsetBox>
+								</Column>
+								<Column
+									Class="ThemeAlignTop"
+									>
+									<FieldsetBox
+										Caption="Search: "
+										>
+										<InputText
+											ID="srch"
+											InputSize="25"
+											>
+											<EventHandler
+												DhtmlEvent="onchange"
+												>
+												<Action
+													ElementID="tsid, camid, crid, dtMetrics"
+													ID="actRefSearch"
+													Type="RefreshElement"
+													>
+													<WaitPage/>
+												</Action>
+											</EventHandler>
+										</InputText>
+										<LineBreak/>
+										<Label
+											Caption="Reset search"
+											>
+											<Action
+												ID="actRef"
+												Type="Report"
+												>
+												<LinkParams
+													camid="0"
+													dateFrom="@Request.dateFrom~"
+													dateTo="@Request.dateTo~"
+													tsid="0"
+												/>
+												<Target
+													Type="Report"
+													>
+													<WaitPage/>
+												</Target>
+											</Action>
+										</Label>
+									</FieldsetBox>
+								</Column>
+							</Row>
+						</Rows>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow
+					CollisionBehavior="Wrap"
+					ID="GoupRRow"
+					>
+					<ResponsiveColumn
+						ColspanExtraSmallScreen="12"
+						ColspanLargeScreen="6"
+						ColspanMediumScreen="8"
+						ColspanSmallScreen="12"
+						ID="GroupByRCol"
+						>
+						<Rows>
+							<Row>
+								<Column>
+									<FieldsetBox
+										Caption="Group by"
+										>
+										<InputCheckboxList
+											CheckboxListDropdown="True"
+											Class="ThemeAlignLeft"
+											DefaultValue="@Request.groupby~"
+											ID="groupby"
+											MultiSelect="True"
+											OptionCaptionColumn="Name"
+											OptionValueColumn="value"
+											>
+											<DataLayer
+												Type="Static"
+												>
+												<StaticDataRow
+													Name="Date"
+													value="DATE(rbs.report_datetime)"
+												/>
+												<StaticDataRow
+													Name="Hour"
+													value="HOUR(rbs.report_datetime)"
+												/>
+												<StaticDataRow
+													Name="Campaign"
+													value="c.name"
+												/>
+												<StaticDataRow
+													Name="Target Strategy"
+													value="rbs.targeting_strategy_id"
+												/>
+												<StaticDataRow
+													Name="Creative "
+													value="rbs.creative_id"
+												/>
+												<StaticDataRow
+													Name="SSP"
+													value="rbs.ssp_name"
+												/>
+												<StaticDataRow
+													Name="Exchange"
+													value="rbs.exchange_name"
+												/>
+											</DataLayer>
+										</InputCheckboxList>
+									</FieldsetBox>
+								</Column>
+								<Column
+									ID="colExchange"
+									>
+									<FieldsetBox
+										Caption="Exchange:  "
+										>
+										<InputCheckboxList
+											CheckboxListDropdown="True"
+											Class="ThemeAlignLeft"
+											DefaultValue="@Request.exIds~"
+											ID="exIds"
+											MultiSelect="False"
+											OptionCaptionColumn="exchange_name"
+											OptionValueColumn="exchange_name"
+											Tooltip="Only one option can be selected at a time "
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="exidSql"
+												Source="Select Distinct rbs.exchange_name
+From report_bid_summary rbs
+Where Date(rbs.report_datetime) &gt; &apos;2015-01-01&apos;
+order by rbs.exchange_name"
+												Type="SQL"
+											/>
+										</InputCheckboxList>
+									</FieldsetBox>
+								</Column>
+								<Column
+									ID="colSSP"
+									>
+									<FieldsetBox
+										Caption="SSP:"
+										>
+										<InputCheckboxList
+											CheckboxListDropdown="True"
+											Class="ThemeAlignLeft"
+											DefaultValue="@Request.sspIds~"
+											ID="sspIds"
+											MultiSelect="False"
+											OptionCaptionColumn="ssp_name"
+											OptionValueColumn="ssp_name"
+											Tooltip="Only one option can be selected at a time "
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="sspidSql"
+												Source="Select distinct rbs.ssp_name
+From stat.report_bid_summary rbs
+where DATE(rbs.report_datetime)&gt;&apos;2015-01-01&apos;
+Order By rbs.ssp_name"
+												Type="SQL"
+											/>
+										</InputCheckboxList>
+									</FieldsetBox>
+								</Column>
+							</Row>
+						</Rows>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow
+					CollisionBehavior="Wrap"
+					ID="FilterRRow"
+					>
+					<ResponsiveColumn
+						ColspanExtraSmallScreen="12"
+						ColspanLargeScreen="6"
+						ColspanMediumScreen="8"
+						ColspanSmallScreen="12"
+						ID="FilterByRCol"
+						>
+						<FieldsetBox
+							Caption="Filter by"
+							>
+							<Rows>
+								<Row>
+									<Column
+										ID="colCam"
+										>
+										<Label
+											Caption="Campaign:  "
+											Class="ThemeAlignLeft"
+										/>
+										<LineBreak/>
+										<InputSelectList
+											DefaultValue="@Request.camid~"
+											ID="camid"
+											InputRows="10"
+											MultiSelect="True"
+											OptionCaptionColumn="name"
+											OptionValueColumn="campaign_id"
+											SaveInCookie="True"
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="camidSql"
+												Source="Select Distinct c.campaign_id, 
+concat(c.campaign_id,&apos; - &apos;,c.name) name
+From opendsp.ld_campaign c
+join opendsp.ld_campaign_lineitem cl on c.campaign_id=cl.campaign_id
+join opendsp.ld_targeting_strategy ts on cl.campaign_lineitem_id = ts.campaign_lineitem_id
+Where c.start_date &gt; &apos;2015-06-01&apos;
+and concat(c.campaign_id,&apos; - &apos;,c.name) like &apos;%@Request.srch~%&apos;
+or (0 in (@Request.tsid~) or ts.targeting_strategy_id in (&apos;@Request.tsid~&apos;))
+Order By c.campaign_id desc"
+												Type="SQL"
+											/>
+											<EventHandler
+												DhtmlEvent="onchange"
+												>
+												<Action
+													ElementID="tsid"
+													ID="actRefTSid"
+													RequestForwarding="True"
+													Type="RefreshElement"
+													>
+													<WaitPage/>
+												</Action>
+											</EventHandler>
+										</InputSelectList>
+									</Column>
+									<Column
+										ID="colTS"
+										>
+										<Label
+											Caption="Targeting strategy:"
+											Class="ThemeAlignLeft"
+										/>
+										<LineBreak/>
+										<InputSelectList
+											DefaultValue="@Request.tsid~"
+											ID="tsid"
+											InputRows="10"
+											MultiSelect="True"
+											OptionCaptionColumn="name"
+											OptionValueColumn="targeting_strategy_id"
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="tsIdSql"
+												Source="Select ts.targeting_strategy_id, 
+concat(ts.targeting_strategy_id,&apos; - &apos;,ts.name) name
+From opendsp.ld_targeting_strategy ts
+left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+Where ts.targeting_strategy_id &gt; 500
+and (&apos;0&apos; IN (&apos;@Request.camid~&apos;) or cl.campaign_id IN (@Request.camid~))
+and concat(ts.targeting_strategy_id,&apos; - &apos;,ts.name) like &apos;%@Request.srch~%&apos;
+Order By ts.targeting_strategy_id Desc"
+												Type="SQL"
+											/>
+											<EventHandler
+												DhtmlEvent="onchange"
+												>
+												<Action
+													ElementID="camid, crid"
+													ID="actRefCRid"
+													Type="RefreshElement"
+													>
+													<WaitPage/>
+												</Action>
+											</EventHandler>
+										</InputSelectList>
+									</Column>
+									<Column
+										ID="colCreative"
+										>
+										<Label
+											Caption="Creative:  "
+											Class="ThemeAlignLeft"
+										/>
+										<LineBreak/>
+										<InputSelectList
+											DefaultValue="@Request.crid~"
+											ID="crid"
+											InputRows="10"
+											MultiSelect="True"
+											OptionCaptionColumn="name"
+											OptionValueColumn="creative_id"
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="cridSql"
+												Source="Select Distinct cr.creative_id, 
+concat(cr.creative_id,&apos; - &apos;,cr.name) name
+From opendsp.ld_creative cr
+left join opendsp.ld_targeting_strategy_creative tscr on cr.creative_id=tscr.creative_id
+Where tscr.targeting_strategy_id in (@Request.tsid~)
+Order By cr.creative_id desc"
+												Type="SQL"
+											/>
+										</InputSelectList>
+									</Column>
+								</Row>
+							</Rows>
+						</FieldsetBox>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+			</Division>
+		</Division>
+		<LineBreak/>
+		<DataTable
+			AjaxPaging="True"
+			ID="dtMetrics"
+			KeepScrollPosition="True"
+			SortArrows="True"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="dlMetrics"
+				Source="select 
+    DATE(rbs.report_datetime) Date,
+	TIME(rbs.report_datetime) Hour,
+	c.name Campaign,
+    ifnull(CONCAT(ts.name,&quot; (&quot;,rbs.targeting_strategy_id,&quot;)&quot;), &apos;- n/a -&apos;) TargetingStrategy,
+	ifnull(CONCAT(cr.name,&quot; (&quot;,rbs.creative_id,&quot;)&quot;), &apos;- n/a -&apos;) creative_id,
+	ifnull(rbs.exchange_name, &apos;- n/a -&apos;) exchange_name,
+	ifnull(rbs.ssp_name, &apos;- n/a -&apos;) ssp_name,
+    ifnull(sum(rbs.bid), 0) Bids,
+    ifnull(sum(rws.win), 0) Wins,
+	ifnull(sum(rws.unique_win), 0) unique_win,
+	ifnull(sum(rws.deduplicated_win), 0) deduplicated_win,
+	
+    ifnull(sum(ris.impression), 0) Impressions,
+	ifnull(sum(ris.unique_impression), 0) unique_impression,
+	ifnull(sum(ris.deduplicated_impression), 0) deduplicated_impression,
+		
+    ifnull(sum(rmi.impressions), 0) Impression2,
+    ifnull(sum(rmi.unique_impressions), 0) unique_impression2,
+	ifnull(sum(rmi.deduplicated_impressions), 0) deduplicated_impression2,
+	
+	ifnull(sum(rws.microWinningPrice / 1000000), 0) Spend,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(ris.impression) * 1000, 0) CPM,
+    ifnull(sum(rcs.click), 0) Clicks,
+    ifnull(sum(rcs.click) / sum(ris.impression), 0) CTR,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(rcs.click), 0) CPC,
+    ifnull(sum(rmc.click), 0) Click2,
+    ifnull(sum(rmc.click) / sum(rmi.impressions), 0) CTR2,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(rmc.click), 0) CPC2,
+	ifnull(sum(rbs.micro_bid_price)/sum(rws.win), 0) AvrBid,
+	ifnull(sum(rbs.micro_bid_price)/sum(rbs.bid)/1000, 0) AvrBidCPM,
+	ifnull(sum(rws.win)/sum(rbs.bid), 0) WinRate,
+	ifnull((sum(ris.impression)-sum(rmi.impressions))/sum(ris.impression), 0) Direp,
+	ifnull(sum(rls.lost), 0) Lost
+from stat.report_bid_summary rbs
+    left outer join stat.report_win_summary rws ON rbs.targeting_strategy_id = rws.targeting_strategy_id
+        and rbs.creative_id = rws.creative_id
+        and rbs.report_datetime = rws.report_datetime
+        and rbs.exchange_name = rws.exchange_name
+        and rbs.ssp_name = rws.ssp_name
+    left join stat.report_impression_summary ris ON rbs.targeting_strategy_id = ris.targeting_strategy_id
+        and rbs.creative_id = ris.creative_id
+        and rbs.report_datetime = ris.report_datetime
+        and rbs.exchange_name = ris.exchange_name
+        and rbs.ssp_name = ris.ssp_name
+	left join stat.report_click_summary rcs ON rbs.targeting_strategy_id = rcs.targeting_strategy_id
+        and rbs.creative_id = rcs.creative_id
+        and rbs.report_datetime = rcs.report_datetime
+        and rbs.exchange_name = rcs.exchange_name
+        and rbs.ssp_name = rcs.ssp_name
+	left join stat.report_man_click rmc ON rbs.targeting_strategy_id = rmc.targeting_strategy_id
+        and rbs.creative_id = rmc.creative_id
+        and rbs.report_datetime = rmc.report_datetime
+        and rbs.exchange_name = rmc.exchange_name
+        and rbs.ssp_name = rmc.ssp_name
+	left join stat.report_man_impression rmi ON rbs.targeting_strategy_id = rmi.targeting_strategy_id
+        and rbs.creative_id = rmi.creative_id
+        and rbs.report_datetime = rmi.report_datetime
+        and rbs.exchange_name = rmi.exchange_name
+        and rbs.ssp_name = rmi.ssp_name
+	left join stat.report_pseudowin_summary rps ON rbs.targeting_strategy_id = rps.targeting_strategy_id
+        and rbs.creative_id = rps.creative_id
+		and rbs.report_datetime = rps.report_datetime
+		and rbs.exchange_name = rps.exchange_name
+        and rbs.ssp_name = rps.ssp_name
+	left join stat.report_lost_summary rls ON rbs.targeting_strategy_id = rls.targeting_strategy_id
+        and rbs.creative_id = rls.creative_id
+        and rbs.report_datetime = rls.report_datetime
+        and rbs.exchange_name = rls.exchange_name
+        and rbs.ssp_name = rls.ssp_name
+	join opendsp.ld_creative cr ON rbs.creative_id = cr.creative_id
+	join opendsp.ld_targeting_strategy ts ON rbs.targeting_strategy_id = ts.targeting_strategy_id
+	    left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+	left join opendsp.ld_campaign c on cl.campaign_id = c.campaign_id 
+Where DATE(rbs.report_datetime) between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+	and (&apos;0&apos; IN (&apos;@Request.tsid~&apos;) or rbs.targeting_strategy_id IN (@SingleQuote.Request.tsid~))
+	and (&apos;0&apos; IN (&apos;@Request.crid~&apos;) or rbs.creative_id IN (@SingleQuote.Request.crid~))
+	and (&apos;0&apos; IN (&apos;@Request.exIds~&apos;) or rbs.exchange_name in (@SingleQuote.Request.exIds~))
+	and (&apos;0&apos; IN (&apos;@Request.sspIds~&apos;)or rbs.ssp_name in (@SingleQuote.Request.sspIds~))
+	and (&apos;0&apos; IN (&apos;@Request.camid~&apos;)or c.campaign_id in (@SingleQuote.Request.camid~))
+group by @Request.groupby~ 
+order by @Request.groupby~ "
+				Type="SQL"
+				>
+				<DataLayerLink
+					ID="dllMetrics"
+				/>
+			</DataLayer>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;DATE(rbs.report_datetime)&apos;) &gt; -1"
+				Header="Date"
+				ID="colDate"
+				Width="50"
+				WidthScale="px"
+				>
+				<Label
+					Caption="@Data.Date~"
+					Format="Short Date"
+					ID="lblDate"
+				/>
+				<DataColumnSort
+					DataColumn="Date"
+					DataType="Date"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;HOUR(rbs.report_datetime)&apos;)&gt;-1"
+				Header="Hour"
+				ID="colHour"
+				>
+				<Label
+					Caption="@Data.Hour~"
+					Format="Short Time"
+					ID="lblHour"
+				/>
+				<DataColumnSort
+					DataColumn="Hour"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;c.name&apos;)&gt;-1"
+				Header="Campaign"
+				ID="colCampaign"
+				>
+				<Label
+					Caption="@Data.Campaign~"
+					ID="lblCampaign"
+				/>
+				<DataColumnSort
+					DataColumn="Campaign"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbs.targeting_strategy_id&apos;) &gt; -1"
+				Header="Targeting Strategy"
+				ID="colTargetingStrategy"
+				>
+				<Label
+					Caption="@Data.TargetingStrategy~"
+					ID="lblTargetingStrategy"
+					>
+					<ConditionalClass
+						Class="ThemeTextNegative"
+						Condition="&quot;@Data.TargetingStrategy~&quot; == &quot;- n/a -&quot;"
+					/>
+				</Label>
+				<DataColumnSort
+					DataColumn="TargetingStrategy"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbs.creative_id&apos;) &gt; -1"
+				Header="Creative"
+				ID="colCreative_id"
+				>
+				<Label
+					Caption="@Data.creative_id~"
+					ID="lblcreative_id"
+					>
+					<ConditionalClass
+						Class="ThemeTextNegative"
+						Condition="&quot;@Data.creative_id~&quot; == &quot;- n/a -&quot;"
+					/>
+				</Label>
+				<DataColumnSort
+					DataColumn="creative_id"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbs.exchange_name&apos;) &gt; -1"
+				Header="Exchange"
+				ID="colExchange_name"
+				>
+				<Label
+					Caption="@Data.exchange_name~"
+					ID="lblexchange_name"
+					>
+					<ConditionalClass
+						Class="ThemeTextNegative"
+						Condition="&quot;@Data.exchange_name~&quot; == &quot;- n/a -&quot;"
+					/>
+				</Label>
+				<DataColumnSort
+					DataColumn="exchange_name"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbs.ssp_name&apos;) &gt; -1"
+				Header="SSP"
+				ID="colSsp_name"
+				>
+				<Label
+					Caption="@Data.ssp_name~"
+					ID="lblssp_name"
+					>
+					<ConditionalClass
+						Class="ThemeTextNegative"
+						Condition="&quot;@Data.ssp_name~&quot; == &quot;- n/a -&quot;"
+					/>
+				</Label>
+				<DataColumnSort
+					DataColumn="ssp_name"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Bids"
+				ID="colBids"
+				>
+				<Label
+					Caption="@Data.Bids~"
+					Format="###,###,##0"
+					ID="lblBids"
+				/>
+				<DataColumnSort
+					DataColumn="Bids"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Bids"
+					Function="Sum"
+					ID="sumBids"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Wins"
+				ID="colWins"
+				>
+				<Label
+					Caption="@Data.Wins~"
+					Class="ThemeTextPositive"
+					Format="###,###,##0"
+					ID="lblWins"
+				/>
+				<DataColumnSort
+					DataColumn="Wins"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Wins"
+					Function="Sum"
+					ID="sumWins"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Unique Win"
+				ID="colunique_win"
+				>
+				<Label
+					Caption="@Data.unique_win~"
+					Class="ThemeTextPositive"
+					Format="###,###,##0"
+					ID="lblunique_win"
+				/>
+				<DataColumnSort
+					DataColumn="unique_win"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="unique_win"
+					Function="Sum"
+					ID="sumUniqWin"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Deduplicated Win"
+				ID="coldeduplicated_win"
+				>
+				<Label
+					Caption="@Data.deduplicated_win~"
+					Class="ThemeTextPositive"
+					Format="###,###,##0"
+					ID="lbldeduplicated_win"
+				/>
+				<DataColumnSort
+					DataColumn="deduplicated_win"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="deduplicated_win"
+					Function="Sum"
+					ID="sumDedublWin"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Impressions"
+				ID="colImpressions"
+				>
+				<Label
+					Caption="@Data.Impressions~"
+					Class="ThemeTextNegative"
+					Format="###,###,##0"
+					ID="lblImpressions"
+				/>
+				<DataColumnSort
+					DataColumn="Impressions"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Impressions"
+					Function="Sum"
+					ID="sumImps"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Unique Impression"
+				ID="colunique_impression"
+				>
+				<Label
+					Caption="@Data.unique_impression~"
+					Class="ThemeTextNegative"
+					Format="###,###,##0"
+					ID="lblunique_impression"
+				/>
+				<DataColumnSort
+					DataColumn="unique_impression"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="unique_impression"
+					Function="Sum"
+					ID="sumUniqImps"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Deduplicated Impression"
+				ID="coldeduplicated_impression"
+				>
+				<Label
+					Caption="@Data.deduplicated_impression~"
+					Class="ThemeTextNegative"
+					Format="###,###,##0"
+					ID="lbldeduplicated_impression"
+				/>
+				<DataColumnSort
+					DataColumn="deduplicated_impression"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="deduplicated_impression"
+					Function="Sum"
+					ID="sumDedublImps"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Impressions2"
+				ID="colImpression2"
+				>
+				<Label
+					Caption="@Data.Impression2~"
+					Class="bulue"
+					Format="###,###,##0"
+					ID="lblImpression2"
+				/>
+				<DataColumnSort
+					DataColumn="Impression2"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Impression2"
+					Function="Sum"
+					ID="sumImps2"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Unique Impression2"
+				ID="colunique_impression2"
+				>
+				<Label
+					Caption="@Data.unique_impression2~"
+					Class="bulue"
+					Format="###,###,##0"
+					ID="lblunique_impression2"
+				/>
+				<DataColumnSort
+					DataColumn="unique_impression2"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="unique_impression2"
+					Function="Sum"
+					ID="sumUniqImps2"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Deduplicated Impression2"
+				ID="coldeduplicated_impression2"
+				>
+				<Label
+					Caption="@Data.deduplicated_impression2~"
+					Class="bulue"
+					Format="###,###,##0"
+					ID="lbldeduplicated_impression2"
+				/>
+				<DataColumnSort
+					DataColumn="deduplicated_impression2"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="deduplicated_impression2"
+					Function="Sum"
+					ID="sumDedublImps2"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Spend"
+				ID="colSpend"
+				>
+				<Label
+					Caption="@Data.Spend~"
+					Format="$###,###,##0.00"
+					ID="lblSpend"
+				/>
+				<DataColumnSort
+					DataColumn="Spend"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Spend"
+					Function="Sum"
+					ID="sumSpend"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CPM"
+				ID="colCPM"
+				>
+				<Label
+					Caption="@Data.CPM~"
+					Format="$###,###,##0.00##"
+					ID="lblCPM"
+				/>
+				<DataColumnSort
+					DataColumn="CPM"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="CPM"
+					DataType="Number"
+					Function="Average"
+					ID="avgCPM"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Clicks"
+				ID="colClicks"
+				>
+				<Label
+					Caption="@Data.Clicks~"
+					Format="###,###,##0"
+					ID="lblClicks"
+				/>
+				<DataColumnSort
+					DataColumn="Clicks"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Clicks"
+					Function="Sum"
+					ID="sumClicks"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CTR"
+				ID="colCTR"
+				>
+				<Label
+					Caption="@Data.CTR~"
+					Format="Percent"
+					ID="lblCTR"
+				/>
+				<DataColumnSort
+					DataColumn="CTR"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CPC"
+				ID="colCPC"
+				>
+				<Label
+					Caption="@Data.CPC~"
+					Format="$###,###,##0.00##"
+					ID="lblCPC"
+				/>
+				<DataColumnSort
+					DataColumn="CPC"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Win Rate"
+				ID="colWinRate"
+				>
+				<Label
+					Caption="@Data.WinRate~"
+					Format="Percent"
+					ID="lblWinRate"
+				/>
+				<DataColumnSort
+					DataColumn="WinRate"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Direp imps1/2"
+				ID="colDirep"
+				>
+				<Label
+					Caption="@Data.Direp~"
+					Format="Percent"
+					ID="lblDirep"
+				/>
+				<DataColumnSort
+					DataColumn="Direp"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Clicks2"
+				ID="colClick2"
+				>
+				<Label
+					Caption="@Data.Click2~"
+					Format="###,###,##0"
+					ID="lblClick2"
+				/>
+				<DataColumnSort
+					DataColumn="Click2"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Click2"
+					Function="Sum"
+					ID="click2Sum"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CTR2"
+				ID="colCTR2"
+				>
+				<Label
+					Caption="@Data.CTR2~"
+					Format="Percent"
+					ID="lblCTR2"
+				/>
+				<DataColumnSort
+					DataColumn="CTR2"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CPC2"
+				ID="colCPC2"
+				>
+				<Label
+					Caption="@Data.CPC2~"
+					Format="Currency"
+					ID="lblCPC2"
+				/>
+				<DataColumnSort
+					DataColumn="CPC2"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Lost"
+				ID="colLost"
+				>
+				<Label
+					Caption="@Data.Lost~"
+					Format="###,###,##0"
+					ID="lblLost"
+				/>
+				<DataColumnSort
+					DataColumn="Lost"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Lost"
+					Function="Sum"
+					ID="sumLost"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="AvrBid"
+				ID="colAvrBid"
+				>
+				<Label
+					Caption="@Data.AvrBid~"
+					Format="###,###,##0"
+					ID="lblAvrBid"
+				/>
+				<DataColumnSort
+					DataColumn="AvrBid"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="AvrBid"
+					DataType="Number"
+					Function="Sum"
+					ID="sumAvrBid"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="AvrBidCPM"
+				ID="colAvrBidCPM"
+				>
+				<Label
+					Caption="@Data.AvrBidCPM~"
+					Format="Currency"
+					ID="lblAvrBidCPM"
+				/>
+				<DataColumnSort
+					DataColumn="AvrBidCPM"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<SummaryRow
+				Caption="Total"
+			/>
+		</DataTable>
+		<Division
+			ID="divExport"
+			ShowModes="rdExport"
+			>
+			<DataTable
+				DraggableColumns="True"
+				ID="dtExport"
+				Layout="Auto"
+				SortArrows="True"
+				>
+				<DataLayer
+					ID="dlMetricsLinked"
+					LinkedDataLayerID="dllMetrics"
+					Type="Linked"
+				/>
+				<DataTableColumn
+					Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;DATE(rbs.report_datetime)&apos;) &gt; -1"
+					Header="Date"
+					ID="colDate"
+					>
+					<Label
+						Caption="@Data.Date~"
+						Format="Short Date"
+						ID="lblDate"
+					/>
+					<ExcelColumnFormat
+						DataType="Date"
+						ExcelAutoFitRow="True"
+						ExcelFormat="m/d/yy"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;HOUR(rbs.report_datetime)&apos;)&gt;-1"
+					Header="Hour"
+					ID="colHour"
+					>
+					<Label
+						Caption="@Data.Hour~"
+						Format="Short Time"
+						ID="lblHour"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;c.name&apos;)&gt;-1"
+					Header="Campaign"
+					ID="colCampaign"
+					>
+					<Label
+						Caption="@Data.Campaign~"
+						ID="lblCampaign"
+					/>
+					<ExcelColumnFormat
+						DataType="Text"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbs.targeting_strategy_id&apos;) &gt; -1"
+					Header="Targeting Strategy"
+					ID="colTargetingStrategy"
+					>
+					<Label
+						Caption="@Data.TargetingStrategy~"
+						ID="lblTargetingStrategy"
+					/>
+					<ExcelColumnFormat
+						DataType="Text"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbs.creative_id&apos;) &gt; -1"
+					Header="Creative Id"
+					ID="colCreative_id"
+					>
+					<Label
+						Caption="@Data.creative_id~"
+						ID="lblcreative_id"
+					/>
+					<ExcelColumnFormat
+						DataType="Text"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbs.exchange_name&apos;) &gt; -1"
+					Header="Exchange"
+					ID="colExchange_name"
+					>
+					<Label
+						Caption="@Data.exchange_name~"
+						ID="lblexchange_name"
+					/>
+					<ExcelColumnFormat
+						DataType="Text"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbs.ssp_name&apos;) &gt; -1"
+					Header="SSP"
+					ID="colSsp_name"
+					>
+					<Label
+						Caption="@Data.ssp_name~"
+						ID="lblssp_name"
+					/>
+					<ExcelColumnFormat
+						DataType="Text"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Bids"
+					ID="colBids"
+					>
+					<Label
+						Caption="@Data.Bids~"
+						ID="lblBids"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Wins"
+					ID="colWins"
+					>
+					<Label
+						Caption="@Data.Wins~"
+						ID="lblWins"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Unique Win"
+					ID="colunique_win"
+					>
+					<Label
+						Caption="@Data.unique_win~"
+						ID="lblunique_win"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Deduplicated Win"
+					ID="coldeduplicated_win"
+					>
+					<Label
+						Caption="@Data.deduplicated_win~"
+						ID="lbldeduplicated_win"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Impressions"
+					ID="colImpressions"
+					>
+					<Label
+						Caption="@Data.Impressions~"
+						ID="lblImpressions"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Unique Impression"
+					ID="colunique_impression"
+					>
+					<Label
+						Caption="@Data.unique_impression~"
+						ID="lblunique_impression"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Deduplicated Impression"
+					ID="coldeduplicated_impression"
+					>
+					<Label
+						Caption="@Data.deduplicated_impression~"
+						ID="lbldeduplicated_impression"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Impressions2"
+					ID="colImpression2"
+					>
+					<Label
+						Caption="@Data.Impression2~"
+						ID="lblImpression2"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Unique Impression2"
+					ID="colunique_impression2"
+					>
+					<Label
+						Caption="@Data.unique_impression2~"
+						ID="lblunique_impression2"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Deduplicated Impression2"
+					ID="coldeduplicated_impression2"
+					>
+					<Label
+						Caption="@Data.deduplicated_impression2~"
+						ID="lbldeduplicated_impression2"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Spend"
+					ID="colSpend"
+					>
+					<Label
+						Caption="@Data.Spend~"
+						ID="lblSpend"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="CPM"
+					ID="colCPM"
+					>
+					<Label
+						Caption="@Data.CPM~"
+						ID="lblCPM"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+						ExcelFormat="0.00"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Clicks"
+					ID="colClicks"
+					>
+					<Label
+						Caption="@Data.Clicks~"
+						ID="lblClicks"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="CTR"
+					ID="colCTR"
+					>
+					<Label
+						Caption="@Data.CTR~"
+						Format="Percent"
+						ID="lblCTR"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+						ExcelFormat="0.00%"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="CPC"
+					ID="colCPC"
+					>
+					<Label
+						Caption="@Data.CPC~"
+						ID="lblCPC"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Win Rate"
+					ID="colWinRate"
+					>
+					<Label
+						Caption="@Data.WinRate~"
+						Format="Percent"
+						ID="lblWinRate"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+						ExcelFormat="0.00%"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Direp imps1/2"
+					ID="colDirep"
+					>
+					<Label
+						Caption="@Data.Direp~"
+						Format="Percent"
+						ID="lblDirep"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+						ExcelFormat="0.00%"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Clicks2"
+					ID="colClick2"
+					>
+					<Label
+						Caption="@Data.Click2~"
+						ID="lblClick2"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="CTR2"
+					ID="colCTR2"
+					>
+					<Label
+						Caption="@Data.CTR2~"
+						Format="Percent"
+						ID="lblCTR2"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+						ExcelFormat="0.00%"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="CPC2"
+					ID="colCPC2"
+					>
+					<Label
+						Caption="@Data.CPC2~"
+						ID="lblCPC2"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Lost"
+					ID="colLost"
+					>
+					<Label
+						Caption="@Data.Lost~"
+						ID="lblLost"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="AvrBid"
+					ID="colAvrBid"
+					>
+					<Label
+						Caption="@Data.AvrBid~"
+						ID="lblAvrBid"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="AvrBidCPM"
+					ID="colAvrBidCPM"
+					>
+					<Label
+						Caption="@Data.AvrBidCPM~"
+						ID="lblAvrBidCPM"
+					/>
+					<ExcelColumnFormat
+						DataType="Number"
+						ExcelAutoFitRow="True"
+					/>
+				</DataTableColumn>
+				<SummaryRow
+					Caption="Total"
+				/>
+			</DataTable>
+		</Division>
+	</Body>
+	<ReportFooter>
+		<IncludeHtml
+			Html="&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+    
+	&lt;script type=&quot;text/javascript&quot;&gt;
+    $(document).ready(function(){
+        $(&quot;.spoilerButton&quot;).click(function (e) { 
+            e.preventDefault()
+            var foo=$(this).attr(&apos;href&apos;)
+            $(&apos;#&apos;+foo).slideToggle(1000); 
+        });
+		$(&quot;.spoiler&quot;).show();
+    });
+    &lt;/script&gt;"
+		/>
+		<IncludeScript
+			IncludedScript="$(document).ready(function() {
+  function setHeight() {
+    windowHeight = $(window).innerHeight();
+    $(&apos;.scrollingTableDiv&apos;).css(&apos;min-height&apos;, windowHeight-139);
+  };
+  setHeight();
+  
+  $(window).resize(function() {
+    setHeight();
+  });
+});"
+		/>
+	</ReportFooter>
+	<ideTestParams
+		camid="0"
+		crid="0"
+		dateFrom="2015-11-15"
+		dateTo="2015-11-16"
+		exIds="0"
+		groupby="DATE(rbs.report_datetime),c.name"
+		srch="0"
+		sspIds="0"
+		tsid="0"
+	/>
+</Report>

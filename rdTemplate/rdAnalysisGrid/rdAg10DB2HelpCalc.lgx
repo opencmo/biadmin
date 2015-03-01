@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="AnalysisGrid.rdAgHelpCalc" SavedBy="LOGIXML\clifton" SavedAt="11/26/2014 3:34:31 PM" EngineVersion="11.2.100">
+  <StyleSheet StyleSheet="rdTemplate/rdAnalysisGrid/rdAg10Style.css" />
+  <StyleSheet StyleSheet="@Request.rdAgStyleSheet~" />
+  <Body Class="rdAg">
+    <Rows ID="rowsAnalysisGrid" CellSpacing="4">
+      <Row ID="rowTitle" Class="rdAgCaptionRow">
+        <Column ID="colTitle">
+          <Label ID="lblTitle" Caption="Formula Help - DB2" />
+        </Column>
+      </Row>
+      <Row ID="rowInstruct">
+        <Column ID="colInstruct">
+          <Label ID="lblInstruct" Caption="Formulas are expressions that must contain data columns, and can include constants, functions, and operators.&#xD;&#xA;&#xD;&#xA;Columns are values that come from the data.  Their names are are enclosed in square brackets, like [ShippedDate].  Depending on their data type, they may be used as text strings, numbers, and date/time values.&#xD;&#xA;&#xD;&#xA;Constants are simply specific fixed values that you enter into a Formula.&#xD;&#xA;&#xD;&#xA;Functions return values, usually computations based on columns and constants.&#xD;&#xA;&#xD;&#xA;Operators do arithmetic and logical comparisons. Logical comparisons must be used with Case statements.&#xD;&#xA;&#xD;&#xA;Here are some examples:&#xD;&#xA;&#xD;&#xA;[UnitPrice] * [Quantity]&#xD;&#xA;Multiply two data columns, UnitPrice and Quantity, to make an ExtendedPrice column.&#xD;&#xA;&#xD;&#xA;[UnitPrice] * .04&#xD;&#xA;Multiply a data column by an constant value to calculate the tax applied to the price.&#xD;&#xA;&#xD;&#xA;To_Char([ShippedDate],'DAY')&#xD;&#xA;Return the name of the day of the week of the shipment date.&#xD;&#xA;&#xD;&#xA;[LastName] || ', ' || [FirstName]&#xD;&#xA;Concatenate columns and strings together.  This might return: Smith, John&#xD;&#xA;&#xD;&#xA;Upper( [LastName] || ', ' || [FirstName] )&#xD;&#xA;Convert to upper case.  This might return: SMITH, JOHN" Format="Preserve Line Feeds" />
+          <LineBreak LineCount="2" />
+        </Column>
+      </Row>
+      <Row ID="rowFunctions" Class="rdAgCaptionRow">
+        <Column ID="colFunctions">
+          <Label ID="lblFunctions" Caption="Functions" />
+        </Column>
+      </Row>
+      <Row ID="rowFunctionsDetail">
+        <Column ID="colFunctions">
+          <Label ID="lblFunctions" Caption="Functions accept some number of values and return a single value." Format="Preserve Line Feeds" />
+          <LineBreak LineCount="2" />
+          <DataTable ID="dtFunctions" CellSpacing="0" TableBorder="1">
+            <DataLayer Type="Static" ID="dlFunctions">
+              <StaticDataRow Name="Abs" Description="Returns the absolute value of a number." Syntax="Abs(number) or AbsVal(number)" Notes="The absolute value of -5 is 5." />
+              <StaticDataRow Name="Date" Description="Returns the current date." Syntax="current date" Notes="For example, to get the number days since a date: DAYS(current date) - DAYS(datecolumn))" />
+              <StaticDataRow Name="DateAdd" Description="Adds or subtracts some interval of time from a date or time." Syntax="date/timestamp + number interval " Notes="&#xD;&#xA;Interval: &#xD;&#xA;timestamp + number of microseconds MICROSECONDS&#xD;&#xA;timestamp + number of seconds SECONDS&#xD;&#xA;timestamp + number of minutes MINUTES&#xD;&#xA;timestamp + number of hours HOURS&#xD;&#xA;date + number of days DAYS&#xD;&#xA;date + number of months MONTHS&#xD;&#xA;date + number of YEARS&#xD;&#xA;" />
+              <StaticDataRow Name="DateDiff" Description="Computes the difference between two dates." Syntax="SELECT TIMESTAMPDIFF(16,CHAR(timestampfld) - CURRENT TIMESTAMP FROM yourtable  See also    http://www-01.ibm.com/support/knowledgecenter/SSEPGG_9.7.0/com.ibm.db2.luw.sql.ref.doc/doc/r0000861.html?cp=SSEPGG_9.7.0%2F2-10-3-2-155" Notes="Number of days and/or fraction of a day." />
+              <StaticDataRow Name="DatePart" Description="Returns part of a date." Syntax="YEAR(datefld) YEAR(timestampfld)" Notes="YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, MICROSECOND" />
+              <StaticDataRow Name="DateValue" Description="Returns a date from a date string.  The function can convert dates from many different formats." Syntax="TO_DATE('23-jan-2014, 'DD-Mon-YYYY')  TO_DATE, TO_TIMESTAMP are TIMESTAMP_FORMAT  see also http://www-01.ibm.com/support/knowledgecenter/SSEPGG_9.7.0/com.ibm.db2.luw.sql.ref.doc/doc/r0007107.html?cp=SSEPGG_9.7.0%2F2-10-3-2-153" Notes="TO_DATE(textdate,format)" />
+              <StaticDataRow Name="Day" Description="Returns the day of the month.  Possible return values are from 1-31." Syntax="" Notes="Day(datefld)" />
+              <StaticDataRow Name="FormatCurrency" Description="Format a number value into currency." Syntax="To_Char(NumericValue,'$9,999.00')" Notes="" />
+              <StaticDataRow Name="FormatDateTime" Description="Formats a date." Syntax="TO_DATE('23-jan-2014, 'DD-Mon-YYYY') " Notes="http://www-01.ibm.com/support/knowledgecenter/SSEPEK_10.0.0/com.ibm.db2z10.doc.intro/src/tpc/db2z_datetimetimestamp.dita" />
+              <StaticDataRow Name="FormatNumber" Description="Formats a number." Syntax="To_Char(NumericValue,'9,999.00')" Notes="TO_CHAR and VARCHAR_FORMAT are synonyms More Info: http://www-01.ibm.com/support/knowledgecenter/SSEPGG_9.7.0/com.ibm.db2.luw.sql.ref.doc/doc/r0007110.html?cp=SSEPGG_9.7.0%2F2-10-3-2-179" />
+              <StaticDataRow Name="FormatPercent" Description="Formats a number as a percentage." Syntax="Concat(To_Char( NumericValue,'999G999G999G999G990D00'),'%')" Notes="" />
+              <StaticDataRow Name="Hour" Description="Returns the hour of the day.  Possible return values are 0-23." Syntax="To_Number(To_Char(date,'HH'))" Notes="" />
+              <StaticDataRow Name="Case" Description="Returns one value or another, depending on if the expression is evaluates to True or False." Syntax="Case When Expression Then True Else False End" Notes="Expression is a formula that returns True or False.  &#xD;&#xA;For example, this would return &quot;Blue&quot;, because 1 does not equal 2.  &#xD;&#xA;Case When 1=2 Then &quot;Red&quot; Else &quot;Blue&quot; End" />
+              <StaticDataRow Name="InString" Description="Returns the character location where one string is found within another string." Syntax="InStr(string1,string2[,start_position[,nth_appearance]])" />
+              <StaticDataRow Name="Int" Description="Returns the integer portion of a number, removing any decimal places." Syntax="Round(Floatvalue,0)" Notes="" />
+              <StaticDataRow Name="IsDate" Description="Returns True if the text is a date." Syntax="NA" Notes="&#xD;&#xA;CREATE or REPLACE FUNCTION isdate (textvalue in varchar2, format_picture in varchar2) return boolean as&#xD;&#xA;BEGIN&#xD;&#xA;	To_Date(textvalue, format_picture);&#xD;&#xA;	return true;&#xD;&#xA;EXCEPTION&#xD;&#xA;	when others then&#xD;&#xA;	return false;&#xD;&#xA;END;" />
+              <StaticDataRow Name="IsNumeric" Description="Returns True if the text is a number." Syntax="NA" Notes="&#xD;&#xA;CREATE or REPLACE FUNCTION isnumeric  (textvalue in varchar2) return boolean as&#xD;&#xA;BEGIN&#xD;&#xA;	To_Number(textvalue);&#xD;&#xA;	return true;&#xD;&#xA;EXCEPTION&#xD;&#xA;	when others then&#xD;&#xA;	return false;&#xD;&#xA;END;" />
+              <StaticDataRow Name="Lower" Description="Converts all characters to lower case." Syntax="Lower(text)" Notes="" />
+              <StaticDataRow Name="Left" Description="Returns the &quot;length&quot; number of characters from the left side of the input text." Syntax="Left(Character_expression, integer_expression)" Notes="A simple example would be:&#xD;&#xA;Left(text, 4)" />
+              <StaticDataRow Name="Len" Description="Returns the number of characters in the text." Syntax="Length(text)" Notes="" />
+              <StaticDataRow Name="LTrim" Description="Removes the space characters from the left side of the text." Syntax="LTrim(text)" Notes="" />
+              <StaticDataRow Name="Mid" Description="Returns characters from the middle of the text." Syntax="Substr(text,start,length)" Notes="&quot;start&quot; is the first character to be returned.  The first character is at position 1.&#xD;&#xA;&#xD;&#xA;&quot;length&quot; is the number of characters to be returned." />
+              <StaticDataRow Name="Minute" Description="Returns the minute of the hour.  Possible return values are 0-59." Syntax="To_Number(To_Char( date,'MI'))" Notes="" />
+              <StaticDataRow Name="Month" Description="Returns the month of the year.  Possible return values are 1-12." Syntax="To_Number(To_Char(date,'MM'))" Notes="" />
+              <StaticDataRow Name="MonthName" Description="Returns the name of the month." Syntax="MonthName( date)" Notes="" />
+              <StaticDataRow Name="Now" Description="Returns the current date and time." Syntax="Current Date" Notes="" />
+              <StaticDataRow Name="Power" Description="Raise the the first argument to the power of the second argument" Syntax="" Notes="Power(number,number)" />
+              <StaticDataRow Name="Repeat" Description="Repeats the specified string N of times" Syntax="Repar(Character_expression, integer_expression)" Notes="Repeat(str,times)" />
+              <StaticDataRow Name="Replace" Description="Searches textSearch for textFind, replacing it with the textReplaceWith value." Syntax="Replace(originalstring,searchstring,[replacement_string])" />
+              <StaticDataRow Name="Right" Description="Returns the &quot;length&quot; number of characters from the right side of the input text." Syntax="Right(Character_expression, integer_expression)" Notes="A simple example would be:&#xD;&#xA;Right(text,  4)" />
+              <StaticDataRow Name="Rand" Description="Returns a random number between 0 and 1." Syntax="To_Char(Round(RAND, Precision),'.99')" Notes="The formatting to two decimal places is optional" />
+              <StaticDataRow Name="Round" Description="Returns a number rounded to a specified number of decimal places." Syntax="Round(numeric_expression,length)" Notes="" />
+              <StaticDataRow Name="RTrim" Description="Removes any space characters from the right side of the text." Syntax="RTrim(text)" Notes="" />
+              <StaticDataRow Name="Second" Description="Returns the second of the minute.  Possible values are 0-59." Syntax="To_Number(To_Char(date,'SS'))" Notes="" />
+              <StaticDataRow Name="Sign" Description="Returns -1 if the number is negative.  Returns 1 if the number is positive.  Returns 0 if the number is 0." Syntax="ToChar(Sign(number),'9')" Notes="" />
+              <StaticDataRow Name="Space" Description="Returns text consisting of the number of spaces." Syntax="Lpad(' ', integer_expression [,PadChar]) See also http://www-01.ibm.com/support/knowledgecenter/SSEPGG_9.7.0/com.ibm.db2.luw.sql.ref.doc/doc/r0053529.html?cp=SSEPGG_9.7.0%2F2-10-3-2-86" Notes="" />
+              <StaticDataRow Name="Square" Description="Returns the square root of a number." Syntax="Sqrt(NumberValue)" Notes="" />
+              <StaticDataRow Name="String" Description="Returns text consisting of the character duplicated the number of times." Syntax="Rpad(CharacterValue,length,CharacterValue)" Notes="&#xD;&#xA;rpad('str',9,'str') returns strstrstr  Lpad(' ', integer_expression [,PadChar]" />
+              <StaticDataRow Name="TimeValue" Description="Returns a time value from a time string.  The function can convert dates from many different formats." Syntax="To_Char(date,'hh24:mi:ss')" Notes="" />
+              <StaticDataRow Name="Trim" Description="Removes space characters from both the left and rights sides of the text." Syntax="Trim(text) " Notes=" Identical to Strip function" />
+              <StaticDataRow Name="Upper" Description="Converts all characters to upper case." Syntax="Upper(text)" Notes="" />
+              <StaticDataRow Name="Weekday" Description="Returns the number of the day of the week.  Possible return values are 1-7." Syntax="To_Number(To_Char(date,'W'))" Notes="" />
+              <StaticDataRow Name="WeekdayName" Description="Returns the name of the day corresponding to the weekday number." Syntax="DayName(date)" Notes="" />
+              <StaticDataRow Name="Year" Description="Returns the number of the year of the specified date." Syntax="Year(date)" Notes="" />
+            </DataLayer>
+            <DataTableColumn ID="colName" Header="Function Name" Class="cell" Width="100">
+              <Label ID="lblName" Caption="@Data.Name~" />
+              <Label ID="lblSpace" Caption="&amp;nbsp;" Format="HTML" />
+            </DataTableColumn>
+            <DataTableColumn ID="colDescription" Header="Description" Class="cell" Width="300">
+              <Label ID="lblDescription" Caption="@Data.Description~" Format="Preserve Line Feeds" />
+              <Label ID="lblSpace" Caption="&amp;nbsp;" Format="HTML" />
+            </DataTableColumn>
+            <DataTableColumn ID="colSyntax" Header="Syntax" Class="cell" Width="300">
+              <Label ID="lblSyntax" Caption="@Data.Syntax~" Format="Preserve Line Feeds" />
+              <Label ID="lblSpace" Caption="&amp;nbsp;" Format="HTML" />
+            </DataTableColumn>
+            <DataTableColumn ID="colNotes" Header="Notes" Class="cell">
+              <Label ID="lblNotes" Caption="@Data.Notes~" Format="Preserve Line Feeds" />
+              <Label ID="lblSpace" Caption="&amp;nbsp;" Format="HTML" />
+            </DataTableColumn>
+          </DataTable>
+          <LineBreak LineCount="2" />
+          <Label ID="lblFunctions" Caption="In the Syntax column, parameters in square brackets are optional." />
+          <LineBreak LineCount="2" />
+        </Column>
+      </Row>
+      <Row ID="rowOperators" Class="rdAgCaptionRow">
+        <Column ID="colOperators">
+          <Label ID="lblOperators" Caption="Operators" />
+        </Column>
+      </Row>
+      <Row ID="rowOperatorsDetail">
+        <Column ID="colOperators">
+          <Label ID="lblIntro" Caption="Operators do arithmetic and logical comparisons." />
+          <LineBreak LineCount="2" />
+          <DataTable ID="dtOperators" CellSpacing="0" TableBorder="1" IdeDisplayStatus="Collapsed">
+            <DataLayer Type="Static" ID="dlFunctions">
+              <StaticDataRow Operator="-" Description="Negation" />
+              <StaticDataRow Operator="^" Description="Exponentiation: Power( m, n ). Function returns m raised to the nth power." />
+              <StaticDataRow Operator="*" Description="Multiplication" />
+              <StaticDataRow Operator="/" Description="Division" />
+              <StaticDataRow Operator="\" Description="Integer Division: Round( m/n )." />
+              <StaticDataRow Operator="Mod" Description="Modulus: Mod( m, n )." />
+              <StaticDataRow Operator="+" Description="Addition" />
+              <StaticDataRow Operator="-" Description="Subtraction" />
+              <StaticDataRow Operator="+" Description="String Concatenation" />
+              <StaticDataRow Operator="=" Description="Equals" />
+              <StaticDataRow Operator="&lt;&gt;" Description="Not Equals" />
+              <StaticDataRow Operator="&lt;" Description="Less Than" />
+              <StaticDataRow Operator="&gt;" Description="Greater Than" />
+              <StaticDataRow Operator="&lt;=" Description="Less Than or Equal To" />
+              <StaticDataRow Operator="&gt;=" Description="Greater Than or Equal To" />
+            </DataLayer>
+            <DataTableColumn ID="colOperator" Header="Operator" Class="cell">
+              <Label ID="lblOperator" Caption="@Data.Operator~" />
+              <Label ID="lblSpace" Caption="&amp;nbsp;" Format="HTML" />
+            </DataTableColumn>
+            <DataTableColumn ID="colDescription" Header="Description" Class="cell">
+              <Label ID="lblDescription" Caption="@Data.Description~" />
+              <Label ID="lblSpace" Caption="&amp;nbsp;" Format="HTML" />
+            </DataTableColumn>
+          </DataTable>
+          <LineBreak LineCount="2" />
+        </Column>
+      </Row>
+      <Row ID="rowOtherNotes" Class="rdAgCaptionRow">
+        <Column ID="colOtherNotes">
+          <Label ID="lblOtherNotes" Caption="Other Notes of Interest" />
+        </Column>
+      </Row>
+      <Row ID="rowOtherNotes">
+        <Column ID="colOtherNotes">
+          <Label ID="lblInstruct" Caption="You may represent true and false values as True and False." Format="Preserve Line Feeds" />
+          <LineBreak LineCount="2" />
+        </Column>
+      </Row>
+    </Rows>
+  </Body>
+  <ideTestParams rdAgStyleSheet="" />
+</Report>

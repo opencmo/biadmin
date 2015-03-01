@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	ID="Scheduler.e_reps.md_SLI_HK"
+	>
+	<Body>
+		<DataTable
+			AltRowClass="ThemeAlternatingRow"
+			Class="specialTable"
+			ID="dtMetrics"
+			Width="99"
+			WidthScale="%"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="dlMetrics"
+				Source="SELECT 
+DATE(rbd.process_date) Date, 
+ifnull(rbd.domain, &apos;- n/a -&apos;) Domain, 
+ifnull(ts.name, &apos;- n/a -&apos;) TargetingStrategy,  
+ifnull(sum(rbd.bids), 0) Bids, 
+ifnull(sum(rbd.wins), 0) Wins,
+ifnull(sum(rbd.impressions), 0) Impressions, 
+ifnull(sum(rbd.clicks), 0) Clicks,
+ifnull(sum(rbd.cost / 1000000), 0) Cost
+
+FROM hive_stats.st_report_by_domain rbd
+left join opendsp.ld_targeting_strategy ts on rbd.targeting_id = ts.targeting_strategy_id
+left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+left join opendsp.ld_campaign cmp on cl.campaign_id = cmp.campaign_id
+
+Where DATE(rbd.process_date) between &apos;@Date.Yesterday~&apos; and &apos;@Date.Yesterday~&apos;
+and cmp.campaign_id = 273
+
+group by DATE(rbd.process_date), rbd.targeting_id, rbd.domain
+order by DATE(rbd.process_date), rbd.targeting_id, rbd.domain;
+"
+				Type="SQL"
+			/>
+			<DataTableColumn
+				Class="ThemeAlignLeft"
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;DATE(rbd.process_date)&apos;) &gt; -1"
+				ID="colDate"
+				Width="7"
+				WidthScale="%"
+				>
+				<Label
+					Caption="@Data.Date~"
+					Format="Short Date"
+					ID="lblDate"
+				/>
+				<DataColumnSort
+					DataColumn="Date"
+					DataType="Date"
+				/>
+				<ExcelColumnFormat
+					DataType="Date"
+					ExcelAutoFitRow="True"
+					ExcelFormat="m/d/yy"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Class="ThemeAlignLeft"
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;ts.name&apos;) &gt; -1"
+				ID="colTargetingStrategy"
+				Width="12"
+				WidthScale="%"
+				>
+				<Label
+					Caption="@Data.TargetingStrategy~"
+					ID="lblTargetingStrategy"
+				/>
+				<DataColumnSort
+					DataColumn="TargetingStrategy"
+				/>
+				<ExcelColumnFormat
+					DataType="Text"
+					ExcelAutoFitRow="True"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Class="ThemeAlignLeft"
+				ID="colDomain"
+				Width="15"
+				WidthScale="%"
+				>
+				<Label
+					Caption="@Data.Domain~"
+					ID="lblDomain"
+				/>
+				<DataColumnSort
+					DataColumn="Domain"
+				/>
+				<ExcelColumnFormat
+					DataType="Text"
+					ExcelAutoFitRow="True"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Class="ThemeAlignLeft"
+				ID="colBids"
+				Width="7"
+				WidthScale="%"
+				>
+				<Label
+					Caption="@Data.Bids~"
+					Format="###,###,##0"
+					ID="lblBids"
+				/>
+				<DataColumnSort
+					DataColumn="Bids"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Bids"
+					Function="Sum"
+					ID="sumBids"
+				/>
+				<ExcelColumnFormat
+					DataType="Number"
+					ExcelAutoFitRow="True"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Class="ThemeAlignLeft"
+				ID="colWins"
+				Width="7"
+				WidthScale="%"
+				>
+				<Label
+					Caption="@Data.Wins~"
+					Format="###,###,##0"
+					ID="lblWins"
+				/>
+				<DataColumnSort
+					DataColumn="Wins"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Wins"
+					Function="Sum"
+					ID="sumWins"
+				/>
+				<ExcelColumnFormat
+					DataType="Number"
+					ExcelAutoFitRow="True"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Class="ThemeAlignLeft"
+				ID="colImpressions"
+				Width="7"
+				WidthScale="%"
+				>
+				<Label
+					Caption="@Data.Impressions~"
+					Format="###,###,##0"
+					ID="lblImpressions"
+				/>
+				<DataColumnSort
+					DataColumn="Impressions"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Impressions"
+					Function="Sum"
+					ID="sumImps"
+				/>
+				<ExcelColumnFormat
+					DataType="Number"
+					ExcelAutoFitRow="True"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Class="ThemeAlignLeft"
+				ID="colClicks"
+				Width="7"
+				WidthScale="%"
+				>
+				<Label
+					Caption="@Data.Clicks~"
+					Format="###,###,##0"
+					ID="lblClicks"
+				/>
+				<DataColumnSort
+					DataColumn="Clicks"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Clicks"
+					Function="Sum"
+					ID="sumClicks"
+				/>
+				<ExcelColumnFormat
+					DataType="Number"
+					ExcelAutoFitRow="True"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Class="ThemeAlignLeft"
+				ID="colCost"
+				Width="7"
+				WidthScale="%"
+				>
+				<Label
+					Caption="@Data.Cost~"
+					Format="$###,###,##0.00"
+					ID="lblCost"
+				/>
+				<DataColumnSort
+					DataColumn="Cost"
+					DataType="Number"
+				/>
+				<ExcelColumnFormat
+					DataType="Number"
+					ExcelAutoFitRow="True"
+				/>
+			</DataTableColumn>
+			<SummaryRow
+				Caption="Totals"
+			/>
+		</DataTable>
+	</Body>
+	<ideTestParams
+		groupby=""
+	/>
+</Report>

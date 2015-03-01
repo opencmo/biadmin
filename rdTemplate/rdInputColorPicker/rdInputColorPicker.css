@@ -1,0 +1,32 @@
+﻿.hidden{
+display:none;
+}
+.CheckedAlignment{
+vertical-align: top;
+margin-left: 0px !important;
+}
+.popupPanelModalTransparent {
+    opacity: 0 !important;
+}
+.rdColorPanelHolder {
+    align-content: center;
+    padding-left: 0px!important;
+    padding-top: 0px!important;
+    align-content: center!important;
+}
+.rdImageColorSelected{
+    width: 13px !important;
+    height: 13px !important;
+    margin-left: -1px;
+}
+.rdColorPickerSpacing {
+    border-spacing: 0px;    
+}
+.rd-colorpicker-image {
+    cursor: pointer;
+}
+a:focus>div{
+    border: solid !important;
+    border-width: 1px !important;
+    border-color: black !important;   
+}

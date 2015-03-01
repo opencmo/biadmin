@@ -1,0 +1,8 @@
+<DataMenuTree ID="rdDtm_rdReportCenterID" RememberView="True" LevelIndent="8" CaptionColumn="Caption" ActionIDColumn="rdAction" xxxImageColumn="rdImage"  SubMenuIDColumn="rdMenu" TargetSubMenuIDColumn="rdTargetMenu">
+	<Action Type="Report" ID="rdActionReport">
+		<Target Type="Report" Report="@Data.rdReport~" />
+	</Action>
+	<Action Type="RunBookmark" Report="@Data.rdReport~" BookmarkID="@Data.BookmarkID~" ID="rdActionBookmark">
+		<Target Type="RunBookmark" />
+	</Action>
+</DataMenuTree>

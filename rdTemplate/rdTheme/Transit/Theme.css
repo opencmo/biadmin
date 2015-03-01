@@ -1,0 +1,1406 @@
+/*Global Style Settings */
+body {
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-size: 13px;
+	color: #4c4c4c;
+}
+
+table {
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-size: 100%;
+	color: #4c4c4c;
+}
+
+img{
+	border: 0px;
+}
+
+a:link {
+	color: #5A5A5A;
+	text-decoration: none;
+}
+a:active {
+	color: #5A5A5A;
+	text-decoration: none;
+}
+a:visited {
+	color: #5A5A5A;
+	text-decoration: none;
+}
+a:hover {
+	color: #25A0DB;
+	text-decoration: underline;
+}
+
+a:hover.ThemeLinkButton,
+a:hover.ThemeLinkButtonSmall,
+a:link.ThemeLinkButton,
+a:link.ThemeLinkButtonSmall,
+a:visited.ThemeLinkButton,
+a:visited.ThemeLinkButtonSmall,
+a:active.ThemeLinkButton,
+a:active.ThemeLinkButtonSmall  {
+	color: #fff;
+	text-decoration: none;
+}
+
+.ThemeLinkButton:hover,
+.ThemeLinkButtonSmall:hover,
+span:hover.rdAgCommand,
+span:hover.rdAcCommand,
+span:hover.rdOgCommand,
+span:hover.rdCgCommand,
+span:hover.rdDashboardCommand,
+.rdPopupContent span:hover.rdDashboardCommand,
+#rowChangeTab span:hover.rdDashboardCommand,
+span:hover.rdPopupPanelCommand,
+.rdAgUnselectedTab:hover,
+.rdOgUnselectedTab:hover {
+	-webkit-transition: background-color 0.20s ease-in-out 0s;
+	-moz-transition: background-color 0.20s ease-in-out 0s;
+	transition: background-color 0.20s ease-in-out 0s;
+	background-color: #38c2e9;
+}
+.ThemeLinkButton:active,
+.ThemeLinkButtonSmall:active,
+.ThemeLinkButton:active span,
+.ThemeLinkButtonSmall:active span,
+img:active.rdThemePaging,
+span:active.rdAgCommand,
+span:active.rdOgCommand,
+span:active.rdCgCommand,
+span:active.rdDashboardCommand,
+#rowChangeTab span:active.rdDashboardCommand,
+span:active.rdPopupPanelCommand  {
+	background-color: #6ae5f6 !important;
+}
+
+.rdAgUnselectedTabOn:hover {
+	background-color: #fad73f;
+}
+
+/* AnalysisGrid */
+.rdAg, .rdAc , .rdDg, .rdOg, .rdCg {
+   font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+   font-size: 13px;
+}
+.rdAg table, .rdAc table, .rdDg table, .rdOg table, .rdCg table {
+   font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+   font-size: 13px;
+}
+
+.rdAgCaptionRow{
+   height: 37px;
+   background-color: #25a0da;
+   font-family: 'Segoe UI Light', 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+   font-weight: 100;
+   font-size: 220%;
+}
+
+.rdAgCaptionRow TD{
+	background-color: #25a0da;
+    padding-left: 15px;
+}
+
+.rdThemeDataTableCell {
+	padding: 4px;
+}
+
+.rdAg .rdThemeDataTableHeader td {
+	background-color: #fff !important;
+	color: #fff;
+}
+
+.rdAg .rdThemeDataTableCell  {
+	background-color: #fff;
+}
+
+#rowMenu table{
+  background: transparent;
+  border: none;
+  border-spacing: 0px;
+  padding-top: 6px;
+}
+
+#colSpacerCalc, #colSpacerLayout, #colSpacerLayout, #colSpacerSort, #colSpacerFilter, #colSpacerGroup, #colSpacerAggr, #colSpacerChart, #colSpacerCrosstab{
+  width: 2px;
+  padding: 0px;
+}
+
+.rdAg #lblExport,
+.rdAg #lblExportCrosstab {
+	color: #fff;
+}
+
+/* AnalysisGrid: Main Menu */
+.rdAgUnselectedTab, .rdOgUnselectedTab{
+  width: 89px;
+  height: 52px;
+  background-image: none;
+  background: #25a0da;
+  border: none;
+  padding: 5px 5px;
+  text-decoration: none;
+  color: #000000;
+}
+.rdAgUnselectedTab td, .rdOgUnselectedTab td {
+ color: #fff;
+}
+
+.rdAgSelectedTabOn
+{
+    background-color: #66CCFF;
+}
+.rdAgUnselectedTabOn
+{
+    background-color: #66CCFF;
+}
+
+.rdAgSelectedTab, .rdOgSelectedTab{
+  width: 89px;
+  height: 52px;
+  background-image: none;
+  background-color: #2f2f2f;
+  border: none;
+  padding: 5px 5px;
+  text-decoration: none;
+  margin-left: 0px;
+}
+
+#rowPaging table,
+#rowCrosstab table,
+#rowChart table,
+#rowAggr table,
+#rowGroup table,
+#rowFilter table,
+#rowSortOrder table,
+#rowLayout table,
+#rowCalc table,
+#rowQueryBuilder table,
+#rowsOlapGrid{
+  background: transparent;
+  border: none;
+  color: #2f2f2f;
+}
+
+.rdAgTabHeading {
+  font-size: 120%;
+}
+
+.rdAgPanel{
+   background-color: #25a0da;
+   color: #2f2f2f;
+   vertical-align: top;
+   border: none;
+}
+
+.rdAgContentHeadingRow {
+  margin-top: -1px;
+  margin-left: -1px;
+  padding: 0px;
+  background-color: #2f2f2f;
+  color: #fff;
+}
+
+.rdAgContentHeading{
+  font-family: 'Segoe UI Light','Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+  font-weight: 100;
+  font-size: 200%;
+}
+
+    /*Buttons*/
+.rdAgCommand, .rdOgCommand, .rdAcCommand, span.rdCgCommand, .rdDashboardCommand, .rdPopupContent span.rdDashboardCommand {
+	background-image: none;
+    background-color: #25a0da;
+	color: #fff !important;
+	font-size: 105%;
+	text-decoration: none !important;
+	border: none;
+	padding-right: 8px;
+	padding-left: 8px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	cursor: pointer;
+}
+.rdAgCommand,
+.rdOgCommand,
+span.rdCgCommand ,
+.rdPopupPanelCommand,
+.rdPopupPanel .ThemeLinkButton,
+.rdPopupPanel .ThemeLinkButtonSmall {
+	border: 1px solid #45d2f0 !important;
+}
+.ThemeLinkButton span,
+.ThemeLinkButtonSmall span {
+	color: #fff !important;
+}
+.ThemeLinkButton:hover span,
+.ThemeLinkButtonSmall:hover span {
+	-webkit-transition: background-color 0.20s ease-in-out 0s;
+	-moz-transition: background-color 0.20s ease-in-out 0s;
+	transition: background-color 0.20s ease-in-out 0s;
+	background-color: #38c2e9;
+}
+
+.rdAcContentRow {
+	border: 1px solid #90909c;
+	background-color: transparent;
+}
+
+.rdAcCommandLeft, .rdAcCommandMiddle, .rdAcCommandRight {
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	margin: 2px;
+	border-radius: 0px 0px 0px 0px;
+}
+.rdAcCommandHighlight {
+	background-image: none;
+	background-color: #2f2f2f;
+	font-size: 105%;
+}
+
+.rdRemoveTableStyle td,
+.rdAg .rdRemoveTableStyle td,
+.rdRemoveTableStyle th {
+	background-image: none;
+	background-color: transparent;
+	height: 5px;
+	border: none;
+	border-collapse: collapse;
+}
+
+/*SubDataTable*/
+
+.rdThemeSubDataTable {
+	background-color: #fff;	/* This is used as the border for the subtable */
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table.rdThemeSubDataTable th, .rdThemeSubDataTable th {
+	background-color: #2f2f2f;
+	color: #fff;
+	padding-left: 4px;
+	padding-top: 2px;
+	padding-right: 3px;
+	padding-bottom: 2px;
+}
+
+.rdThemeSubDataTableGroupHeaderRow td {
+	background-color: #878786;
+	color: #fff;
+	padding-left: 3px;
+}
+
+.rdThemeSubDataTableDataTableCell {
+	background-color: #ececec;
+	color: #4c4c4c;
+}
+
+.rdThemeSubDataTableMoreInfoRow {
+	background-color: #fff;
+	color: #4c4c4c;
+	padding-left: 3px;
+}
+
+.rdThemeSubDataTableGroupSummaryRow td {
+	background-color: #b3b2b2;
+	color: #fff;
+	padding-left: 3px;
+}
+
+.rdThemeSubDataTableSummaryRow td {
+	background-color: #2f2f2f;
+	color: #fff;
+	padding-left: 3px;
+}
+
+/* User Input Controls */
+.rdThemeInputCaption {
+	padding-right: 10px;
+	vertical-align: middle;
+}
+
+input.rdThemeInput, textarea.rdThemeInput, select.rdThemeInput, select.rdDataCalendarDropdown {
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-size: 13px;
+	border: 1px solid #90909c;
+	padding: 4px;
+}
+
+/* Input checkbox list */
+.rd-checkboxlist, .rd-checkboxlist-dropdown {
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	background-color: #fff;
+	border: 1px solid #90909C;
+}
+
+.rd-checkboxlist-popup {
+	border: 1px solid #90909C;
+	background-color: #fff;
+	padding: 4px;
+}
+
+/* Paging */
+
+.rdThemePaging{
+	font-size:14px;
+	margin-bottom: 2px;
+}
+.rdAg .rdThemePaging {
+	background-color:#25a0da;
+}
+
+.rdThemePaging a{
+   font-size: 100%;
+}
+
+.rdAg .rdThemePaging a span{
+	color: #fff;
+    padding-bottom: 1px;
+    padding-top: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+	text-align: center;
+    border: #fff 1px solid;
+    border-radius: 2px 2px 2px 2px;
+}
+
+.rdThemePagingCurrent {
+	background-color: #25a0da;
+	color: #fff;
+	padding-bottom: 1px;
+    padding-top: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+	text-align: center;
+    border-radius: 2px 2px 2px 2px;
+}
+.rdAg .rdThemePagingCurrent {
+	background-color: #fff;
+	color: #25a0da;
+}
+
+input.rdThemePagingCurrent {
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-size: 100%;
+	background-color: #fff;
+	color: #90909c;
+	border: 1px solid #90909c;
+	padding: 2px;
+	border-radius: 0px 0px 0px 0px;
+
+}
+
+/* Quicktip */
+.rdquicktip-content,
+.rdCcTextNormal,
+.rdCcTextNormal table, .rdCcTextNormal td, .rdCcTextNormal span {
+	background-color: #2f2f2f !important;
+	border-color: #000;
+	color: #fff;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+	filter: alpha(opacity=90);
+	opacity: 0.9;
+	border-radius: 0px;
+}
+
+.rdquicktip-content .rdquicktip-table,
+.rdquicktip-content .rdquicktip-table td {
+	color: #fff;
+}
+
+.quicktip-pointer {
+	border-color: #000 transparent;
+}
+
+.quicktip-pointer-inner {
+	border-color: #2f2f2f transparent;
+}
+
+.rdquicktip-content .header {
+	background-color: #2f2f2f;
+	font-family: 'Segoe UI Light', 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-size: 140%;
+	font-weight: 100;
+}
+
+.rdCcTextNormal .rdPopupContent span {
+  color: #fff;
+}
+.rdCcTextPositive,
+.rdCcTextNormal .rdPopupContent .rdCcTextPositive span {
+  color: green;
+}
+.rdCcTextNegative,
+.rdCcTextNormal .rdPopupContent .rdCcTextNegative span {
+  color: darkred;
+}
+
+/* PopupMenu */
+
+
+/* Analysis / Dimension / OLAP Chart Grid */
+
+table.rdAgDataTable th, tr.rdAgHeaderRow th {
+    background-image: none;
+    background-color: #fff;
+	border-right: 2px solid #25a0da;
+	border-bottom: 2px solid #25a0da;
+	color: #25a0da;
+}
+table.rdAgDataTable th a {
+	font-size: 110%;
+	color: #25a0da;
+}
+
+.rdDgCaptionRow td,
+.rdCgCaptionRow td,
+.rdOgCaptionRow td {
+	background-color:#25a0da;
+}
+.rdDgSelected,
+.rdCgSelected {
+	background-color: #2f2f2f;
+	color: #fff;
+}
+.rdDg table,
+.rdCg table {
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+}
+
+.rdDgContentHeading ,
+.rdCgContentHeading,
+.rdOgContentHeading{
+	color:#fff;
+}
+
+.rdOgSortColumn span{
+	color:black;
+}
+.rdDgPanel, .rdCgPanel, .rdOgPanel {
+	background-color: #fff;
+	border: none;
+}
+
+.rdDgCaptionRow,
+.rdDgContentHeading,
+.rdCgCaptionRow,
+.rdCgContentHeading,
+.rdOgCaptionRow,
+.rdOgContentHeading{
+	font-family: 'Segoe UI Light', 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-weight: 100;
+	font-size: 200% !important;
+}
+
+.rdAg tr.ThemeAlternatingRow td {
+	background-color: #E8E8E8;
+	padding: 4px;
+}
+
+.rdCg #lblColumnTitle,
+.rdCg #lblRowTitle {
+	color: #4c4c4c !important;
+}
+
+/* Tabs */
+
+.yui-navset, .yui-nav{
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-size: 13px;
+}
+.yui-nav li{
+  font-family: 'Segoe UI Light', 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+  font-size: 169% !important;
+}
+.yui-nav li span{
+	padding: 4px;
+}
+.yui-nav a{
+  border: none !important;
+  text-decoration: none;
+  margin-bottom: 4px;
+}
+.yui-navset .yui-nav li a  {
+  color: #ccc;
+  margin-top: 0 !important;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+.yui-navset .yui-content {
+  border: none;
+}
+.yui-navset li em{
+  padding: 0px !important;
+}
+
+.yui-navset .yui-nav .selected a{
+	background-color: transparent !important;
+	background-image: none !important;
+	color: #4c4c4c !important;
+	-webkit-transition: color 0.20s ease-in-out 0s;
+	-moz-transition: color 0.20s ease-in-out 0s;
+	transition: color 0.20s ease-in-out 0s;
+}
+.yui-nav a:link{
+	background-color:#fff !important;
+	background-image:none !important;
+}
+
+/* dashboard */
+
+.rdDashboard,
+.rdDashboard table {
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-size: 12px;
+}
+
+td.rdDashboard {
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-size: 100%;
+    background-color: #fff;
+	padding: 0px;
+}
+
+#rdDashboardPanelTable,
+#rdDivDashboardPanelTable,
+.rdDashboardDropZone {
+	background-color: #c0c0c0;
+	color: #4c4c4c;
+}
+#rdDivDashboardPanelTable {
+	/*padding-left: 10px; #22246.*/
+	padding-bottom: 10px;
+}
+
+.rdDashboardPanel{
+  border: none;
+}
+
+td.rdDashboardDropZoneActive,
+.rdAgDropZoneActive {
+	background-image: none;
+    background-color: #ccc;
+}
+
+.rdDashboardPanel, .rdDashboardPanel table{
+    background-color: #fff; /*c8ebfa*/
+    border: none;
+	border-collapse: collapse;
+}
+.rdDashboardTitle table {
+    background-image: none !important;
+    color: #fff;
+    font-size: 15px;
+    padding: 0px;
+}
+.rdDashboardTitle .rdDashboardCommand {
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-weight: none;
+}
+td.rdDashboardTitle {
+	background-image: none !important;
+	background-color: #2f2f2f;
+	padding: 0px;
+}
+.rdDashboardTitleCaption {
+	font-family: 'Segoe UI Light', 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-weight: 100;
+    font-size: 120%;
+	padding: 4px;
+}
+.rdDashboardColumn .rdDashboardTitleCaption,
+#rdDivDashboardPanelTable .rdDashboardTitleCaption {
+	color: #4c4c4c;
+}
+.rdDashboardControl {
+	padding: 4px;
+}
+.rdDashboardText {
+	padding: 4px;
+}
+#rowChangeTab {
+	background-color: #c0c0c0;
+}
+#rowChangeTab .rdDashboardCommand{
+	background-color: #c0c0c0;
+}
+#rowsTabChange table, #rdDashboardListTable table{
+    background-color: transparent;
+}
+#rowsTabChange .rdDashboardTitle, #rowPanelList .rdDashboardTitle{
+    border: none;
+}
+#rdTabAddNewTab a{
+    font-size: 60%;
+}
+#rdTabAddNewTab em{
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 8px;
+}
+.rdDashboardParams {
+	background: transparent;
+	color: #4c4c4c;
+	font-size: 110%;
+}
+
+tr.rdDashboardParams td {
+    background-color: #efefef;
+    padding: 3px;
+}
+
+td.rdDashboardParams {
+	border-color: #ccc;
+    border-style: solid;
+	border-top-width: 1px;
+    border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+.rdDashboardParams table {
+	background-color: #efefef;
+}
+
+.rdDashboardParams a{
+	float: right;
+}
+
+/* calendar */
+
+.rdDataCalendarFont,
+.rdDataCalendar ,
+.rdDataCalendar table,
+.rdDataCalendarPopUp,
+.rdDataCalendarPopUp table,
+.rdTimePicker {
+    font-family: 'Segoe UI','Lucida Grande','Verdana','Arial','helvetica','sans-serif';
+	font-size: 13px;
+	font-weight: normal;
+}
+.rdTimePicker {
+	background-color: #9f9d9d;
+}
+.rdPopupContent .rdTimePicker {
+	background-color: #25a0db;
+}
+
+table.rdDataCalendar{
+	background-color: transparent;
+    border-collapse: collapse;
+}
+.rdPopupContent table.rdDataCalendar{
+	background-color: #25a0db;
+    border-collapse: collapse;
+}
+
+.rdDataCalendarWeekdayCaption, .rdTimePickerTableHeaderCaption{
+	background-color: #fff;
+	color: #2f2f2f !important;
+    font-size: 18px;
+}
+.rdDataCalendarWeekdayCaption td {
+	color: #2f2f2f !important;
+}
+
+.rdDataCalendarDay, .rdTimePickerCell, .rdTimePickerAMPMCell{
+    background-color: #fff;
+	color: #2f2f2f;
+}
+.rdPopupContent .rdDataCalendarDay,
+.rdPopupContent .rdTimePickerCell,
+.rdPopupContent .rdTimePickerAMPMCell,
+.rdPopupContent .rdDataCalendarDay span,
+.rdPopupContent .rdTimePickerCell span,
+.rdPopupContent .rdTimePickerAMPMCell span {
+	background-color: #fff !important;
+	color: #2f2f2f !important;
+}
+
+.rdDataCalendarToday,
+.rdPopupContent .rdDataCalendarToday,
+.rdPopupContent .rdDataCalendarToday span {
+	background-color: #ccc !important;
+}
+
+.rdDataCalendarCaption , .rdDataCalendarDayCaption{
+	color: #2f2f2f !important;
+    font-size: 135%;
+}
+.rdDataCalendarDayOutsideMonth,
+.rdDataCalendarDayOutsideMonth span{
+    background-color: #E8E8E8 !important;
+}
+.rdDataCalendarDayOutsideMonth {
+	border-right: #fff solid 1px;
+	height: 25px; /*Issue 22365*/
+}
+.rdPopupContent .rdDataCalendarDayOutsideMonth {
+	border: #25a0db solid 1px;
+}
+
+td.rdDataCalendarDay{
+  border: #9f9d9d solid 1px;
+}
+.rdPopupContent td.rdDataCalendarDay{
+  border: #25a0db solid 1px;
+}
+.rdDataCalendarDayLabel,
+.rdTimePickerLabel {
+	font-family: 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-size: 105%;
+}
+.rdDataCalendarDayLabelHighlight a,
+.rdDataCalendarDayLabelHighlight td,
+.rdPopupContent .rdDataCalendarDayLabelHighlight span,
+.rdPopupContent  .rdDataCalendarDayCaption,
+.rdDataCalendarDayLabelHighlight,
+ .rdTimePickerLabelHighlight{
+  color: #fff !important;
+}
+.rdDataCalendarDayLabelHighlight,
+.rdTimePickerLabelHighlight,
+.rdPopupContent .rdDataCalendarDayLabelHighlight span,
+.rdPopupContent .rdTimePickerLabelHighlight span{
+  background-color: #66CCFF !important;
+}
+
+#Cal-2-CaptionCell.rdDataCalendarCaption,
+#Cal-3-CaptionCell.rdDataCalendarCaption {
+	line-height: 35px;
+}
+
+/* datatable / crosstabtable */
+
+.rdThemeDataTableMainHeader a{
+	color: #fff;
+}
+.rdThemeDataTableMainHeader{
+	background-color: #2f2f2f;
+    color: #fff;
+    font-size: 140%;
+    padding-left: 15px;
+    text-align: left;
+	margin-bottom: 2px;
+	border-right: 2px solid #fff;
+}
+
+.rdThemeDataTableHeader {
+	color: #fff;
+	background-color: #25a0db;
+	border-right: 2px solid #fff;
+	border-bottom: 2px solid #fff;
+	padding:4px;
+	font-size:100%;
+}
+.rdThemeDataTableHeader td {
+	background-color: #25a0db !important;
+	color: #fff;
+}
+.rdThemeDataTableHeader a {
+	color: #fff !important;
+}
+
+.rdThemeDataTableHeaderRow th{
+	background-color: #2F2F2F;
+	color:#fff;
+	font-weight:normal;
+	border-right: 2px solid #fff;
+	border-bottom: 2px solid #fff;
+}
+
+.rdThemeDataTableSummaryRow td {
+	background-color: #25a0db;
+	color: #fff;
+}
+
+.rdThemeDataTableGroupHeaderRow0 td, .rdAg tr.rdAgGroup0HeaderRow td {
+	background-color: #66CCFF;
+	color: #fff;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow1 td, .rdAg tr.rdAgGroup1HeaderRow td {
+	background-color: #7CE0FC;
+	color: #fff;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow2 td, .rdAg tr.rdAgGroup2HeaderRow td {
+	background-color: #9AEFFD;
+	color: #25a0da;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow3 td, .rdAg tr.rdAgGroup3HeaderRow td {
+	background-color: #D4FEFE;
+	color: #25a0da;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow4 td, .rdAg tr.rdAgGroup4HeaderRow td {
+	background-color: #ddeaf9;
+	color: #25a0da;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupSummaryRow td {
+
+	padding: 4px;
+}
+
+/* WaitPage */
+.rdThemeWaitPanel {
+	background-color: #25a0da;
+	padding: 10px;
+
+}
+.rdThemeWaitCaption {
+	color: #fff;
+	font-size: 18px;
+}
+
+/*User classes*/
+.ThemeHeaderLargest  {
+	font-family: 'Segoe UI Light', 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	color: #2f2f2f;
+	font-size: 220%;
+	font-weight: 100;
+}
+
+.ThemeHeaderLarger  {
+	font-family: 'Segoe UI Light', 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	color: #2f2f2f;
+	font-size: 169%;
+	font-weight: 100;
+}
+
+.ThemeHeaderLarge  {
+	font-family: 'Segoe UI Light', 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	color: #2f2f2f;
+	font-size: 130%;
+	font-weight: 100;
+}
+
+.ThemeHeader{
+	font-family: 'Segoe UI Light', 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	color: #2f2f2f;
+}
+
+.ThemeHeaderSmall {
+	color: #2f2f2f;
+	font-size: 85%;
+}
+
+.ThemeHeaderSmaller {
+	color: #2f2f2f;
+	font-size: 75%;
+}
+
+.ThemeHeaderSmallest {
+	color: #2f2f2f;
+	font-size: 60%;
+}
+
+.ThemeTextLargest {
+	font-size: 160%;
+}
+
+.ThemeTextLarger {
+	font-size: 145%;
+}
+
+.ThemeTextLarge {
+	font-size: 130%;
+}
+
+.ThemeTextSmall {
+	font-size: 85%;
+}
+
+.ThemeTextSmaller {
+	font-size: 75%;
+}
+
+.ThemeTextSmallest {
+	font-size: 60%;
+}
+
+.ThemeMarginLargest {
+	margin: 25px;
+}
+
+.ThemeMarginLarger {
+	margin: 20px;
+}
+
+.ThemeMarginLarge {
+	margin: 15px;
+}
+
+.ThemeMargin {
+	margin: 5px;
+}
+
+.ThemePaddingLargest {
+	padding: 25px;
+}
+
+.ThemePaddingLarger {
+	padding: 20px;
+}
+
+.ThemePaddingLarge {
+	padding: 15px;
+}
+
+.ThemePadding {
+	padding: 5px;
+}
+
+.ThemeBold {
+	font-weight: bold;
+}
+
+.ThemeItalic {
+	font-style: italic;
+}
+
+.ThemeContainerBordered {
+	border: solid 2px #25A0DA;
+	padding: 3px;
+}
+
+.ThemeContainerShaded {
+	background-color: #9AEFFD;
+	padding: 3px;
+}
+
+.ThemeContainerShadedAndBordered {
+	background-color:#25a0da;
+	color:#fff;
+}
+
+tr.ThemeAlternatingRow td.rdThemeDataTableCell {
+	background-color: #E8E8E8;
+	padding: 4px;
+}
+
+.ThemeLinkButton {
+	color: #fff !important;
+	font-size: 105%;
+	background: #25a0da;
+	background-position: bottom;
+	text-decoration: none;
+	padding-left: 11px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-right: 7px;
+	margin-bottom: 2px;
+	line-height: 24px;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.ThemeLinkButtonSmall {
+	color: #fff !important;
+	font-size: 105%;
+	background: #25a0da;
+	text-decoration: none;
+	margin-left: 3px;
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	cursor: pointer;
+	vertical-align: middle;
+	line-height: 24px;
+	white-space: nowrap;
+}
+
+.ThemeTextPositive {
+	color: green;
+}
+
+.ThemeTextNegative {
+	color: darkred;
+}
+
+.ThemeTextNormal {
+	font-size: 12px;
+	color: #444;
+}
+
+.ThemeErrorText {
+	color: #790619 !important;
+	font-family: arial, sans-serif;
+	font-size: 100%;
+	border: 1px solid #d8000c !important;
+	background-color: #ffbaba !important;
+}
+
+.ThemeNoWrap {
+	white-space: nowrap;
+}
+
+.ThemeHidden {
+	display: none;
+}
+
+.ThemeAlignCenter {
+	text-align: center;
+}
+
+.ThemeAlignLeft {
+	text-align: left;
+}
+
+.ThemeAlignRight {
+	text-align: right;
+}
+
+.ThemeAlignTop {
+	vertical-align: top;
+}
+
+.ThemeAlignTopLeft {
+	vertical-align: top;
+	text-align: left;
+}
+
+.ThemeAlignTopRight {
+	vertical-align: top;
+	text-align: right;
+}
+
+.ThemeAlignBottom {
+	vertical-align: bottom;
+}
+
+.ThemeAlignBottomLeft {
+	vertical-align: bottom;
+	text-align: left;
+}
+
+.ThemeAlignBottomRight {
+	vertical-align: bottom;
+	text-align: right;
+}
+
+/*User classes*/
+
+.ThemeContainerShadedAndBordered a {
+	color: #fff;
+}
+/*.ThemeAlignRight a{
+	color:#25a0da;
+	border:1px solid #fff;
+	padding:0 5px 0 5px;
+	text-decoration:none;
+}
+.ThemeAlignRight a:hover{
+	text-decoration: underline;
+}*/
+
+/* MultiColumnList */
+.ThemeContainer	tr td span:hover{
+	background-color:#e0eefb;
+}
+
+/* popup */
+
+/* ORIGINAL
+.rdPopupPanel, .rdPopupContent {
+	font-size: 13px;
+	background-color: #25a0da !important;
+	color: #fff !important;
+	border-color: transparent;
+}
+*/
+
+
+.rdPopupPanel, .rdPopupContent {
+	font-size: 13px;
+	background-color: #fff !important;
+	border-color: #888888;
+}
+
+/* ORIGINAL .rdPopupContent .rdThemeInputCaption,
+.rdPopupContent td,
+.rdPopupContent span {
+	color: #fff;
+	background-color:#25a0da;
+} */
+
+.rdPopupContent .rdThemeInputCaption,
+.rdPopupContent td,
+.rdPopupContent span {
+	color: #2F2F2F;
+}
+
+
+.rdPopupContent a span {
+	color: #5A5A5A;
+}
+
+.rdPopupPanelTitle,
+.rdPopupPanelTitle td,
+.rdPopupPanelTitle span {
+	background-color:#25a0da;
+	background-image:none;
+	color:#fff;
+}
+.rdPopupPanelTitle .rdPopupPanelCommand {
+	border: none !important;
+}
+
+.rdPopupPanelTitleCaption{
+	font-family: 'Segoe UI Light', 'Segoe UI', 'Lucida Grande', 'Verdana', 'Arial', 'helvetica', 'sans-serif';
+	font-weight: 100;
+	font-size: 140%;
+}
+.rdPopupPanelCommand{
+	font-size: 140%;
+	background: none;
+	text-decoration: none !important;
+	color: #fff !important;
+	border-color:transparent;
+}
+
+/* PopupMenu */
+
+.yuimenu {
+	border: none;
+}
+
+.yuimenubaritemlabel, .yuimenuitemlabel, .yuimenubaritem, .yuimenuitem
+{
+    color: #fff !important;
+}
+
+.yuimenubaritemlabel-selected, .yuimenuitemlabel-selected, .yuimenubaritem-selected, .yuimenuitem-selected
+{
+    color: #fff;
+    background-color: #2f2f2f;
+    text-decoration: none;
+}
+
+.first-of-type{
+	background-color: #25a0da;
+	border: none;
+    display: block;
+    padding: 5px;
+	width:100%;
+}
+.first-of-type li a{
+	color:#fff;
+}
+.first-of-type:hover{
+	background-color: #25a0da;
+}
+
+/* DimensionGrid, OlapGrid, ChartGrid */
+.rdDgPanel table,
+.rdCgPanel table,
+.rdOgPanel table{
+    border-collapse: collapse;
+}
+
+.rdCgFilterTable td, .rdDg #popupFilter td, .rdDg #popupFilter a {
+	background-color: #25a0da !important;
+	color: #fff;
+}
+
+td.rdDgPanel table,
+.rdDgContentHeadingRow,
+td.rdCgPanel table,
+.rdCgContentHeadingRow,
+.rdOgContentHeadingRow,
+.rdOgContentHeading
+{
+  background-color: #2f2f2f !important;
+  font-size: 100%;
+}
+
+td.rdDgPanel .rdThemeDataTableCell,
+td.rdCgPanel .rdThemeDataTableCell {
+  background-color: #fff;
+}
+
+.rdOgDataCell,
+.rdCgDataCell {
+  border-right: #ccc solid 1px;
+  border-bottom: #ccc solid 1px;
+  padding: 4px;
+}
+
+td.rdDgPanelLine, .rdDgPanelLine td, .rdDgPanelLine a:link,
+td.rdCgPanelLine, .rdCgPanelLine td, .rdCgPanelLine a:link{
+ background-color: #fff;
+ font-size: 100%;
+ border: none;
+}
+
+.rdDgPanelLine .rdDgSelected a:link
+.rdCgPanelLine .rdCgSelected a:link{
+  color: #fff !important;
+  font-weight: normal;
+}
+
+.rdDgPanelLine .rdDgSelected,
+.rdCgPanelLine .rdCgSelected,
+.rdCgPanelLine .rdCgSelected span {
+  background-color: #25a0da !important;
+}
+
+th.rdOgPositionCellXAxis,
+td.rdOgPositionCellXAxis,
+td.rdOgPositionCellXAxis td,
+th.rdOgPositionCellYAxis,
+th.rdOgSortColumn,
+th.rdCgPositionCellXAxis,
+td.rdCgPositionCellXAxis,
+td.rdCgPositionCellXAxis td,
+th.rdCgPositionCellYAxis {
+  background-image: none;
+  background-color: #25a0da !important;
+  color: #fff;
+  padding: 4px;
+}
+th.rdOgPositionCellXAxis,
+td.rdOgPositionCellXAxis,
+th.rdCgPositionCellXAxis,
+td.rdCgPositionCellXAxis {
+    border-right: #fff solid 1px;
+    border-bottom: #fff solid 1px;
+	padding: 4px;
+}
+th.rdOgPositionCellYAxis,
+th.rdOgSortColumn {
+    border-right: #fff solid 1px;
+}
+
+.rdOgPositionCellYAxis, th.rdOgPositionCellXAxis{
+  color: #fff !important;
+}
+td .rdDgPanelLine, td .rdDgPanelLine table{
+  background-color: #fff !important;
+}
+
+.rdOgContentHeadingRow .rdOgCommand {
+  padding: 0.1em 1em;
+}
+.rdOgContentHeadingRow #lblShowEmpty {
+	color: #fff;
+}
+
+
+/*Report Author*/
+.rdReportAuthor_CommandLeft, .rdReportAuthor_CommandMiddle{
+    padding: 5px 12px!important;
+    margin: 0px;
+    border-radius: 0;
+}
+/*buttom menu*/
+.rdAcCommandHighlight {
+padding-top: 0px!important;
+padding-bottom: 4px!important;
+}
+.rdAcCommand{
+padding-top: 0px!important;
+padding-bottom: 4px!important;
+text-decoration: none!!important;
+
+}
+.rdAgPanel span a:hover{
+    text-decoration: none!important;
+}
+
+.rd-element-editor {
+    border: solid 1px #C9E6F2;
+}
+
+    .rd-element-editor:hover {
+        border-color: #68B6E3;
+    }
+
+.rd-element-editor-header {
+    background-color: #f8f8f8;
+}
+
+.rd-element-editor-droppable {
+    border: solid 1px #C9E6F2;
+}
+
+    .rd-element-editor-droppable:hover {
+        border-color: #68B6E3;
+    }
+
+.column-with-droppable {
+    border-right: 1px solid #C9E6F2;
+}
+
+#lblSwitchToDesignModeTrue,
+#lblSwitchToPreviewModeTrue{
+color:#fff!important;
+}
+
+
+.reportAuthorbgcmenu{
+  background-color: #25A0DA;
+}
+.rdReportAuthor_BackgroundMenu {
+height: 21px!important;
+}
+
+/* ingoGo - Table for Share Bookmarks list */
+table #dtBookmarkSharedWith.rdThemeDataTable{
+	border-collapse: collapse !important;
+	border: none;
+}
+
+#rowBookmarkSharedWith {
+  min-height: 185px;
+  height: 185px;
+}
+
+table #dtBookmarkSharedWith a{
+  display: inline-block;
+  line-height: 28px;
+  padding-right: 25px;
+  background: transparent url("../../rdBookmarkOrganizer/deleteOn.png") top right no-repeat; 
+}
+
+table #dtBookmarkSharedWith td:first-of-type > span{
+  display: inline-block;
+  line-height: 28px;
+  padding-left: 25px;
+  background: transparent url("../../rdBookmarkOrganizer/rdBookmarkSharingOn.png") top left no-repeat; 
+}
+
+.iconAddUser{
+  background: transparent url("../../rdBookmarkOrganizer/rdBookmarkSharingAdd.png") top left no-repeat; 
+  height: 24px;
+  display: block;
+}
+
+#dtBookmarkSharedWith a, #dtBookmarkSharedWith a:hover,
+#rdDivBookmarkShareTemplate a, #rdDivBookmarkShareTemplate a:hover{
+	text-decoration: none;
+}
+
+#lblDimSwap, #lblExport{
+color:#fff;
+}
+
+#DpForInputDate_txtOrderDate_rdInputDateElement td{ /*Issue 22365*/
+	vertical-align: top;
+}
+.rdDataCalendar .rdDataCalendarDropdown{ /*Issue 22365*/
+	margin-bottom: 2px;
+    margin-top: 2px;
+}

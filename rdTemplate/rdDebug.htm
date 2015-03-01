@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+   <head>
+      <meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
+      <meta http-equiv="Expires" content="-1" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>rdDebug</title>
+      <style type="text/css">
+	      BODY { margin-right: 0px; margin-left: 0px; font-size: 11px; font-family: verdana, arial, sans-serif;}
+         .MoreInfo { BACKGROUND: Gray; color:White; }
+         .ErrDiv { BACKGROUND: #f0f0f0; }
+         .MajorTitle { font-size:9pt; font-weight:bold; }
+         .bld { font-weight:bold; }
+         .InfHeader { font-weight:bold; text-align: center; width: 100%; }
+         .WrnHeader { font-weight:bold; text-align: center; width: 100%; }
+         .ErrHeader { color:Maroon; font-size:12pt; font-weight:bold; width: 100%; }
+         .ErrMessage { color:Maroon; font-size:9pt; width: 100%; }
+	    .BodyTable { border-collapse: collapse; width: 99%; }
+	    .DebugTable { border-collapse: collapse; height: 11px; width: auto; border: solid 1px #3f60af; }
+	    .DebugTable tr th { text-align: left; }
+	    .DebugTable tr td { border: solid 1px #bbbbbb; font-size: 11px; }
+	    .BodyTable tr td table .StepRow td { border-top: solid 1px #3f60af; background-color: #454545; }
+	    .HeaderRow th { background-color: #eaeff8; border-bottom: solid 1px #3f60af; }
+	    .LogiDarkGreen { color: #639e12; font-weight: normal; font-size: 18px; }
+	    .logiPurple { color: #3f60af; font-size: 18px; }
+	    .TimeRight { text-align: right; padding-right: 4px; }
+	    .SecondHeader { background-color: #3f60af; color: white; padding-left: 4px; font-weight: bold; }
+	    .SmallNote { font-size: 12px; padding-left: 8px; }
+	    .GroupHdr { background-color: #cc0033; color: white; padding-left: 4px; font-weight: bold; }
+	    .TopError { border: solid 1px #cc0033; }
+	    .TopError tr td { border-top: solid 1px #cc0033; padding-left: 4px; font-size: 11px; }
+        .InnerError { border-left: solid 1px #cc0033; border-right: solid 1px #cc0033; border-bottom: solid 1px #cc0033; font-size: 11px; }
+        .InnerError tr td { padding-left: 4px; font-size: 11px; }
+        .InnerErrorMessage td { padding-left: 4px; color: #cc0033; font-size: 11px; }
+        td.progress { width: 10%; }
+        td.progress .text { position: relative; }
+		td.progress span { position: absolute; top: 0px; right: 0px; }
+		div.progressBar, div.previousElapsed { background-color: #d4e4a4; float: left; clear: right; } /* Clear right is for IE7 */
+		div.previousElapsed { background-color: #efffbf; }
+		a.generateProgressBars { color: #0000EE; }
+        td,th {
+	        padding: 0;
+            white-space: pre;           /* CSS 2.0 */
+	        white-space: pre-wrap;      /* CSS 2.1 */
+	        white-space: pre-line;      /* CSS 3.0 */
+	        white-space: -pre-wrap;     /* Opera 4-6 */
+	        white-space: -o-pre-wrap;   /* Opera 7 */
+	        white-space: -moz-pre-wrap; /* Mozilla */
+	        white-space: -hp-pre-wrap;  /* HP Printers */
+	        word-wrap: break-word;      /* IE 5+ */
+	     }
+      </style>
+   </head>
+   <body rdDebugUrl="-rdDebugUrl-">
+      <div style="padding-left: 4px"><h3><span class="LogiDarkGreen">Logi</span> <span class="LogiPurple">Debugger Trace Report</span></h3></div>
+      <rdErrorMsgContent>
+         <rdErrorMessage />
+      </rdErrorMsgContent>
+      <span id="DetailedReport" style="Display:rdDetailDisplayStyle">
+          <table border="0" class="BodyTable">
+             <tr><td><div class="SecondHeader">Trace</div></td></tr>
+             <tr><td></td></tr>	 
+             <tr><td>
+	        <table class="DebugTable" border="0" cellspacing="0" style="table-layout:fixed;width:100%;white-space:nowrap;">
+                   <tr class="HeaderRow">
+                      <th style="width:20%">Event</th>
+                      <th style="width:20%;">Event Detail</th>
+                      <th style="width:52%;">Value</th>
+                      <th style="width:08%;text-align:center;"><a href="javascript:void(0);" class="generateProgressBars">Time</a> *</th>
+                   </tr>
+                   <tr id="rdCurrentPosition" style="display: none;"></tr>
+             </table>
+             </td></tr>
+             <tr><td class="SmallNote">* Generating this debugger information increases the overall elapsed time.</td></tr>
+             <tr><td>&#160;</td></tr>
+          </table>
+          <table border="0" class="BodyTable">
+             <tr><td><rdErrorReport /></td></tr>
+          </table>
+      </span>
+        <script src="../rdTemplate/rdYui/yui-preload-min.js"></script>
+        <script src="../rdTemplate/rdYui/global.js"></script>
+        <script src="../rdTemplate/rdCookie.js"></script>
+       <script src="../rdTemplate/rdAjax/rdAjax2.js"></script>
+        <script>
+            (function(){
+                /*
+                 * This code serves multiple purposes
+                 * 1) General Debug
+                 * 2) General Debug in ETL
+                 * 3) Exception Page for our exceptions
+                 *
+                 * In some cases ../rdTemplate is transformed into rdTemplate.  And often this breaks the URLs
+                 */
+                if ( typeof YUI !== 'undefined' ) {
+                
+                    var RENDER_PROGRESS_BARS = 'alwaysRenderProgressBars',
+                        rd = LogiXML.rd,
+                        progressBarsRendered = false;
+                
+                    Y.on('domready', function() {
+                        // User always want bars rendered
+                        if ( rd.getLocalStorage( RENDER_PROGRESS_BARS ) === 'true' ) {
+                            progressBarsRendered = true;
+                            buildProgressBars();
+                        }
+                    
+                        Y.one('.generateProgressBars').on('click', function(e) {
+                        
+                            if ( rd.getLocalStorage( RENDER_PROGRESS_BARS ) === 'true' ) {
+                                rd.setLocalStorage( RENDER_PROGRESS_BARS, false );
+                                removeProgressBars();
+                            }
+                            else {
+                                rd.setLocalStorage( RENDER_PROGRESS_BARS, true );
+                                buildProgressBars();
+                            }
+                        });
+		            });
+		            
+		            removeProgressBars = function() {
+		                var debugTime;
+		                Y.all('td.progress').each( function( tdNode ) {
+		                    debugTime = tdNode.one('.text span').get('innerHTML');
+		                    tdNode.empty();
+		                    tdNode.set('innerHTML', debugTime);
+		                    tdNode.removeClass('progress');
+		                });
+		            };
+        			
+		            buildProgressBars = function() {
+        				
+		                var totalTime = findFirstAvailableTimeEntry();
+		                if ( !Y.Lang.isNumber( totalTime ) ) {
+			                return;
+		                }
+        				
+		                var previousTimeUsage = 0;
+		                Y.all('table.DebugTable tr > td:last-child').each( function( tdNode ) {
+		                    // Iterate through each and modify CSS
+		                    var timeText = tdNode.get('text');
+			                var time = parseFloat( timeText );
+        					
+			                if ( Y.Lang.isNumber( time ) ) {
+        						
+				                var percent = Math.round( (time / totalTime) * 100 ),
+				                    previousPercent = Math.round( (previousTimeUsage / totalTime) * 100 ),
+				                    elapsedSincePrevious = percent - previousPercent;
+        						
+				                tdNode.addClass('progress');
+				                tdNode.setContent('<div class="previousElapsed" style="width:' + previousPercent + '%;">&nbsp;</div>');
+				                tdNode.append('<div class="progressBar" style="width:' + elapsedSincePrevious + '%;">&nbsp;</div>');
+				                tdNode.append('<div class="text"><span>' + timeText + '</span></div>');
+        						
+				                // Update previous UsageTime
+				                previousTimeUsage = time;
+			                }
+		                });
+                    };
+                    
+                    findFirstAvailableTimeEntry = function() {
+                        /* Most of the time we want the last td in the second to last row in the table as it 
+                         * contains the total debug time.
+                         * Usually the last row is a placeholder, hence checking second to last row, otherwise
+                         * start looking further up the table.
+		                 */
+                        var getTotalTimeSelector = function( nthLastChild ) {
+                            return 'table.DebugTable tr:nth-last-child(' + nthLastChild + ') > td:last-child';
+                        };
+                        
+                        var totalTime = undefined,
+                            nthLastChild = 2,
+                            totalTimeTD = 'junk',
+                            selector;
+                        
+                        while ( totalTimeTD != null ) {
+                            selector = getTotalTimeSelector( nthLastChild );
+                            totalTimeTD = Y.one( selector );
+                            
+                            if ( totalTimeTD == null ) {
+                                // Most likely selector is wrong or no time entries at all.  Either way done
+                                return undefined;
+                            }
+                            
+                            totalTime = parseFloat( totalTimeTD.get('text') );
+		                    if ( !Y.Lang.isNumber( totalTime ) ) {
+		                        nthLastChild++;
+		                    }
+		                    else {
+		                        return totalTime;
+		                    }
+                        }			            
+                    };
+                }
+            })();
+            
+            function rdDebugExpand(sID){
+                var eleMoreInfo = document.getElementById(sID)
+                eleMoreInfo.style.display=""
+                eleMoreInfo.parentNode.removeChild(eleMoreInfo.previousSibling)
+            }
+        </script>
+    </body>
+</html>

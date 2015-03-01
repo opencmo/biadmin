@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="Conversion Report"
+	ID="Reports.Conversion"
+	>
+	<ReportCenterItem
+		ReportCenterFolder="Metrics Reports"
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<StyleSheet
+		ID="themeTransit"
+		StyleSheet="extraTheme.css"
+		Theme="Transit"
+	/>
+	<DefaultRequestParams
+		dateFrom="@Date.ThisMonthStart~"
+		dateTo="@Date.ThisMonthEnd~"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Conversion Report"
+				Class="ThemeHeaderLarger"
+			/>
+		</Division>
+		<HR/>
+	</ReportHeader>
+	<Body>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			ID="DatePickRRow"
+			>
+			<ResponsiveColumn
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="6"
+				ColspanSmallScreen="4"
+				>
+				<FieldsetBox
+					Caption="Filter by Date"
+					>
+					<IncludeSharedElement
+						DefinitionFile="SharedElements"
+						SharedElementID="DatePicker"
+					/>
+				</FieldsetBox>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="expRow"
+			>
+			<Button
+				Caption="Export to Excel"
+				Class="ThemeContainerShadedAndBordered"
+				ID="btnExport"
+				>
+				<Action
+					ID="actExport"
+					Type="NativeExcel"
+					>
+					<Target
+						ExcelOutputFormat="Excel2007"
+						ExportDataTableID="dtMetrics"
+						ExportFilename="Conversion_report_for_@Request.dateFrom~_@Request.dateTo~"
+						ShowGridlines="True"
+						Type="NativeExcel"
+					/>
+				</Action>
+			</Button>
+			<LineBreak
+				LineCount="2"
+			/>
+		</Division>
+		<DataTable
+			ID="dtMetrics"
+			SortArrows="True"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="dlMetrics"
+				Source="Select
+ stats.`Date`,
+ ifnull(stats.CampaignName, &apos;- n/a -&apos;) CampaignName,
+ ifnull(stats.TsName, &apos;- n/a -&apos;) TsName,
+ ifnull(stats.targeting_strategy_id, &apos;- n/a -&apos;) TsId,
+ sum(stats.Bids) Bids,
+ ifnull(sum(stats.Impressions),0) Impressions,
+ ifnull(sum(stats.Clicks),0) Clicks,
+ ifnull(sum(stats.Clicks) / sum(stats.Impressions), 0) CTR,
+ ifnull(round(sum(stats.Cost) / sum(stats.Impressions) * 1000, 4), 0) CPM,
+ ifnull(sum(conv.conversion), 0) Conversions,
+ ifnull(sum(conv.unique_conversion), 0) UniqueConversions,
+ ifnull(round(Sum(stats.Cost)/sum(stats.Clicks),4),0) CPC
+
+From (Select 
+			DATE(rbs.report_datetime) Date,
+			cmp.`name` as CampaignName,
+			ts.targeting_strategy_id,
+			ts.`name` as TsName,
+			sum(rbs.bid) Bids,
+			Sum(ris.impression) Impressions,
+			sum(rcs.click) Clicks,
+			sum(rws.microWinningPrice / 1000000) Cost
+		from stat.report_bid_summary rbs
+			left outer join stat.report_win_summary rws ON rbs.targeting_strategy_id = rws.targeting_strategy_id
+				and rbs.creative_id = rws.creative_id
+				and rbs.report_datetime = rws.report_datetime
+				and rbs.exchange_name = rws.exchange_name
+				and rbs.ssp_name = rws.ssp_name
+			left join stat.report_impression_summary ris ON rbs.targeting_strategy_id = ris.targeting_strategy_id
+				and rbs.creative_id = ris.creative_id
+				and rbs.report_datetime = ris.report_datetime
+				and rbs.exchange_name = ris.exchange_name
+				and rbs.ssp_name = ris.ssp_name
+			left join stat.report_click_summary rcs ON rbs.targeting_strategy_id = rcs.targeting_strategy_id
+				and rbs.creative_id = rcs.creative_id
+				and rbs.report_datetime = rcs.report_datetime
+				and rbs.exchange_name = rcs.exchange_name
+				and rbs.ssp_name = rcs.ssp_name
+			 join opendsp.ld_targeting_strategy ts ON rbs.targeting_strategy_id = ts.targeting_strategy_id
+			 join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+			 join opendsp.ld_campaign cmp on cl.campaign_id = cmp.campaign_id
+			Where DATE(rbs.report_datetime) between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+			and (0 IN (&apos;@Request.campid~&apos;) or cmp.campaign_id IN (@SingleQuote.Request.campid~))
+			and ((rws.microWinningPrice!=0 and rws.exchange_name=&apos;adx&apos;)or(rws.exchange_name!=&apos;adx&apos;))
+		group by DATE(rbs.report_datetime), cmp.campaign_id, ts.targeting_strategy_id
+	) as stats
+left join stat.report_conversion_simple conv ON stats.targeting_strategy_id = conv.targeting_strategy_id and stats.Date = conv.report_datetime
+Where stats.`Date` between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+group by stats.targeting_strategy_id, stats.`Date`"
+				Type="SQL"
+			/>
+			<DataTableColumn
+				Header="Date"
+				ID="colDate"
+				>
+				<Label
+					Caption="@Data.Date~"
+					Format="Short Date"
+					ID="lblDate"
+				/>
+				<DataColumnSort
+					DataColumn="Date"
+					DataType="Date"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Campaign"
+				ID="colCampaign"
+				>
+				<Label
+					Caption="@Data.CampaignName~"
+					ID="lblCampaign"
+				/>
+				<DataColumnSort
+					DataColumn="Campaign"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Targeting Strategy"
+				ID="colTs"
+				>
+				<Label
+					Caption="@Data.TsName~"
+					ID="lblTs"
+				/>
+				<DataColumnSort
+					DataColumn="Ts"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="TS ID"
+				ID="colTsId"
+				>
+				<Label
+					Caption="@Data.TsId~"
+					ID="lblTsId"
+				/>
+				<DataColumnSort
+					DataColumn="TsId"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Bids"
+				ID="colBids"
+				>
+				<Label
+					Caption="@Data.Bids~"
+					Format="###,###,##0"
+					ID="lblBids"
+				/>
+				<DataColumnSort
+					DataColumn="Bids"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Bids"
+					Function="Sum"
+					ID="sumBids"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Impressions"
+				ID="colImpressions"
+				>
+				<Label
+					Caption="@Data.Impressions~"
+					Format="###,###,##0"
+					ID="lblImpressions"
+				/>
+				<DataColumnSort
+					DataColumn="Impressions"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Impressions"
+					Function="Sum"
+					ID="sumImps"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Clicks"
+				ID="colClicks"
+				>
+				<Label
+					Caption="@Data.Clicks~"
+					Format="###,###,##0"
+					ID="lblClicks"
+				/>
+				<DataColumnSort
+					DataColumn="Clicks"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Clicks"
+					Function="Sum"
+					ID="sumClick"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CTR"
+				ID="colCTR"
+				>
+				<Label
+					Caption="@Data.CTR~"
+					Format="Percent"
+					ID="lblCTR"
+				/>
+				<DataColumnSort
+					DataColumn="CTR"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CPC"
+				ID="colCPC"
+				>
+				<Label
+					Caption="@Data.CPC~"
+					Format="Currency"
+					ID="lblCPC"
+				/>
+				<DataColumnSort
+					DataColumn="CPC"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Conversions"
+				ID="colConversions"
+				>
+				<Label
+					Caption="@Data.Conversions~"
+					Format="###,###,##0"
+					ID="lblConversions"
+				/>
+				<DataColumnSort
+					DataColumn="Conversions"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Conversions"
+					Function="Sum"
+					ID="sumConv"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Unique Conversions"
+				ID="colUniqueConversions"
+				>
+				<Label
+					Caption="@Data.UniqueConversions~"
+					Format="###,###,##0"
+					ID="lblUniqueConversions"
+				/>
+				<DataColumnSort
+					DataColumn="UniqueConversions"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="UniqueConversions"
+					Function="Sum"
+					ID="sumUniqueConv"
+				/>
+			</DataTableColumn>
+			<SummaryRow
+				Caption="Total"
+			/>
+			<InteractivePaging
+				CaptionType="Image"
+				HideWhenOnePage="True"
+				Location="Both"
+				PageRowCount="100"
+				ShowPageNumber="True"
+			/>
+		</DataTable>
+	</Body>
+	<ReportFooter/>
+	<ideTestParams
+		adverid=""
+		campid=""
+		dateFrom=""
+		dateTo=""
+	/>
+</Report>

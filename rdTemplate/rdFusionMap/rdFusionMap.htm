@@ -1,0 +1,25 @@
+<div id="mapdiv" align="center"></div>
+    <SCRIPT type="text/javascript" rdAjaxRunOnLoad="True">
+		function rdLoadFusionMap() { 
+		if (typeof FusionMaps == 'undefined') {
+                //Wait for the script to load. Especially for Widgets in Mozilla.
+                setTimeout('rdLoadFusionMap()', 500); 
+		} else {
+		    if (typeof FusionCharts !== 'undefined')
+		        FusionCharts.setCurrentRenderer('flash');
+			 	var map = new FusionMaps("rdTemplate/rdFusionMap/mapType.swf", "myMapId", "width", "height", "0", "0");
+        	 	map.setDataURL("Data.xml");
+        	 	map.render("mapdiv");
+			}
+		}
+       
+	   rdLoadFusionMap()
+        try{
+            if(rdInitAnimatedMapResizer) {
+				Y.on('domready', function(e) {
+					rdInitAnimatedMapResizer("rdTemplate/rdFusionMap/mapType.swf", "myMapId", "Data.xml", "OriginalChartID", "BGColor");
+				});
+			}
+        }
+        catch(e){}
+    </SCRIPT>

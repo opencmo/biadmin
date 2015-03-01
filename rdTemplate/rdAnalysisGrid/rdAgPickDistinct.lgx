@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report ID="rdAgPickDistinct" Class="rdAg rdAgPickDistinct">
+  <StyleSheet StyleSheet="rdTemplate/rdAnalysisGrid/rdAg10Style.css"/>
+  <Body >
+	  
+	<AnalysisGridActiveSqlDistinctValues />
+		   
+    <DataTable ID="dtFilter" CellSpacing="1" Width="230" Layout="Fixed" Class="rdAgDataTable">
+		<DataLayer Type="XMLFile" ID="rdAgPickDistinct" XMLFile="@Session.rdDataCacheLocation~\@Request.XMLFile~" >
+			<GroupFilter GroupColumn="@Request.rdAgDataColumn~" KeepGroupedRows="False" DataType="Text" />
+			<CalculatedColumn ID="Value" Formula="&quot;@Data.@Request.rdAgDataColumn~~&quot;" />
+		</DataLayer>
+		<DataTableColumn>
+			<Label Caption="@Data.Value~" ID="lblFilter">
+			  <Action Type="Link" ID="actionUpdateFilterValue">
+				<Target Type="Link" Link="javascript:window.parent.LogiXML.AnalysisGrid.rdAgSetPickedFilterValue(&quot;@Function.RowNumber~&quot;);window.parent.ShowElement(this.id,'popupPickDistinct','Hide')" />
+			  </Action>
+			</Label>
+      </DataTableColumn>
+    </DataTable>
+  </Body>
+</Report>

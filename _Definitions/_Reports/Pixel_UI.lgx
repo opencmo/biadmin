@@ -1,0 +1,1388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="Pixel/data collection creation tool"
+	ID="Pixel_UI"
+	>
+	<StyleSheet
+		StyleSheet="extraTheme.css"
+	/>
+	<ReportCenterItem
+		ReportCenterFolder="Interfaces"
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<DefaultRequestParams
+		inpAID="0"
+		inpCamID="0"
+		inpCID="0"
+		inpPixList="0"
+		pixType="0"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Pixel/data collection creation tool"
+				Class="ThemeHeaderLarger"
+			/>
+			<HR/>
+		</Division>
+		<Division
+			ID="hMenu"
+			>
+			<Label
+				Caption=" // "
+			/>
+			<Label
+				Caption="Home"
+				>
+				<Action
+					ID="actHome"
+					Type="Report"
+					>
+					<Target
+						FrameID="Self"
+						Report="ReportMenuCenter"
+						Type="Report"
+					/>
+				</Action>
+			</Label>
+			<Label
+				Caption=" // "
+			/>
+			<Label
+				Caption="Segment Update Form"
+				>
+				<Action
+					ID="actPix"
+					Type="Report"
+					>
+					<Target
+						FrameID="Self"
+						Report="SegmentUpd"
+						Type="Report"
+					/>
+				</Action>
+			</Label>
+			<Label
+				Caption=" // "
+			/>
+			<HR/>
+		</Division>
+	</ReportHeader>
+	<Body>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="8"
+				ColspanLargeScreen="3"
+				ColspanMediumScreen="3"
+				ColspanSmallScreen="8"
+				ID="rrowInstruct"
+				>
+				<Division
+					HtmlDiv="True"
+					ID="instruction"
+					>
+					<Label
+						Caption="Please follow the instruction !"
+						Class="ThemeContainerShaded"
+					/>
+					<LineBreak/>
+					<IncludeHtml
+						Html="&lt;p&gt;&lt;ol&gt;
+&lt;li&gt;Choose Pixel / Data Collection type&lt;/li&gt;
+&lt;li&gt;Select Client from the list&lt;/li&gt;
+&lt;li&gt;Select an Advertiser from the list&lt;/li&gt;
+&lt;ol type=&quot;a&quot;&gt;&lt;li&gt;If Pixel / Data Collection type is &lt;i&gt;&quot;Conversion&quot;&lt;/i&gt;, select a Campaign&lt;/li&gt;&lt;/ol&gt;
+&lt;li&gt;Fill the form &quot;New Pixel Information&quot;&lt;/li&gt;
+&lt;li&gt;Add Additional Parameters *(optional)&lt;/li&gt;
+&lt;li&gt;Press &quot;Insert Data&quot; button&lt;/li&gt;
+&lt;li&gt;&lt;span style=&quot;color:red&quot;&gt;Upd: &lt;/span&gt;&lt;span style=&quot;color:#008dcf&quot;&gt;Press &lt;b&gt;Vendors Update&lt;/b&gt; button to exclude/include Data Sync Providers for creaded pixel&lt;/span&gt;&lt;/li&gt;
+&lt;ol type=&quot;a&quot;&gt;&lt;li&gt;Select pixel from list &lt;/li&gt;
+&lt;li&gt;Check which Data Sync Provider will be excluded&lt;/li&gt;
+&lt;li&gt;Press &lt;b&gt;Apply&lt;/b&gt; button&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/ol&gt;&lt;/p&gt;"
+					/>
+					<LineBreak/>
+					<Label
+						Caption="Choose pixel type: "
+						ID="pixT"
+					/>
+					<InputSelectList
+						DefaultValue="@Request.pixType~"
+						ID="pixType"
+						IncludeBlank="True"
+						IncludeBlankCaption="... Choose pixel type ..."
+						IncludeBlankValue="0"
+						OptionCaptionColumn="Name"
+						OptionValueColumn="TaskID"
+						SaveInCookie="True"
+						>
+						<DataLayer
+							ID="sdlTasks"
+							Type="Static"
+							>
+							<StaticDataRow
+								Name="Site pixel"
+								TaskID="insrRetarg"
+							/>
+							<StaticDataRow
+								Name="Conversion pixel"
+								TaskID="insertConv"
+							/>
+							<Remark>
+								<StaticDataRow
+									Name="Other type of pixel"
+									TaskID="insrOther"
+								/>
+							</Remark>
+						</DataLayer>
+						<EventHandler
+							DhtmlEvent="onchange"
+							>
+							<Action
+								ElementID="btnInsert, actProcInsert, rows, colCam, colCamH"
+								ID="refInsert"
+								RequestForwarding="True"
+								Type="RefreshElement"
+								>
+								<WaitPage/>
+								<LinkParams
+									inpCID="@Request.inpCID~"
+								/>
+							</Action>
+						</EventHandler>
+					</InputSelectList>
+					<LineBreak
+						LineCount="2"
+					/>
+				</Division>
+			</ResponsiveColumn>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="8"
+				ColspanLargeScreen="3"
+				ColspanMediumScreen="3"
+				ColspanSmallScreen="8"
+				ID="rrowAdvClCam"
+				>
+				<FieldsetBox
+					Caption="Clients/Advertisers Lists"
+					>
+					<Rows
+						CellSpacing="0"
+						ID="rows"
+						TableBorder="0"
+						>
+						<Row
+							ID="rowCaptions"
+							>
+							<Column>
+								<Label
+									Caption="Clients"
+									Class="ThemeHeader"
+								/>
+							</Column>
+							<Column>
+								<Label
+									Caption="Advertisers"
+									Class="ThemeHeader"
+								/>
+							</Column>
+							<Column
+								Condition="&apos;@Request.pixType~&apos;.indexOf(&apos;insertConv&apos;) &gt; -1"
+								>
+								<Label
+									Caption="Campaigns"
+									Class="ThemeHeader"
+								/>
+							</Column>
+						</Row>
+						<Row
+							ID="rowLists"
+							>
+							<Column
+								ID="colClient"
+								>
+								<InputSelectList
+									ID="inpCID"
+									InputRows="9"
+									MultiSelect="False"
+									OptionCaptionColumn="name"
+									OptionValueColumn="client_id"
+									SaveInCookie="True"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="dlClients"
+										Source="SELECT c.client_id,c.`name`
+FROM opendsp.ld_client c
+order by lower(c.name)"
+										Type="SQL"
+									/>
+									<EventHandler
+										DhtmlEvent="onchange"
+										>
+										<Action
+											ElementID="inpAID, dlAdver"
+											ID="actRefC"
+											Type="RefreshElement"
+											>
+											<WaitPage/>
+										</Action>
+									</EventHandler>
+								</InputSelectList>
+							</Column>
+							<Column
+								ID="colAdvertiser"
+								>
+								<InputSelectList
+									ID="inpAID"
+									InputRows="9"
+									MultiSelect="False"
+									OptionCaptionColumn="Advertiser"
+									OptionValueColumn="advertiser_id"
+									SaveInCookie="True"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="dlAdver"
+										Source="Select adv.name Advertiser,
+  adv.advertiser_id
+FROM opendsp.ld_client cli 
+join opendsp.ld_advertiser adv ON adv.client_id=cli.client_id
+Where (&apos;0&apos; in (&apos;@Request.inpCID~&apos;) or cli.client_id = @Request.inpCID~)
+Order By lower(adv.name);"
+										Type="SQL"
+									/>
+									<EventHandler
+										DhtmlEvent="onchange"
+										>
+										<Action
+											ElementID="inpCamID, dlCampaign, pixName, dlPixName"
+											ID="actRefC"
+											Type="RefreshElement"
+											>
+											<WaitPage/>
+										</Action>
+									</EventHandler>
+								</InputSelectList>
+							</Column>
+							<Column
+								Condition="&apos;@Request.pixType~&apos;.indexOf(&apos;insertConv&apos;) &gt; -1"
+								ID="colCam"
+								>
+								<InputSelectList
+									ID="inpCamID"
+									InputRows="9"
+									MultiSelect="False"
+									OptionCaptionColumn="name"
+									OptionValueColumn="campaign_id"
+									SaveInCookie="True"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="dlCampaign"
+										Source="select cam.campaign_id,
+cam.name 
+from opendsp.ld_campaign cam
+where (0 in (&apos;@Request.inpAID~&apos;) or cam.advertiser_id in (&apos;@Request.inpAID~&apos;))
+order by lower(cam.name)"
+										Type="SQL"
+									/>
+									<EventHandler
+										DhtmlEvent="onchange"
+										>
+										<Action
+											ElementID="pixName, dlPixName"
+											ID="actRefC"
+											Type="RefreshElement"
+											>
+											<WaitPage/>
+										</Action>
+									</EventHandler>
+								</InputSelectList>
+							</Column>
+						</Row>
+					</Rows>
+				</FieldsetBox>
+			</ResponsiveColumn>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="8"
+				ColspanLargeScreen="2"
+				ColspanMediumScreen="2"
+				ColspanSmallScreen="8"
+				ID="rrowPixInfo"
+				>
+				<FieldsetBox
+					Caption="New Pixel / Data Collection Information"
+					>
+					<Rows
+						CellSpacing="0"
+						ID="pixelinfo"
+						>
+						<Row>
+							<Column
+								ID="colNames"
+								>
+								<Label
+									Caption="Pixel Name"
+								/>
+							</Column>
+							<Column
+								ID="colValue"
+								>
+								<InputHidden
+									ID="inpPN"
+								/>
+								<DataTable
+									CellSpacing="0"
+									ColumnHeaderClass="ThemeHidden"
+									ID="pixName"
+									SortArrows="True"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="dlPixName"
+										Source="Select Case &apos;@Request.pixType~&apos;
+    When &apos;insertConv&apos; Then Concat(&apos;Conversion/&apos;, adv.name, &apos;/&apos;, cam.name)
+    When &apos;insrRetarg&apos; Then Concat(&apos;Retargeting/&apos;, adv.name)
+    Else Concat(&apos;Retargeting/&apos;, adv.name) End As pixname
+From opendsp.ld_advertiser adv
+  Left Join opendsp.ld_campaign cam On adv.advertiser_id = cam.advertiser_id
+Where (0 In (&apos;@Request.inpAID~&apos;) Or adv.advertiser_id In (&apos;@Request.inpAID~&apos;))
+  And (0 In (&apos;@Request.inpCamID~&apos;) Or cam.campaign_id In (&apos;@Request.inpCamID~&apos;))
+Limit 1"
+										Type="SQL"
+									/>
+									<DataTableColumn
+										ID="dtCol"
+										>
+										<InputText
+											DefaultValue="@Data.pixname~"
+											ID="colPixName"
+											InputSize="45"
+											>
+											<Validation
+												Class="ThemeTextNegative"
+												ErrorMsg="Pixel name can&apos;t be empty"
+												Type="Required"
+											/>
+										</InputText>
+									</DataTableColumn>
+								</DataTable>
+							</Column>
+						</Row>
+						<Row>
+							<Column
+								Class="ThemeAlignTopLeft"
+								ID="colNames"
+								>
+								<Label
+									Caption="Description"
+								/>
+							</Column>
+							<Column
+								ID="colValue"
+								>
+								<InputTextArea
+									ID="inpDesc"
+									InputColumns="43"
+									InputRows="3"
+									>
+									<Remark>
+										<Validation
+											Class="ThemeTextNegative"
+											ErrorMsg="Description required"
+											Type="Required"
+										/>
+									</Remark>
+								</InputTextArea>
+								<LineBreak
+									LineCount="3"
+								/>
+							</Column>
+						</Row>
+					</Rows>
+					<HR/>
+					<Division
+						Class="ThemeAlignRight"
+						HtmlDiv="True"
+						>
+						<Button
+							Caption="Insert Data"
+							Class="ThemeContainerShadedAndBordered"
+							ID="btnInsert"
+							>
+							<Action
+								ConfirmMessage="Are you sure you want to add this? "
+								ID="actProcInsert"
+								Process="PixelUpdate"
+								TaskID="@Request.pixType~"
+								Type="Process"
+								Validate="True"
+								>
+								<LinkParams
+									inpCamID="@Request.inpCamID~"
+									inpCID="@Request.inpCID~"
+								/>
+							</Action>
+							<EventHandler
+								DhtmlEvent="onMouseDown"
+								ID="evhMouseDown"
+								>
+								<Note
+									Note="Stuff new value into Input Hidden"
+								/>
+								<Action
+									ID="actUpdateJS"
+									Javascript="document.getElementById(&apos;inpPN&apos;).value = document.getElementById(&apos;colPixName_Row1&apos;).value;
+"
+									Type="Javascript"
+								/>
+							</EventHandler>
+						</Button>
+					</Division>
+				</FieldsetBox>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<LineBreak/>
+		<Rows>
+			<Row
+				Class="ThemeAlignTop"
+				>
+				<Column>
+					<InputGrid>
+						<InputText
+							Caption="Pixel Name:"
+							ID="pixName"
+						/>
+						<InputText
+							Caption="Advertiser ID:"
+							ID="advids"
+							>
+							<Validation
+								ErrorMsg="Numbers ONLY!"
+								Type="Numeric"
+							/>
+						</InputText>
+					</InputGrid>
+					<Spaces
+						Size="46"
+					/>
+					<Button
+						Caption="Search"
+						Class="ThemeContainerShadedAndBordered"
+						ID="refPixColl"
+						>
+						<Action
+							ID="actReport"
+							Type="Report"
+							Validate="True"
+							>
+							<Target
+								LinkDataLayers="True"
+								Paging="Interactive"
+								RequestForwarding="True"
+								Type="Report"
+								>
+								<WaitPage
+									Caption="Please Wait..."
+								/>
+							</Target>
+						</Action>
+					</Button>
+				</Column>
+				<Column>
+					<Spaces
+						Size="5"
+					/>
+				</Column>
+				<Column>
+					<Label
+						Caption="Additional Parameters"
+					/>
+					<Label
+						Caption=" (optional)"
+						Class="ThemeTextSmaller"
+					/>
+					<Spaces
+						Size="3"
+					/>
+					<ToggleImage
+						AltText="Show/Hide Parameters"
+						ElementID="AdQParam"
+						ID="AddParam"
+						Value="True"
+					/>
+					<Division
+						ID="AdQParam"
+						ShowModes="None"
+						>
+						<Rows
+							Class="rdThemeDataTable"
+							>
+							<Row
+								Class="rdThemeDataTableHeader"
+								ID="rowHeader"
+								>
+								<Column>
+									<Label
+										Caption="#"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="Parameter Name"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="Parameter Value"
+									/>
+								</Column>
+							</Row>
+							<Row
+								ID="r1"
+								>
+								<Column>
+									<Label
+										Caption="1"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="nam1"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="val1"
+									/>
+								</Column>
+								<Column>
+									<ToggleImage
+										ElementID="r2"
+										ID="tog1"
+										Value="False"
+									/>
+								</Column>
+							</Row>
+							<Row
+								ID="r2"
+								ShowModes="None"
+								>
+								<Column>
+									<Label
+										Caption="2"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="nam2"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="val2"
+									/>
+								</Column>
+								<Column>
+									<ToggleImage
+										ElementID="r3"
+										ID="tog2"
+									/>
+								</Column>
+							</Row>
+							<Row
+								ID="r3"
+								ShowModes="None"
+								>
+								<Column>
+									<Label
+										Caption="3"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="nam3"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="val3"
+									/>
+								</Column>
+								<Column>
+									<ToggleImage
+										ElementID="r4"
+										ID="tog3"
+									/>
+								</Column>
+							</Row>
+							<Row
+								ID="r4"
+								ShowModes="None"
+								>
+								<Column>
+									<Label
+										Caption="4"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="nam4"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="val4"
+									/>
+								</Column>
+								<Column>
+									<ToggleImage
+										ElementID="r5"
+										ID="tog4"
+									/>
+								</Column>
+							</Row>
+							<Row
+								ID="r5"
+								ShowModes="None"
+								>
+								<Column>
+									<Label
+										Caption="5"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="nam5"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="val5"
+									/>
+								</Column>
+								<Column>
+									<ToggleImage
+										ElementID="r6"
+										ID="tog5"
+									/>
+								</Column>
+							</Row>
+							<Row
+								ID="r6"
+								ShowModes="None"
+								>
+								<Column>
+									<Label
+										Caption="6"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="nam6"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="val6"
+									/>
+								</Column>
+								<Column>
+									<ToggleImage
+										ElementID="r7"
+										ID="tog6"
+									/>
+								</Column>
+							</Row>
+							<Row
+								ID="r7"
+								ShowModes="None"
+								>
+								<Column>
+									<Label
+										Caption="7"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="nam7"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="val7"
+									/>
+								</Column>
+								<Column>
+									<ToggleImage
+										ElementID="r8"
+										ID="tog7"
+									/>
+								</Column>
+							</Row>
+							<Row
+								ID="r8"
+								ShowModes="None"
+								>
+								<Column>
+									<Label
+										Caption="8"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="nam8"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="val8"
+									/>
+								</Column>
+								<Column>
+									<ToggleImage
+										ElementID="r9"
+										ID="tog8"
+									/>
+								</Column>
+							</Row>
+							<Row
+								ID="r9"
+								ShowModes="None"
+								>
+								<Column>
+									<Label
+										Caption="9"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="nam9"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="val9"
+									/>
+								</Column>
+								<Column>
+									<ToggleImage
+										ElementID="r10"
+										ID="tog9"
+									/>
+								</Column>
+							</Row>
+							<Row
+								ID="r10"
+								ShowModes="None"
+								>
+								<Column>
+									<Label
+										Caption="10"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="nam10"
+									/>
+								</Column>
+								<Column>
+									<InputText
+										ID="val10"
+									/>
+								</Column>
+							</Row>
+						</Rows>
+					</Division>
+					<LineBreak
+						LineCount="2"
+					/>
+					<Button
+						Caption="Vendors Update"
+						Class="ThemeContainerShadedAndBordered"
+						ID="btnVendUpd"
+						>
+						<Action
+							Display="Toggle"
+							ElementID="popVendors"
+							ID="actVendUpd"
+							Type="ShowElement"
+						/>
+					</Button>
+				</Column>
+			</Row>
+		</Rows>
+		<LineBreak
+			LineCount="2"
+		/>
+		<DataTable
+			Caption="Pixel collection"
+			ID="dtPixelCollection"
+			SortArrows="True"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="SQLDataLayer1"
+				Source="Select Distinct (p.data_collection_id),
+  a.advertiser_id AdvID,
+  a.name Advertiser,
+  p.pixel_id PixID,
+  p.name Pixel
+From opendsp.ld_pixel p
+  Join opendsp.ld_advertiser a On p.advertiser_id = a.advertiser_id
+  Join opendsp.ld_first_party_audience_segment s On s.advertiser_id =
+    p.advertiser_id
+  Left Join opendsp.ld_segment_rule_data_collection r On r.data_collection_id =
+    p.data_collection_id And s.first_party_audience_segment_id =
+    r.first_party_audience_segment_id
+Where p.name like &apos;%@Request.pixName~%&apos;
+and a.advertiser_id like &apos;%@Request.advids~%&apos;
+Order By PixID Desc"
+				Type="SQL"
+			/>
+			<DataTableColumn
+				Header="AdvID"
+				ID="colAdvID"
+				>
+				<Label
+					Caption="@Data.AdvID~"
+					ID="lblAdvID"
+				/>
+				<DataColumnSort
+					DataColumn="AdvID"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Advertiser"
+				ID="colAdvertiser"
+				>
+				<Label
+					Caption="@Data.Advertiser~"
+					ID="lblAdvertiser"
+				/>
+				<DataColumnSort
+					DataColumn="Advertiser"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="PixID"
+				ID="colPixID"
+				>
+				<Label
+					Caption="@Data.PixID~"
+					ID="lblPixID"
+				/>
+				<DataColumnSort
+					DataColumn="PixID"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Pixel"
+				ID="colPixel"
+				>
+				<Label
+					Caption="@Data.Pixel~"
+					ID="lblPixel"
+				/>
+				<DataColumnSort
+					DataColumn="Pixel"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Action"
+				ID="colDetail"
+				>
+				<Label
+					Caption="Show more details"
+					ID="lblSecureJS"
+					>
+					<Action
+						ElementID="mirFullinfoRow"
+						ID="showSubInfo"
+						ShowElementEffect="FadeIn"
+						Type="ShowElement"
+					/>
+				</Label>
+				<DataColumnSort
+					DataColumn="SecureJS"
+				/>
+			</DataTableColumn>
+			<MoreInfoRow
+				ColumnSpanFirst="2"
+				ID="mirFullinfoRow"
+				ShowModes="None"
+				>
+				<SubDataTable
+					ID="subTable"
+					Layout="Fixed"
+					>
+					<SubDataLayer
+						ID="sdlFullinfo"
+						OrphanRowExistence="True"
+						>
+						<SubDataLayerRelationColumn
+							ChildColumn="data_collection_id"
+							ID="subData"
+							ParentColumn="data_collection_id"
+						/>
+						<DataLayer
+							ConnectionID="OpenDSP"
+							ID="dlFullinfo"
+							Source="Select p.name,
+   dc.data_collection_id,
+  Concat(&apos;http://s.opendsp.com&apos;, &apos;/man/osfa/&apos;, &apos;c&apos;, dc.client_id, &apos;/dc&apos;,
+  dc.data_collection_id, &apos;/&apos;, s.first_party_audience_segment_id, &apos;:fp:&apos;,
+  p.advertiser_id, &apos;/&apos;, p.pixel_id, &apos;/&apos;) Image,
+  Concat(&apos;https://s.opendsp.com&apos;, &apos;/man/osfa/&apos;, &apos;c&apos;, dc.client_id, &apos;/dc&apos;,
+  dc.data_collection_id, &apos;/&apos;, s.first_party_audience_segment_id, &apos;:fp:&apos;,
+  p.advertiser_id, &apos;/&apos;, p.pixel_id, &apos;/&apos;) SecureImage,
+  Concat(&apos;http://s.opendsp.com&apos;, &apos;/nanoput/jspx/&apos;, p.pixel_id,
+  &apos;/?path=man/osfa/&apos;, &apos;c&apos;, dc.client_id, &apos;/dc&apos;, dc.data_collection_id,
+  &apos;/&apos;, s.first_party_audience_segment_id, &apos;:fp:&apos;, p.advertiser_id, &apos;/&apos;,
+  p.pixel_id, &apos;/&apos;) JS,
+  Concat(&apos;http://s.opendsp.com&apos;, &apos;/nanoput/jspx/&apos;, p.pixel_id,
+  &apos;/?path=man/osfa/&apos;, &apos;c&apos;, dc.client_id, &apos;/dc&apos;, dc.data_collection_id,
+  &apos;/&apos;, s.first_party_audience_segment_id, &apos;:fp:&apos;, p.advertiser_id, &apos;/&apos;,
+  p.pixel_id, &apos;.js&apos;) JS2,
+  Concat(&apos;https://s.opendsp.com&apos;, &apos;/nanoput/jspx/&apos;, p.pixel_id,  &apos;/?path=man/osfa/&apos;, &apos;c&apos;, dc.client_id, &apos;/dc&apos;, dc.data_collection_id,  &apos;/&apos;, s.first_party_audience_segment_id, &apos;:fp:&apos;, p.advertiser_id, &apos;/&apos;,  p.pixel_id, &apos;/&apos;) SecureJS
+From opendsp.ld_pixel p
+  right Join opendsp.ld_data_collection dc On p.data_collection_id =
+    dc.data_collection_id
+  right Join opendsp.ld_first_party_audience_segment s On s.advertiser_id =
+    p.advertiser_id and s.name = p.name
+"
+							Type="SQL"
+						/>
+					</SubDataLayer>
+					<DataTableColumn>
+						<Spaces
+							Size="5"
+						/>
+						<Label
+							Caption="Detailed information on pixel: "
+							Class="ThemeHeaderLarger"
+						/>
+						<Label
+							Caption="@Data.name~"
+							Class="ThemeBold ThemeHeaderLarger"
+						/>
+						<LineBreak
+							LineCount="2"
+						/>
+						<Rows
+							CellSpacing="4"
+							Class="ThemeMargin"
+							Layout="Fixed"
+							TableBorder="0"
+							>
+							<Row
+								ID="rowImage"
+								>
+								<Column>
+									<Label
+										Caption="Image link: "
+										Class="ThemeBold"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="@Data.Image~"
+										ID="lblImage"
+										>
+										<Action
+											ID="acLnkImage"
+											Type="Link"
+											>
+											<Target
+												FrameID="NewWindow"
+												ID="trgImage"
+												Link="@Data.Image~"
+												Type="Link"
+											/>
+										</Action>
+									</Label>
+								</Column>
+							</Row>
+							<Row
+								ID="rowSecImage"
+								>
+								<Column>
+									<Label
+										Caption="Secure Image link: "
+										Class="ThemeBold"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="@Data.SecureImage~"
+										ID="lblSecureImage"
+										>
+										<Action
+											ID="actLnkSecureImage"
+											Type="Link"
+											>
+											<Target
+												FrameID="NewWindow"
+												ID="tgrSecureImage"
+												Link="@Data.SecureImage~"
+												Type="Link"
+											/>
+										</Action>
+									</Label>
+								</Column>
+							</Row>
+							<Row
+								ID="rowJS"
+								>
+								<Column>
+									<Label
+										Caption="Javascript link: "
+										Class="ThemeBold"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="@Data.JS~"
+										ID="lblJS"
+										>
+										<Action
+											ID="actLnkJS"
+											Type="Link"
+											>
+											<Target
+												FrameID="NewWindow"
+												ID="trgJS"
+												Link="@Data.JS~"
+												Type="Link"
+											/>
+										</Action>
+									</Label>
+								</Column>
+							</Row>
+							<Row
+								ID="rowSJS"
+								>
+								<Column>
+									<Label
+										Caption="Secure Javascript link: "
+										Class="ThemeBold"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="@Data.SecureJS~"
+										ID="lblSecureJS"
+										>
+										<Action
+											ID="actLnkSecureJS"
+											Type="Link"
+											>
+											<Target
+												FrameID="NewWindow"
+												ID="trgSecureJS"
+												Link="@Data.SecureJS~"
+												Type="Link"
+											/>
+										</Action>
+									</Label>
+								</Column>
+							</Row>
+							<Row
+								ID="rowPIxSource"
+								>
+								<Column>
+									<Label
+										Caption="Pixel source"
+										Class="ThemeBold"
+									/>
+								</Column>
+								<Column>
+									<Division
+										HtmlDiv="True"
+										ID="divPixSrc"
+										ShowModes="None"
+										>
+										<InputTextArea
+											DefaultValue="&lt;SCRIPT TYPE=&quot;text/javascript&quot;&gt;
+var axel = Math.random() + &quot;&quot;;
+var a = axel * 10000000000000;
+document.write(&apos;&lt;SCR&apos;+&apos;IPT type=&quot;text/javascript&quot; src=&quot;@Data.JS~&amp;njs=1&quot;&gt;&apos;);
+document.write(&apos;&lt;/SCR&apos;+&apos;IPT&gt;&apos;);
+&lt;/SCRIPT&gt;
+&lt;NOSCRIPT&gt;
+&lt;img src=&quot;@Data.Image~&quot; width=&quot;1&quot; height=&quot;1&quot; /&gt;
+&lt;/NOSCRIPT&gt;"
+											ID="itaPixSrc"
+											InputColumns="90"
+											InputRows="10"
+										/>
+									</Division>
+									<Label
+										Caption="Show/hide Source "
+										>
+										<Action
+											ElementID="divPixSrc"
+											ID="actPSource"
+											Type="ShowElement"
+										/>
+									</Label>
+								</Column>
+							</Row>
+							<Row
+								ID="rowSPixSource"
+								>
+								<Column>
+									<Label
+										Caption="Secure Pixel source"
+										Class="ThemeBold"
+									/>
+								</Column>
+								<Column>
+									<Division
+										HtmlDiv="True"
+										ID="divSPixSrc"
+										ShowModes="None"
+										>
+										<InputTextArea
+											DefaultValue="&lt;SCRIPT TYPE=&quot;text/javascript&quot;&gt;
+var axel = Math.random() + &quot;&quot;;
+var a = axel * 10000000000000;
+document.write(&apos;&lt;SCR&apos;+&apos;IPT type=&quot;text/javascript&quot; src=&quot;@Data.SecureJS~&amp;njs=1&quot;&gt;&apos;);
+document.write(&apos;&lt;/SCR&apos;+&apos;IPT&gt;&apos;);
+&lt;/SCRIPT&gt;
+&lt;NOSCRIPT&gt;
+&lt;img src=&quot;@Data.SecureImage~&quot; width=&quot;1&quot; height=&quot;1&quot; /&gt;
+&lt;/NOSCRIPT&gt;"
+											ID="itaSPixSrc"
+											InputColumns="90"
+											InputRows="10"
+										/>
+									</Division>
+									<Label
+										Caption="Show/hide Source "
+										>
+										<Action
+											ElementID="divSPixSrc"
+											ID="actPSource"
+											Type="ShowElement"
+										/>
+									</Label>
+								</Column>
+							</Row>
+							<Remark>
+								<Row
+									ID="JSsource"
+									>
+									<Column>
+										<Label
+											Caption="Javascript source: "
+											Class="ThemeBold"
+										/>
+									</Column>
+									<Column
+										ColSpan="2"
+										>
+										<InputTextArea
+											DefaultValue="Javascript Source will be provided soon"
+											ID="itaJS"
+											InputColumns="70"
+										/>
+										<Button
+											Caption="Get JS Suorce"
+											ID="btnGetJS"
+											>
+											<EventHandler
+												DhtmlEvent="onclick"
+												>
+												<Action
+													ID="actjs"
+													Javascript="load(this,&quot;@Data.JS2~&quot;)"
+													Type="Javascript"
+												/>
+											</EventHandler>
+										</Button>
+										<IncludeHtml
+											Html="&lt;script&gt;
+function load(btn, url)
+{
+ var res = btn.id.split(&quot;_&quot;);
+ var xmlhttp;
+ if (window.XMLHttpRequest) {
+    xmlhttp=new XMLHttpRequest();
+   } else {// code for IE6, IE5
+    xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+  }
+ xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) {
+   alert(xmlhttp.responseText);
+       document.getElementById(&quot;itaJS_&quot;+res[1]).value=xmlhttp.responseText;
+      }
+   }
+ xmlhttp.open(&quot;GET&quot;, url, true);
+ xmlhttp.send(null);
+}
+&lt;/script&gt;"
+										/>
+									</Column>
+								</Row>
+							</Remark>
+						</Rows>
+					</DataTableColumn>
+				</SubDataTable>
+			</MoreInfoRow>
+			<InteractivePaging
+				CaptionType="Image"
+				HideWhenOnePage="True"
+				Location="Bottom"
+				PageRowCount="25"
+				ShowPageNumber="True"
+			/>
+		</DataTable>
+		<Spaces
+			Size="5"
+		/>
+		<Label
+			Caption="* last added on top"
+		/>
+		<PopupPanel
+			Caption="Exclude Data Sync Providers"
+			ID="popVendors"
+			>
+			<Rows>
+				<Row>
+					<Column>
+						<Label
+							Caption="List of Pixels"
+						/>
+					</Column>
+					<Column>
+						<Label
+							Caption="Excluded DSP"
+						/>
+					</Column>
+					<Column>
+						<Label
+							Caption="Data Sync Providers"
+						/>
+					</Column>
+				</Row>
+				<Row
+					Class="ThemeAlignTop"
+					>
+					<Column>
+						<InputSelectList
+							ID="inpPixList"
+							InputRows="15"
+							MultiSelect="False"
+							OptionCaptionColumn="name"
+							OptionValueColumn="pixel_id"
+							>
+							<DataLayer
+								ConnectionID="OpenDSP"
+								ID="dlPixList"
+								Source="Select concat( p.pixel_id,&apos; &apos;,p.name) name,
+  p.pixel_id
+From opendsp.ld_pixel p
+order by p.pixel_id desc"
+								Type="SQL"
+							/>
+							<EventHandler
+								DhtmlEvent="onchange"
+								>
+								<Action
+									ElementID="lbl1, exdsp"
+									ID="actRefDSP"
+									Type="RefreshElement"
+									>
+									<WaitPage/>
+								</Action>
+							</EventHandler>
+						</InputSelectList>
+					</Column>
+					<Column>
+						<Remark>
+							<Label
+								Caption="@Request.inpPixList~"
+								ID="lbl1"
+							/>
+						</Remark>
+						<InputSelectList
+							DefaultValue="None"
+							ID="exdsp"
+							InputRows="15"
+							OptionCaptionColumn="name"
+							OptionValueColumn="data_sync_partner_id"
+							>
+							<DataLayer
+								ConnectionID="OpenDSP"
+								ID="SQLDataLayer2"
+								Source="Select dsp.name, dsp.data_sync_partner_id
+From opendsp.ld_data_sync_partner dsp
+  Left Join opendsp.ld_pixel_exclude_data_sync_provider exdsp
+    On dsp.data_sync_partner_id = exdsp.data_sync_partner_id
+Where exdsp.pixel_id = @Request.inpPixList~"
+								Type="SQL"
+							/>
+						</InputSelectList>
+					</Column>
+					<Column>
+						<InputCheckboxList
+							DefaultValue="0"
+							ID="inpVendList"
+							OptionCaptionColumn="name"
+							OptionValueColumn="data_sync_partner_id"
+							>
+							<DataLayer
+								ConnectionID="OpenDSP"
+								ID="dlVendLIst"
+								Source="Select dsp.data_sync_partner_id,
+  dsp.name
+From opendsp.ld_data_sync_partner dsp"
+								Type="SQL"
+							/>
+						</InputCheckboxList>
+						<LineBreak/>
+						<Button
+							Caption="Apply"
+							ID="updVend"
+							>
+							<Action
+								ConfirmMessage="Applying this change you will overwrite previously saved data."
+								ID="procVendUpd"
+								Process="PixelUpdate"
+								TaskID="ExcludeVendors"
+								Type="Process"
+								>
+								<LinkParams
+									inpPixList="@Request.inpPixList~"
+									inpVendList="@Request.inpVendList~"
+								/>
+								<WaitPage/>
+							</Action>
+						</Button>
+					</Column>
+				</Row>
+			</Rows>
+		</PopupPanel>
+	</Body>
+	<ideTestParams
+		advids=""
+		inpAID="0"
+		inpCamID=""
+		inpCID="0"
+		inpPixList="0"
+		inpVendList=""
+		pixName=""
+		pixType=""
+	/>
+</Report>

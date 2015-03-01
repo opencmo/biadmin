@@ -1,0 +1,2410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report ID="AnalysisGrid.rdAgTemplate" rdAgVersion="10.0">
+	<Body ID="bodyMain">
+		<Rows ID="rowsAnalysisGrid" CellSpacing="4" Class="rdAg">
+			<Row ID="rowTitle" Class="rdAgCaptionRow">
+				<Column ID="colTitle">
+					<Label ID="lblTitleAG"/>
+				</Column>
+			</Row>
+
+			<Row ID="rowMenu" Class="rdAgContentRow">
+				<Column ID="colMenu" Class="rdAgNoPadding">
+					<Division ShowModes="None">
+						<InputText ID="rdAgCurrentOpenPanel" DefaultValue="@Request.rdAgCurrentOpenPanel~" />
+					</Division>
+
+					<Rows Class="rdAgPanel" CellSpacing="4px" Width="100" WidthScale="%" >
+						<Row>
+							<Column>
+								<Rows CellSpacing="0">
+									<Row>
+
+										<Column ID="colQueryBuilder" Class="rdAgUnselectedTab">
+											<EventHandler DhtmlEvent="onclick">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('QueryBuilder')" />
+												</Action>
+											</EventHandler>
+											<Rows CellSpacing="0">
+												<Row>
+													<Column Width="1" WidthScale="%">
+														<Image Caption="rdTemplate/rdAnalysisGrid/rdAgQueryBuilder.gif" ID="imgQueryBuilder" AltText="Select the data." Tooltip="Select the data." />
+													</Column>
+													<Column Class="rdAgTabHeading" >
+														<Label Caption="Data" ID="lblHeadingQueryBuilder"/>
+														<Spaces Size="1"/>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+										<Column ID="colSpacerQueryBuilder" Width="6" WidthScale="px"/>
+
+										<Column ID="colLayout" Class="rdAgUnselectedTab">
+											<EventHandler DhtmlEvent="onclick">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Layout')" />
+												</Action>
+											</EventHandler>
+											<Rows CellSpacing="0">
+												<Row>
+													<Column Width="1" WidthScale="%">
+														<Image Caption="rdTemplate/rdAnalysisGrid/rdAgLayout.gif" ID="imgLayout" AltText="Hide and move columns." Tooltip="Hide and move columns."/>
+													</Column>
+													<Column Class="rdAgTabHeading" >
+														<Label Caption="Columns" ID="lblHeadingLayout"/>
+														<Spaces Size="1"/>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+										<Column ID="colSpacerLayout" Width="6" WidthScale="px"/>
+
+										<Column ID="colCalc" Class="rdAgUnselectedTab">
+											<EventHandler DhtmlEvent="onclick">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Calc')" />
+												</Action>
+											</EventHandler>
+											<Rows CellSpacing="0">
+												<Row>
+													<Column Width="1" WidthScale="%">
+														<Image Caption="rdTemplate/rdAnalysisGrid/rdAgCalc.gif" ID="imgCalc" AltText="Add a new column with a formula." Tooltip="Add a new column with a formula." />
+													</Column>
+													<Column Class="rdAgTabHeading" >
+														<Label Caption="Formula" ID="lblHeadingCalc"/>
+														<Spaces Size="1"/>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+										<Column ID="colSpacerCalc" Width="6" WidthScale="px"/>
+
+										<Column ID="colSortOrder" Class="rdAgUnselectedTab">
+											<EventHandler DhtmlEvent="onclick">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('SortOrder')" />
+												</Action>
+											</EventHandler>
+											<Rows CellSpacing="0">
+												<Row>
+													<Column Width="1" WidthScale="%">
+														<Image Caption="rdTemplate/rdAnalysisGrid/rdAgSortOrder.gif" ID="imgSortOrder" AltText="Order the data on one or more columns." Tooltip="Order the data on one or more columns."/>
+													</Column>
+													<Column Class="rdAgTabHeading" >
+														<Label Caption="Sort" ID="lblHeadingSort"/>
+														<Spaces Size="1"/>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+										<Column ID="colSpacerSort" Width="6" WidthScale="px"/>
+
+										<Column ID="colFilter" Class="rdAgUnselectedTab">
+											<EventHandler DhtmlEvent="onclick">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Filter')" />
+												</Action>
+											</EventHandler>
+											<Rows CellSpacing="0">
+												<Row>
+													<Column Width="1" WidthScale="%">
+														<Image Caption="rdTemplate/rdAnalysisGrid/rdAgFilter.gif" ID="imgFilter" AltText="Remove rows with a filter." Tooltip="Remove rows with a filter."/>
+													</Column>
+													<Column Class="rdAgTabHeading" >
+														<Label Caption="Filter" ID="lblHeadingFilter"/>
+														<Spaces Size="1"/>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+										<Column ID="colSpacerFilter" Width="6" WidthScale="px"/>
+
+										<Column ID="colGroup" Class="rdAgUnselectedTab">
+											<EventHandler DhtmlEvent="onclick">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Group')" />
+												</Action>
+											</EventHandler>
+											<Rows CellSpacing="0">
+												<Row>
+													<Column Width="1" WidthScale="%">
+														<Image Caption="rdTemplate/rdAnalysisGrid/rdAgGroup.gif" ID="imgGroup" AltText="Group the data." Tooltip="Group the data."/>
+													</Column>
+													<Column Class="rdAgTabHeading" >
+														<Label Caption="Group" ID="lblHeadingGroup"/>
+														<Spaces Size="1"/>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+										<Column ID="colSpacerGroup" Width="6" WidthScale="px"/>
+
+										<Column ID="colAggr" Class="rdAgUnselectedTab">
+											<EventHandler DhtmlEvent="onclick">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Aggr')" />
+												</Action>
+											</EventHandler>
+											<Rows CellSpacing="0">
+												<Row>
+													<Column Width="1" WidthScale="%">
+														<Image Caption="rdTemplate/rdAnalysisGrid/rdAgAggr.gif" ID="imgAggr" AltText="Get aggregate values like sum and count." Tooltip="Get aggregate values like sum and count."/>
+													</Column>
+													<Column Class="rdAgTabHeading" >
+														<Label Caption="Aggregate" ID="lblHeadingAggr"/>
+														<Spaces Size="1"/>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+										<Column ID="colSpacerAggr" Width="6" WidthScale="px"/>
+
+										<Column ID="colChart" Class="rdAgUnselectedTab">
+											<EventHandler DhtmlEvent="onclick">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Chart')" />
+												</Action>
+											</EventHandler>
+											<Rows CellSpacing="0">
+												<Row>
+													<Column Width="1" WidthScale="%" >
+														<Image Caption="rdTemplate/rdAnalysisGrid/rdAgChart.gif" ID="imgChart" AltText="Add a chart." Tooltip="Add a chart."/>
+													</Column>
+													<Column Class="rdAgTabHeading" >
+														<Label Caption="Chart" ID="lblHeadingChart"/>
+														<Spaces Size="1"/>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+										<Column ID="colSpacerChart" Width="6" WidthScale="px"/>
+
+										<Column ID="colCrosstab" Class="rdAgUnselectedTab">
+											<EventHandler DhtmlEvent="onclick">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Crosstab')" />
+												</Action>
+											</EventHandler>
+											<Rows CellSpacing="0">
+												<Row>
+													<Column Width="1" WidthScale="%">
+														<Image Caption="rdTemplate/rdAnalysisGrid/rdAgCrosstab.gif" ID="imgCrosstab" AltText="Create a crosstab view." Tooltip="Create a crosstab view."/>
+													</Column>
+													<Column Class="rdAgTabHeading" >
+														<Label Caption="Crosstab" ID="lblHeadingCrosstab"/>
+														<Spaces Size="1"/>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+										<Column ID="colSpacerCrosstab" Width="6" WidthScale="px"/>
+
+										<Column ID="colPaging" Class="rdAgUnselectedTab">
+											<EventHandler DhtmlEvent="onclick">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Paging')" />
+												</Action>
+											</EventHandler>
+											<Rows CellSpacing="0">
+												<Row>
+													<Column Width="1" WidthScale="%">
+														<Image Caption="rdTemplate/rdAnalysisGrid/rdAgPaging.gif" ID="imgPaging" AltText="Control paging." Tooltip="Control paging."/>
+													</Column>
+													<Column Class="rdAgTabHeading" >
+														<Label Caption="Paging" ID="lblHeadingPaging"/>
+														<Spaces Size="1"/>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+
+									</Row>
+								</Rows>
+
+							</Column>
+						</Row>
+					</Rows>
+
+				</Column>
+			</Row>
+
+
+
+			<Row ID="rowQueryBuilder" Class="rdAgContentRow" ShowModes="None">
+				<Column Class="rdAgNoPadding">
+					<Rows Class="rdAgPanel" Width="100" WidthScale="%">
+						<Row>
+							<Column ID="colQueryBuilder" >
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column>
+											<Image Class="rdAgContentHeading" Caption="rdTemplate/rdAnalysisGrid/rdAgQueryBuilder.gif" ID="imgQueryBuilderSub" AltText="Close" Tooltip="Close">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('QueryBuilder')" />
+												</Action>
+											</Image>
+											<Spaces Size="2"/>
+											<Label ID="lblQueryBuilderDescription" Class="rdAgContentHeading" Caption="Select data for analysis."></Label>
+										</Column>
+									</Row>
+								</Rows>
+                
+                <Division ID="divColumnError-InUse" Condition="@Session.agColumnError-InUse~">
+                  <Spaces Size="3"/>
+                  <Label ID="lblColumnError-InUse" Class="rdAgError" Caption="Cannot remove.  It is used in another panel.">
+                  </Label>
+                </Division>
+                
+								<Division ID="divQueryBuilder">
+									<ActiveQueryBuilder ID="NorthwindQb" ConnectionID="SQL2K8tasks" Class="" TemplateModifierFile="" />
+								</Division>
+
+							</Column>
+						</Row>
+					</Rows >
+				</Column>
+			</Row>
+
+			<Row ID="rowCalc" Class="rdAgContentRow" ShowModes="None">
+				<Column Class="rdAgNoPadding">
+					<Rows Class="rdAgPanel" Width="100" WidthScale="%">
+						<Row>
+							<Column ID="colCalc" >
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column>
+											<Image Class="rdAgContentHeading" Caption="rdTemplate/rdAnalysisGrid/rdAgCalc.gif" ID="imgCalcSub" AltText="Close" Tooltip="Close">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Calc')" />
+												</Action>
+											</Image>
+											<Spaces Size="2"/>
+											<Label ID="lblFormulaColumnDescription" Class="rdAgContentHeading" Caption="Add a new column from a formula. "></Label>
+											<Label Caption="Formula Help" ID="lblCalcHelp" Class="rdAgCommand">
+												<Action Type="Report" ID="actCalcHelp">
+													<Target Type="Report" FrameID="NewWindow" Report="rdAg10HelpCalc" ID="tgtCalcHelp"/>
+													<LinkParams rdAgStyleSheet=""/>
+                          <LinkParams rdAgCommand="CalcAdd"/>
+                        </Action>
+											</Label>
+										</Column>
+									</Row>
+								</Rows>
+
+								<Division ID="divCalcAdd">
+									<Rows ID="rowsColCalc">
+										<Row ID="row1ColCalc">
+											<Column ID="col1Row1Calc">
+												<Label ID="lblCalcName" Caption="Name"  For="rdAgCalcName">
+												</Label>
+											</Column>
+											<Column ID="col2Row1Calc">
+												<InputText ID="rdAgCalcName" DefaultValue="@Request.rdAgCalcName~"/>
+											</Column>
+										</Row>
+										<Row Class="rdAgAlignRight" ID="row2ColCalc">
+											<Column ID="col1Row2Calc">
+											</Column>
+											<Column ID="col2Row2Calc">
+												<Label ID="lblCalcInsertDataColumn" Caption="Insert a column" For="rdAgCalcDataColumns" >
+												</Label>
+												<Spaces Size="2"/>
+												<InputSelectList OptionValueColumn="BracketedColumnName" ID="rdAgCalcDataColumns" OptionCaptionColumn="ColumnName" IncludeBlank="True">
+													<DataLayer Type="Static" ID="dlCalcDataColumns">
+													</DataLayer>
+												</InputSelectList>
+												<Spaces Size="2"/>
+												<Label ID="lblCalcInsertDataColumnNow" Caption="Insert" Class="rdAgCommand">
+													<Action Type="Link" ID="actCalcInsertDataColumnNow">
+														<Target Type="Link" ID="tgtCalcInsertDataColumnNow" Link="javascript:document.rdForm.rdAgCalcFormula.value=document.rdForm.rdAgCalcFormula.value+document.rdForm.rdAgCalcDataColumns.value"/>
+													</Action>
+												</Label>
+											</Column>
+										</Row>
+										<Row ID="row3ColCalc">
+											<Column ID="col1Row3Calc">
+												<Label ID="lblCalcFormula" Caption="Formula"  For="rdAgCalcFormula">
+												</Label>
+											</Column>
+											<Column ID="col2Row3Calc">
+												<InputTextArea ID="rdAgCalcFormula" InputColumns="50" InputRows="4" DefaultValue="@Request.rdAgCalcFormula~"/>
+											</Column>
+										</Row>
+										<Row ID="row4ColCalc">
+											<Column ID="col1Row4Calc">
+												<Label ID="lblCalcDataType" Caption="Data Type" For="rdAgCalcDataTypes" >
+												</Label>
+											</Column>
+											<Column ID="col2Row4Calc">
+												<InputSelectList OptionValueColumn="Format" ID="rdAgCalcDataTypes" OptionCaptionColumn="Format" DefaultValue="@Request.rdAgCalcDataTypes~">
+													<DataLayer Type="Static" ID="dlCalcDataTypes">
+														<StaticDataRow Format="Number"/>
+														<StaticDataRow Format="Text"/>
+														<StaticDataRow Format="Date"/>
+														<StaticDataRow Format="DateTime"/>
+													</DataLayer>
+												</InputSelectList>
+											</Column>
+										</Row>
+										<Row ID="row5ColCalc">
+											<Column ID="col1Row5Calc">
+												<Label ID="lblCalcDisplayFormat" Caption="Display Format" For="rdAgCalcFormats">
+												</Label>
+											</Column>
+											<Column ID="col2Row5Calc">
+												<InputSelectList OptionValueColumn="Format" ID="rdAgCalcFormats" IncludeBlank="True" OptionCaptionColumn="FormatName" DefaultValue="@Request.rdAgCalcFormats~">
+													<DataLayer Type="Static" ID="dlCalcFormats">
+														<StaticDataRow Format="###,###,##0.00" FormatName="###,###,##0.00"/>
+														<StaticDataRow Format="$###,###,##0.00" FormatName="$###,###,##0.00"/>
+														<StaticDataRow Format="yyyy/MM/dd" FormatName="yyyy/MM/dd"/>
+														<StaticDataRow Format="yyyy/MM/dd hh:mm:ss" FormatName="yyyy/MM/dd hh:mm:ss"/>
+														<StaticDataRow Format="MM/dd/yyyy" FormatName="MM/dd/yyyy"/>
+														<StaticDataRow Format="MM/dd/yyyy hh:mm:ss" FormatName="MM/dd/yyyy hh:mm:ss"/>
+														<StaticDataRow Format="Bars" FormatName="Bar Gauges"/>
+														<StaticDataRow Format="BackgroundColorSlider" FormatName="Cell Colors"/>
+													</DataLayer>
+												</InputSelectList>
+											</Column>
+										</Row>
+										<Row ID="row7ColCalc">
+											<Column />
+											<Column ID="col2Row7Calc">
+												<Label Caption="Add" ID="lblCalcOk" Class="rdAgCommand">
+													<Action Type="Report" ID="actAddCalc">
+														<Target Type="Report" ID="tgtAddCalcReport"/>
+														<LinkParams rdAgCommand="CalcAdd" rdAgCommandID="@Function.GUID~"/>
+													</Action>
+												</Label>
+												<Division ID="divCalcError-BlankName" Condition="@Session.agCalcError-BlankName~">
+													<Spaces Size="3"/>
+													<Label ID="lblCalcError-BlankName" Class="rdAgError" Caption="Enter a Name for the column.">
+													</Label>
+												</Division>
+												<Division ID="divCalcError-BlankFormula" Condition="@Session.agCalcError-BlankFormula~">
+													<Spaces Size="3"/>
+													<Label ID="lblCalcError-BlankFormula" Class="rdAgError" Caption="Enter a Formula for the column.">
+													</Label>
+												</Division>
+												<Division ID="divCalcError-FormulaWithNoDataColumn" Condition="@Session.agCalcError-FormulaWithNoDataColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblCalcError-FormulaWithNoDataColumn" Class="rdAgError" Caption="Formula must use a Data Column.">
+													</Label>
+												</Division>
+												<Division ID="divCalcError-ActiveSql" Condition="&quot;@Request.rdAgCommand~&quot;.indexOf(&quot;Calc&quot;)==0" >
+													<Division ID="divCalcError-ActiveSql" Condition="@Session.rdActiveSqlError~" >
+														<Spaces Size="3"/>
+														<Label ID="lblActiveSqlErrorCalc" Caption="There is an error in the formula." Class="rdAgError" />
+													</Division>
+												</Division>
+											</Column>
+										</Row>
+									</Rows>
+								</Division>
+								<Division ID="divCalcList" ShowModes="None">
+									<LineBreak LineCount="2" ID="nlCalcList"/>
+									<Label Caption="Formula Columns:" ID="lblCalcColumns" Class="rdAgContentHeading"/>
+									<DataTable ID="dtCalcColumns">
+										<DataLayer Type="Static" ID="dlCalcColumns"/>
+										<DataTableColumn ID="colCalcColumnName">
+											<Label Caption="&#8226; " ID="lblBulletCalc" Format="HTML">
+											</Label>
+											<Label Caption="@Data.Name~" ID="lblCalcColumnName">
+												<Action Type="Link" ID="actShowCalcColumn">
+													<Target Type="Link" Link="javascript:
+document.rdForm.rdAgCalcName.value=&quot;@Data.Name~&quot;;
+document.rdForm.rdAgCalcDataTypes.value=&quot;@Data.DataType~&quot;;
+document.rdForm.rdAgCalcFormula.value=&quot;@Data.Formula~&quot;.replace(/&amp;quot;/g,'&quot;').replace(/&amp;amp;/g,'&amp;').replace(/&amp;lt;/g,'&lt;');
+document.rdForm.rdAgCalcFormats.value=&quot;@Data.Format~&quot;;
+" ID="tgtShowCalcColumn"/>
+												</Action>
+											</Label>
+											<Spaces Size="3"/>
+										</DataTableColumn>
+										<DataTableColumn ID="colCalcColumnFormula">
+											<Label Caption="@Data.Formula~" ID="lblCalcColumnFormula">
+											</Label>
+											<Spaces Size="3"/>
+										</DataTableColumn>
+										<DataTableColumn ID="colCalcColumnReplaceRemove">
+											<Label Caption="Replace" ID="lblCalcReplace" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Replace?  Are you sure?" ID="actCalcReplace">
+													<Target Type="Report" ID="tgtCalcReplace"/>
+													<LinkParams rdAgCommand="CalcReplace" rdAgCalcID="@Data.ID~" rdAgCommandID="@Function.GUID~"/>
+												</Action>
+											</Label>
+											<Label Caption="Remove" ID="lblCalcRemove" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Remove?  Are you sure?" ID="actCalcRemove">
+													<Target Type="Report" ID="tgtCalcRemove"/>
+													<LinkParams rdAgCommand="CalcRemove" rdAgCalcID="@Data.ID~" rdAgCommandID="@Function.GUID~"/>
+												</Action>
+											</Label>
+										</DataTableColumn>
+									</DataTable>
+									<Division ID="divCalcError-InUse" Condition="@Session.agCalcError-InUse~">
+										<Spaces Size="3"/>
+										<Label ID="lblCalcError-InUse" Class="rdAgError" Caption="Cannot remove.  It is used in another panel.">
+										</Label>
+									</Division>
+									<Division ID="divCalcError-InUse2" Condition="@Session.agCalcError-InUse2~">
+										<Spaces Size="3"/>
+										<Label ID="lblCalcError-InUse2" Class="rdAgError" Caption="Cannot replace the Name or Data Type when used in another panel.">
+										</Label>
+									</Division>
+								</Division>
+							</Column>
+						</Row>
+					</Rows >
+				</Column>
+			</Row>
+
+			<Row ID="rowLayout" Class="rdAgContentRow" ShowModes="None">
+				<Column Class="rdAgNoPadding" >
+					<Rows Class="rdAgPanel" Width="100" WidthScale="%">
+						<Row>
+							<Column ID="colLayout" ColSpan="2">
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column>
+											<Image Class="rdAgContentHeading" Caption="rdTemplate/rdAnalysisGrid/rdAgLayout.gif" ID="imgLayoutSub" AltText="Close" Tooltip="Close">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Layout')" />
+												</Action>
+											</Image>
+											<Spaces Size="2"/>
+											<Label  ID="lblLayoutDescription" Class="rdAgContentHeading" Caption="Hide and show columns."/>
+										</Column>
+									</Row>
+								</Rows>
+
+								<DataMultiColumnList ID="dtLayout" MultiListColumns="4" MultiListDirection="Down">
+									<DataLayer Type="Static" ID="dlLayout" />
+									<InputCheckbox ID="rdAgColVisible" DefaultValue="@Data.ColumnVisible~" CheckedValue="True" Class="rdAgColVisible"/>
+									<Label Caption="@Data.Header~" ID="lblColHeader" For="rdAgColVisible_Row@Data.Row~"/>
+									<InputHidden ID="rdAgLayoutColumnName" DefaultValue="@Data.ID~" />
+								</DataMultiColumnList>
+								<Row ID="RowLayoutControls">
+									<Column ID="colLayoutControls" >
+										<Label Caption="OK" ID="lblLayoutOk" Class="rdAgCommand">
+											<Action Type="Report" ID="actSetLayout">
+												<Target Type="Report" ID="tgtSetLayout"/>
+												<LinkParams rdAgCommand="LayoutSet" rdAgCommandID="@Function.GUID~"/>
+											</Action>
+										</Label>
+									</Column>
+									<Column Class="rdAgAlignRight" ID="colLayoutControlsAllNone" >
+										<Label Caption="Select: " ID="lblLayoutSelect"/>
+										<Label Caption="All" ID="lblLayoutSelectAll" Class="rdAgCommand">
+											<Action Type="Link">
+												<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgLayoutSelect('All')" />
+											</Action>
+										</Label>
+										<Label Caption="None" ID="lblLayoutSelectNone" Class="rdAgCommand">
+											<Action Type="Link">
+												<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgLayoutSelect('None')" />
+											</Action>
+										</Label>
+									</Column>
+								</Row>
+							</Column>
+						</Row>
+					</Rows>
+				</Column>
+			</Row>
+
+			<Row ID="rowSortOrder" Class="rdAgContentRow" ShowModes="None">
+				<Column Class="rdAgNoPadding">
+					<Rows Class="rdAgPanel" Width="100" WidthScale="%">
+						<Row>
+							<Column ID="colOrder">
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column>
+											<Image Class="rdAgContentHeading" Caption="rdTemplate/rdAnalysisGrid/rdAgSortOrder.gif" ID="imgSortOrderSub" AltText="Close" Tooltip="Close">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('SortOrder')" />
+												</Action>
+											</Image>
+											<Spaces Size="2"/>
+											<Label  ID="lblSortOrderDescription" Class="rdAgContentHeading" Caption="Order rows by cell values."/>
+										</Column>
+									</Row>
+								</Rows>
+
+								<Division ID="divOrderAdd">
+									<Rows ID="rowsOrderAdd">
+										<Row ID="rowOrderColumn">
+											<Column ID="colRowOrderCell1">
+												<Label ID="lblOrderColumn" Caption="Data Column " For="rdAgOrderColumn" >
+												</Label>
+											</Column>
+											<Column ID="colRowOrderCell2">
+												<InputSelectList OptionValueColumn="ColumnName" ID="rdAgOrderColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgOrderColumn~">
+													<DataLayer Type="Static" ID="dlOrderColumns">
+													</DataLayer>
+												</InputSelectList>
+												<Spaces Size="3"/>
+											</Column>
+										</Row>
+										<Row ID="rowOrderDirection">
+											<Column ID="colRowOrderDirectionCell2">
+												<Label ID="lblOrderDirection" Caption="Order Direction" For="rdAgOrderDirection">
+												</Label>
+											</Column>
+											<Column ID="colRowOrderDirectionCell2">
+												<InputSelectList OptionValueColumn="Direction" ID="rdAgOrderDirection" OptionCaptionColumn="Direction" DefaultValue="@Request.rdAgOrderDirection~">
+													<DataLayer Type="Static" ID="dlOrderDirections">
+														<StaticDataRow Direction="Ascending"/>
+														<StaticDataRow Direction="Descending"/>
+													</DataLayer>
+												</InputSelectList>
+												<Spaces Size="3"/>
+											</Column>
+										</Row>
+
+										<Row ID="rowAddSort">
+											<Column />
+											<Column ID="colAddSort">
+												<Label Caption="Add" ID="lblOrderOk" Class="rdAgCommand">
+													<Action Type="Report" ID="actAddOrder">
+														<Target Type="Report" ID="tgtAddOrder"/>
+														<LinkParams rdAgCommand="OrderAdd" rdAgCommandID="@Function.GUID~" dtAnalysisGrid-PageNr="1"/>
+													</Action>
+												</Label>
+												<Division ID="divOrderError-BlankOrderColumn" Condition="@Session.agOrderError-BlankOrderColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblOrderError-BlankOrderColumn" Class="rdAgError" Caption="Select a Data Column.">
+													</Label>
+												</Division>
+												<Division ID="divOrderError-DuplicateColumn" Condition="@Session.agOrderError-DuplicateColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblOrderError-DuplicateColumn" Class="rdAgError" Caption="This column is already ordered.">
+													</Label>
+												</Division>
+											</Column>
+										</Row>
+									</Rows>
+								</Division>
+								<Division ID="divOrderList" ShowModes="None">
+									<LineBreak LineCount="2" ID="nlOrderList"/>
+									<Label Caption="Sort Order Columns:" ID="lblOrders" Class="rdAgContentHeading"/>
+									<DataTable ID="dtOrders">
+										<DataLayer Type="Static" ID="dlOrders"/>
+										<DataTableColumn ID="colOrderName" Width="50" WidthScale="%">
+											<Label Caption="&#8226; " ID="lblBulletOrders" Format="HTML">
+											</Label>
+											<Label Caption="@Data.Name~" ID="lblOrderName">
+											</Label>
+											<Spaces Size="3"/>
+										</DataTableColumn>
+										<DataTableColumn ID="colOrderRemove">
+											<Label Caption="Replace" ID="lblOrderReplace" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Replace?  Are you sure?" ID="actOrderReplace">
+													<Target Type="Report" ID="tgtOrderReplace"/>
+													<LinkParams rdAgCommand="OrderReplace" rdAgCommandID="@Function.GUID~" rdAgOrderID="@Data.OrderID~" dtAnalysisGrid-PageNr="1"/>
+												</Action>
+											</Label>
+											<Label Caption="Remove" ID="lblOrderRemove" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Remove?  Are you sure?" ID="actOrderRemove">
+													<Target Type="Report" ID="tgtOrderRemove"/>
+													<LinkParams rdAgCommand="OrderRemove" rdAgCommandID="@Function.GUID~" rdAgOrderRemoveColumn="@Data.OrderColumn~" dtAnalysisGrid-PageNr="1"/>
+												</Action>
+											</Label>
+										</DataTableColumn>
+										<MoreInfoRow ID="mirOrderList"/>
+									</DataTable>
+								</Division>
+							</Column>
+						</Row>
+					</Rows>
+				</Column>
+			</Row>
+
+			<Row ID="rowFilter" Class="rdAgContentRow" ShowModes="None">
+				<Column Class="rdAgNoPadding">
+					<Rows Class="rdAgPanel" Width="100" WidthScale="%">
+						<Row>
+							<Column ID="colFilter">
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column>
+											<Image Class="rdAgContentHeading" Caption="rdTemplate/rdAnalysisGrid/rdAgFilter.gif" ID="imgFilterSub" AltText="Close" Tooltip="Close">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Filter')" />
+												</Action>
+											</Image>
+											<Spaces Size="2"/>
+											<Label  ID="lblFilterDescription" Class="rdAgContentHeading" Caption="Filter rows by cell values."/>
+										</Column>
+									</Row>
+								</Rows>
+
+								<Division ID="divFilterAdd">
+									<Rows ID="rowsFilterAdd">
+										<Row ID="rowFilterColumn">
+											<Column ID="colFilterColumnCell1">
+												<Label ID="lblFilterColumn" Caption="Filter Column" For="rdAgFilterColumn" >
+												</Label>
+											</Column>
+											<Column ID="colFilterColumnCell2">
+												<InputSelectList OptionValueColumn="DataColumn" ID="rdAgFilterColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgFilterColumn~">
+													<DataLayer Type="Static" ID="dlFilterColumns">
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Link" ID="actionChangeFilterColumn">
+															<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowPickDistinctButton()" ID="target" />
+														</Action>
+													</EventHandler>
+												</InputSelectList>
+											</Column>
+										</Row>
+										<Row ID="rowFilterOperator">
+											<Column ID="colFilterOperatorCell1">
+												<Label ID="lblFilterOperator" Caption="Comparison"  For="rdAgFilterOperator">
+												</Label>
+											</Column>
+											<Column ID="colFilterOperatorCell2">
+												<InputSelectList OptionValueColumn="OperatorValue" ID="rdAgFilterOperator" OptionCaptionColumn="Operator" DefaultValue="@Request.rdAgFilterOperator~">
+													<DataLayer Type="Static" ID="dlFilterOperators">
+														<StaticDataRow Operator="=" OperatorValue="="/>
+														<StaticDataRow Operator="&lt;" OperatorValue="&lt;"/>
+														<StaticDataRow Operator="&lt;=" OperatorValue="&lt;=" />
+														<StaticDataRow Operator="&gt;=" OperatorValue="&gt;="/>
+														<StaticDataRow Operator="&gt;" OperatorValue="&gt;"/>
+														<StaticDataRow Operator="Not =" OperatorValue="&lt;&gt;"/>
+														<StaticDataRow Operator="Starts With" OperatorValue="Starts With"/>
+														<StaticDataRow Operator="Contains" OperatorValue="Contains"/>
+														<StaticDataRow Operator="Not Starts With" OperatorValue="Not Starts With"/>
+														<StaticDataRow Operator="Not Contains" OperatorValue="Not Contains"/>
+														<StaticDataRow Operator="Date Range" OperatorValue="Date Range"/>
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Link" ID="actionChangeFilterOptionColumn">
+															<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgPickProperElementDiv()" ID="targetFilterOptionColumn" />
+														</Action>
+													</EventHandler>
+												</InputSelectList>
+											</Column>
+										</Row>
+										<Row ID="rowFilterAggrColumn">
+											<Column ID="colFilterAggrColumnCell1">
+												<Label ID="lblFilterValue" Caption="Value" For="rdAgFilterValue">
+												</Label>
+											</Column>
+											<Column ID="colFilterAggrColumn2">
+												<InputHidden ID="rdAgPickDistinctColumns" DefaultValue="@Session.rdAgPickDistinctColumns~"/>
+												<InputHidden ID="rdAgPickDateColumns" DefaultValue="@Session.rdAgPickDateColumns~"/>
+												<InputHidden ID="rdAgCurrentFilterValue" DefaultValue="@Session.rdAgCurrentFilterValue~"/>
+												<InputHidden ID="rdAgCurrentDateType" DefaultValue="@Session.rdAgCurrentDateType~"/>
+												<Division ID="divSlidingTimeStartDateFilterOpearator" ShowModes="None">
+													<InputSelectList OptionValueColumn="Value" ID="rdAgSlidingTimeStartDateFilterOpearator" OptionCaptionColumn ="Text" DefaultValue="@Request.rdAgSlidingTimeStartDateFilterOpearator~">
+														<DataLayer Type="Static" ID="dlrdAgSlidingTimeStartDateFilterOpearator">
+															<StaticDataRow Text="Specific Date" Value="Specific Date"/>
+															<StaticDataRow Text="Sliding Date" Value="Sliding Date"/>
+														</DataLayer>
+														<EventHandler DhtmlEvent="onchange">
+															<Action Type="Link" ID="actionSlidingTimeStartDateFilterOpearator">
+																<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgPickProperElementDiv()" ID="targetSlidingTimeStartDateFilterOpearator" />
+															</Action>
+														</EventHandler>
+													</InputSelectList>
+													<Division ID="divSlidingTimeStartDateFilterOpearatorValues" ShowModes="None">
+														<Spaces Size="5"/>
+														<InputSelectList OptionValueColumn="Value" ID="rdAgSlidingTimeStartDateFilterOpearatorOptions" OptionCaptionColumn ="Text" DefaultValue="@Request.rdAgSlidingTimeStartDateFilterOpearatorOptions~">
+															<DataLayer Type="Static" ID="dlrdAgSlidingTimeStartDateFilterOpearatorOptions">
+																<StaticDataRow Text="Today" Value="Today"  />
+																<StaticDataRow Text="Yesterday" Value="Yesterday" />
+																<StaticDataRow Text="Tomorrow" Value="Tomorrow" />
+																<StaticDataRow Text="Last Week Start" Value="Last Week Start" />
+																<StaticDataRow Text="Last Week End" Value="Last Week End" />
+																<StaticDataRow Text="This Week Start" Value="This Week Start" />
+																<StaticDataRow Text="This Week End" Value="This Week End" />
+																<StaticDataRow Text="Next Week Start" Value="Next Week Start" />
+																<StaticDataRow Text="Next Week End" Value="Next Week End" />
+																<StaticDataRow Text="Last Month Start" Value="Last Month Start" />
+																<StaticDataRow Text="Last Month End" Value="Last Month End" />
+																<StaticDataRow Text="This Month Start" Value="This Month Start" />
+																<StaticDataRow Text="This Month End" Value="This Month End" />
+																<StaticDataRow Text="Next Month Start" Value="Next Month Start" />
+																<StaticDataRow Text="Next Month End" Value="Next Month End" />
+																<StaticDataRow Text="Last Quarter Start" Value="Last Quarter Start" />
+																<StaticDataRow Text="Last Quarter End" Value="Last Quarter End" />
+																<StaticDataRow Text="This Quarter Start" Value="This Quarter Start" />
+																<StaticDataRow Text="This Quarter End" Value="This Quarter End" />
+																<StaticDataRow Text="Next Quarter Start" Value="Next Quarter Start" />
+																<StaticDataRow Text="Next Quarter End" Value="Next Quarter End" />
+																<StaticDataRow Text="Last Year Start" Value="Last Year Start" />
+																<StaticDataRow Text="Last Year End" Value="Last Year End" />
+																<StaticDataRow Text="This Year Start" Value="This Year Start" />
+																<StaticDataRow Text="This Year End" Value="This Year End" />
+																<StaticDataRow Text="Next Year Start" Value="Next Year Start" />
+																<StaticDataRow Text="Next Year End" Value="Next Year End" />
+																<StaticDataRow Text="10 Days Ago" Value="10 Days Ago" />
+																<StaticDataRow Text="30 Days Ago" Value="30 Days Ago" />
+																<StaticDataRow Text="60 Days Ago" Value="60 Days Ago" />
+																<StaticDataRow Text="90 Days Ago" Value="90 Days Ago" />
+                                <StaticDataRow Text="180 Days Ago" Value="180 Days Ago" />
+																<StaticDataRow Text="365 Days Ago" Value="365 Days Ago" />
+																<StaticDataRow Text="Last Fiscal Year Start" Value="Last Fiscal Year Start" />
+																<StaticDataRow Text="This Fiscal Year Start" Value="This Fiscal Year Start" />
+																<StaticDataRow Text="Next Fiscal Year Start" Value="Next Fiscal Year Start" />
+																<StaticDataRow Text="Last Fiscal Year End" Value="Last Fiscal Year End" />
+																<StaticDataRow Text="This Fiscal Year End" Value="This Fiscal Year End" />
+																<StaticDataRow Text="Next Fiscal Year End" Value="Next Fiscal Year End" />
+																<StaticDataRow Text="Last Fiscal Quarter Start" Value="Last Fiscal Quarter Start" />
+																<StaticDataRow Text="Last Fiscal Quarter End" Value="Last Fiscal Quarter End" />
+																<StaticDataRow Text="This Fiscal Quarter Start" Value="This Fiscal Quarter Start" />
+																<StaticDataRow Text="This Fiscal Quarter End" Value="This Fiscal Quarter End" />
+																<StaticDataRow Text="Next Fiscal Quarter Start" Value="Next Fiscal Quarter Start" />
+																<StaticDataRow Text="Next Fiscal Quarter End" Value="Next Fiscal Quarter End" />
+															</DataLayer>
+														</InputSelectList>
+													</Division>
+													<Division ID="divFilterStartDateCalendar" ShowModes="None">
+														<Spaces Size="5"/>
+														<InputDate ID="rdAgFilterStartDate" DefaultValue="@Request.rdAgFilterStartDate~" CalendarLinkType="Text" CalendarLink="..." CalendarLinkClass="rdAgCommand" InputDateReformat="yyyy/MM/dd" />
+													</Division>
+													<Division ID="divFilterStartDateTextbox" ShowModes="None">
+														<Spaces Size="5"/>
+														<InputDate ID="rdAgFilterStartDateTextbox" DefaultValue="@Request.rdAgFilterStartDateTextbox~" InputDateReformat="yyyy/MM/dd"/>
+													</Division>
+												</Division>
+												<Division ID="divSlidingTimeEndDateFilterOpearator" ShowModes="None">
+													<LineBreak></LineBreak>
+													<InputSelectList OptionValueColumn="Value" ID="rdAgSlidingTimeEndDateFilterOpearator" OptionCaptionColumn ="Text" DefaultValue="@Request.rdAgSlidingTimeEndDateFilterOpearator~">
+														<DataLayer Type="Static" ID="dlrdAgrdAgSlidingTimeEndDateFilterOpearator">
+															<StaticDataRow Text="Specific Date" Value="Specific Date"/>
+															<StaticDataRow Text="Sliding Date" Value="Sliding Date"/>
+														</DataLayer>
+														<EventHandler DhtmlEvent="onchange">
+															<Action Type="Link" ID="actionrdAgSlidingTimeEndDateFilterOpearator">
+																<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgPickProperElementDiv()" ID="targetrdAgSlidingTimeEndDateFilterOpearator" />
+															</Action>
+														</EventHandler>
+													</InputSelectList>
+													<Division ID="divSlidingTimeEndDateFilterOpearatorValues" ShowModes="None">
+														<Spaces Size="5"/>
+														<InputSelectList OptionValueColumn="Value" ID="rdAgSlidingTimeEndDateFilterOpearatorOptions" OptionCaptionColumn ="Text" DefaultValue="@Request.rdAgSlidingTimeEndDateFilterOpearatorOptions~">
+															<DataLayer Type="Static" ID="dlrdAgSlidingTimeFilterOpearatorEndDateOptions">
+																<StaticDataRow Text="Today" Value="Today"  />
+																<StaticDataRow Text="Yesterday" Value="Yesterday" />
+																<StaticDataRow Text="Tomorrow" Value="Tomorrow" />
+																<StaticDataRow Text="Last Week Start" Value="Last Week Start" />
+																<StaticDataRow Text="Last Week End" Value="Last Week End" />
+																<StaticDataRow Text="This Week Start" Value="This Week Start" />
+																<StaticDataRow Text="This Week End" Value="This Week End" />
+																<StaticDataRow Text="Next Week Start" Value="Next Week Start" />
+																<StaticDataRow Text="Next Week End" Value="Next Week End" />
+																<StaticDataRow Text="Last Month Start" Value="Last Month Start" />
+																<StaticDataRow Text="Last Month End" Value="Last Month End" />
+																<StaticDataRow Text="This Month Start" Value="This Month Start" />
+																<StaticDataRow Text="This Month End" Value="This Month End" />
+																<StaticDataRow Text="Next Month Start" Value="Next Month Start" />
+																<StaticDataRow Text="Next Month End" Value="Next Month End" />
+																<StaticDataRow Text="Last Quarter Start" Value="Last Quarter Start" />
+																<StaticDataRow Text="Last Quarter End" Value="Last Quarter End" />
+																<StaticDataRow Text="This Quarter Start" Value="This Quarter Start" />
+																<StaticDataRow Text="This Quarter End" Value="This Quarter End" />
+																<StaticDataRow Text="Next Quarter Start" Value="Next Quarter Start" />
+																<StaticDataRow Text="Next Quarter End" Value="Next Quarter End" />
+																<StaticDataRow Text="Last Year Start" Value="Last Year Start" />
+																<StaticDataRow Text="Last Year End" Value="Last Year End" />
+																<StaticDataRow Text="This Year Start" Value="This Year Start" />
+																<StaticDataRow Text="This Year End" Value="This Year End" />
+																<StaticDataRow Text="Next Year Start" Value="Next Year Start" />
+																<StaticDataRow Text="Next Year End" Value="Next Year End" />
+																<StaticDataRow Text="10 Days Ago" Value="10 Days Ago" />
+																<StaticDataRow Text="30 Days Ago" Value="30 Days Ago" />
+																<StaticDataRow Text="60 Days Ago" Value="60 Days Ago" />
+																<StaticDataRow Text="90 Days Ago" Value="90 Days Ago" />
+                                <StaticDataRow Text="180 Days Ago" Value="180 Days Ago" />
+																<StaticDataRow Text="365 Days Ago" Value="365 Days Ago" />
+																<StaticDataRow Text="Last Fiscal Year Start" Value="Last Fiscal Year Start" />
+																<StaticDataRow Text="This Fiscal Year Start" Value="This Fiscal Year Start" />
+																<StaticDataRow Text="Next Fiscal Year Start" Value="Next Fiscal Year Start" />
+																<StaticDataRow Text="Last Fiscal Year End" Value="Last Fiscal Year End" />
+																<StaticDataRow Text="This Fiscal Year End" Value="This Fiscal Year End" />
+																<StaticDataRow Text="Next Fiscal Year End" Value="Next Fiscal Year End" />
+																<StaticDataRow Text="Last Fiscal Quarter Start" Value="Last Fiscal Quarter Start" />
+																<StaticDataRow Text="Last Fiscal Quarter End" Value="Last Fiscal Quarter End" />
+																<StaticDataRow Text="This Fiscal Quarter Start" Value="This Fiscal Quarter Start" />
+																<StaticDataRow Text="This Fiscal Quarter End" Value="This Fiscal Quarter End" />
+																<StaticDataRow Text="Next Fiscal Quarter Start" Value="Next Fiscal Quarter Start" />
+																<StaticDataRow Text="Next Fiscal Quarter End" Value="Next Fiscal Quarter End" />
+															</DataLayer>
+														</InputSelectList>
+													</Division>
+													<Division ID="divFilterEndDateCalendar" ShowModes="None">
+														<Spaces Size="5"/>
+														<InputDate ID="rdAgFilterEndDate" DefaultValue="@Request.rdAgFilterEndDate~" CalendarLinkType="Text" CalendarLink="..." CalendarLinkClass="rdAgCommand" InputDateReformat="yyyy/MM/dd"/>
+													</Division>
+													<Division ID="divFilterEndDateTextbox" ShowModes="None">
+														<Spaces Size="5"/>
+														<InputDate ID="rdAgFilterEndDateTextbox" DefaultValue="@Request.rdAgFilterEndDateTextbox~" InputDateReformat="yyyy/MM/dd"/>
+													</Division>
+												</Division>
+												<Division ID="divPickDistinct" ShowModes="None">
+													<InputText ID="rdAgFilterValue" DefaultValue="@Request.rdAgFilterValue~" />
+												</Division>
+												<Division ID="divPickDistinctPopUpButton" ShowModes="None">
+													<Label Caption="..." ID="lblPickDistinct" Class="rdAgCommand" >
+														<Action Type="ShowElement" ElementID="popupPickDistinct" ID="actionPickDistinct" />
+													</Label>
+												</Division>
+												<PopupPanel ID="popupPickDistinct" Draggable="True" PopupModal="True" Caption="Select a Value">
+													<IncludeFrame ID="subPickDistinct" FrameBorder="False" Class="rdAgPickDistinctFrame" Height="400" Width="250">
+														<Target Type="IncludeFrameReport" Report="rdAgPickDistinct" ID="targetPickDistinct" />
+														<LinkParams rdAgDataCacheXMLFile="" rdAgDataColumn="rdPickDataColumn" />
+													</IncludeFrame>
+												</PopupPanel>
+											</Column>
+										</Row>
+										<Row ID="rowAddFilter">
+											<Column />
+											<Column>
+												<Label Caption="Add" ID="lblFilterOk" Class="rdAgCommand">
+													<Action Type="Report" ID="actAddFilter">
+														<Target Type="Report" ID="tgtAddFilter"/>
+														<LinkParams rdAgCommand="FilterAdd" rdAgCommandID="@Function.GUID~" dtAnalysisGrid-PageNr="1"/>
+													</Action>
+												</Label>
+												<Division ID="divFilterError-BlankColumn" Condition="@Session.agFilterError-BlankColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblFilterError-BlankColumn" Class="rdAgError" Caption="Select a Filter Column.">
+													</Label>
+												</Division>
+												<Division ID="divFilterError-StartsWithDate" Condition="@Session.agFilterError-StartsWithDate~">
+													<Spaces Size="3"/>
+													<Label ID="lblFilterError-StartsWithDate" Class="rdAgError" Caption="&quot;Starts With&quot; does not work with Dates.">
+													</Label>
+												</Division>
+												<Division ID="divFilterError-ActiveSql" Condition="&quot;@Request.rdAgCommand~&quot;.indexOf(&quot;Filter&quot;)==0" >
+													<Division ID="divFilterError-ActiveSql" Condition="@Session.rdActiveSqlError~" >
+														<Spaces Size="3"/>
+														<Label ID="lblActiveSqlErrorFilter" Caption="There is an error in the filter." Class="rdAgError" />
+													</Division>
+												</Division>
+											</Column>
+										</Row>
+
+									</Rows>
+								</Division>
+								<Division ID="divFilterList" ShowModes="None">
+									<LineBreak LineCount="2" ID="nlFilterList"/>
+									<Label Caption="Filters:" ID="lblFilters" Class="rdAgContentHeading"/>
+									<DataTable ID="dtFilters">
+										<DataLayer Type="Static" ID="dlFilters">
+											<AggregateColumn AggregateColumn="Name" AggregateFunction="COUNT" ID="cntFilters"/>
+											<SequenceColumn ID="seqFilters"/>
+										</DataLayer>
+										<DataTableColumn ID="colFilterName" Width="50" WidthScale="%">
+											<Spaces Size="@Data.Indent~"/>
+											<Spaces Size="@Data.Indent~"/>
+											<Spaces Size="@Data.Indent~"/>
+											<Label ID="lblBoolean" xClass="rdAgCommand" Caption="@Data.Boolean~" Tooltip="Toggle and/or">
+												<Action Type="Report" ID="actBoolean">
+													<Target Type="Report" ID="tgtBoolean"/>
+													<LinkParams rdAgCommand="FilterToggleBoolean" rdAgCommandID="@Function.GUID~" rdAgFilterID="@Data.FilterID~" dtAnalysisGrid-PageNr="1"/>
+												</Action>
+											</Label>
+											<Spaces Size="1"/>
+											<Label Caption="@Data.LeftParens~" ID="lblLeftParens" Class="rdAgContentHeading">
+											</Label>
+											<Spaces Size="1"/>
+											<Label Caption="@Data.Name~" ID="lblFilterName">
+												<Action Type="Link" ID="actShowFilter">
+													<Target Type="Link" Link="javascript:
+LogiXML.AnalysisGrid.rdAgManipulateFilterOptionsDropdownForDateColumns(&quot;@Data.DataColumn~&quot;, &quot;@Data.Operator~&quot;, &quot;@Data.Value~&quot;);
+LogiXML.AnalysisGrid.rdAgManipulateFilterInputTextBoxValuesForDateColumns(&quot;@Data.DataColumn~&quot;, &quot;@Data.Operator~&quot;, &quot;@Data.Value~&quot;, &quot;@Data.DateType~&quot;, &quot;@Data.SlidingDateName~&quot;);
+" ID="tgtShowFilter"/>
+												</Action>
+											</Label>
+											<Spaces Size="3"/>
+											<Label Caption="@Data.RightParens~" ID="lblRightParens" Class="rdAgContentHeading">
+											</Label>
+										</DataTableColumn>
+										<DataTableColumn ID="colFilterRemove">
+											<Label Caption="Replace" ID="lblFilterReplace" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Replace?  Are you sure?" ID="actFilterReplace">
+													<Target Type="Report" ID="tgtFilterReplace"/>
+													<LinkParams rdAgCommand="FilterReplace" rdAgCommandID="@Function.GUID~" rdAgFilterID="@Data.FilterID~" dtAnalysisGrid-PageNr="1"/>
+												</Action>
+											</Label>
+											<Label Caption="Remove" ID="lblFilterRemove" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Remove?  Are you sure?" ID="actFilterRemove">
+													<Target Type="Report" ID="tgtFilterRemove"/>
+													<LinkParams rdAgCommand="FilterRemove" rdAgCommandID="@Function.GUID~" rdAgFilterID="@Data.FilterID~" dtAnalysisGrid-PageNr="1"/>
+												</Action>
+											</Label>
+										</DataTableColumn>
+										<DataTableColumn ID="colFilterMove">
+											<Division ID="divFilterMove" Condition="@Data.cntFilters~ &gt; 1 and @Data.seqFilters~ &lt;&gt; 1">
+												<Rows TableBorder="0" CellSpacing="0" ID="rowsFilterMove">
+													<Row ID="rowFilterMove">
+														<Column ID="colFilterMoveCell1">
+															<Image Caption="rdTemplate/rdAnalysisGrid/rdAgLeft.gif" ID="imgFilterMoveLeft" AltText="Add parentheses by moving the Filter left or right." Tooltip="Add parentheses by moving the Filter left or right.">
+																<Action Type="Report" ID="actFilterMoveLeft">
+																	<Target Type="Report" ID="tgtFilterMoveLEft"/>
+																	<LinkParams rdAgCommand="FilterMove" rdAgCommandID="@Function.GUID~" rdAgFilterID="@Data.FilterID~" rdAgFilterMoveDirection="Left" dtAnalysisGrid-PageNr="1"/>
+																</Action>
+															</Image>
+														</Column>
+														<Column ID="colFilterMoveCell2">
+															<Image Caption="rdTemplate/rdAnalysisGrid/rdAgUp.gif" ID="imgFilterMoveUp" AltText="Move up." Tooltip="Move up.">
+																<Action Type="Report" ID="actFilterMoveUp">
+																	<Target Type="Report" ID="tgtFilterMoveUp"/>
+																	<LinkParams rdAgCommand="FilterMove" rdAgCommandID="@Function.GUID~" rdAgFilterID="@Data.FilterID~" rdAgFilterMoveDirection="Up" dtAnalysisGrid-PageNr="1"/>
+																</Action>
+															</Image>
+															<LineBreak/>
+															<Image Caption="rdTemplate/rdAnalysisGrid/rdAgDown.gif" ID="imgFilterMoveDown" AltText="Move down." Tooltip="Move down.">
+																<Action Type="Report" ID="actFilterMoveDown">
+																	<Target Type="Report" ID="tgtFilterMoveDown"/>
+																	<LinkParams rdAgCommand="FilterMove" rdAgCommandID="@Function.GUID~" rdAgFilterID="@Data.FilterID~" rdAgFilterMoveDirection="Down" dtAnalysisGrid-PageNr="1"/>
+																</Action>
+															</Image>
+														</Column>
+														<Column ID="colFilterMoveCell3">
+															<Image Caption="rdTemplate/rdAnalysisGrid/rdAgRight.gif" ID="imgFilterMoveRight" AltText="Add parentheses by moving the Filter left or right." Tooltip="Add parentheses by moving the Filter left or right.">
+																<Action Type="Report" ID="actFilterMoveRight">
+																	<Target Type="Report" ID="tgtFilterMoveRight"/>
+																	<LinkParams rdAgCommand="FilterMove" rdAgCommandID="@Function.GUID~" rdAgFilterID="@Data.FilterID~" rdAgFilterMoveDirection="Right" dtAnalysisGrid-PageNr="1"/>
+																</Action>
+															</Image>
+														</Column>
+													</Row>
+												</Rows>
+											</Division>
+										</DataTableColumn>
+									</DataTable>
+								</Division>
+							</Column>
+
+						</Row>
+					</Rows>
+				</Column>
+			</Row>
+
+			<Row ID="rowGroup" Class="rdAgContentRow" ShowModes="None">
+				<Column Class="rdAgNoPadding">
+					<Rows Class="rdAgPanel" Width="100" WidthScale="%">
+						<Row>
+							<Column ID="colGroup">
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column>
+											<Image Class="rdAgContentHeading" Caption="rdTemplate/rdAnalysisGrid/rdAgGroup.gif" ID="imgGroupSub" AltText="Close" Tooltip="Close">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Group')" />
+												</Action>
+											</Image>
+											<Spaces Size="2"/>
+											<Label  ID="lblGroupDescription" Class="rdAgContentHeading" Caption="Organize rows with grouping and sub-grouping."/>
+										</Column>
+									</Row>
+								</Rows>
+
+								<Division ID="divGroupAdd">
+									<Rows ID="rowsGroupAdd">
+										<Row ID="rowGroupColumn">
+											<Column ID="colGroupColumnCell1">
+												<Label ID="lblGroupColumnColumn" Caption="Grouping Column " For="rdAgGroupColumn">
+												</Label>
+											</Column>
+											<Column ID="colGroupColumnCell2">
+												<InputSelectList OptionValueColumn="DataColumn" ID="rdAgGroupColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgGroupColumn~">
+													<DataLayer Type="Static" ID="dlGroupColumns">
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Link" ID="actionGetGroupByDateOperatorOptionsColumn">
+															<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgGetGroupByDateOperatorDiv()" ID="targetGetGroupByDateOperatorOptionsColumn" />
+														</Action>
+													</EventHandler>
+												</InputSelectList>
+												<Spaces Size="3"/>
+											</Column>
+											<Column ID="colGroupColumnCell3">
+												<Division ID="divGroupByDateOperator" ShowModes="None">
+													<InputHidden ID="rdAgPickDateColumnsForGrouping" DefaultValue="@Session.rdAgPickDateColumnsForGrouping~"/>
+													<Label ID="lblGroupByDateOperatorCaption" Caption="by " For="rdAgDateGroupBy"/>
+													<InputSelectList OptionValueColumn="GroupByDateOperatorValue" ID="rdAgDateGroupBy" IncludeBlank="True"  OptionCaptionColumn="GroupByDateOperator" DefaultValue="@Request.rdAgDateGroupBy~">
+														<DataLayer Type="Static" ID="dlGroupByDateOperators">
+															<StaticDataRow GroupByDateOperator="Year" GroupByDateOperatorValue="Year"/>
+															<StaticDataRow GroupByDateOperator="Quarter" GroupByDateOperatorValue="FirstDayOfQuarter"/>
+															<StaticDataRow GroupByDateOperator="Month" GroupByDateOperatorValue="FirstDayOfMonth"/>
+															<StaticDataRow GroupByDateOperator="Day" GroupByDateOperatorValue="Date"/>
+														</DataLayer>
+													</InputSelectList>
+												</Division>
+											</Column>
+										</Row>
+										<Row ID="rowAddGroup">
+											<Column>
+												<Label Caption="Add" ID="lblGroupOk" Class="rdAgCommand">
+													<Action Type="Report" ID="actAddGroup">
+														<Target Type="Report" ID="tgtAddGroup"/>
+														<LinkParams rdAgCommand="GroupAdd" rdAgCommandID="@Function.GUID~" dtAnalysisGrid-PageNr="1"/>
+													</Action>
+												</Label>
+												<Division ID="divGroupError-BlankColumn" Condition="@Session.agGroupError-BlankColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblGroupError-BlankGroupColumn" Class="rdAgError" Caption="Select a Group Column.">
+													</Label>
+												</Division>
+												<Division ID="divGroupError-DuplicateColumn" Condition="@Session.agGroupError-DuplicateColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblGroupError-DuplicateGroupColumn" Class="rdAgError" Caption="This column is already grouped.">
+													</Label>
+												</Division>
+											</Column>
+										</Row>
+									</Rows>
+								</Division>
+								<Division ID="divGroupList" ShowModes="None">
+									<LineBreak LineCount="2" ID="nlGroupList"/>
+									<Label Caption="Groups:" ID="lblGroups" Class="rdAgContentHeading"/>
+									<DataTable ID="dtGroups">
+										<DataLayer Type="Static" ID="dlGroups"/>
+										<DataTableColumn ID="colGroupColumnName" Width="50" WidthScale="%">
+											<Label Caption="&#8226; " ID="lblBulletGroup" Format="HTML">
+											</Label>
+											<Label Caption="@Data.Indent~" ID="lblGroupIndent">
+											</Label>
+											<Label Caption="@Data.Name~" ID="lblGroupName">
+											</Label>
+											<Spaces Size="3"/>
+										</DataTableColumn>
+										<DataTableColumn ID="colGroupRemove">
+											<Label Caption="Replace" ID="lblGroupReplace" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Replace?  Are you sure?" ID="actGroupReplace">
+													<Target Type="Report" ID="tgtAddGroup"/>
+													<LinkParams rdAgCommand="GroupReplace" rdAgCommandID="@Function.GUID~" rdAgGroupID="@Data.ID~" dtAnalysisGrid-PageNr="1"/>
+												</Action>
+											</Label>
+											<Label Caption="Remove" ID="lblGroupRemove" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Remove?  Are you sure?" ID="actGroupRemove">
+													<Target Type="Report" ID="tgtGroupRemove"/>
+													<LinkParams rdAgCommand="GroupRemove" rdAgCommandID="@Function.GUID~" rdAgGroupColumn="@Data.GroupColumn~" rdAgGroupName="@Data.Name~" rdAgGroupDateGroupByOperator ="@Data.DateGroupByOperator~" dtAnalysisGrid-PageNr="1"/>
+												</Action>
+											</Label>
+										</DataTableColumn>
+									</DataTable>
+									<LineBreak LineCount="1" ID="nlDetailRows"/>
+									<Label Caption="Detail Rows:" ID="lblDetailRows" Class="rdAgContentHeading"/>
+									<LineBreak LineCount="1" ID="nlExcludeDetailRows"/>
+									<Spaces Size="1"/>
+									<Label Caption="&#8226; " ID="lblBulletGroup" Format="HTML"/>
+									<Label Caption="Exclude Detail Rows" ID="lblExcludeDetailRows" For="rdAgExcludeDetailRowsCheckbox" />
+									<Spaces Size="8"/>
+									<InputCheckbox ID="rdAgExcludeDetailRowsCheckbox" DefaultValue="@Request.rdAgExcludeDetailRowsCheckbox~" CheckedValue="True">
+										<EventHandler DhtmlEvent="onclick" ID="rdAgExcludeDetailRowsEventHandler">
+											<Action Type="Report" ID="actExcludeDetailRows">
+												<Target Type="Report" ID="tgtExcludeDetailRows" />
+												<LinkParams rdAgCommandExcludeDetailRows="True" />
+											</Action>
+										</EventHandler>
+									</InputCheckbox>
+								</Division>
+							</Column>
+						</Row>
+					</Rows>
+				</Column>
+			</Row>
+
+			<Row ID="rowAggr" Class="rdAgContentRow" ShowModes="None">
+				<Column Class="rdAgNoPadding">
+					<Rows Class="rdAgPanel" Width="100" WidthScale="%">
+						<Row>
+							<Column ID="colAggr">
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column>
+											<Image Class="rdAgContentHeading" Caption="rdTemplate/rdAnalysisGrid/rdAgAggr.gif" ID="imgAggrSub" AltText="Close" Tooltip="Close">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Aggr')" />
+												</Action>
+											</Image>
+											<Spaces Size="2"/>
+											<Label  ID="lblAggregateDescription" Class="rdAgContentHeading" Caption="Calculate totals, averages and such for the top and grouped levels."/>
+										</Column>
+									</Row>
+								</Rows>
+
+								<Division ID="divAggrAdd">
+									<Rows ID="rowsAddrAdd">
+										<Row ID="rowAggrColumn">
+											<Column ID="colAggrColumnCell1">
+												<Label ID="lblAggrColumn" Caption="Data Column " For="rdAgAggrColumn" >
+												</Label>
+											</Column>
+											<Column ID="colAggrColumnCell2">
+												<InputSelectList OptionValueColumn="ColumnName" ID="rdAgAggrColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgAggrColumn~">
+													<DataLayer Type="Static" ID="dlAggrColumns">
+													</DataLayer>
+												</InputSelectList>
+												<Spaces Size="3"/>
+											</Column>
+										</Row>
+										<Row ID="rowAggrFunction">
+											<Column ID="colAggrFunctionCell1">
+												<Label ID="lblAggrFunction" Caption="Aggregate Function" For="rdAgAggrFunction">
+												</Label>
+											</Column>
+											<Column ID="colAggrFunctionCell2">
+												<InputSelectList OptionValueColumn="Function" ID="rdAgAggrFunction" OptionCaptionColumn="Name" DefaultValue="@Request.rdAgAggrFunction~">
+													<DataLayer Type="Static" ID="dlAggrFunctions">
+														<StaticDataRow Function="SUM" Name="Sum"/>
+														<StaticDataRow Function="AVERAGE" Name="Average"/>
+														<StaticDataRow Function="STDEV" Name="Standard Deviation"/>
+														<StaticDataRow Function="COUNT" Name="Count"/>
+														<StaticDataRow Function="DISTINCTCOUNT" Name="Distinct Count"/>
+														<StaticDataRow Function="MIN" Name="Minimum"/>
+														<StaticDataRow Function="MAX" Name="Maximum"/>
+													</DataLayer>
+												</InputSelectList>
+												<Spaces Size="3"/>
+											</Column>
+										</Row>
+										<Row ID="rowAddAggr">
+											<Column />
+											<Column>
+												<Label Caption="Add" ID="lblAggrOk" Class="rdAgCommand">
+													<Action Type="Report" ID="actAddAggr">
+														<Target Type="Report" ID="tgtAddAggr"/>
+														<LinkParams rdAgCommand="AggrAdd" rdAgCommandID="@Function.GUID~"/>
+													</Action>
+												</Label>
+												<Division ID="divAggrError-BlankAggrColumn" Condition="@Session.agAggrError-BlankAggrColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblAggrError-BlankAggrColumn" Class="rdAgError" Caption="Select an Aggregate Column.">
+													</Label>
+												</Division>
+												<Division ID="divAggrError-InvalidAggrFunction" Condition="@Session.agAggrError-InvalidAggrFunction~">
+													<Spaces Size="3"/>
+													<Label ID="lblAggrError-InvalidAggrFunction" Class="rdAgError" Caption="Sum, Average, and Standard Deviation only work with numeric columns.">
+													</Label>
+												</Division>
+											</Column>
+										</Row>
+									</Rows>
+
+								</Division>
+								<Division ID="divAggrList" ShowModes="None">
+									<LineBreak LineCount="2" ID="nlAggrList"/>
+									<Label Caption="Aggregates:" ID="lblAggrs" Class="rdAgContentHeading"/>
+									<DataTable ID="dtAggrs" >
+										<DataLayer Type="Static" ID="dlAggrs"/>
+										<DataTableColumn ID="colAggrName" Width="50" WidthScale="%">
+											<Label Caption="&#8226; " ID="lblBulletAggr" Format="HTML">
+											</Label>
+											<Label Caption="@Data.Name~" ID="lblAggrName">
+											</Label>
+											<Spaces Size="3"/>
+										</DataTableColumn>
+										<DataTableColumn ID="colAggrRemove">
+											<Label Caption="Replace" ID="lblAggrReplace" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Replace?  Are you sure?" ID="actAggrReplace">
+													<Target Type="Report" ID="tgtAggrReplace"/>
+													<LinkParams rdAgCommand="AggrReplace" rdAgCommandID="@Function.GUID~" rdAgAggrRemoveColumn="@Data.AggrColumnID~"/>
+												</Action>
+											</Label>
+											<Label Caption="Remove" ID="lblAggrRemove" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Remove?  Are you sure?" ID="actAddrRemove">
+													<Target Type="Report" ID="tgtAggrRemove"/>
+													<LinkParams rdAgCommand="AggrRemove" rdAgCommandID="@Function.GUID~" rdAgAggrRemoveColumn="@Data.AggrColumnID~"/>
+												</Action>
+											</Label>
+										</DataTableColumn>
+										<MoreInfoRow ID="mirAggrs"/>
+									</DataTable>
+								</Division>
+							</Column>
+						</Row>
+					</Rows>
+				</Column>
+			</Row>
+
+			<Row ID="rowChart" Class="rdAgContentRow" ShowModes="None">
+				<Column Class="rdAgNoPadding">
+					<Rows Class="rdAgPanel" Width="100" WidthScale="%">
+						<Row>
+							<Column ID="colChart" WidthScale="px">
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column>
+											<Image Class="rdAgContentHeading" Caption="rdTemplate/rdAnalysisGrid/rdAgChart.gif" ID="imgChartSub" AltText="Close" Tooltip="Close">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Chart')" />
+												</Action>
+											</Image>
+											<Spaces Size="2"/>
+											<Label  ID="lblChartDescription" Class="rdAgContentHeading" Caption="Add charts and gauges."/>
+										</Column>
+									</Row>
+								</Rows>
+
+								<Label Caption="Add: " ID="lblChartAdd">
+								</Label>
+								<Division ID="divHiddenChartType" ShowModes="None">
+									<InputText ID="rdAgChartType"/>
+								</Division>
+								<Label Caption="Pie" ID="lblChartAddPie" Class="rdAgCommand">
+									<Action Type="Link" ID="actionShowPie">
+										<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowChartAdd('Pie');" ID="tgtShowPie"/>
+									</Action>
+								</Label>
+								<Label Caption="Bar" ID="lblChartAddBar" Class="rdAgCommand">
+									<Action Type="Link" ID="actionShowBar">
+										<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowChartAdd('Bar');" ID="tgtShowBar"/>
+									</Action>
+								</Label>
+								<Label Caption="Line" ID="lblChartAddLine" Class="rdAgCommand">
+									<Action Type="Link" ID="actionShowLine">
+										<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowChartAdd('Line');" ID="tgtShowLine"/>
+									</Action>
+								</Label>
+								<Label Caption="Curved Line" ID="lblChartAddSpline" Class="rdAgCommand">
+									<Action Type="Link" ID="actionShowSpline">
+										<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowChartAdd('Spline');" ID="tgtShowSpline"/>
+									</Action>
+								</Label>
+								<Label Caption="Scatter Plot" ID="lblChartAddScatter" Class="rdAgCommand">
+									<Action Type="Link" ID="actionShowScatter">
+										<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowChartAdd('Scatter');" ID="tgtShowScatter"/>
+									</Action>
+								</Label>
+								<Label Caption="Heatmap" ID="lblChartAddHeatmap" Class="rdAgCommand">
+									<Action Type="Link" ID="actionShowHeatmap">
+										<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowChartAdd('Heatmap');" ID="tgtShowHeatmap"/>
+									</Action>
+								</Label>
+								<Label Caption="Gauge" ID="lblChartAddGauge" Class="rdAgCommand">
+									<Action Type="Link" ID="actionShowGauge">
+										<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowChartAdd('Gauge');" ID="tgtShowHeatmap"/>
+									</Action>
+								</Label>
+								<LineBreak LineCount="2"/>
+								<Division ID="divChartAdd" ShowModes="None">
+									<Rows ID="rowsChartAdd">
+										<Row ID="rowChartXColumn">
+											<Column ID="colChartXColumnCell1">
+												<Label ID="lblChartXLabelColumn" Caption="Label Column " For="rdAgChartXLabelColumn" >
+												</Label>
+												<Label ID="lblChartXAxisColumn" Caption="X-Axis Column" For="rdAgChartXDataColumn" >
+												</Label>
+                        <Division ShowModes="None">
+                          <Label ID="lblChartXNumberColumn" Caption="Number Column" For="rdAgChartXNumberColumn">
+                          </Label>
+                          <Label ID="lblChartXLabelTextColumn" Caption="Chart X Label Column" For="rdAgChartXLabelTextColumn">
+                          </Label>
+                        </Division>
+											</Column>
+											<Column ID="colChartXColumnCell2">
+												<InputSelectList OptionValueColumn="DataColumn" ID="rdAgChartXLabelColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgChartXLabelColumn~">
+													<DataLayer Type="Static" ID="dlChartXLabelColumns">
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Javascript" ID="actionGetChartsGroupByDateOperatorOptionsColumn" Javascript="LogiXML.AnalysisGrid.rdAgGetChartsGroupByDateOperatorDiv();LogiXML.AnalysisGrid.rdAgModifyForecastOptions(this.value);" />
+													</EventHandler>
+												</InputSelectList>
+												<InputSelectList OptionValueColumn="DataColumn" ID="rdAgChartXDataColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgChartXDataColumn~">
+													<DataLayer Type="Static" ID="dlChartXDataColumns">
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Javascript" ID="actionGetChartsGroupByDateOperatorOptionsColumn" Javascript="LogiXML.AnalysisGrid.rdAgGetChartsGroupByDateOperatorDiv();LogiXML.AnalysisGrid.rdAgModifyForecastOptions(this.value);LogiXML.AnalysisGrid.rdAgModifyAggregationAvailability(this.value);" />
+													</EventHandler>
+												</InputSelectList>
+												<InputSelectList OptionValueColumn="DataColumn" ID="rdAgChartXNumberColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgChartXNumberColumn~">
+													<DataLayer Type="Static" ID="dlChartXNumberColumns">
+													</DataLayer>
+												</InputSelectList>
+												<InputSelectList OptionValueColumn="DataColumn" ID="rdAgChartXLabelTextColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgChartXLabelTextColumn~">
+													<DataLayer Type="Static" ID="dlHeatmapXLabelColumns">
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Javascript" ID="actionGetChartsGroupByDateOperatorOptionsColumn" Javascript="LogiXML.AnalysisGrid.rdAgGetChartsGroupByDateOperatorDiv();LogiXML.AnalysisGrid.rdAgModifyForecastOptions(this.value);" />
+													</EventHandler>
+												</InputSelectList>
+												<Spaces Size="3"/>
+											</Column>
+											<Column Id="colChartsGroupByOperatorDiv">
+												<Division ID="divChartsGroupByDateOperator" ShowModes="None">
+													<InputHidden ID="rdAgDataColumnDetails" DefaultValue="@Session.rdAgDataColumnDetails~"/>
+													<InputHidden ID="rdAgPickDateColumnsInChartForGrouping" DefaultValue="@Session.rdAgPickDateColumnsForGrouping~"/>
+													<Label ID="lblChartsGroupByDateOperatorCaption" Caption="by "  For="rdAgChartsDateGroupBy"/>
+													<InputSelectList OptionValueColumn="ChartsGroupByDateOperatorValue" ID="rdAgChartsDateGroupBy" IncludeBlank="True"  OptionCaptionColumn="ChartsGroupByDateOperator" DefaultValue="@Request.rdAgChartsDateGroupBy~">
+														<DataLayer Type="Static" ID="dlChartsGroupByDateOperators">
+															<StaticDataRow ChartsGroupByDateOperator="Year" ChartsGroupByDateOperatorValue="FirstDayOfYear"/>
+															<StaticDataRow ChartsGroupByDateOperator="Quarter" ChartsGroupByDateOperatorValue="FirstDayOfQuarter"/>
+															<StaticDataRow ChartsGroupByDateOperator="Month" ChartsGroupByDateOperatorValue="FirstDayOfMonth"/>
+															<StaticDataRow ChartsGroupByDateOperator="Day" ChartsGroupByDateOperatorValue="Date"/>
+														</DataLayer>
+														<EventHandler DhtmlEvent="onchange">
+															<Action Type="Javascript" ID="actShowForecast" Javascript="LogiXML.AnalysisGrid.rdAgModifyTimeSeriesCycleLengthOptions(this);" />
+														</EventHandler>
+													</InputSelectList>
+												</Division>
+											</Column>
+										</Row>
+										<Row ID="rowChartYColumn">
+											<Column ID="colChartYColumnCell1">
+												<Label ID="lblChartYDataColumn" Caption="Data Column " For="rdAgChartYColumn" >
+												</Label>
+												<Label ID="lblChartYAxisColumn" Caption="Y-Axis Column " For="rdAgChartYColumn" >
+												</Label>
+												<Label ID="lblChartSizeColumn" Caption="Size Column" For="rdAgChartYColumn">
+												</Label>
+											</Column>
+											<Column ID="colChartYColumnCell2">
+												<InputSelectList OptionValueColumn="DataColumn" ID="rdAgChartYColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgChartYColumn~">
+													<DataLayer Type="Static" ID="dlChartYColumns">
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Javascript" ID="actAgGauge" Javascript="LogiXML.AnalysisGrid.rdGetAgGaugeAggregation();LogiXML.AnalysisGrid.rdAgModifyAggregateOptions(this.value);"/>
+													</EventHandler>
+												</InputSelectList>
+											</Column>
+										</Row>
+										<Row ID="rowChartAggr">
+											<Column>
+												<Label ID="rdAgChartYAggrLabel" Caption="Data Aggregation " For="rdAgChartYAggrList">
+												</Label>
+												<Label ID="rdAgChartSizeColumnAggrLabel" Caption="Size Column Aggregation " For = "rdAgChartYAggrList">
+												</Label>
+											</Column>
+											<Column>
+												<InputSelectList OptionValueColumn="Function" ID="rdAgChartYAggrList" OptionCaptionColumn="Name" DefaultValue="@Request.rdAgChartYAggrList~">
+													<DataLayer Type="Static" ID="dlChartYAggrs">
+														<StaticDataRow Function="SUM" Name="Sum"/>
+														<StaticDataRow Function="AVERAGE" Name="Average"/>
+														<StaticDataRow Function="STDEV" Name="Standard Deviation"/>
+														<StaticDataRow Function="COUNT" Name="Count"/>
+														<StaticDataRow Function="DISTINCTCOUNT" Name="Distinct Count"/>
+														<StaticDataRow Function="MIN" Name="Minimum"/>
+														<StaticDataRow Function="MAX" Name="Maximum"/>
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Javascript" ID="actAgGauge" Javascript="LogiXML.AnalysisGrid.rdGetAgGaugeAggregation();"/>
+													</EventHandler>
+												</InputSelectList>
+											</Column>
+											<Column ID="colChartYColumnCell3">
+												<Label ID="lblChartYDataAggregation" Caption="" Class="rdAgMessage"/>
+												<InputHidden ID="rdAgGaugeAggregationValue" DefaultValue=""/>
+											</Column>
+										</Row>
+										<Row ID="rowChartExtraDataColumn" IdeDisplayStatus="Collapsed">
+											<Column ID="colChartExtraDataColumnCell1">
+												<Label ID="lblChartColorColumn" Caption="Color Column " For="rdAgChartExtraDataColumn" />
+											</Column>
+											<Column ID="colChartExtraDataColumnCell2">
+												<InputSelectList OptionValueColumn="ColumnName" ID="rdAgChartExtraDataColumn" OptionCaptionColumn="ColumnName" IncludeBlank="True" DefaultValue="@Request.rdAgChartExtraDataColumn~">
+													<DataLayer Type="Static" ID="dlChartExtraColumns" />
+												</InputSelectList>
+											</Column>
+										</Row>
+										<Row ID="rowChartExtraAggr" IdeDisplayStatus="Collapsed">
+											<Column ID="colChartExtraColumnCell1">
+												<Label ID="rdAcChartColorAggrLabel" Caption="Color Column Aggregation " For="rdAgChartExtraAggrList"/>
+											</Column>
+											<Column ID="colChartExtraColumnCell3">
+												<InputSelectList OptionValueColumn="Function" ID="rdAgChartExtraAggrList" OptionCaptionColumn="Name" DefaultValue="@Request.rdAgChartExtraAggrList~">
+													<DataLayer Type="Static" ID="dlChartExtraAggrs">
+														<StaticDataRow Function="SUM" Name="Sum" />
+														<StaticDataRow Function="AVERAGE" Name="Average" />
+														<StaticDataRow Function="STDEV" Name="Standard Deviation" />
+														<StaticDataRow Function="COUNT" Name="Count" />
+														<StaticDataRow Function="DISTINCTCOUNT" Name="Distinct Count" />
+														<StaticDataRow Function="MIN" Name="Minimum" />
+														<StaticDataRow Function="MAX" Name="Maximum" />
+													</DataLayer>
+												</InputSelectList>
+											</Column>
+										</Row>
+										<Row ID="rowChartForecast">
+											<Column ID="colChartForecastColumnCell1">
+												<Label ID="rdAgChartForecastLabel" Caption="Forecast " For="IslAgForecastType"/>
+											</Column>
+											<Column ID="colChartForecastColumnCell2">
+												<InputSelectList OptionValueColumn="ForeccastType" ID="IslAgForecastType" OptionCaptionColumn="ForecastName" DefaultValue="@Request.IslAgForecastType~">
+													<DataLayer Type="Static" ID="dlForecastType">
+														<StaticDataRow ForeccastType="None" ForecastName="" />
+														<StaticDataRow ForeccastType="TimeSeriesDecomposition" ForecastName="Time Series" />
+														<StaticDataRow ForeccastType="Regression" ForecastName="Regression" />
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Javascript" ID="actShowForecast" Javascript="LogiXML.AnalysisGrid.rdAgShowForecastOptions();" />
+													</EventHandler>
+												</InputSelectList>
+											</Column>
+											<Column ID="colChartForecastColumnCell3">
+												<InputSelectList OptionValueColumn="RegressionValue" ID="IslAgRegressionType" OptionCaptionColumn="RegressionName" Caption="Type " DefaultValue="@Request.IslAgRegressionType~">
+													<DataLayer Type="Static" ID="dlRegressionType">
+														<StaticDataRow RegressionName="Linear/Trend" RegressionValue="Linear" />
+														<StaticDataRow RegressionName="Autoregressive" RegressionValue="Autoregressive" />
+														<StaticDataRow RegressionName="Exponential" RegressionValue="Exponential" />
+														<StaticDataRow RegressionName="Logarithmic" RegressionValue="Logarithmic" />
+														<StaticDataRow RegressionName="Polynomial 2" RegressionValue="Polynomial2" />
+														<StaticDataRow RegressionName="Polynomial 3" RegressionValue="Polynomial3" />
+														<StaticDataRow RegressionName="Polynomial 4" RegressionValue="Polynomial4" />
+														<StaticDataRow RegressionName="Polynomial 5" RegressionValue="Polynomial5" />
+														<StaticDataRow RegressionName="Power" RegressionValue="Power" />
+													</DataLayer>
+												</InputSelectList>
+												<InputSelectList OptionValueColumn="TimeSeriesCycleValue" ID="IslAgTimeSeriesCycleLength" OptionCaptionColumn="TimeSeriesCycleName" Caption="Cycle " DefaultValue="@Request.IslAgTimeSeriesCycleLength~" IncludeBlank="True">
+													<DataLayer Type="Static" ID="dlTimeSeriesCycleLength">
+														<StaticDataRow TimeSeriesCycleName="Year" TimeSeriesCycleValue="Year" />
+														<StaticDataRow TimeSeriesCycleName="Quarter" TimeSeriesCycleValue="Quarter" />
+														<StaticDataRow TimeSeriesCycleName="Month" TimeSeriesCycleValue="Month" />
+														<StaticDataRow TimeSeriesCycleName="Week" TimeSeriesCycleValue="Week" />
+														<StaticDataRow TimeSeriesCycleName="Day" TimeSeriesCycleValue="Day" />
+													</DataLayer>
+												</InputSelectList>
+												<Spaces Size="2" />
+											</Column>
+										</Row>
+										<Row ID="rdAgGaugeMin">
+											<Column>
+												<Label Caption="Min" ID="lblMinValue" For="txtMinValue" />
+											</Column>
+											<Column>
+												<Rows>
+													<Row>
+														<Column>
+															<InputText InputSize="8" ID="txtMinValue" DefaultValue="@Request.txtMinValue~">
+																<Validation Type="Numeric" ErrorMsg="Min value must be Numeric." />
+															</InputText>
+														</Column>
+													</Row>
+												</Rows>
+											</Column>
+										</Row>
+										<Row ID="rdAgGaugeGoal1">
+											<Column>
+												<Label Caption="Goal-1" ID="lblGoal1" For="txtGoal1" />
+											</Column>
+											<Column>
+												<Rows>
+													<Row>
+														<Column>
+															<InputText InputSize="8" ID="txtGoal1" DefaultValue="@Request.txtGoal1~">
+																<Validation Type="Numeric" ErrorMsg="Goal-1 value must be Numeric." />
+															</InputText>
+															<InputHidden ID="rdAgGaugeGoalsColorSequence" DefaultValue="#CC0000,#F1C232,#6AA84F" />
+														</Column>
+														<Column>
+															<Image Caption="rdTemplate/rdAnalysisGrid/ColorPicker.png" ID="imgGaugeColorPicker1" Tooltip="Pick Gauge Colors.">
+																<EventHandler DhtmlEvent="onclick">
+																	<Action Type="Javascript" ID="actClickColor" Javascript="ShowElement(this.id,'ppColors','Toggle'); GetColorPicker('1', this);"  />
+																</EventHandler>
+															</Image>
+															<InputHidden ID="rdAgGaugeGoalsColor1" DefaultValue=""/>
+														</Column>
+														<Column>
+															<Rectangle ID="rectColor1" Height="10" Width="10" BorderThickness="0" BackgroundColor="#CC0000" />
+														</Column>
+
+													</Row>
+												</Rows>
+											</Column>
+										</Row>
+										<Row ID="rdAgGaugeGoal2">
+											<Column>
+												<Label Caption="Goal-2" ID="lblGoal2" For="txtGoal2"/>
+											</Column>
+											<Column>
+												<Rows>
+													<Row>
+														<Column>
+															<InputText InputSize="8" ID="txtGoal2" DefaultValue="@Request.txtGoal2~">
+																<Validation Type="Numeric" ErrorMsg="Goal-2 value must be Numeric." />
+															</InputText>
+														</Column>
+														<Column>
+															<Image Caption="rdTemplate/rdAnalysisGrid/ColorPicker.png" ID="imgGaugeColorPicker2" Tooltip="Pick Gauge Colors.">
+																<EventHandler DhtmlEvent="onclick">
+																	<Action Type="Javascript" ID="actClickColor" Javascript="ShowElement(this.id,'ppColors','Toggle'); GetColorPicker('2', this);"  />
+																</EventHandler>
+															</Image>
+															<InputHidden ID="rdAgGaugeGoalsColor2" DefaultValue=""/>
+														</Column>
+														<Column>
+															<Rectangle ID="rectColor2" Height="10" Width="10" BorderThickness="0" BackgroundColor="#F1C232" />
+														</Column>
+													</Row>
+												</Rows>
+											</Column>
+										</Row>
+										<Row ID="rdAgGaugeMax">
+											<Column>
+												<Label Caption="Max" ID="lblMaxValue" For="txtMaxValue"/>
+											</Column>
+											<Column>
+												<Rows>
+													<Row>
+														<Column>
+															<InputText InputSize="8" ID="txtMaxValue" DefaultValue="@Request.txtMaxValue~">
+																<Validation Type="Numeric" ErrorMsg="Max value must be Numeric." />
+															</InputText>
+														</Column>
+														<Column>
+															<Image Caption="rdTemplate/rdAnalysisGrid/ColorPicker.png" ID="imgGaugeColorPicker3" Tooltip="Pick Gauge Colors.">
+																<EventHandler DhtmlEvent="onclick">
+																	<Action Type="Javascript" ID="actClickColor" Javascript="ShowElement(this.id,'ppColors','Toggle'); GetColorPicker('3', this);"  />
+																</EventHandler>
+															</Image>
+															<InputHidden ID="rdAgGaugeGoalsColor3" DefaultValue=""/>
+														</Column>
+														<Column>
+															<Rectangle ID="rectColor3" Height="10" Width="10" BorderThickness="0" BackgroundColor="#6AA84F" />
+														</Column>
+													</Row>
+												</Rows>
+											</Column>
+											<Column>
+												<Division ID="divSuggestedMinMax" ShowModes="None">
+													<Label Caption="Autofill Min/Max Values" ID="lblSuggestedMinMax" Class="rdAgMessage">
+														<Action Type="Javascript" ID="actFillMinMax" Javascript="LogiXML.AnalysisGrid.AutoPopulateMinMaxValues();" />
+													</Label>
+												</Division>
+											</Column>
+											<Column>
+												<PopupPanel ID="ppColors">
+													<Rows>
+														<Row>
+															<Column Class="rdAgKPIColor1" ID="colColor1">
+																<Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor1" BorderThickness="0" />
+																<EventHandler DhtmlEvent="onclick" ID="evtColor">
+																	<Action Type="Javascript" ID="actClickColor" Javascript="PickGaugeGoalColor(this);" />
+																</EventHandler>
+															</Column>
+															<Column Class="rdAgKPIColor2" ID="colColor2">
+																<Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor2" BorderThickness="0" />
+																<EventHandler DhtmlEvent="onclick" ID="evtColor">
+																	<Action Type="Javascript" ID="actClick" Javascript="PickGaugeGoalColor(this);" />
+																</EventHandler>
+															</Column>
+															<Column Class="rdAgKPIColor3" ID="colColor3">
+																<Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor3" BorderThickness="0" />
+																<EventHandler DhtmlEvent="onclick" ID="evtColor">
+																	<Action Type="Javascript" ID="actClick" Javascript="PickGaugeGoalColor(this);" />
+																</EventHandler>
+															</Column>
+														</Row>
+														<Row>
+															<Column Class="rdAgKPIColor4" ID="colColor4">
+																<Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor4" BorderThickness="0" />
+																<EventHandler DhtmlEvent="onclick" ID="evtColor">
+																	<Action Type="Javascript" ID="actClickColor" Javascript="PickGaugeGoalColor(this);" />
+																</EventHandler>
+															</Column>
+															<Column Class="rdAgKPIColor5" ID="colColor5">
+																<Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor5" BorderThickness="0" />
+																<EventHandler DhtmlEvent="onclick" ID="evtColor">
+																	<Action Type="Javascript" ID="actClick" Javascript="PickGaugeGoalColor(this);" />
+																</EventHandler>
+															</Column>
+															<Column Class="rdAgKPIColor6" ID="colColor6">
+																<Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor6" BorderThickness="0" />
+																<EventHandler DhtmlEvent="onclick" ID="evtColor">
+																	<Action Type="Javascript" ID="actClick" Javascript="PickGaugeGoalColor(this);" />
+																</EventHandler>
+															</Column>
+														</Row>
+														<Row>
+															<Column Class="rdAgKPIColor7" ID="colColor7">
+																<Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor7" BorderThickness="0" />
+																<EventHandler DhtmlEvent="onclick" ID="evtColor">
+																	<Action Type="Javascript" ID="actClickColor" Javascript="PickGaugeGoalColor(this);" />
+																</EventHandler>
+															</Column>
+															<Column Class="rdAgKPIColor8" ID="colColor8">
+																<Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor8" BorderThickness="0" />
+																<EventHandler DhtmlEvent="onclick" ID="evtColor">
+																	<Action Type="Javascript" ID="actClick" Javascript="PickGaugeGoalColor(this);" />
+																</EventHandler>
+															</Column>
+															<Column Class="rdAgKPIColor9" ID="colColor9">
+																<Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor9" BorderThickness="0" />
+																<EventHandler DhtmlEvent="onclick" ID="evtColor">
+																	<Action Type="Javascript" ID="actClick" Javascript="PickGaugeGoalColor(this);" />
+																</EventHandler>
+															</Column>
+														</Row>
+													</Rows>
+												</PopupPanel>
+											</Column>
+										</Row>
+										<Row ID="rowAddChart">
+											<Column />
+											<Column>
+												<Label Caption="Add" ID="lblChartOk" Class="rdAgCommand">
+													<Action Type="Report" ID="actAddChart" Validate="True">
+														<Target Type="Report" ID="tgtAddChart"/>
+														<LinkParams rdAgCommand="ChartAdd" rdAgCommandID="@Function.GUID~"/>
+													</Action>
+												</Label>
+												<Division ID="divChartError-BlankType" Condition="@Session.agChartError-BlankType~">
+													<Spaces Size="3"/>
+													<Label ID="lblChartError-BlankType" Class="rdAgError" Caption="Select a Chart Type.">
+													</Label>
+												</Division>
+												<Division ID="divChartError-BlankName" Condition="@Session.agChartError-BlankName~">
+													<Spaces Size="3"/>
+													<Label ID="lblChartError-BlankName" Class="rdAgError" Caption="Enter a Title for the Chart.">
+													</Label>
+												</Division>
+												<Division ID="divChartError-BlankLabel" Condition="@Session.agChartError-BlankLabel~">
+													<Spaces Size="3"/>
+													<Label ID="lblChartError-BlankLabel" Class="rdAgError" Caption="Select the Chart's Label Column.">
+													</Label>
+												</Division>
+												<Division ID="divChartError-BlankXAxis" Condition="@Session.agChartError-BlankXAxis~">
+													<Spaces Size="3"/>
+													<Label ID="lblChartError-BlankXAxis" Class="rdAgError" Caption="Select the Chart's X-Axis Column.">
+													</Label>
+												</Division>
+												<Division ID="divChartError-BlankData" Condition="@Session.agChartError-BlankData~">
+													<Spaces Size="3"/>
+													<Label ID="lblChartError-BlankData" Class="rdAgError" Caption="Select the Chart's Data Column.">
+													</Label>
+												</Division>
+												<Division ID="divChartError-BlankYAxis" Condition="@Session.agChartError-BlankYAxis~">
+													<Spaces Size="3"/>
+													<Label ID="lblChartError-BlankYAxis" Class="rdAgError" Caption="Select the Chart's Y-Axis Column.">
+													</Label>
+												</Division>
+												<Division ID="divHeatmapError-BlankSizeColumn" Condition="@Session.agHeatmapError-BlankSizeColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblHeatmapError-BlankSizeColumn" Class="rdAgError" Caption="Select the Chart's Size Column.">
+													</Label>
+												</Division>
+												<Division ID="divHeatmapError-BlankColorColumn" Condition="@Session.agHeatmapError-BlankColorColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblHeatmapError-BlankColorColumn" Class="rdAgError" Caption="Select the Chart's Color Column.">
+													</Label>
+												</Division>
+												<Division ID="divGaugeError-BlankData" Condition="@Session.agGaugeError-BlankData~">
+													<Spaces Size="3"/>
+													<Label ID="lblGaugeError-BlankData" Class="rdAgError" Caption="Select the Gauge's Data Column.">
+													</Label>
+												</Division>
+											</Column>
+										</Row>
+									</Rows>
+								</Division>
+
+								<Division ID="divChartList" ShowModes="None">
+									<LineBreak LineCount="1" ID="nlChartList"/>
+									<Label Caption="Charts: " ID="lblCharts" Class="rdAgContentHeading">
+									</Label>
+									<DataTable ID="dtCharts">
+										<DataLayer Type="Static" ID="dlCharts"/>
+										<DataTableColumn ID="colChartName">
+											<Label Caption="&#8226; " ID="lblBulletCharts" Format="HTML">
+											</Label>
+											<Label Caption="@Data.Name~" ID="lblChartName">
+											</Label>
+											<Spaces Size="3"/>
+										</DataTableColumn>
+										<DataTableColumn ID="colChartRemove">
+											<Label Caption="Replace" ID="lblChartReplace" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Replace?  Are you sure?" ID="actChartReplace">
+													<Target Type="Report" ID="tgtChartReplace"/>
+													<LinkParams rdAgCommand="ChartReplace" rdAgCommandID="@Function.GUID~" rdAgChartID="@Data.ID~"/>
+												</Action>
+											</Label>
+											<Label Caption="Remove" ID="lblChartRemove" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Remove?  Are you sure?" ID="actChartRemove">
+													<Target Type="Report" ID="tgtChartRemove"/>
+													<LinkParams rdAgCommand="ChartRemove" rdAgCommandID="@Function.GUID~" rdAgChartID="@Data.ID~"/>
+												</Action>
+											</Label>
+										</DataTableColumn>
+									</DataTable>
+								</Division>
+							</Column>
+						</Row>
+					</Rows>
+				</Column>
+			</Row>
+
+			<Row ID="rowCrosstab" Class="rdAgContentRow" ShowModes="None">
+				<Column Class="rdAgNoPadding">
+					<Rows Class="rdAgPanel" Width="100" WidthScale="%">
+						<Row>
+							<Column ID="colCrosstab">
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column>
+											<Image Class="rdAgContentHeading" Caption="rdTemplate/rdAnalysisGrid/rdAgCrosstab.gif" ID="imgCrosstabSub" AltText="Close" Tooltip="Close">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Crosstab')" />
+												</Action>
+											</Image>
+											<Spaces Size="2"/>
+											<Label  ID="lblCrosstabDescription" Class="rdAgContentHeading" Caption="Pivot and summarize by rows and columns."/>
+										</Column>
+									</Row>
+								</Rows>
+
+								<Division ID="divCrosstabAdd">
+									<Rows ID="rowsCrosstabAdd">
+										<Row ID="rowCrosstabHeaderColumn">
+											<Column ID="colCrosstabHeaderColumnCell1">
+												<Label ID="lblCrosstabHeaderColumn" Caption="Header Values Column" For="rdAgCrosstabHeaderColumn" >
+												</Label>
+											</Column>
+											<Column ID="colCrosstabHeaderColumnCell2" Class="rdCrosstabDropdownColumn">
+												<InputSelectList OptionValueColumn="DataColumn" ID="rdAgCrosstabHeaderColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgCrosstabHeaderColumn~">
+													<DataLayer Type="Static" ID="dlCrosstabHeaderColumns">
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Link" ID="actionGetCrosstabHeaderGroupByDateOperatorOptionsColumn">
+															<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgGetCrosstabHeaderGroupByDateOperatorDiv()" ID="targetGetCrosstabHeaderGroupByDateOperatorOptionsColumn" />
+														</Action>
+													</EventHandler>
+												</InputSelectList>
+												<Division ID="divCrosstabHeaderGroupByDateOperator" ShowModes="None">
+													<InputHidden ID="rdAgPickDateColumnsInCrossTabForGrouping" DefaultValue="@Session.rdAgPickDateColumnsForGrouping~"/>
+													<Spaces Size="3"/>
+													<Label ID="lblCrosstabHeaderGroupByDateOperatorCaption" Caption="by "  For="rdAgCrosstabHeaderDateGroupBy" />
+													<InputSelectList OptionValueColumn="CrosstabHeaderGroupByDateOperatorValue" ID="rdAgCrosstabHeaderDateGroupBy" IncludeBlank="True"  OptionCaptionColumn="CrosstabHeaderGroupByDateOperator" DefaultValue="@Request.rdAgCrosstabHeaderDateGroupBy~">
+														<DataLayer Type="Static" ID="dlCrosstabHeaderGroupByDateOperators">
+															<StaticDataRow CrosstabHeaderGroupByDateOperator="Year" CrosstabHeaderGroupByDateOperatorValue="Year"/>
+															<StaticDataRow CrosstabHeaderGroupByDateOperator="Quarter" CrosstabHeaderGroupByDateOperatorValue="FirstDayOfQuarter"/>
+															<StaticDataRow CrosstabHeaderGroupByDateOperator="Month" CrosstabHeaderGroupByDateOperatorValue="FirstDayOfMonth"/>
+															<StaticDataRow CrosstabHeaderGroupByDateOperator="Day" CrosstabHeaderGroupByDateOperatorValue="Date"/>
+														</DataLayer>
+													</InputSelectList>
+												</Division>
+											</Column>
+											<Column ID="colCrosstabHeaderColumnCell3" Class="rdAgInstruct">
+												<Label Caption="The crosstab will have one column for each unique value." ID="lblDescHeader">
+												</Label>
+											</Column>
+										</Row>
+										<Row ID="rowCrosstabLabelColumn">
+											<Column ID="colCrosstabLabelColumnCell1">
+												<Label ID="lblCrosstabLabelColumn" Caption="Label Values Column" For = "rdAgCrosstabLabelColumn">
+												</Label>
+											</Column>
+											<Column ID="colCrosstabLabelColumnCell2" Class="rdCrosstabDropdownColumn">
+												<InputSelectList OptionValueColumn="DataColumn" ID="rdAgCrosstabLabelColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgCrosstabLabelColumn~">
+													<DataLayer Type="Static" ID="dlCrosstabLabelColumns">
+													</DataLayer>
+													<EventHandler DhtmlEvent="onchange">
+														<Action Type="Link" ID="actionGetCrosstabLabelGroupByDateOperatorOptionsColumn">
+															<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgGetCrosstabLabelGroupByDateOperatorDiv()" ID="targetGetCrosstabLabelGroupByDateOperatorOptionsColumn" />
+														</Action>
+													</EventHandler>
+												</InputSelectList>
+												<Division ID="divCrosstabLabelGroupByDateOperator" ShowModes="None">
+													<Spaces Size="3"/>
+													<Label ID="lblCrosstabLabelGroupByDateOperatorCaption" Caption="by " For="rdAgCrosstabLabelDateGroupBy"/>
+													<InputSelectList OptionValueColumn="CrosstabLabelGroupByDateOperatorValue" ID="rdAgCrosstabLabelDateGroupBy" IncludeBlank="True"  OptionCaptionColumn="CrosstabLabelGroupByDateOperator" DefaultValue="@Request.rdAgCrosstabLabelDateGroupBy~">
+														<DataLayer Type="Static" ID="dlCrosstabLabelGroupByDateOperators">
+															<StaticDataRow CrosstabLabelGroupByDateOperator="Year" CrosstabLabelGroupByDateOperatorValue="Year"/>
+															<StaticDataRow CrosstabLabelGroupByDateOperator="Quarter" CrosstabLabelGroupByDateOperatorValue="FirstDayOfQuarter"/>
+															<StaticDataRow CrosstabLabelGroupByDateOperator="Month" CrosstabLabelGroupByDateOperatorValue="FirstDayOfMonth"/>
+															<StaticDataRow CrosstabLabelGroupByDateOperator="Day" CrosstabLabelGroupByDateOperatorValue="Date"/>
+														</DataLayer>
+													</InputSelectList>
+												</Division>
+											</Column>
+											<Column ID="colCrosstabLabelColumnCell3" Class="rdAgInstruct">
+												<Label Caption="The crosstab will have one row for each unique value." ID="lblDescLabel">
+												</Label>
+											</Column>
+										</Row>
+										<Row ID="rowCrosstabAggrColumn">
+											<Column ID="colCrosstabAggrColumnCell1">
+												<Label ID="lblCrosstabAggrColumn" Caption="Aggregate Values Column" For="rdAgCrosstabAggrColumn" >
+												</Label>
+											</Column>
+											<Column ID="colCrosstabAggrColumnCell2">
+												<InputSelectList OptionValueColumn="DataColumn" ID="rdAgCrosstabAggrColumn" IncludeBlank="True" OptionCaptionColumn="ColumnName" DefaultValue="@Request.rdAgCrosstabAggrColumn~">
+													<DataLayer Type="Static" ID="dlCrosstabAggrColumns">
+													</DataLayer>
+												</InputSelectList>
+											</Column>
+											<Column ID="colCrosstabAggrColumnCell3" Class="rdAgInstruct">
+												<Label Caption="The contents of the crosstab as the Sum, Average, Standard Deviation or Count of the Header and Label columns." ID="lblDescAggr">
+												</Label>
+											</Column>
+										</Row>
+										<Row ID="rowCrosstabAggrFunction">
+											<Column ID="colCrosstabAggrFunctionCell1">
+												<Label ID="lblCrosstabAggrFunction" Caption="Aggregate Function"  For="rdAgCrosstabAggrFunction" >
+												</Label>
+											</Column>
+											<Column ID="colCrosstabAggrFunctionCell2">
+												<InputSelectList OptionValueColumn="Function" ID="rdAgCrosstabAggrFunction" IncludeBlank="False" OptionCaptionColumn="Name" DefaultValue="@Request.rdAgCrosstabAggrFunction~">
+													<DataLayer Type="Static" ID="dlCrosstabAggrFunctions">
+														<StaticDataRow Function="SUM" Name="Sum"/>
+														<StaticDataRow Function="AVERAGE" Name="Average"/>
+														<StaticDataRow Function="STDEV" Name="Standard Deviation"/>
+														<StaticDataRow Function="COUNT" Name="Count"/>
+                            <StaticDataRow Function="DISTINCTCOUNT" Name="Distinct Count"/>
+													</DataLayer>
+												</InputSelectList>
+											</Column>
+											<Column ID="colCrosstabAggrFunctionCell3" Class="rdAgInstruct">
+												<Label Caption="The function used to aggregate the values in the crosstab cells." ID="lblDescAggrFunction">
+												</Label>
+											</Column>
+										</Row>
+										<Row ID="rowCrosstabComparison">
+											<Column ID="colCrosstabComparison">
+												<Label Caption="Compare Columns" ID="lblCompareColumns" For="rdAgCrosstabComparisionCheckbox" />
+											</Column>
+											<Column ID="colCrosstabComparisonCheckbox">
+												<InputCheckbox ID="rdAgCrosstabComparisionCheckbox" DefaultValue="@Request.rdAgCrosstabComparisionCheckbox~" CheckedValue="True"/>
+											</Column>
+											<Column ID="colCrosstabComparison">
+												<Label Caption="Show how values change between columns." ID="lblCompareColumnsShow" />
+											</Column>
+										</Row>
+										<Row ID="rowAddCrosstab">
+											<Column />
+											<Column ColSpan="2">
+												<Label Caption="Add" ID="lblCrosstabOk" Class="rdAgCommand">
+													<Action Type="Report" ID="actAddCrosstab">
+														<Target Type="Report" ID="tgtAddCrosstab"/>
+														<LinkParams rdAgCommand="CrosstabAdd" rdAgCommandID="@Function.GUID~"/>
+													</Action>
+												</Label>
+												<Division ID="divCrosstabError-BlankHeaderColumn" Condition="@Session.agCrosstabError-BlankHeaderColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblCrosstabError-BlankHeaderColumn" Class="rdAgError" Caption="Select a Header Values Column.">
+													</Label>
+												</Division>
+												<Division ID="divCrosstabError-BlankLabelColumn" Condition="@Session.agCrosstabError-BlankLabelColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblCrosstabError-BlankLabelColumn" Class="rdAgError" Caption="Select a Crosstab Label Values Column.">
+													</Label>
+												</Division>
+												<Division ID="divCrosstabError-BlankAggrColumn" Condition="@Session.agCrosstabError-BlankAggrColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblCrosstabError-BlankAggrColumn" Class="rdAgError" Caption="Select an Aggregate Values Column.">
+													</Label>
+												</Division>
+												<Division ID="divCrosstabAggrError-InvalidAggrFunction" Condition="@Session.agCrosstabAggrError-InvalidAggrFunction~">
+													<Spaces Size="3"/>
+													<Label ID="lblCrosstabAggrError-InvalidAggrFunction" Class="rdAgError" Caption="Sum, Average, and Standard Deviation only work with numeric columns.">
+													</Label>
+												</Division>
+												<Division ID="divCrosstabError-DuplicateColumn" Condition="@Session.agCrosstabError-DuplicateColumn~">
+													<Spaces Size="3"/>
+													<Label ID="lblCrosstabError-DuplicateColumn" Class="rdAgError" Caption="All three columns must be different.">
+													</Label>
+												</Division>
+											</Column>
+										</Row>
+									</Rows>
+								</Division>
+								<Division ShowModes="None" ID="divCrosstabList">
+									<LineBreak LineCount="2" ID="nlCrosstabList"/>
+									<Label Caption="Crosstabs:" ID="lblCrosstabs" Class="rdAgContentHeading"/>
+									<DataTable ID="dtCrosstabs">
+										<DataLayer Type="Static" ID="dlCrosstabs"/>
+										<DataTableColumn ID="colCrosstabName">
+											<Label Caption="&#8226; " ID="lblBulletCrosstab" Format="HTML">
+											</Label>
+											<Label Caption="@Data.Name~" ID="lblCrosstabName">
+											</Label>
+											<Spaces Size="3"/>
+										</DataTableColumn>
+										<DataTableColumn ID="colCrosstabRemove">
+											<Label Caption="Replace" ID="lblCrosstabReplace" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Replace?  Are you sure?" ID="actCrosstabReplace">
+													<Target Type="Report" ID="tgtCrosstabReplace"/>
+													<LinkParams rdAgCommand="CrosstabReplace" rdAgCommandID="@Function.GUID~" rdAgCrosstabID="@Data.CrosstabID~"/>
+												</Action>
+											</Label>
+											<Label Caption="Remove" ID="lblCrosstabRemove" Class="rdAgCommand">
+												<Action Type="Report" ConfirmMessage="Remove?  Are you sure?" ID="actCrosstabRemove">
+													<Target Type="Report" ID="tgtCrosstabRemove"/>
+													<LinkParams rdAgCommand="CrosstabRemove" rdAgCommandID="@Function.GUID~" rdAgCrosstabID="@Data.CrosstabID~"/>
+												</Action>
+											</Label>
+										</DataTableColumn>
+									</DataTable>
+								</Division>
+							</Column>
+						</Row>
+					</Rows>
+				</Column>
+			</Row>
+
+			<Row ID="rowPaging" ShowModes="None" Class="rdAgContentRow">
+				<Column Class="rdAgNoPadding">
+					<Rows Class="rdAgPanel" Width="100" WidthScale="%">
+						<Row>
+							<Column ID="colPaging" WidthScale="px">
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column>
+											<Image Class="rdAgContentHeading" Caption="rdTemplate/rdAnalysisGrid/rdAgPaging.gif" ID="imgPagingSub" AltText="Close" Tooltip="Close">
+												<Action Type="Link">
+													<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdAgShowMenuTab('Paging')" />
+												</Action>
+											</Image>
+											<Spaces Size="2"/>
+											<Label  ID="lblPagingDescription" Class="rdAgContentHeading" Caption="Set the number of rows displayed per page."/>
+										</Column>
+									</Row>
+								</Rows>
+								<Division ShowModes="" ID="divPagingRadioButtons">
+									<InputRadioButtons ID="rdAgPaging" OptionCaptionColumn="Caption" OptionValueColumn="Value" RadioButtonDirection="Down" DefaultValue="ShowPaging">
+										<DataLayer Type="Static" ID="dlPaging">
+											<StaticDataRow Value="NoPaging" Caption="Show all rows"/>
+											<StaticDataRow Value="ShowPaging" Caption="Show paging"/>
+										</DataLayer>
+									</InputRadioButtons>
+								</Division>
+								<InputGrid>
+									<InputText ID="rdAgRowsPerPage" Caption="Rows per Page" DefaultValue="10" InputSize="4"/>
+								</InputGrid>
+								<Label Caption="OK" ID="lblPagingOk" Class="rdAgCommand">
+									<Action Type="Report" ID="actOkPaging">
+										<Target Type="Report" ID="tgtOkPaging"/>
+										<LinkParams rdAgCommand="Paging" rdAgCommandID="@Function.GUID~"/>
+									</Action>
+								</Label>
+							</Column>
+						</Row>
+					</Rows>
+				</Column>
+			</Row>
+
+			<Row ID="rowTable" Class="rdAgContentRow" >
+				<Column ID="colTable" Class="rdAgNoPadding">
+					<InputHidden ID="rdAgId" />
+					<InputHidden ID="rdAgReportId" />
+					<InputHidden ID="rdAgDraggablePanels" DefaultValue="True"/>
+					<InputHidden ID="rdAgPanelOrder" DefaultValue=""/>
+					<Rows Class="rdAgPanel" ID="rowsTable" Width="100" WidthScale="%">
+						<Row ID="rowContentTableHeading" Class="rdAgContentHeadingItem">
+							<Column >
+								<Rows Class="rdAgContentHeadingRow">
+									<Row>
+										<Column Class="rdAgPanelHeading">
+											<ToggleImage ElementID="rowContentTable" Class="rdAgContentHeading" ID="toggleShowContentTable" FalseImage="rdTemplate/rdMinus.gif" TrueImage="rdTemplate/rdPlus.gif" />
+											<Spaces Size="2"/>
+											<Label Caption="Table" Class="rdAgContentHeading" ID="lblHeadingTable"/>
+										</Column>
+										<Column ID="colTableExportControls" Class="rdAgAlignRight">
+											<Label Caption=" Export: " ID="lblExport"/>
+											<Division Condition="(parseInt(&quot;@Session.dtAnalysisGrid-RowCnt~&quot;) || 0) &lt;= (parseInt(&quot;@Session.rdAgMaxRowsExport~&quot;) || 0) || @Session.rdAgAllowASQLExport~">
+												<Label Caption="Excel" ID="lblExportExcel" Class="rdAgCommand" Tooltip="Only @Session.rdAgMaxRowsExport~ row(s) can be exported.">
+													<Action Type="NativeExcel" ID="actExportExcel">
+														<Target Type="NativeExcel" Report="CurrentReport" ID="tgtExportExcel"/>
+														<LinkParams rdAgNoDefCache="True" rdExportTableID="dtAnalysisGrid"/>
+													</Action>
+												</Label>
+												<Label Caption="CSV" ID="lblExportCsv" Class="rdAgCommand" Tooltip="Only @Session.rdAgMaxRowsExport~ row(s) can be exported.">
+													<Action Type="CSV" ID="actExportCSV">
+														<Target Type="CSV" Report="CurrentReport" ID="tgtExportCSV"/>
+														<LinkParams rdAgNoDefCache="True" rdExportTableID="dtAnalysisGrid"/>
+													</Action>
+												</Label>
+												<Label Caption="PDF" ID="lblExportPdf" Class="rdAgCommand" Tooltip="Only @Session.rdAgMaxRowsExport~ row(s) can be exported.">
+													<Action Type="PDF" ID="actExportPDF">
+														<Target Type="PDF" Report="CurrentReport" ID="tgtExportPDF"/>
+														<LinkParams rdAgNoDefCache="True" rdExportTableID="dtAnalysisGrid"/>
+													</Action>
+												</Label>
+											</Division>
+											<Division Condition="(parseInt(&quot;@Session.dtAnalysisGrid-RowCnt~&quot;) || 0) &gt; (parseInt(&quot;@Session.rdAgMaxRowsExport~&quot;) || 0) &#38;&#38; !@Session.rdAgAllowASQLExport~">
+												<Label Caption="(Too many rows.)" ID="lblExportError" Tooltip="Only @Session.rdAgMaxRowsExport~ row(s) can be exported."/>
+											</Division>
+											<LineBreak LineCount="1"/>
+										</Column>
+										<Column ID="colTableAddDashboard" Class="rdAgAddDashboard rdAgAlignRight" Width="1" WidthScale="%">
+											<Label Caption="Add to Dashboard" Class="rdAgCommand rdAgAlignRight" ID="lblAddToDashboardDataTable">
+												<Action ID="actAddToDashboardDataTable" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="dtAnalysisGrid" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Table" AddPanelDescription="" Image="../rdTemplate/rdAnalysisGrid/rdAgDataTable.png" MultipleInstances="False" AgAddToDashboard="True" AddPanelSkipLocalData="False">
+													<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+												</Action>
+											</Label>
+										</Column>
+									</Row>
+								</Rows>
+							</Column>
+
+						</Row>
+						<Row ID="rowContentTable" >
+							<Column ColSpan="2" ID="cellTable" >
+								<Division ID="divError-ActiveSql" Condition="@Session.rdActiveSqlError~" >
+									<Label ID="lblActiveSqlErrorRetrieval" Caption="There was an error retrieving the data." Class="rdAgError" Tooltip="@Session.rdActiveSqlErrorMsg~" />
+								</Division >
+								<DataTable ID="dtAnalysisGrid" CellSpacing="1" Class="rdAgDataTable" TableBorder="0" DraggableColumns="True" ResizableColumns="True" RememberSort="True" AccessibleHeaders="True">
+									<InteractivePaging ShowPageNumber="True"     Class="rdAgPaging" IDnotSupportedHere="pagingTable"                                                                                PageRowCount="20" HideWhenOnePage="True" Location="Top" CaptionType="Image" />
+									<InteractivePaging ShowPageNumber="False"    Class="rdAgPaging" IDnotSupportedHere="pagingTableFalse"                                          HideShowPrevNextCaptions="True"  PageRowCount="20" HideWhenOnePage="True" Location="Top" CaptionType="Image" />
+									<InteractivePaging ShowPageNumber="Numbered" Class="rdAgPaging" IDnotSupportedHere="pagingTableNumbered" CurrentPageClass="rdAgContentHeading" HideShowPrevNextCaptions="False" PageRowCount="20" HideWhenOnePage="True" Location="Top" CaptionType="Image" />
+								</DataTable>
+							</Column>
+						</Row>
+					</Rows>
+				</Column>
+
+			</Row>
+
+			<ElementTemplate ID="etCharts">
+				<Row ID="rowChartPie" ShowModes="None" >
+					<Column ID="colChartPie">
+						<Rows Class="rdAgPanel" Width="100" WidthScale="%" ID="rowsChartPie">
+							<Row ID="rowChartPieHeading" Class="rdAgContentHeadingItem">
+								<Column ID="colChartPieHeading">
+									<Rows Class="rdAgContentHeadingRow">
+										<Row>
+											<Column Class="rdAgPanelHeading">
+												<ToggleImage ElementID="rowContentChartPie" Class="rdAgContentHeading" ID="toggleShowContentPie" FalseImage="rdTemplate/rdMinus.gif" TrueImage="rdTemplate/rdPlus.gif" />
+												<Spaces Size="2"/>
+												<Label Caption="Pie Chart" Class="rdAgContentHeading" ID="lblHeadingPie"/>
+												<Spaces Size="10"/>
+											</Column>
+											<Column Class="rdAgAddDashboard rdAgAlignRight">
+												<Label Caption="Add to Dashboard" Class="rdAgCommand rdAgAlignRight" ID="lblAddToDashboardPie">
+													<Action ID="actAddToDashboardPieChart" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="PieChart" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Enter a Panel Title" AddPanelDescription="" MultipleInstances="False" AgAddToDashboard="True" AddPanelSkipLocalData="False">
+														<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+													</Action>
+												</Label>
+											</Column>
+										</Row>
+									</Rows>
+								</Column>
+							</Row>
+							<Row ID="rowContentChartPie">
+								<Column ID="colContentChartPie">
+									<Chart Type="Pie" ChartHeight="300" ChartWidth="500" OuterBorderColor="#7A7A7A" RoundedBorder="4" YAxisTitle="Unit Price" LabelLayout="SideLayout" D3="5" ShowDataValues="False" Transparency="1" ID="ChartPie" LabelRoundedBorder="False" LabelShading="SoftLight" D3Angle="10" ChartTexture="RoundedEdge" MaxLabelLength="20">
+										<DataLayer Type="Linked" ID="dlChart">
+											<RelevanceFilter RelevanceValue="10" RelevanceType="NumberOfRows" IrrelevanceLabel="Other" DataColumn="" LabelColumn=""/>
+										</DataLayer>
+										<HoverHighlight />
+										<Quicktip ID="rdAgPieChartQuicktip">
+											<QuicktipRow ID="rdAgPieChartQuicktipRow1" />
+										</Quicktip>
+									</Chart>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+				<Row ID="rowChartBar" ShowModes="None">
+					<Column ID="colChartBar">
+						<Rows Class="rdAgPanel" Width="100" WidthScale="%" ID="rowsChartBar">
+							<Row ID="rowChartBarHeading" Class="rdAgContentHeadingItem">
+								<Column ID="colChartBarHeading">
+									<Rows Class="rdAgContentHeadingRow">
+										<Row>
+											<Column Class="rdAgPanelHeading">
+												<ToggleImage ElementID="rowContentChartBar" ID="toggleShowContentBar" FalseImage="rdTemplate/rdMinus.gif" TrueImage="rdTemplate/rdPlus.gif" />
+												<Spaces Size="2"/>
+												<Label Caption="Bar Chart" ID="lblHeadingBar" Class="rdAgContentHeading" />
+												<Spaces Size="10"/>
+											</Column>
+											<Column Class="rdAgAddDashboard rdAgAlignRight">
+												<Label Caption="Add to Dashboard" Class="rdAgCommand rdAgAlignRight" ID="lblAddToDashboardBar">
+													<Action ID="actAddToDashboardBarChart" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="BarChart" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Enter a Panel Title" AddPanelDescription="" MultipleInstances="False" AgAddToDashboard="True" AddPanelSkipLocalData="False">
+														<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+													</Action>
+												</Label>
+											</Column>
+										</Row>
+									</Rows>
+								</Column>
+							</Row>
+							<Row ID="rowContentChartBar">
+								<Column ID="colContentChartBar">
+									<Chart Type="XY" XYChartType="Bar" ChartHeight="300" ChartWidth="600" OuterBorderColor="#7A7A7A" RoundedBorder="4" Transparency="2" LineWidth="2" BarShape="Square" BarShading="BottomLight" D3="3" ChartBackgroundColor="#FFFFFF" ChartBackgroundGradientColor="#FFFFFF" ID="ChartXYBar">
+										<DataLayer Type="Linked" ID="dlChart">
+											<RelevanceFilter RelevanceValue="15" RelevanceType="NumberOfRows" IrrelevanceLabel="Other" DataColumn="" LabelColumn=""/>
+										</DataLayer>
+										<FontLabel FontAngle="90"/>
+										<HoverHighlight />
+										<Quicktip ID="rdAgBarChartQuicktip">
+											<QuicktipRow ID="rdAgBarChartQuicktipRow1" />
+										</Quicktip>
+									</Chart>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+				<Row ID="rowChartLine" ShowModes="None">
+					<Column ID="colChartLine">
+						<Rows Class="rdAgPanel" Width="100" WidthScale="%" ID="rowsChartLine">
+							<Row ID="rowChartLineHeading" Class="rdAgContentHeadingItem">
+								<Column ID="colChartLineHeading">
+									<Rows Class="rdAgContentHeadingRow">
+										<Row>
+											<Column Class="rdAgPanelHeading">
+												<ToggleImage ElementID="rowContentChartLine" ID="toggleShowContentLine" FalseImage="rdTemplate/rdMinus.gif" TrueImage="rdTemplate/rdPlus.gif" />
+												<Spaces Size="2"/>
+												<Label Caption="Line Chart" ID="lblHeadingLine" Class="rdAgContentHeading" />
+												<Spaces Size="10"/>
+											</Column>
+											<Column Class="rdAgAddDashboard rdAgAlignRight">
+												<Label Caption="Add to Dashboard" Class="rdAgCommand rdAgAlignRight" ID="lblAddToDashboardLine">
+													<Action ID="actAddToDashboardLineChart" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="LineChart" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Enter a Panel Title" AddPanelDescription="" MultipleInstances="False" AgAddToDashboard="True" AddPanelSkipLocalData="False">
+														<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+													</Action>
+												</Label>
+											</Column>
+										</Row>
+									</Rows>
+								</Column>
+							</Row>
+							<Row ID="rowContentChartLine">
+								<Column ID="colContentChartLine">
+									<Chart Type="XY" XYChartType="Line" ChartHeight="300" ChartWidth="600" OuterBorderColor="#7A7A7A" RoundedBorder="4" Transparency="7" LineWidth="1" ChartBackgroundColor="#FFFFFF" ChartBackgroundGradientColor="#FFFFFF" MaxLabelLength="20" ID="chartXYLine">
+										<DataLayer Type="Linked" ID="dlChart">
+										</DataLayer>
+										<FontLabel FontAngle="90"/>
+										<HoverHighlight />
+										<Quicktip ID="rdAgLineChartQuicktip">
+											<QuicktipRow ID="rdAgLineChartQuicktipRow1" />
+										</Quicktip>
+									</Chart>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+				<Row ID="rowChartSpline" ShowModes="None">
+					<Column ID="colChartSpline">
+						<Rows Class="rdAgPanel" Width="100" WidthScale="%" ID="rowsChartSpline">
+							<Row ID="rowChartSplineHeading" Class="rdAgContentHeadingItem">
+								<Column ID="colChartSplineHeading">
+									<Rows Class="rdAgContentHeadingRow">
+										<Row>
+											<Column Class="rdAgPanelHeading">
+												<ToggleImage ElementID="rowContentChartSpline" ID="toggleShowContentSpline" FalseImage="rdTemplate/rdMinus.gif" TrueImage="rdTemplate/rdPlus.gif" />
+												<Spaces Size="2"/>
+												<Label Caption="Curved Line Chart" ID="lblHeadingSpline" Class="rdAgContentHeading" />
+												<Spaces Size="10"/>
+											</Column>
+											<Column Class="rdAgAddDashboard rdAgAlignRight">
+												<Label Caption="Add to Dashboard" Class="rdAgCommand rdAgAlignRight" ID="lblAddToDashboardSpline">
+													<Action ID="actAddToDashboardSplineChart" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="SplineChart" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Enter a Panel Title" AddPanelDescription="" MultipleInstances="False" AgAddToDashboard="True" AddPanelSkipLocalData="False">
+														<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+													</Action>
+												</Label>
+											</Column>
+										</Row>
+									</Rows>
+								</Column>
+							</Row>
+							<Row ID="rowContentChartSpline">
+								<Column ID="colContentChartSpline">
+									<Chart Type="XY" XYChartType="Spline" ChartHeight="300" ChartWidth="600" OuterBorderColor="#7A7A7A" RoundedBorder="4" Transparency="7" LineWidth="1" ChartBackgroundColor="#FFFFFF" ChartBackgroundGradientColor="#FFFFFF" MaxLabelLength="20" ID="ChartXYSpline">
+										<DataLayer Type="Linked" ID="dlChart">
+										</DataLayer>
+										<FontLabel FontAngle="90"/>
+										<Quicktip ID="rdAgSplineChartQuicktip">
+											<QuicktipRow ID="rdAgSplineChartQuicktipRow1" />
+										</Quicktip>
+									</Chart>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+				<Row ID="rowChartScatter" ShowModes="None">
+					<Column ID="colChartScatter">
+						<Rows Class="rdAgPanel" Width="100" WidthScale="%" ID="rowsChartScatter">
+							<Row ID="rowChartScatterHeading" Class="rdAgContentHeadingItem">
+								<Column ID="colChartScatterHeading">
+									<Rows Class="rdAgContentHeadingRow">
+										<Row>
+											<Column Class="rdAgPanelHeading">
+												<ToggleImage ElementID="rowContentChartScatter" ID="toggleShowContentScatter" FalseImage="rdTemplate/rdMinus.gif" TrueImage="rdTemplate/rdPlus.gif" />
+												<Spaces Size="2"/>
+												<Label Caption="Scatter Chart" ID="lblHeadingScatter" Class="rdAgContentHeading" />
+												<Spaces Size="10"/>
+											</Column>
+											<Column Class="rdAgAddDashboard rdAgAlignRight">
+												<Label Caption="Add to Dashboard" Class="rdAgCommand rdAgAlignRight" ID="lblAddToDashboardScatter">
+													<Action ID="actAddToDashboardScatterChart" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="ScatterChart" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Enter a Panel Title" AddPanelDescription="" MultipleInstances="False" AgAddToDashboard="True" AddPanelSkipLocalData="False">
+														<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+													</Action>
+												</Label>
+											</Column>
+										</Row>
+									</Rows>
+								</Column>
+							</Row>
+							<Row ID="rowContentChartScatter">
+								<Column ID="colContentChartScatter">
+									<Chart Type="Scatter" ChartHeight="300" ChartWidth="600" OuterBorderColor="#7A7A7A" RoundedBorder="4" Transparency="7" ChartSymbolFillColor="LightBlue" ChartSymbolEdgeColor="Blue" ChartSymbol="SymbolCircle" ChartBackgroundColor="#FFFFFF" ChartBackgroundGradientColor="#FFFFFF" ID="ChartXYScatter">
+										<DataLayer Type="Linked" ID="dlChart">
+										</DataLayer>
+										<FontLabel FontAngle="90"/>
+										<ChartTrendLine Color="#111111" LineWidth="2"/>
+										<HoverHighlight />
+										<Quicktip ID="rdAgScatterChartQuicktip">
+											<QuicktipRow ID="rdAgScatterChartQuicktipRow1" />
+										</Quicktip>
+									</Chart>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+				<Row ID="rowChartHeatmap" ShowModes="None">
+					<Column ID="colChartHeatmap">
+						<Rows Class="rdAgPanel" Width="100" WidthScale="%" ID="rowsChartHeatmap">
+							<Row ID="rowChartHeatmapHeading" Class="rdAgContentHeadingItem">
+								<Column ID="colChartHeatmapHeading">
+									<Rows Class="rdAgContentHeadingRow">
+										<Row>
+											<Column Class="rdAgPanelHeading">
+												<ToggleImage ElementID="rowContentChartHeatmap" ID="toggleShowContentHeatmap" FalseImage="rdTemplate/rdMinus.gif" TrueImage="rdTemplate/rdPlus.gif" />
+												<Spaces Size="2"/>
+												<Label Caption="Heatmap Chart" ID="lblHeadingHeatmap" Class="rdAgContentHeading" />
+												<Spaces Size="10"/>
+											</Column>
+											<Column Class="rdAgAddDashboard rdAgAlignRight">
+												<Label Caption="Add to Dashboard" Class="rdAgCommand rdAgAlignRight" ID="lblAddToDashboardHeatmap">
+													<Action ID="actAddToDashboardHeatmapChart" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="Heatmap" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Enter a Panel Title" AddPanelDescription="" MultipleInstances="False" AgAddToDashboard="True" AddPanelSkipLocalData="False">
+														<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+													</Action>
+												</Label>
+											</Column>
+										</Row>
+									</Rows>
+								</Column>
+							</Row>
+							<Row ID="rowContentChartHeatmap">
+								<Column ID="colContentChartHeatmap">
+									<Chart Type="Heatmap" ChartHeight="300" ChartWidth="600" OuterBorderColor="#7A7A7A" RoundedBorder="4" Transparency="7" ID="ChartXYHeatmap">
+										<HeatmapFontTitle FontName="Arial" FontBold="True" FontSize="11" />
+										<DataLayer Type="Linked" ID="dlChart">
+										</DataLayer>
+										<FontLabel FontAngle="90"/>
+										<ChartTrendLine Color="#111111" LineWidth="2"/>
+										<HoverHighlight />
+										<Quicktip ID="rdAgHeatmapChartQuicktip">
+											<QuicktipRow ID="rdAgHeatmapChartQuicktipRow1" Caption=""/>
+											<QuicktipRow ID="rdAgHeatmapChartQuicktipRow2" Caption=""/>
+											<QuicktipRow ID="rdAgHeatmapChartQuicktipRow3" Caption=""/>
+										</Quicktip>
+									</Chart>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+				<Row ID="rowChartGauge" ShowModes="None">
+					<Column ID="colChartGauge">
+						<Rows Class="rdAgPanel" Width="100" WidthScale="%" ID="rowsChartGauge">
+							<Row ID="rowChartGaugeHeading" Class="rdAgContentHeadingItem">
+								<Column ID="colChartGaugeHeading">
+									<Rows Class="rdAgContentHeadingRow">
+										<Row>
+											<Column Class="rdAgPanelHeading">
+												<ToggleImage ElementID="rowContentChartGauge" ID="toggleShowContentGauge" FalseImage="rdTemplate/rdMinus.gif" TrueImage="rdTemplate/rdPlus.gif" />
+												<Spaces Size="2"/>
+												<Label Caption="Gauge Chart" ID="lblHeadingGauge" Class="rdAgContentHeading" />
+												<Spaces Size="10"/>
+											</Column>
+											<Column Class="rdAgAddDashboard rdAgAlignRight">
+												<Label Caption="Add to Dashboard" Class="rdAgCommand rdAgAlignRight" ID="lblAddToDashboardGauge">
+													<Action ID="actAddToDashboardGauge" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="Gauge" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Enter a Panel Title" AddPanelDescription="" AgAddToDashboard="True" AddPanelSkipLocalData="False">
+														<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+													</Action>
+												</Label>
+											</Column>
+										</Row>
+									</Rows>
+								</Column>
+							</Row>
+							<Row ID="rowContentChartGauge">
+								<Column ID="colContentChartGauge">
+									<Gauge Type="BalloonBar" ChartHeight="100" ChartWidth="400" ID="rdAgGauge" rdAgGaugeGoalsColorSequence="@Request.rdAgGaugeGoalsColorSequence~" TickMarks="True" TickLabelFormat="#0.##mp">
+										<DataLayer Type="Linked" ID="dlChart" />
+										<Resizer ID="rdGaugeResizerTemplate" MinWidth="100" MinHeight="60" MaxHeight="200" />
+									</Gauge>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+			</ElementTemplate>
+
+			<ElementTemplate ID="etCrosstab">
+				<Row ID="rowCrosstabTemplate" ShowModes="None" >
+					<Column ID="colCrosstabTemplate">
+						<Rows Class="rdAgPanel" Width="100" WidthScale="%" ID="rowsCrosstabTemplate">
+							<Row ID="rowCrosstabTemplateHeading" Class="rdAgContentHeadingItem">
+								<Column ID="colCrosstabTemplateHeadingContent">
+									<Rows Class="rdAgContentHeadingRow">
+										<Row>
+											<Column Class="rdAgPanelHeading">
+												<ToggleImage ElementID="rowContentCrosstab,colCrosstabExportControls,colCrosstabAddDashboard" Class="rdAgContentHeading" ID="toggleShowContentCrosstab" FalseImage="rdTemplate/rdMinus.gif" TrueImage="rdTemplate/rdPlus.gif" />
+												<Spaces Size="2"/>
+												<Label ID="lblHeadingCrosstab" Class="rdAgContentHeading" Caption="Crosstab"/>
+											</Column>
+											<Column Class="rdAgAlignRight" ID="colCrosstabExportControls">
+												<Label Caption=" Export: " ID="lblExportCrosstab"/>
+												<Label Caption="Excel" ID="lblExportExcelCrosstab" Class="rdAgCommand">
+													<Action Type="NativeExcel" ID="actExcelCrosstab">
+														<Target Type="NativeExcel" Report="CurrentReport" ID="tgtExcelCrosstab"/>
+														<LinkParams rdAgNoDefCache="True" rdExportTableID="(Set in rdAnalysisGrid.vb)"/>
+													</Action>
+												</Label>
+												<Label Caption="CSV" ID="lblExportCsvCrosstab" Class="rdAgCommand">
+													<Action Type="CSV" ID="actCsvCrosstab">
+														<Target Type="CSV" Report="CurrentReport" ID="tgtCsvCrosstab"/>
+														<LinkParams rdAgNoDefCache="True" rdExportTableID="(Set in rdAnalysisGrid.vb)"/>
+													</Action>
+												</Label>
+												<Label Caption="PDF" ID="lblExportPdfCrosstab" Class="rdAgCommand">
+													<Action Type="PDF" ID="actPdfCrosstab">
+														<Target Type="PDF" Report="CurrentReport" ID="tgtPdfCrosstab"/>
+														<LinkParams rdAgNoDefCache="True" rdExportTableID="(Set in rdAnalysisGrid.vb)"/>
+													</Action>
+												</Label>
+												<LineBreak LineCount="1"/>
+											</Column>
+											<Column ID="colCrosstabAddDashboard" Class="rdAgAddDashboard rdAgAlignRight" Width="1" WidthScale="%">
+												<Label Caption="Add to Dashboard" Class="rdAgCommand rdAgAlignRight" ID="lblAddToDashboardCrosstabTable">
+													<Action ID="actAddToDashboardCrosstab" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="ctAnalysisCrosstab" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Enter a Panel Title" AddPanelDescription="" Image="../rdTemplate/rdAnalysisGrid/rdAgCrosstab.png" MultipleInstances="False" AgAddToDashboard="True" AddPanelSkipLocalData="False">
+														<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+													</Action>
+												</Label>
+											</Column>
+										</Row>
+									</Rows>
+								</Column>
+							</Row>
+							<Row ID="rowContentCrosstab">
+								<Column ColSpan="2" ID="colContentCrosstab">
+									<CrosstabTable ID="ctAnalysisCrosstab" CellSpacing="1" Class="rdAgDataTable" TableBorder="0" DraggableColumns="True" ResizableColumns="True" RememberSort="True">
+										<InteractivePaging ShowPageNumber="True"     IDnotSupportedHere="pagingCrosstab"         Class="rdAgPaging" PageRowCount="20" HideWhenOnePage="True" Location="Top" CaptionType="Image" />
+										<InteractivePaging ShowPageNumber="False"    IDnotSupportedHere="pagingCrosstabFalse"    Class="rdAgPaging"                   HideShowPrevNextCaptions="True" PageRowCount="20" HideWhenOnePage="True" Location="Top" CaptionType="Image" />
+										<InteractivePaging ShowPageNumber="Numbered" IDnotSupportedHere="pagingCrosstabNumbered" Class="rdAgPaging" CurrentPageClass="rdAgContentHeading" PageRowCount="20" HideWhenOnePage="True" Location="Top" CaptionType="Image" />
+									</CrosstabTable>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+			</ElementTemplate>
+
+			<ElementTemplate ID="etResizer">
+				<Resizer ID="rdChartResizerTemplate" MinWidth="250" MinHeight="250" />
+			</ElementTemplate>
+			<ElementTemplate>
+				<ExtraXYLayer ID="rdBarForecast" XYChartType="Line" ChartDataColumn="rdForecastValue" Color="Red" LineStyle="DotLine">
+					<Quicktip ID="rdAcBarChartQuicktip">
+						<QuicktipRow ID="rdAcBarChartQuicktipRow1" />
+					</Quicktip>
+				</ExtraXYLayer>
+			</ElementTemplate>
+			<Note Note="The TemplateElement element prevents these templates from being processed.
+Save's lots of time."/>
+		</Rows>
+	</Body>
+</Report>

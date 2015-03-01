@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	ID="ReportMenuCenter"
+	>
+	<ReportHeader>
+		<Image
+			AltText="OpenDSP"
+			Caption="logo.png"
+			Height="64"
+			ID="Logo"
+		/>
+		<Spaces
+			Size="2"
+		/>
+		<Label
+			Caption="Report Center"
+			Class="ThemeHeaderLargest"
+		/>
+		<HR/>
+	</ReportHeader>
+	<Body>
+		<Division>
+			<ReportCenterMenu
+				BookmarkCollection="opsdBookmarks"
+				ID="odspReportCenter"
+			/>
+		</Division>
+	</Body>
+	<ReportFooter/>
+</Report>

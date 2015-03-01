@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="NewColorPicker" SavedBy="AGILEENGINE-PAV\NewUser" SavedAt="11/28/2014 4:42:27 PM" EngineVersion="8.2.26">
+  <StyleSheet StyleSheet="rdRaStyle.css" />
+  <ReportHeader />
+  <Body>
+    <Division ID="ColorPickerWraper_rdElementID">
+      <InputHidden ID="rdElementID" DefaultValue="#000000" />
+      <Rows>
+        <Row>
+          <Column>
+            <Rectangle ID="rectColorIndicator_rdElementID" Height="10" Width="10" BorderThickness="1" BackgroundColor="#6AA84F" Color="White" />
+          </Column>
+          <Column>
+            <PopupPanel ID="ppColors_rdElementID" PopupPanelLocation="Mouse" PopupModal="True">                           
+              <Image Caption="rdTemplate/rdInputColorPicker/selectedColor.png" ID="selectedColor_rdElementID" Height="11" Width="11" Class="CheckedAlignment rdImageColorSelected hidden" />
+            </PopupPanel>
+            <Image Caption="rdTemplate/rdAnalysisGrid/ColorPicker.png" ID="colorPicker_rdElementID" Tooltip="Pick Color." Class="rd-colorpicker-image" IdeDisplayStatus="Collapsed">    
+            </Image>
+          </Column>
+        </Row>
+      </Rows>
+    </Division>
+  </Body>
+  <ReportFooter />
+</Report>

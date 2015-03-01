@@ -1,0 +1,617 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="by Domain"
+	ID="Reports.MetricsByDomain"
+	>
+	<ReportCenterItem
+		ReportCenterFolder="Metrics Reports"
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<StyleSheet
+		ID="themeTransit"
+		StyleSheet="extraTheme.css"
+		Theme="Transit"
+	/>
+	<DefaultRequestParams
+		campid="0"
+		dateFrom="@Date.Yesterday~"
+		dateTo="@Date.Yesterday~"
+		groupby="DATE(rbd.process_date),rbd.domain"
+		linit="0"
+		ts="0"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Metrics by Domain"
+				Class="ThemeHeaderLarger"
+			/>
+		</Division>
+		<HR/>
+	</ReportHeader>
+	<Body>
+		<Division
+			HtmlDiv="True"
+			>
+			<Division
+				Class="PullRight"
+				HtmlDiv="True"
+				ID="expRow"
+				>
+				<Button
+					Caption="Export to Excel"
+					Class="ThemeContainerShadedAndBordered"
+					ID="exportBtn"
+					>
+					<Action
+						ID="actExport"
+						Type="NativeExcel"
+						>
+						<Target
+							ExcelOutputFormat="Excel2007"
+							ExportDataTableID="dtMetrics"
+							ExportFilename="Stats by Domain @Request.dateFrom~_@Request.dateTo~"
+							ShowGridlines="True"
+							Type="NativeExcel"
+						/>
+						<LinkParams
+							dateFrom="@Request.dateFrom~"
+							dateTo="@Request.dateTo~"
+						/>
+					</Action>
+				</Button>
+			</Division>
+			<IncludeHtml
+				Html="&lt;a href=&quot;a2&quot; class = &quot;spoilerButton&quot;&gt;Show/Hide Filters&lt;/a&gt;"
+				ID="htmlHideFilters"
+			/>
+			<Division
+				Class="spoiler"
+				HtmlDiv="True"
+				ID="a2"
+				>
+				<ResponsiveRow
+					CollisionBehavior="Wrap"
+					ID="DatePickRRow"
+					>
+					<ResponsiveColumn
+						ColspanLargeScreen="6"
+						ColspanMediumScreen="6"
+						ColspanSmallScreen="4"
+						>
+						<FieldsetBox
+							Caption="Filter by Date"
+							>
+							<IncludeSharedElement
+								DefinitionFile="SharedElements"
+								SharedElementID="DatePickerAC"
+							/>
+						</FieldsetBox>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow
+					CollisionBehavior="Wrap"
+					ID="GoupRRow"
+					>
+					<ResponsiveColumn
+						ColspanLargeScreen="5"
+						ColspanMediumScreen="5"
+						ColspanSmallScreen="4"
+						ID="GroupByRCol"
+						>
+						<FieldsetBox
+							Caption="Group by"
+							>
+							<InputCheckboxList
+								CheckboxListDropdown="True"
+								Class="ThemeAlignLeft"
+								DefaultValue="@Request.groupby~"
+								ID="groupby"
+								MultiSelect="True"
+								OptionCaptionColumn="Name"
+								OptionValueColumn="value"
+								>
+								<DataLayer
+									Type="Static"
+									>
+									<StaticDataRow
+										Name="Date"
+										value="DATE(rbd.process_date)"
+									/>
+									<StaticDataRow
+										Name="Campaign"
+										value="cmp.name"
+									/>
+									<Remark>
+										<StaticDataRow
+											Name="Line Item"
+											value="cl.name"
+										/>
+									</Remark>
+									<StaticDataRow
+										Name="Targeting Strategy"
+										value="ts.name"
+									/>
+								</DataLayer>
+							</InputCheckboxList>
+						</FieldsetBox>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow
+					CollisionBehavior="Wrap"
+					ID="FilterRRow"
+					>
+					<ResponsiveColumn
+						ColspanLargeScreen="6"
+						ColspanMediumScreen="6"
+						ColspanSmallScreen="4"
+						ID="FilterByRCol"
+						>
+						<FieldsetBox
+							Caption="Filter by"
+							>
+							<Rows>
+								<Row>
+									<Column
+										ID="colCamp"
+										>
+										<Label
+											Caption="Campaign:"
+											Class="ThemeAlignLeft"
+										/>
+										<LineBreak/>
+										<InputCheckboxList
+											CheckboxListDropdown="True"
+											DefaultValue="@Request.campid~"
+											ID="campid"
+											OptionCaptionColumn="name"
+											OptionValueColumn="campaign_id"
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="campidSql"
+												Source="Select c.campaign_id, c.name 
+from opendsp.ld_campaign c 
+join opendsp.ld_advertiser adv ON c.advertiser_id=adv.advertiser_id 
+group by c.name
+Order By c.name"
+												Type="SQL"
+											/>
+										</InputCheckboxList>
+									</Column>
+									<Remark>
+										<Column
+											ID="colLinIt"
+											>
+											<Label
+												Caption="Line item:  "
+												Class="ThemeAlignLeft"
+											/>
+											<LineBreak/>
+											<InputCheckboxList
+												CheckboxListDropdown="True"
+												Class="ThemeAlignLeft"
+												DefaultValue="@Request.linit~"
+												ID="linit"
+												OptionCaptionColumn="name"
+												OptionValueColumn="campaign_lineitem_id"
+												>
+												<DataLayer
+													ConnectionID="OpenDSP"
+													ID="camIdSql"
+													Source="Select cl.name, cl.campaign_lineitem_id
+From opendsp.ld_creative cr
+  left join opendsp.ld_campaign c On cr.campaign_id = c.campaign_id
+  left join opendsp.ld_advertiser adv On c.advertiser_id = adv.advertiser_id
+  left join opendsp.ld_campaign_lineitem cl on c.campaign_id= cl.campaign_id
+Where cl.campaign_lineitem_id&gt;0
+group by cl.name
+Order By cl.name"
+													Type="SQL"
+												/>
+											</InputCheckboxList>
+										</Column>
+									</Remark>
+									<Column
+										ID="colTarStr"
+										>
+										<Label
+											Caption="Targeting Strategy:"
+											Class="ThemeAlignLeft"
+										/>
+										<LineBreak/>
+										<InputCheckboxList
+											CheckboxListDropdown="True"
+											Class="ThemeAlignLeft"
+											DefaultValue="@Request.ts~"
+											ID="ts"
+											OptionCaptionColumn="name"
+											OptionValueColumn="targeting_strategy_id"
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="tsSql"
+												Source="Select ts.name, ts.targeting_strategy_id
+FROM hive_stats.st_report_by_domain rbd
+left join opendsp.ld_targeting_strategy ts on rbd.targeting_id = ts.targeting_strategy_id
+group by ts.name
+order by ts.name"
+												Type="SQL"
+											/>
+										</InputCheckboxList>
+									</Column>
+								</Row>
+							</Rows>
+						</FieldsetBox>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+			</Division>
+		</Division>
+		<LineBreak
+			ID="LineUnderButton"
+		/>
+		<Division
+			HtmlDiv="True"
+			ID="divContainer"
+			>
+			<Division
+				HtmlDiv="True"
+				ID="divInnerContainer"
+				>
+				<DataTable
+					ID="dtMetricss"
+					Width="98"
+					WidthScale="%"
+					>
+					<DataLayer
+						ConnectionID="OpenDSP"
+						ID="dlMetricss"
+						MaxRows="0"
+						Source="SELECT 1;"
+						Type="SQL"
+					/>
+					<DataTableColumn
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;DATE(rbd.process_date)&apos;) &gt; -1"
+						Header="Date"
+						ID="colDates"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Domain"
+						ID="colDomains"
+						Width="15"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;cmp.name&apos;) &gt; -1"
+						Header="Campaign"
+						ID="colCampaigns"
+						Width="15"
+						WidthScale="%"
+					/>
+					<Remark>
+						<DataTableColumn
+							Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;cl.name&apos;) &gt; -1"
+							Header="LineItem"
+							ID="colLineItems"
+							Width="7"
+							WidthScale="%"
+						/>
+					</Remark>
+					<DataTableColumn
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;ts.name&apos;) &gt; -1"
+						Header="TargetingStrategy"
+						ID="colTargetingStrategys"
+						Width="12"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Bids"
+						ID="colBidss"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Wins"
+						ID="colWinss"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Impressions"
+						ID="colImpressionss"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Clicks"
+						ID="colClickss"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Cost"
+						ID="colCosts"
+						Width="7"
+						WidthScale="%"
+					/>
+				</DataTable>
+			</Division>
+			<Division
+				Class="scrollingTableDivDomain"
+				HtmlDiv="True"
+				ID="divDataTable"
+				>
+				<DataTable
+					AltRowClass="ThemeAlternatingRow"
+					Class="specialTable"
+					ID="dtMetrics"
+					Width="99"
+					WidthScale="%"
+					>
+					<DataLayer
+						ConnectionID="OpenDSP"
+						ID="dlMetrics"
+						Source="SELECT 
+DATE(rbd.process_date) Date, 
+ifnull(rbd.domain, &apos;- n/a -&apos;) Domain, 
+ifnull(cmp.name, &apos;- n/a -&apos;) Campaign, 
+--ifnull(cl.name, &apos;- n/a -&apos;) LineItem, 
+ifnull(ts.name, &apos;- n/a -&apos;) TargetingStrategy,  
+ifnull(sum(rbd.bids), 0) Bids, 
+ifnull(sum(rbd.wins), 0) Wins,
+ifnull(sum(rbd.impressions), 0) Impressions, 
+ifnull(sum(rbd.clicks), 0) Clicks,
+ifnull(sum(rbd.cost / 1000000), 0) Cost
+
+FROM hive_stats.st_report_by_domain rbd
+left join opendsp.ld_targeting_strategy ts on rbd.targeting_id = ts.targeting_strategy_id
+left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+left join opendsp.ld_campaign cmp on cl.campaign_id = cmp.campaign_id
+left join opendsp.ld_advertiser adv ON cmp.advertiser_id=adv.advertiser_id 
+
+Where DATE(rbd.process_date) between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (&apos;0&apos; IN (&apos;@Request.campid~&apos;) or cmp.campaign_id IN (@Request.campid~))
+and (&apos;0&apos; IN (&apos;@Request.linit~&apos;) or cl.campaign_lineitem_id IN (@Request.linit~))
+and (&apos;0&apos; IN (&apos;@Request.ts~&apos;) or ts.targeting_strategy_id IN (@Request.ts~))
+
+group by rbd.domain ,@Request.groupby~
+order by @Request.groupby~ ;
+"
+						Type="SQL"
+					/>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;DATE(rbd.process_date)&apos;) &gt; -1"
+						ID="colDate"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Date~"
+							Format="Short Date"
+							ID="lblDate"
+						/>
+						<DataColumnSort
+							DataColumn="Date"
+							DataType="Date"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colDomain"
+						Width="15"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Domain~"
+							ID="lblDomain"
+						/>
+						<DataColumnSort
+							DataColumn="Domain"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;cmp.name&apos;) &gt; -1"
+						ID="colCampaign"
+						Width="15"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Campaign~"
+							ID="lblCampaign"
+						/>
+						<DataColumnSort
+							DataColumn="Campaign"
+						/>
+					</DataTableColumn>
+					<Remark>
+						<DataTableColumn
+							Class="ThemeAlignLeft"
+							Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;cl.name&apos;) &gt; -1"
+							ID="colLineItem"
+							Width="7"
+							WidthScale="%"
+							>
+							<Label
+								Caption="@Data.LineItem~"
+								ID="lblLineItem"
+							/>
+							<DataColumnSort
+								DataColumn="LineItem"
+							/>
+						</DataTableColumn>
+					</Remark>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;ts.name&apos;) &gt; -1"
+						ID="colTargetingStrategy"
+						Width="12"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.TargetingStrategy~"
+							ID="lblTargetingStrategy"
+						/>
+						<DataColumnSort
+							DataColumn="TargetingStrategy"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colBids"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Bids~"
+							Format="###,###,##0"
+							ID="lblBids"
+						/>
+						<DataColumnSort
+							DataColumn="Bids"
+							DataType="Number"
+						/>
+						<DataColumnSummary
+							DataColumn="Bids"
+							Function="Sum"
+							ID="sumBids"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colWins"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Wins~"
+							Format="###,###,##0"
+							ID="lblWins"
+						/>
+						<DataColumnSort
+							DataColumn="Wins"
+							DataType="Number"
+						/>
+						<DataColumnSummary
+							DataColumn="Wins"
+							Function="Sum"
+							ID="sumWins"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colImpressions"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Impressions~"
+							Format="###,###,##0"
+							ID="lblImpressions"
+						/>
+						<DataColumnSort
+							DataColumn="Impressions"
+							DataType="Number"
+						/>
+						<DataColumnSummary
+							DataColumn="Impressions"
+							Function="Sum"
+							ID="sumImps"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colClicks"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Clicks~"
+							Format="###,###,##0"
+							ID="lblClicks"
+						/>
+						<DataColumnSort
+							DataColumn="Clicks"
+							DataType="Number"
+						/>
+						<DataColumnSummary
+							DataColumn="Clicks"
+							Function="Sum"
+							ID="sumClicks"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colCost"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Cost~"
+							Format="$###,###,##0.00"
+							ID="lblCost"
+						/>
+						<DataColumnSort
+							DataColumn="Cost"
+							DataType="Number"
+						/>
+					</DataTableColumn>
+					<SummaryRow
+						Caption="Totals"
+					/>
+					<InteractivePaging
+						CaptionType="Image"
+						HideWhenOnePage="True"
+						Location="Bottom"
+						PageRowCount="100"
+						ShowPageNumber="True"
+					/>
+				</DataTable>
+			</Division>
+		</Division>
+	</Body>
+	<ReportFooter>
+		<IncludeHtml
+			Html="&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+   
+	&lt;script type=&quot;text/javascript&quot;&gt;
+    $(document).ready(function(){
+        $(&quot;.spoilerButton&quot;).click(function (e) { 
+            e.preventDefault()
+            var foo=$(this).attr(&apos;href&apos;)
+            $(&apos;#&apos;+foo).slideToggle(1000); 
+        });
+		$(&quot;.spoiler&quot;).show();
+    });
+    &lt;/script&gt;"
+		/>
+		<IncludeScript
+			IncludedScript="$(document).ready(function() {
+  function setHeight() {
+    windowHeight = $(window).innerHeight();
+    $(&apos;.scrollingTableDiv&apos;).css(&apos;min-height&apos;, windowHeight-139);
+  };
+  setHeight();
+  
+  $(window).resize(function() {
+    setHeight();
+  });
+});"
+		/>
+	</ReportFooter>
+	<ideTestParams
+		campid="0"
+		dateFrom="2015-06-20"
+		dateTo="2015-06-28"
+		groupby="DATE(rbd.process_date)"
+		linit="0"
+		ts="0"
+	/>
+</Report>

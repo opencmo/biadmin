@@ -1,0 +1,545 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="Metrics Report (СТP)"
+	ID="Reports.MetricsReport"
+	>
+	<ReportCenterItem
+		ReportCenterFolder="Metrics Reports"
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<DefaultRequestParams
+		dateFrom="@Date.ThisMonthStart~"
+		dateTo="@Date.ThisMonthEnd~"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Metrics Report"
+				Class="ThemeHeaderLarger"
+			/>
+			<Label
+				Caption="  consumer technical preview"
+			/>
+		</Division>
+		<Division
+			Class="ThemeAlignRight"
+			HtmlDiv="True"
+			ID="repHelp"
+			>
+			<Label
+				Caption="Help on Metrics"
+				>
+				<Action
+					ID="lnkHelp"
+					Type="Link"
+					>
+					<Target
+						FrameID="NewWindow"
+						ID="tglHelp"
+						Link="https://baatoot.atlassian.net/wiki/pages/viewpage.action?pageId=14975008"
+						Type="Link"
+					/>
+				</Action>
+			</Label>
+		</Division>
+		<HR/>
+	</ReportHeader>
+	<Body>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			ID="DatePickRRow"
+			>
+			<ResponsiveColumn
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="6"
+				ColspanSmallScreen="4"
+				>
+				<FieldsetBox
+					Caption="Filter by Date"
+					>
+					<IncludeSharedElement
+						DefinitionFile="SharedElements"
+						SharedElementID="DatePickerAC"
+					/>
+				</FieldsetBox>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<LineBreak/>
+		<Button
+			Caption="Reset Analysis Grid"
+			Class="ThemeContainerShadedAndBordered"
+			ID="apllyBtn"
+			>
+			<Action
+				ID="actReport"
+				Type="Report"
+				>
+				<LinkParams
+					rdAgReset="True"
+				/>
+				<Target
+					LinkDataLayers="True"
+					Paging="Interactive"
+					RequestForwarding="True"
+					Type="Report"
+					>
+					<WaitPage
+						Caption="Please Wait..."
+					/>
+				</Target>
+			</Action>
+		</Button>
+		<Label
+			Caption="  - it will apply settings of Date filter to Analysis Grid, but reset any changes within"
+		/>
+		<HR/>
+		<AnalysisGrid
+			AjaxPaging="True"
+			DraggableColumns="True"
+			ID="agMetrics"
+			ShowPageNumber="True"
+			SortArrows="True"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="dlMetrics"
+				Source="select 
+    DATE(rbs.report_datetime) Date,
+	TIME(rbs.report_datetime) Hour,
+    ifnull(CONCAT(ts.name,&quot; (&quot;,rbs.targeting_strategy_id,&quot;)&quot;), &apos;- n/a -&apos;) TargetingStrategy,
+	ifnull(CONCAT(cr.name,&quot; (&quot;,rbs.`creative_id`,&quot;)&quot;), &apos;- n/a -&apos;) creative_id,
+	ifnull(rbs.`exchange_name`, &apos;- n/a -&apos;) exchange_name,
+	ifnull(rbs.`ssp_name`, &apos;- n/a -&apos;) ssp_name,
+    ifnull(sum(rbs.bid), 0) Bids,
+    ifnull(sum(rws.win), 0) Wins,
+    ifnull(sum(ris.impression), 0) Impressions,
+    ifnull(sum(rmi.impressions), 0) Impression2,
+    ifnull(sum(rws.microWinningPrice / 1000000), 0) Spend,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(ris.impression) * 1000, 0) CPM,
+    ifnull(sum(rcs.click), 0) Clicks,
+    ifnull(sum(rcs.click) / sum(ris.impression), 0) CTR,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(rcs.click), 0) CPC,
+    ifnull(sum(rmc.click), 0) Click2,
+    ifnull(sum(rmc.click) / sum(rmi.impressions), 0) CTR2,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(rmc.click), 0) CPC2,
+	ifnull(sum(rbs.micro_bid_price)/sum(rws.win), 0) AvrBid,
+	ifnull(sum(rbs.micro_bid_price)/sum(rbs.bid)/1000, 0) AvrBidCPM,
+	ifnull(sum(rps.pseudowin), 0) PseudoWin,
+	ifnull(round(sum(rps.microWinningPrice)/1000000,2), 0) SpendPsWin
+from stat.report_bid_summary rbs
+    left outer join stat.report_win_summary rws ON rws.`targeting_strategy_id` = rbs.`targeting_strategy_id`
+        and rbs.`creative_id` = rws.`creative_id`
+        and rbs.`report_datetime` = rws.`report_datetime`
+        and rbs.`exchange_name` = rws.exchange_name
+        and rbs.`ssp_name` = rws.ssp_name
+    left join stat.report_impression_summary ris ON rbs.`targeting_strategy_id` = ris.`targeting_strategy_id`
+        and rbs.`creative_id` = ris.`creative_id`
+        and rbs.`report_datetime` = ris.`report_datetime`
+        and rbs.`exchange_name` = ris.exchange_name
+        and rbs.`ssp_name` = ris.ssp_name
+	left join stat.report_click_summary rcs ON rbs.`targeting_strategy_id` = rcs.`targeting_strategy_id`
+        and rbs.`creative_id` = rcs.`creative_id`
+        and rbs.`report_datetime` = rcs.`report_datetime`
+        and rbs.`exchange_name` = rcs.exchange_name
+        and rbs.`ssp_name` = rcs.ssp_name
+	left join stat.report_man_click rmc ON rbs.`targeting_strategy_id` = rmc.`targeting_strategy_id`
+        and rbs.`creative_id` = rmc.`creative_id`
+        and rbs.`report_datetime` = rmc.`report_datetime`
+        and rbs.`exchange_name` = rmc.exchange_name
+        and rbs.`ssp_name` = rmc.ssp_name
+	left join stat.report_man_impression rmi ON rbs.`targeting_strategy_id` = rmi.`targeting_strategy_id`
+        and rbs.`creative_id` = rmi.`creative_id`
+        and rbs.`report_datetime` = rmi.`report_datetime`
+        and rbs.`exchange_name` = rmi.exchange_name
+        and rbs.`ssp_name` = rmi.ssp_name
+	left join stat.report_pseudowin_summary rps ON rbs.targeting_strategy_id = rps.targeting_strategy_id
+        and rbs.creative_id = rps.creative_id
+		and rbs.report_datetime = rps.report_datetime
+		and rbs.exchange_name = rps.exchange_name
+        and rbs.ssp_name = rps.ssp_name
+	join opendsp.ld_creative cr ON rbs.creative_id = cr.creative_id
+	join opendsp.ld_targeting_strategy ts ON rbs.targeting_strategy_id = ts.targeting_strategy_id
+	
+Where DATE(rbs.`report_datetime`) between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and ((rws.microWinningPrice!=0 and rws.exchange_name=&apos;adx&apos;)or(rws.exchange_name!=&apos;adx&apos;))
+group by DATE(rbs.report_datetime), HOUR(rbs.report_datetime), rbs.targeting_strategy_id, rbs.creative_id, rbs.exchange_name, rbs.ssp_name
+order by DATE(rbs.report_datetime), HOUR(rbs.report_datetime), rbs.targeting_strategy_id, rbs.creative_id, rbs.exchange_name, rbs.ssp_name;"
+				Type="SQL"
+			/>
+			<AnalysisGridColumn
+				DataColumn="Date"
+				DataType="Date"
+				Format="Short Date"
+				Header="Date"
+				ID="colDate"
+			/>
+			<AnalysisGridColumn
+				DataColumn="Hour"
+				DataType="Text"
+				Format="Short Time"
+				Header="Hour"
+				ID="colHour"
+			/>
+			<AnalysisGridColumn
+				DataColumn="TargetingStrategy"
+				DataType="Text"
+				Header="Targeting Strategy"
+				ID="colTargetingStrategy"
+			/>
+			<AnalysisGridColumn
+				DataColumn="creative_id"
+				DataType="Text"
+				Header="Creative Id"
+				ID="colcreative_id"
+			/>
+			<AnalysisGridColumn
+				DataColumn="exchange_name"
+				DataType="Text"
+				Header="Exchange"
+				ID="colexchange_name"
+			/>
+			<AnalysisGridColumn
+				DataColumn="ssp_name"
+				DataType="Text"
+				Header="SSP"
+				ID="colssp_name"
+			/>
+			<AnalysisGridColumn
+				DataColumn="Bids"
+				DataType="Number"
+				Format="###,###,##0"
+				Header="Bids"
+				ID="colBids"
+			/>
+			<AnalysisGridColumn
+				DataColumn="Wins"
+				DataType="Number"
+				Format="###,###,##0"
+				Header="Wins"
+				ID="colWins"
+			/>
+			<AnalysisGridColumn
+				DataColumn="Impressions"
+				DataType="Number"
+				Format="###,###,##0"
+				Header="Impressions"
+				ID="colImpressions"
+			/>
+			<AnalysisGridColumn
+				DataColumn="Impression2"
+				DataType="Number"
+				Format="###,###,##0"
+				Header="Impression2"
+				ID="colImpression2"
+			/>
+			<AnalysisGridColumn
+				DataColumn="Spend"
+				DataType="Number"
+				Format="$###,###,##0.00##"
+				Header="Spend"
+				ID="colSpend"
+			/>
+			<AnalysisGridColumn
+				DataColumn="CPM"
+				DataType="Number"
+				Format="$###,###,##0.00##"
+				Header="CPM"
+				ID="colCPM"
+			/>
+			<AnalysisGridColumn
+				DataColumn="Clicks"
+				DataType="Number"
+				Format="###,###,##0"
+				Header="Clicks"
+				ID="colClicks"
+			/>
+			<AnalysisGridColumn
+				DataColumn="CTR"
+				DataType="Number"
+				Format="Percent"
+				Header="CTR"
+				ID="colCTR"
+			/>
+			<AnalysisGridColumn
+				DataColumn="CPC"
+				DataType="Number"
+				Format="$###,###,##0.00##"
+				Header="CPC"
+				ID="colCPC"
+			/>
+			<AnalysisGridColumn
+				DataColumn="Click2"
+				DataType="Number"
+				Format="###,###,##0"
+				Header="Click2"
+				ID="colClick2"
+			/>
+			<AnalysisGridColumn
+				DataColumn="CTR2"
+				DataType="Number"
+				Format="Percent"
+				Header="CTR2"
+				ID="colCTR2"
+			/>
+			<AnalysisGridColumn
+				DataColumn="CPC2"
+				DataType="Number"
+				Format="Currency"
+				Header="CPC2"
+				ID="colCPC2"
+			/>
+			<AnalysisGridColumn
+				DataColumn="AvrBid"
+				DataType="Number"
+				Format="###,###,##0"
+				Header="AvrBid"
+				ID="colAvrBid"
+			/>
+			<AnalysisGridColumn
+				DataColumn="AvrBidCPM"
+				DataType="Number"
+				Format="Currency"
+				Header="AvrBid CPM"
+				ID="colAvrBidCPM"
+			/>
+			<AnalysisGridColumn
+				DataColumn="PseudoWin"
+				DataType="Number"
+				Format="###,###,##0"
+				Header="PseudoWin"
+				ID="colPseudoWin"
+			/>
+			<AnalysisGridColumn
+				DataColumn="SpendPsWin"
+				DataType="Number"
+				Format="$###,###,##0.00##"
+				Header="SpendPsWin"
+				ID="colSpendPsWin"
+			/>
+			<WaitPage/>
+		</AnalysisGrid>
+		<Division
+			HtmlDiv="True"
+			ID="divChart1BasicSQL"
+			>
+			<LineBreak
+				LineCount="2"
+			/>
+			<Label
+				Caption="Test Analysis Chart"
+				Class="ThemeTextLargest"
+				ID="lblDesc"
+			/>
+			<LineBreak
+				LineCount="3"
+			/>
+			<AnalysisChart
+				ChartHeight="350"
+				ChartWidth="640"
+				Class="centerSuperEle"
+				ControlPanelLocation="Left"
+				ID="Chart1Basic"
+				>
+				<DataLayer
+					ConnectionID="OpenDSP"
+					ID="dlMetricsAC"
+					Source="select 
+    DATE(rbs.report_datetime) Date,
+	TIME(rbs.report_datetime) Hour,
+    ifnull(CONCAT(ts.name,&quot; (&quot;,rbs.targeting_strategy_id,&quot;)&quot;), &apos;- n/a -&apos;) TargetingStrategy,
+	ifnull(CONCAT(cr.name,&quot; (&quot;,rbs.`creative_id`,&quot;)&quot;), &apos;- n/a -&apos;) creative_id,
+	ifnull(rbs.`exchange_name`, &apos;- n/a -&apos;) exchange_name,
+	ifnull(rbs.`ssp_name`, &apos;- n/a -&apos;) ssp_name,
+    ifnull(sum(rbs.bid), 0) Bids,
+    ifnull(sum(rws.win), 0) Wins,
+    ifnull(sum(ris.impression), 0) Impressions,
+    ifnull(sum(rmi.impressions), 0) Impression2,
+    ifnull(sum(rws.microWinningPrice / 1000000), 0) Spend,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(ris.impression) * 1000, 0) CPM,
+    ifnull(sum(rcs.click), 0) Clicks,
+    ifnull(sum(rcs.click) / sum(ris.impression), 0) CTR,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(rcs.click), 0) CPC,
+    ifnull(sum(rmc.click), 0) Click2,
+    ifnull(sum(rmc.click) / sum(rmi.impressions), 0) CTR2,
+    ifnull(sum(rws.microWinningPrice / 1000000) / sum(rmc.click), 0) CPC2,
+	ifnull(sum(rbs.micro_bid_price)/sum(rws.win), 0) AvrBid,
+	ifnull(sum(rbs.micro_bid_price)/sum(rbs.bid)/1000, 0) AvrBidCPM,
+	ifnull(sum(rps.pseudowin), 0) PseudoWin,
+	ifnull(round(sum(rps.microWinningPrice)/1000000,2), 0) SpendPsWin
+from stat.report_bid_summary rbs
+    left outer join stat.report_win_summary rws ON rws.`targeting_strategy_id` = rbs.`targeting_strategy_id`
+        and rbs.`creative_id` = rws.`creative_id`
+        and rbs.`report_datetime` = rws.`report_datetime`
+        and rbs.`exchange_name` = rws.exchange_name
+        and rbs.`ssp_name` = rws.ssp_name
+    left join stat.report_impression_summary ris ON rbs.`targeting_strategy_id` = ris.`targeting_strategy_id`
+        and rbs.`creative_id` = ris.`creative_id`
+        and rbs.`report_datetime` = ris.`report_datetime`
+        and rbs.`exchange_name` = ris.exchange_name
+        and rbs.`ssp_name` = ris.ssp_name
+	left join stat.report_click_summary rcs ON rbs.`targeting_strategy_id` = rcs.`targeting_strategy_id`
+        and rbs.`creative_id` = rcs.`creative_id`
+        and rbs.`report_datetime` = rcs.`report_datetime`
+        and rbs.`exchange_name` = rcs.exchange_name
+        and rbs.`ssp_name` = rcs.ssp_name
+	left join stat.report_man_click rmc ON rbs.`targeting_strategy_id` = rmc.`targeting_strategy_id`
+        and rbs.`creative_id` = rmc.`creative_id`
+        and rbs.`report_datetime` = rmc.`report_datetime`
+        and rbs.`exchange_name` = rmc.exchange_name
+        and rbs.`ssp_name` = rmc.ssp_name
+	left join stat.report_man_impression rmi ON rbs.`targeting_strategy_id` = rmi.`targeting_strategy_id`
+        and rbs.`creative_id` = rmi.`creative_id`
+        and rbs.`report_datetime` = rmi.`report_datetime`
+        and rbs.`exchange_name` = rmi.exchange_name
+        and rbs.`ssp_name` = rmi.ssp_name
+	left join stat.report_pseudowin_summary rps ON rbs.targeting_strategy_id = rps.targeting_strategy_id
+        and rbs.creative_id = rps.creative_id
+		and rbs.report_datetime = rps.report_datetime
+		and rbs.exchange_name = rps.exchange_name
+        and rbs.ssp_name = rps.ssp_name
+	join opendsp.ld_creative cr ON rbs.creative_id = cr.creative_id
+	join opendsp.ld_targeting_strategy ts ON rbs.targeting_strategy_id = ts.targeting_strategy_id
+	
+Where DATE(rbs.`report_datetime`) between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+
+group by DATE(rbs.report_datetime), HOUR(rbs.report_datetime), rbs.targeting_strategy_id, rbs.creative_id, rbs.exchange_name, rbs.ssp_name
+order by DATE(rbs.report_datetime), HOUR(rbs.report_datetime), rbs.targeting_strategy_id, rbs.creative_id, rbs.exchange_name, rbs.ssp_name;"
+					Type="SQL"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Date"
+					DataType="Date"
+					Format="Short Date"
+					Header="Date"
+					ID="colDate"
+				/>
+				<AnalysisChartColumn
+					DataColumn="TargetingStrategy"
+					DataType="Text"
+					Header="TargetingStrategy"
+					ID="colTargetingStrategy"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Bids"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="Bids"
+					ID="colBids"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Wins"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="Wins"
+					ID="colWins"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Impressions"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="Impressions"
+					ID="colImpressions"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Impression2"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="Impression2"
+					ID="colImpression2"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Spend"
+					DataType="Number"
+					Format="$###,###,##0.00##"
+					Header="Spend"
+					ID="colSpend"
+				/>
+				<AnalysisChartColumn
+					DataColumn="CPM"
+					DataType="Number"
+					Format="$###,###,##0.00##"
+					Header="CPM"
+					ID="colCPM"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Clicks"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="Clicks"
+					ID="colClicks"
+				/>
+				<AnalysisChartColumn
+					DataColumn="CTR"
+					DataType="Number"
+					Format="Percent"
+					Header="CTR"
+					ID="colCTR"
+				/>
+				<AnalysisChartColumn
+					DataColumn="CPC"
+					DataType="Number"
+					Format="$###,###,##0.00##"
+					Header="CPC"
+					ID="colCPC"
+				/>
+				<AnalysisChartColumn
+					DataColumn="Click2"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="Click2"
+					ID="colClick2"
+				/>
+				<AnalysisChartColumn
+					DataColumn="CTR2"
+					DataType="Number"
+					Format="Percent"
+					Header="CTR2"
+					ID="colCTR2"
+				/>
+				<AnalysisChartColumn
+					DataColumn="CPC2"
+					DataType="Number"
+					Format="Currency"
+					Header="CPC2"
+					ID="colCPC2"
+				/>
+				<AnalysisChartColumn
+					DataColumn="AvrBid"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="AvrBid"
+					ID="colAvrBid"
+				/>
+				<AnalysisChartColumn
+					DataColumn="AvrBidCPM"
+					DataType="Number"
+					Format="Currency"
+					Header="AvrBidCPM"
+					ID="colAvrBidCPM"
+				/>
+				<AnalysisChartColumn
+					DataColumn="PseudoWin"
+					DataType="Number"
+					Format="###,###,##0"
+					Header="PseudoWin"
+					ID="colPseudoWin"
+				/>
+				<AnalysisChartColumn
+					DataColumn="SpendPsWin"
+					DataType="Number"
+					Format="$###,###,##0.00##"
+					Header="SpendPsWin"
+					ID="colSpendPsWin"
+				/>
+			</AnalysisChart>
+		</Division>
+	</Body>
+	<ideTestParams
+		dateFrom="2015-04-01"
+		dateTo="2015-04-30"
+	/>
+</Report>

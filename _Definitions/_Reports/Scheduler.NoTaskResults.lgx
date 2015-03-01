@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	ID="Scheduler.NoTaskResults"
+	>
+	<Note
+		Note="Certain errors could prevent task results from being logged; this page
+provides some feedback when that happens and users looks for results"
+	/>
+	<StyleSheet
+		StyleSheet="SampleStylesSC.css"
+		Theme="ProfessionalGreen"
+	/>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connScheduler"
+			ID="dlScheduledTask"
+			SchedulerApplicationID="@Constant.SchedulerApplicationID~"
+			SchedulerTaskID="@Request.TaskID~"
+			Type="Scheduler"
+		/>
+	</LocalData>
+	<ReportHeader>
+		<Image
+			Caption="LogiSampleBanner.png"
+			ID="imgBanner"
+		/>
+	</ReportHeader>
+	<Body>
+		<Division
+			HtmlDiv="True"
+			ID="divOuterContainer"
+			>
+			<LineBreak
+				LineCount="8"
+			/>
+			<Label
+				Caption="No task results could be found for task &quot;@Local.TaskName~&quot;"
+				Class="font10pt"
+				ID="lblNoResults"
+			/>
+			<LineBreak
+				LineCount="4"
+			/>
+			<Label
+				Caption="Close this page"
+				Class="fontA10"
+				ID="lblClosePage"
+				>
+				<Action
+					ID="actClose"
+					Type="Link"
+					>
+					<Target
+						ID="tgtClose"
+						Link="javascript:window.close();"
+						Type="Link"
+					/>
+				</Action>
+			</Label>
+		</Division>
+	</Body>
+	<ideTestParams
+		TaskID=""
+	/>
+</Report>

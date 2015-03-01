@@ -1,0 +1,1038 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Process
+	ID="ProcessSendEmail"
+	>
+	<Task
+		ID="taskSendEmbedded"
+		>
+		<Procedure
+			ConnectionID="connEmail"
+			EmailSubject="LogiXML Sample with Embedded Report"
+			FromEmailAddress="DevNet@LogiXML.com"
+			FromEmailName="LogiXML"
+			ID="procSendHTMLReport"
+			ToEmailAddress="@Request.inpEmailAddress~"
+			Type="SendHtmlReport"
+			>
+			<Target
+				Report="Scheduler.e_reps.Cumulative_AdverRep"
+				Type="Report"
+			/>
+			<IfError
+				ID="procIfSendError1"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<Note
+						Note="Send the error message back to calling definition"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSendHTMLReport.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Response
+			ID="respReport"
+			Type="Report"
+			>
+			<Target
+				Report="Scheduler.Management_Console"
+				Type="Report"
+			/>
+			<LinkParams
+				StatusMsg="Status: Email was sent successfully."
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="taskSendAsAttachment"
+		>
+		<Note
+			Note="If it doesn&apos;t exist, create a temporary folder for the attachment file"
+		/>
+		<Procedure
+			Folder="@Function.AppPhysicalPath~\temp"
+			ID="procCreateTempFolder"
+			Type="CreateFolder"
+			>
+			<IfError
+				ID="procIfFileError"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error creating Temp folder: @Procedure.procCreateTempFolder.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			Expression="&quot;@Request.ReportFormat~&quot; = &quot;HTML&quot;"
+			ID="procIfFormatHTML"
+			Type="If"
+			>
+			<Note
+				Note="Use a GUID to create attachment filename"
+			/>
+			<Procedure
+				ID="procMakeFilename"
+				Type="SetSessionVars"
+				>
+				<SessionParams
+					ReportFilename="@Function.GUID~.html"
+				/>
+			</Procedure>
+			<Procedure
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="procSaveAsHTMLFile"
+				Type="SaveHTML"
+				>
+				<Target
+					Report="Scheduler.e_reps.Cumulative_AdverRep"
+					Type="Report"
+				/>
+			</Procedure>
+		</Procedure>
+		<Procedure
+			Expression="&quot;@Request.ReportFormat~&quot; = &quot;PDF&quot;"
+			ID="procElseIfFormatPDF"
+			Type="If"
+			>
+			<Note
+				Note="Use a GUID to create attachment filename"
+			/>
+			<Procedure
+				ID="procMakeFilename"
+				Type="SetSessionVars"
+				>
+				<SessionParams
+					ReportFilename="@Function.GUID~.pdf"
+				/>
+			</Procedure>
+			<Procedure
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="procSaveAsPDFFile"
+				Type="ExportToPDF"
+				>
+				<Target
+					Report="Scheduler.e_reps.Cumulative_AdverRep"
+					Type="PDF"
+				/>
+			</Procedure>
+		</Procedure>
+		<Procedure
+			ConnectionID="connEmail"
+			EmailBody="&lt;p&gt;Dear Client,&lt;/p&gt;
+&lt;p&gt;Your report has been successfully generated and is attached.&lt;/p&gt;
+&lt;p&gt;Report Name: &lt;i&gt;Daily Delivery report&lt;/i&gt;&lt;br&gt;
+Organization: &lt;i&gt;Mediata&lt;/i&gt;&lt;br&gt;
+Dates: &lt;i&gt;Month to Date&lt;/i&gt;&lt;br&gt;
+File Name: &lt;i&gt;@Session.ReportFilename~&lt;/i&gt;&lt;br&gt;
+Date/Time Requested: &lt;i&gt;@Function.DateTime~&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;This message was generated automatically. Please do not reply to this email.&lt;/p&gt;
+&lt;p&gt;Sincerely,&lt;br&gt;
+OpenDSP Team&lt;/p&gt;"
+			EmailBodyType="HTML"
+			EmailSubject="OpenDSP Daily Reports"
+			FromEmailAddress="Reports@OpenDSP.com"
+			FromEmailName="Reports OpenDSP"
+			ID="procSendEmail"
+			ReplyToEmailAddress="info@opendsp.com"
+			ToEmailAddress="@Request.inpEmailAddress~"
+			Type="SendMail"
+			>
+			<Attachment
+				DisplayName="OpenDSP Report Service"
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="attReport"
+				>
+				<Note
+					Note="Note we&apos;re not attached any supporting files (.css, .js, etc.) so the attached report"
+				/>
+				<Note
+					Note="will look extremely basic and plain when viewed by the email recipient"
+				/>
+			</Attachment>
+			<IfError
+				ID="procIfSendError2"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<Note
+						Note="Send the error message back to calling definition"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSendEmail.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Response
+			ID="respReport"
+			Type="Report"
+			>
+			<Target
+				Report="Scheduler.Management_Console"
+				Type="Report"
+			/>
+			<LinkParams
+				StatusMsg="Status: Email was sent successfully."
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="taskSendAsPDF"
+		>
+		<Procedure
+			Folder="@Function.AppPhysicalPath~\temp"
+			ID="procCreateTempFolder"
+			Type="CreateFolder"
+			>
+			<IfError
+				ID="procIfFileError"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error creating Temp folder: @Procedure.procCreateTempFolder.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			ID="procMakeFilename"
+			Type="SetSessionVars"
+			>
+			<SessionParams
+				ReportFilename="@Function.GUID~.pdf"
+			/>
+		</Procedure>
+		<Procedure
+			Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+			ID="procSaveAsPDFFile"
+			Type="ExportToPDF"
+			>
+			<Target
+				Report="Scheduler.e_reps.Cumulative_AdverRep"
+				Type="PDF"
+			/>
+		</Procedure>
+		<Procedure
+			ConnectionID="connEmail"
+			EmailBody="&lt;p&gt;Dear Client,&lt;/p&gt;
+&lt;p&gt;Your report has been successfully generated and is attached.&lt;/p&gt;
+&lt;p&gt;Report Name: &lt;i&gt;Daily Delivery report&lt;/i&gt;&lt;br&gt;
+Organization: &lt;i&gt;Mediata&lt;/i&gt;&lt;br&gt;
+Dates: &lt;i&gt;Month to Date&lt;/i&gt;&lt;br&gt;
+File Name: &lt;i&gt;@Session.ReportFilename~&lt;/i&gt;&lt;br&gt;
+Date/Time Requested: &lt;i&gt;@Function.DateTime~&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;This message was generated automatically. Please do not reply to this email.&lt;/p&gt;
+&lt;p&gt;Sincerely,&lt;br&gt;
+OpenDSP Team&lt;/p&gt;"
+			EmailBodyType="HTML"
+			EmailSubject="OpenDSP Daily Reports"
+			FromEmailAddress="Reports@OpenDSP.com"
+			FromEmailName="Reports OpenDSP"
+			ID="procSendEmail"
+			ReplyToEmailAddress="info@opendsp.com"
+			ToEmailAddress="volodymyr@opendsp.com; nataly@opendsp.com"
+			Type="SendMail"
+			>
+			<Attachment
+				DisplayName="Daily Delivery report"
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="attReport"
+			/>
+			<IfError
+				ID="procIfSendError5"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSendEmail.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Response
+			ID="respReport"
+			Type="Report"
+			>
+			<Target
+				Report="Scheduler.Management_Console"
+				Type="Report"
+			/>
+			<LinkParams
+				StatusMsg="Status: Email was sent successfully."
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="taskSendAsXLSX"
+		>
+		<Procedure
+			Folder="@Function.AppPhysicalPath~\temp"
+			ID="procCreateTempFolder"
+			Type="CreateFolder"
+			>
+			<IfError
+				ID="procIfFileError"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error creating Temp folder: @Procedure.procCreateTempFolder.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			ID="procMakeFilename"
+			Type="SetSessionVars"
+			>
+			<SessionParams
+				ReportFilename="@Function.GUID~.xlsx"
+			/>
+		</Procedure>
+		<Procedure
+			Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+			ID="procSaveAsXLSXFile"
+			Type="ExportToNativeExcel"
+			>
+			<Target
+				ExcelOutputFormat="Excel2007"
+				Report="Scheduler.e_reps.Cumulative_AdverRep"
+				RequestForwarding="True"
+				Type="NativeExcel"
+			/>
+		</Procedure>
+		<Procedure
+			ConnectionID="connEmail"
+			EmailBody="&lt;p&gt;Dear Client,&lt;/p&gt;
+&lt;p&gt;Your report has been successfully generated and is attached.&lt;/p&gt;
+&lt;p&gt;Report Name: &lt;i&gt;Daily Delivery report&lt;/i&gt;&lt;br&gt;
+Organization: &lt;i&gt;Mediata&lt;/i&gt;&lt;br&gt;
+Dates: &lt;i&gt;Month to Date&lt;/i&gt;&lt;br&gt;
+File Name: &lt;i&gt;@Session.ReportFilename~&lt;/i&gt;&lt;br&gt;
+Date/Time Requested: &lt;i&gt;@Function.DateTime~&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;This message was generated automatically. Please do not reply to this email.&lt;/p&gt;
+&lt;p&gt;Sincerely,&lt;br&gt;
+OpenDSP Team&lt;/p&gt;"
+			EmailBodyType="HTML"
+			EmailSubject="OpenDSP Daily Reports"
+			FromEmailAddress="Reports@OpenDSP.com"
+			FromEmailName="Reports OpenDSP"
+			ID="procSendEmail"
+			ReplyToEmailAddress="info@opendsp.com"
+			ToEmailAddress="volodymyr@opendsp.com; nataly@opendsp.com"
+			Type="SendMail"
+			>
+			<Attachment
+				DisplayName="Daily Delivery report"
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="attReport"
+			/>
+			<IfError
+				ID="procIfSendError3"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSendEmail.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Response
+			ID="respReport"
+			Type="Report"
+			>
+			<Target
+				Report="Scheduler.Management_Console"
+				Type="Report"
+			/>
+			<LinkParams
+				StatusMsg="Status: Email was sent successfully."
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="taskSendAsCSV"
+		>
+		<Procedure
+			Folder="@Function.AppPhysicalPath~\temp"
+			ID="procCreateTempFolder"
+			Type="CreateFolder"
+			>
+			<IfError
+				ID="procIfFileError"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error creating Temp folder: @Procedure.procCreateTempFolder.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			ID="procMakeFilename"
+			Type="SetSessionVars"
+			>
+			<SessionParams
+				ReportFilename="@Function.GUID~.csv"
+			/>
+		</Procedure>
+		<Procedure
+			Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+			ID="procSaveAsCSVFile"
+			Type="ExportToCSV"
+			>
+			<Target
+				Report="Scheduler.e_reps.Cumulative_AdverRep"
+				Type="CSV"
+			/>
+			<IfError
+				ID="procIfSendError5"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSaveAsCSVFile.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			ConnectionID="connEmail"
+			EmailBody="&lt;p&gt;Dear Client,&lt;/p&gt;
+&lt;p&gt;Your report has been successfully generated and is attached.&lt;/p&gt;
+&lt;p&gt;Report Name: &lt;i&gt;Daily Delivery report&lt;/i&gt;&lt;br&gt;
+Organization: &lt;i&gt;Mediata&lt;/i&gt;&lt;br&gt;
+Dates: &lt;i&gt;Month to Date&lt;/i&gt;&lt;br&gt;
+File Name: &lt;i&gt;@Session.ReportFilename~&lt;/i&gt;&lt;br&gt;
+Date/Time Requested: &lt;i&gt;@Function.DateTime~&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;This message was generated automatically. Please do not reply to this email.&lt;/p&gt;
+&lt;p&gt;Sincerely,&lt;br&gt;
+OpenDSP Team&lt;/p&gt;"
+			EmailBodyType="HTML"
+			EmailSubject="OpenDSP Daily Reports"
+			FromEmailAddress="Reports@OpenDSP.com"
+			FromEmailName="Reports OpenDSP"
+			ID="procSendEmail"
+			ReplyToEmailAddress="info@opendsp.com"
+			ToEmailAddress="volodymyr@opendsp.com; nataly@opendsp.com"
+			Type="SendMail"
+			>
+			<Attachment
+				DisplayName="Daily Delivery report"
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="attReport"
+			/>
+			<IfError
+				ID="procIfSendError4"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSendEmail.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Response
+			ID="respReport"
+			Type="Report"
+			>
+			<Target
+				Report="Scheduler.Management_Console"
+				Type="Report"
+			/>
+			<LinkParams
+				StatusMsg="Status: Email was sent successfully."
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="t_MMR_PDF"
+		>
+		<Procedure
+			Folder="@Function.AppPhysicalPath~\temp"
+			ID="procCreateTempFolder"
+			Type="CreateFolder"
+			>
+			<IfError
+				ID="procIfFileError"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error creating Temp folder: @Procedure.procCreateTempFolder.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			ID="procMakeFilename"
+			Type="SetSessionVars"
+			>
+			<SessionParams
+				ReportFilename="@Function.GUID~.pdf"
+			/>
+		</Procedure>
+		<Procedure
+			Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+			ID="procSaveAsPDFFile"
+			Type="ExportToPDF"
+			>
+			<Target
+				Report="Scheduler.e_reps.mr_SLI_AU"
+				Type="PDF"
+			/>
+		</Procedure>
+		<Procedure
+			ConnectionID="connEmail"
+			EmailBody="&lt;p&gt;Dear Client,&lt;/p&gt;
+&lt;p&gt;Your report has been successfully generated and is attached.&lt;/p&gt;
+&lt;p&gt;Report Name: &lt;i&gt;Daily Delivery report&lt;/i&gt;&lt;br&gt;
+Campaign: &lt;i&gt;Standard Life Investments Australia H1 2016&lt;/i&gt;&lt;br&gt;
+Dates: &lt;i&gt;@Date.Today~&lt;/i&gt;&lt;br&gt;
+Sevice File Name: &lt;i&gt;@Session.ReportFilename~&lt;/i&gt;&lt;br&gt;
+Date/Time Requested: &lt;i&gt;@Function.DateTime~&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;This message was generated automatically. Please do not reply to this email.&lt;/p&gt;
+&lt;p&gt;Sincerely,&lt;br&gt;
+OpenDSP Team&lt;/p&gt;"
+			EmailBodyType="HTML"
+			EmailSubject="OpenDSP Daily Reports"
+			FromEmailAddress="Reports@OpenDSP.com"
+			FromEmailName="Reports OpenDSP"
+			ID="procSendEmail"
+			ReplyToEmailAddress="info@opendsp.com"
+			ToEmailAddress="@Request.email~"
+			Type="SendMail"
+			>
+			<Attachment
+				DisplayName="Daily Delivery report"
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="attReport"
+			/>
+			<IfError
+				ID="procIfSendError5"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSendEmail.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Response
+			ID="respReport"
+			Type="Report"
+			>
+			<Target
+				Report="Scheduler.Management_Console"
+				Type="Report"
+			/>
+			<LinkParams
+				StatusMsg="Status: Email was sent successfully."
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="mohawkgp_domain"
+		>
+		<Procedure
+			Folder="@Function.AppPhysicalPath~\temp"
+			ID="procCreateTempFolder"
+			Type="CreateFolder"
+			>
+			<IfError
+				ID="procIfFileError"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error creating Temp folder: @Procedure.procCreateTempFolder.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			ID="procMakeFilename"
+			Type="SetSessionVars"
+			>
+			<SessionParams
+				ReportFilename="@Function.GUID~.xlsx"
+			/>
+		</Procedure>
+		<Procedure
+			Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+			ID="procSaveAsXLSXFile"
+			Type="ExportToNativeExcel"
+			>
+			<Target
+				ExcelOutputFormat="Excel2007"
+				Report="Scheduler.e_reps.mohawkgp_domain"
+				RequestForwarding="True"
+				Type="NativeExcel"
+			/>
+		</Procedure>
+		<Procedure
+			ConnectionID="connEmail"
+			EmailBody="&lt;p&gt;Dear Client,&lt;/p&gt;
+&lt;p&gt;Your report has been successfully generated and is attached.&lt;/p&gt;
+&lt;p&gt;Report Name: &lt;i&gt;Domain report&lt;/i&gt;&lt;br&gt;
+Campaign: &lt;i&gt;Beauty Giveaway&lt;/i&gt;&lt;br&gt;
+Dates: &lt;i&gt;@Date.Yesterday~&lt;/i&gt;&lt;br&gt;
+Sevice File Name: &lt;i&gt;@Session.ReportFilename~&lt;/i&gt;&lt;br&gt;
+Date/Time Requested: &lt;i&gt;@Function.DateTime~&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;This message was generated automatically. Please do not reply to this email.&lt;/p&gt;
+&lt;p&gt;Sincerely,&lt;br&gt;
+OpenDSP Team&lt;/p&gt;"
+			EmailBodyType="HTML"
+			EmailSubject="OpenDSP Domain Reports"
+			FromEmailAddress="Reports@OpenDSP.com"
+			FromEmailName="Reports OpenDSP"
+			ID="procSendEmail"
+			ReplyToEmailAddress="info@opendsp.com"
+			ToEmailAddress="@Request.email~"
+			Type="SendMail"
+			>
+			<Attachment
+				DisplayName="Daily Delivery report"
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="attReport"
+			/>
+			<IfError
+				ID="procIfSendError3"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSendEmail.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Response
+			ID="respReport"
+			Type="Report"
+			>
+			<Target
+				Report="Scheduler.Management_Console"
+				Type="Report"
+			/>
+			<LinkParams
+				StatusMsg="Status: Email was sent successfully."
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="mohawkgp_XLSX"
+		>
+		<Procedure
+			Folder="@Function.AppPhysicalPath~\temp"
+			ID="procCreateTempFolder"
+			Type="CreateFolder"
+			>
+			<IfError
+				ID="procIfFileError"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error creating Temp folder: @Procedure.procCreateTempFolder.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			ID="procMakeFilename"
+			Type="SetSessionVars"
+			>
+			<SessionParams
+				ReportFilename="@Function.GUID~.xlsx"
+			/>
+		</Procedure>
+		<Procedure
+			Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+			ID="procSaveAsXLSXFile"
+			Type="ExportToNativeExcel"
+			>
+			<Target
+				ExcelOutputFormat="Excel2007"
+				Report="Scheduler.e_reps.mohawkgp"
+				RequestForwarding="True"
+				Type="NativeExcel"
+			/>
+		</Procedure>
+		<Procedure
+			ConnectionID="connEmail"
+			EmailBody="&lt;p&gt;Dear Client,&lt;/p&gt;
+&lt;p&gt;Your report has been successfully generated and is attached.&lt;/p&gt;
+&lt;p&gt;Report Name: &lt;i&gt;Basic report&lt;/i&gt;&lt;br&gt;
+Campaign: &lt;i&gt;Beauty Giveaway&lt;/i&gt;&lt;br&gt;
+Dates: from 2016-6-1 to &lt;i&gt;@Date.Today~&lt;/i&gt;&lt;br&gt;
+Sevice File Name: &lt;i&gt;@Session.ReportFilename~&lt;/i&gt;&lt;br&gt;
+Date/Time Requested: &lt;i&gt;@Function.DateTime~&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;This message was generated automatically. Please do not reply to this email.&lt;/p&gt;
+&lt;p&gt;Sincerely,&lt;br&gt;
+OpenDSP Team&lt;/p&gt;"
+			EmailBodyType="HTML"
+			EmailSubject="OpenDSP Daily Reports"
+			FromEmailAddress="Reports@OpenDSP.com"
+			FromEmailName="Reports OpenDSP"
+			ID="procSendEmail"
+			ReplyToEmailAddress="info@opendsp.com"
+			ToEmailAddress="@Request.email~"
+			Type="SendMail"
+			>
+			<Attachment
+				DisplayName="Daily Delivery report"
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="attReport"
+			/>
+			<IfError
+				ID="procIfSendError3"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSendEmail.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Response
+			ID="respReport"
+			Type="Report"
+			>
+			<Target
+				Report="Scheduler.Management_Console"
+				Type="Report"
+			/>
+			<LinkParams
+				StatusMsg="Status: Email was sent successfully."
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="t_MMR_PDF"
+		>
+		<Procedure
+			Folder="@Function.AppPhysicalPath~\temp"
+			ID="procCreateTempFolder"
+			Type="CreateFolder"
+			>
+			<IfError
+				ID="procIfFileError"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error creating Temp folder: @Procedure.procCreateTempFolder.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			ID="procMakeFilename"
+			Type="SetSessionVars"
+			>
+			<SessionParams
+				ReportFilename="@Function.GUID~.pdf"
+			/>
+		</Procedure>
+		<Procedure
+			Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+			ID="procSaveAsPDFFile"
+			Type="ExportToPDF"
+			>
+			<Target
+				Report="Scheduler.e_reps.mr_SLI_AU"
+				Type="PDF"
+			/>
+		</Procedure>
+		<Procedure
+			ConnectionID="connEmail"
+			EmailBody="&lt;p&gt;Dear Client,&lt;/p&gt;
+&lt;p&gt;Your report has been successfully generated and is attached.&lt;/p&gt;
+&lt;p&gt;Report Name: &lt;i&gt;Daily Delivery report&lt;/i&gt;&lt;br&gt;
+Campaign: &lt;i&gt;Standard Life Investments Australia H1 2016&lt;/i&gt;&lt;br&gt;
+Dates: &lt;i&gt;@Date.Today~&lt;/i&gt;&lt;br&gt;
+Sevice File Name: &lt;i&gt;@Session.ReportFilename~&lt;/i&gt;&lt;br&gt;
+Date/Time Requested: &lt;i&gt;@Function.DateTime~&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;This message was generated automatically. Please do not reply to this email.&lt;/p&gt;
+&lt;p&gt;Sincerely,&lt;br&gt;
+OpenDSP Team&lt;/p&gt;"
+			EmailBodyType="HTML"
+			EmailSubject="OpenDSP Daily Reports"
+			FromEmailAddress="Reports@OpenDSP.com"
+			FromEmailName="Reports OpenDSP"
+			ID="procSendEmail"
+			ReplyToEmailAddress="info@opendsp.com"
+			ToEmailAddress="@Request.email~"
+			Type="SendMail"
+			>
+			<Attachment
+				DisplayName="Daily Delivery report"
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="attReport"
+			/>
+			<IfError
+				ID="procIfSendError5"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSendEmail.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Response
+			ID="respReport"
+			Type="Report"
+			>
+			<Target
+				Report="Scheduler.Management_Console"
+				Type="Report"
+			/>
+			<LinkParams
+				StatusMsg="Status: Email was sent successfully."
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="t_SLI_HK_CSV"
+		>
+		<Procedure
+			Folder="@Function.AppPhysicalPath~\temp"
+			ID="procCreateTempFolder"
+			Type="CreateFolder"
+			>
+			<IfError
+				ID="procIfFileError"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error creating Temp folder: @Procedure.procCreateTempFolder.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			ID="procMakeFilename"
+			Type="SetSessionVars"
+			>
+			<SessionParams
+				ReportFilename="@Function.GUID~.csv"
+			/>
+		</Procedure>
+		<Procedure
+			Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+			ID="procSaveAsCSVFile"
+			Type="ExportToCSV"
+			>
+			<Target
+				Report="Scheduler.e_reps.md_SLI_HK"
+				Type="CSV"
+			/>
+			<IfError
+				ID="procIfSendError5"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSaveAsCSVFile.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Procedure
+			ConnectionID="connEmail"
+			EmailBody="&lt;p&gt;Dear Client,&lt;/p&gt;
+&lt;p&gt;Your report has been successfully generated and is attached.&lt;/p&gt;
+&lt;p&gt;Report Name: &lt;i&gt;Domain report&lt;/i&gt;&lt;br&gt;
+Campaign: &lt;i&gt;Standard Life Investments Hong Kong H1 2016&lt;/i&gt;&lt;br&gt;
+Dates: &lt;i&gt;@Date.Yesterday~&lt;/i&gt;&lt;br&gt;
+Sevice File Name: &lt;i&gt;@Session.ReportFilename~&lt;/i&gt;&lt;br&gt;
+Date/Time Requested: &lt;i&gt;@Function.DateTime~&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;This message was generated automatically. Please do not reply to this email.&lt;/p&gt;
+&lt;p&gt;Sincerely,&lt;br&gt;
+OpenDSP Team&lt;/p&gt;"
+			EmailBodyType="HTML"
+			EmailSubject="OpenDSP Daily Reports"
+			FromEmailAddress="Reports@OpenDSP.com"
+			FromEmailName="Reports OpenDSP"
+			ID="procSendEmail"
+			ReplyToEmailAddress="info@opendsp.com"
+			ToEmailAddress="@Request.email~"
+			Type="SendMail"
+			>
+			<Attachment
+				DisplayName="Daily Delivery report"
+				Filename="@Function.AppPhysicalPath~\temp\@Session.ReportFilename~"
+				ID="attReport"
+			/>
+			<IfError
+				ID="procIfSendError4"
+				>
+				<Response
+					ID="respReport"
+					Type="Report"
+					>
+					<Target
+						Report="Scheduler.Management_Console"
+						Type="Report"
+					/>
+					<LinkParams
+						StatusMsg="Error sending email: @Procedure.procSendEmail.ErrorMessage~"
+					/>
+				</Response>
+			</IfError>
+		</Procedure>
+		<Response
+			ID="respReport"
+			Type="Report"
+			>
+			<Target
+				Report="Scheduler.Management_Console"
+				Type="Report"
+			/>
+			<LinkParams
+				StatusMsg="Status: Email was sent successfully."
+			/>
+		</Response>
+	</Task>
+	<ideTestParams
+		email=""
+		inpEmailAddress=""
+		rdTaskID=""
+		ReportFormat=""
+	/>
+</Process>

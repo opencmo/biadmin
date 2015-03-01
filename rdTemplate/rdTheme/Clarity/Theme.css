@@ -1,0 +1,1644 @@
+/*Global Style Settings */
+body {
+	font-family: helvetica;
+	font-size: 13px;
+	color: #222;
+}
+
+table {
+	font-family: helvetica;
+	font-size: 100%;
+	color: #222;
+}
+
+img {
+	border: 5px;
+   -ms-interpolation-mode: bicubic;
+}
+
+.ThemeLinkButton:hover,
+.ThemeLinkButtonSmall:hover,
+img:hover.rdThemePaging,
+span:hover.rdAgCommand,
+span:hover.rdOgCommand,
+span:hover.rdCgCommand,
+span:hover.rdDashboardCommand,
+span:hover.rdPopupPanelCommand {
+	background-color: #f1f1f1;
+}
+
+td:hover.rdAgUnselectedTab,
+td:hover.rdOgUnselectedTab,
+img:hover.rdThemePaging{
+	background-color: #f1f1f1;
+}
+td:active.rdAgUnselectedTab,
+td:active.rdOgUnselectedTab,
+img:active.rdThemePaging, span:active.rdDashboardCommand,
+span:active.rdPopupPanelCommand{
+	background-color: #ccc;
+}
+td:hover.rdAgUnselectedTabOn {
+	background-image: none;
+	background-color: #feffde;
+}
+span:hover.rdAcCommand {
+	background-image: none;
+}
+
+input.ThemeLinkButton, input.ThemeLinkButtonSmall {
+	line-height: 10px;
+}
+
+/*User classes*/
+
+.ThemeHeaderLargest  {
+	color: #0f0f0f;
+	font-size: 220%;
+	font-weight: bold;
+}
+
+.ThemeHeaderLarger  {
+	color: #0f0f0f;
+	font-size: 169%;
+	font-weight: bold;
+}
+
+.ThemeHeaderLarge  {
+	color: #0f0f0f;
+	font-size: 130%;
+	font-weight: bold;
+}
+
+.ThemeHeader{
+	color: #0f0f0f;
+	font-weight: bold;
+}
+
+.ThemeHeaderSmall {
+	color: #0f0f0f;
+	font-size: 85%;
+	font-weight: bold;
+}
+
+.ThemeHeaderSmaller {
+	color: #0f0f0f;
+	font-size: 75%;
+	font-weight: bold;
+}
+
+.ThemeHeaderSmallest {
+	color: #0f0f0f;
+	font-size: 60%;
+	font-weight: bold;
+}
+
+.ThemeTextLargest {
+	font-size: 160%;
+}
+
+.ThemeTextLarger {
+	font-size: 145%;
+}
+
+.ThemeTextLarge {
+	font-size: 130%;
+}
+
+.ThemeTextSmall {
+	font-size: 85%;
+}
+
+.ThemeTextSmaller {
+	font-size: 75%;
+}
+
+.ThemeTextSmallest {
+	font-size: 60%;
+}
+
+.ThemeMarginLargest {
+	margin: 25px;
+}
+
+.ThemeMarginLarger {
+	margin: 20px;
+}
+
+.ThemeMarginLarge {
+	margin: 15px;
+}
+
+.ThemeMargin {
+	margin: 5px;
+}
+
+.ThemePaddingLargest {
+	padding: 25px;
+}
+
+.ThemePaddingLarger {
+	padding: 20px;
+}
+
+.ThemePaddingLarge {
+	padding: 15px;
+}
+
+.ThemePadding {
+	padding: 5px;
+}
+
+
+.ThemeBold {
+	font-weight: bold;
+}
+
+.ThemeItalic {
+	font-style: italic;
+}
+
+.ThemeContainerBordered {
+	border: solid 2px #6694e3;
+	padding: 3px;
+}
+
+.ThemeContainerShaded {
+	background-color: #e0ecff;
+	padding: 3px;
+}
+
+.ThemeContainerShadedAndBordered {
+	background-image: none;
+	background-repeat: repeat-x;
+	background-color: #fff;
+	vertical-align: top;
+	border: 1px solid #c1c1c1;
+	padding: 3px;
+}
+
+tr.ThemeAlternatingRow  td.rdThemeDataTableCell {
+	background-color: #eee;
+}
+
+.ThemeLinkButton {
+	color: #444;
+	background-image: none;
+	background-repeat: repeat-x;
+	background-color: #f9f9f9;
+	background-position: bottom;
+	text-decoration: none;
+	border: 1px solid #bbb;
+	padding-left: 11px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-right: 7px;
+	margin-bottom: 2px;
+	line-height: 28px;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.ThemeLinkButtonSmall {
+	color: #444;
+	background-image: none;
+	background-repeat: repeat-x;
+	background-position: bottom;
+	background-color: #f9f9f9;
+	border: 1px solid #bbb;
+	text-decoration: none;
+	margin-left: 3px;
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	cursor: pointer;
+	vertical-align: middle;
+	line-height: 28px;
+	white-space: nowrap;
+}
+
+.ThemeTextPositive {
+	color: green;
+}
+
+.ThemeTextNegative {
+	color: darkred;
+}
+
+.ThemeTextNormal {
+	font-size: 13px;
+	color: #444;
+}
+
+.ThemeErrorText {
+	color: #790619;
+	font-family: arial, sans-serif;
+	font-size: 100%;
+	border: 1px solid #d8000c;
+	background-color: #ffbaba;
+}
+
+.ThemeNoWrap {
+	white-space: nowrap;
+}
+
+.ThemeHidden {
+	display: none;
+}
+
+.ThemeAlignCenter {
+	text-align: center;
+}
+
+.ThemeAlignLeft {
+	text-align: left;
+}
+
+.ThemeAlignRight {
+	text-align: right;
+}
+
+.ThemeAlignTop {
+	vertical-align: top;
+}
+
+.ThemeAlignTopLeft {
+	vertical-align: top;
+	text-align: left;
+}
+
+.ThemeAlignTopRight {
+	vertical-align: top;
+	text-align: right;
+}
+
+.ThemeAlignBottom {
+	vertical-align: bottom;
+}
+
+.ThemeAlignBottomLeft {
+	vertical-align: bottom;
+	text-align: left;
+}
+
+.ThemeAlignBottomRight {
+	vertical-align: bottom;
+	text-align: right;
+}
+
+/*User classes*/
+
+/*Datatable, Crosstab Table, AnalysisGrid*/
+.rdThemeDataTable , .rdAgDataTable, .rdOgOlapTable, .rdDgOlapTable {
+	border: none;
+	background-color: #cccccc;
+}
+
+caption.rdThemeDataTableMainHeader {
+    background-color: #fff;
+    border-top-width: 0;
+    font-weight: normal;
+	text-align: left;
+    padding-left: 5px;
+    font-size: 18px;
+}
+
+.rdThemeDataTableHeader, table.rdAgDataTable th, tr.rdAgHeaderRow th {
+	background-image: none;
+	background-repeat: repeat-x;
+	background-color: #e4e9f3;
+}
+.rdThemeDataTableHeader {
+	padding: 4px;
+}
+
+table.rdAgDataTable th, tr.rdAgHeaderRow th {
+	font-size: 107%;
+	color: #444;
+}
+
+.rdThemeDataTableCell, table.rdAgDataTable td {
+	background-color: #fff;
+	padding: 4px;
+}
+
+.rdThemeDataTableSummaryRow td {
+	background-color: #f1f1f1;
+	padding-left: 10px;
+	color: #666;
+	font-weight: bold;
+}
+
+.rdThemeDataTableGroupHeaderRow0 td, tr.rdAgGroup0HeaderRow td {
+	background-image: none;
+	background-color: #e9e9e9;
+	color: #666;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow1 td, tr.rdAgGroup1HeaderRow td {
+	background-color: #eee;
+	color: #666;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow2 td , tr.rdAgGroup2HeaderRow td {
+	background-color: #f3f3f3;
+	color: #666;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow3 td, tr.rdAgGroup3HeaderRow td {
+	background-color: #f9f9f9;
+	color: #666;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow4 td, tr.rdAgGroup4HeaderRow td {
+	background-color: #fbfbfb;
+	color: #746e57;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupSummaryRow td {
+	background-image: none;
+	color: #746e57;
+	font-weight: normal;
+	padding: 4px;
+}
+
+.rdThemeDataTableMoreInfoRow {
+	padding-left: 7px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	background-color: #fff;
+}
+td.rdThemeDataTableMoreInfoRow span {
+    color: #333;
+}
+
+.rdRemoveTableStyle td, .rdRemoveTableStyle th  {
+	background-image: none;
+	background-color: transparent;
+	padding: 0px;
+	height: 5px;
+	border: 0px;
+}
+
+/*SubDataTable*/
+
+.rdThemeSubDataTable {
+	background-color: #beb9ad;	/* This is used as the border for the subtable */
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+TABLE.rdThemeSubDataTable th, .rdThemeSubDataTable th {
+	background-color: #888;
+	color: #fff;
+	padding-left: 4px;
+	padding-top: 2px;
+	padding-right: 3px;
+	padding-bottom: 2px;
+}
+
+.rdThemeSubDataTableGroupHeaderRow td {
+	background-color: #a5a5a5;
+	color: #fff;
+	padding-left: 3px;
+}
+
+.rdThemeSubDataTableDataTableCell {
+	background-color: #dbdbdb;
+	color: #444;
+}
+
+.rdThemeSubDataTableMoreInfoRow {
+	background-color: #eeeded;
+	border-top: 2px Solid #d1d0d0;
+	color: #444;
+	padding-left: 3px;
+}
+
+.rdThemeSubDataTableGroupSummaryRow td {
+	background-color: #b1b1b1;
+	color: #fff;
+	padding-left: 3px;
+	border-bottom: 2px Solid #888;
+}
+
+.rdThemeSubDataTableSummaryRow td {
+	background-color: #767676;
+	color: #fff;
+	font-weight: bold;
+	padding-left: 3px;
+	border-bottom: 1px Solid #fff;
+}
+
+/* Paging */
+.rdThemePaging {
+	vertical-align : text-bottom;
+}
+
+.rdThemePagingCurrent {
+	background-color: #00558e;
+    color: #fff;
+	font-weight: bold;
+	padding-bottom: 2px;
+    padding-top: 2px;
+    padding-left: 3px;
+    padding-right: 3px;
+	text-align: center;
+}
+
+input.rdThemePagingCurrent {
+	font-size: 100%;
+	font-weight: normal;
+	color: #222;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	padding: 2px;
+}
+input.rdThemePagingCurrent:hover {
+    background-color: #feffde;
+}
+
+img.rdThemePaging {
+	background-image: none;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #777;
+	border-right: 1px solid #777;
+	border-left: 1px solid #ddd;
+	margin: -1px;
+}
+
+/* User Input Controls */
+.rdThemeInputCaption {
+	padding-right: 10px;
+	vertical-align: middle;
+}
+
+input.rdThemeInput, textarea.rdThemeInput, select.rdThemeInput, select.rdDataCalendarDropdown {
+	font-family: arial, sans-serif;
+	font-size: 100%;
+	border: 1px solid #ccc;
+	padding: 2px;
+}
+
+/* Input checkbox list */
+.rd-checkboxlist, .rd-checkboxlist-dropdown {
+	font-family: arial, sans-serif;
+	background-color: none;
+	border: 1px solid #ccc;
+	color: #222;
+}
+
+.rd-checkboxlist-popup {
+	border: 1px solid #ccc;
+	background-color: #fff;
+	padding: 2px;
+}
+
+/* Quicktip */
+.rdquicktip-content {
+	background-color: #424242;
+	border-color: #000;
+	color: #fff;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+	filter: alpha(opacity=90);
+	opacity: 0.9;
+}
+
+.rdquicktip-content .rdquicktip-table {
+	color: #fff;
+}
+
+.quicktip-pointer {
+	border-color: #000 transparent;
+}
+
+.quicktip-pointer-inner {
+	border-color: #424242 transparent;
+}
+
+.rdquicktip-content .header {
+	background-color: #424242;
+}
+
+/* PopupPanel */
+
+.rdPopupPanel
+{
+	border-style: solid;
+	border-color: #bbb;
+	border-width: thin;
+}
+
+.rdPopupPanelTitle
+{
+    background-color: #c3d9ff;
+    background-image: none;
+    background-repeat:repeat-x;
+}
+.rdPopupPanelTitleCaption
+{
+	font-weight:bolder;
+}
+
+td.rdPopupPanelControl
+{
+	font-weight: bolder;
+	text-align: right;
+    background-color: #c3d9ff;
+    background-image: none;
+    background-repeat:repeat-x;
+}
+
+/* PopupMenu */
+.yuimenubaritemlabel, .yuimenuitemlabel, .yuimenubaritem, .yuimenuitem, div.yuimenu
+{
+    color: #222;
+	background-color: #f9f9f9;
+}
+
+.yuimenubaritemlabel-selected, .yuimenuitemlabel-selected, .yuimenubaritem-selected, .yuimenuitem-selected
+{
+    color: #fff !important;
+    background-color: #00558e;
+}
+
+/* Analysis/OLAP Grid */
+
+.rdDashboard, .rdDashboard table,
+.rdDataCalendar, .rdDataCalendar table,
+.rdTimePicker, .rdTimePicker table,
+.rdAg table, .rdAc, .rdAc table, .rdOg table, .rdDg table, .rdCg table {
+	color: #444;
+	font-size: 13px;
+}
+
+.rdAgContentHeadingRow, .rdOgContentHeadingRow, .rdDgContentHeadingRow, .rdCgContentHeadingRow
+{
+	background-color: transparent;
+	background-image: none;
+	border: solid 1px transparent;
+}
+
+.rdAcContentRow, .rdAgPanel, .rdOgPanel, .rdDgPanel, .rdCgPanel {
+	background-image: none;
+	background-repeat:none;
+	background-color: #fff;
+	vertical-align: top;
+	border-style: solid;
+	border-color: #d1d1d1;
+	border-top-width: 2px;
+	border-left-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+	/*background: rgb(232,232,232);*/ /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(232,232,232,1) 0px, rgba(247,247,247,1) 7px, rgba(255,255,255,1) 15px); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0px,rgba(232,232,232,1)), color-stop(7px,rgba(247,247,247,1)), color-stop(15px,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(232,232,232,1) 0px,rgba(247,247,247,1) 7px,rgba(255,255,255,1) 15px); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(232,232,232,1) 0px,rgba(247,247,247,1) 7px,rgba(255,255,255,1) 15px); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(232,232,232,1) 0px,rgba(247,247,247,1) 7px,rgba(255,255,255,1) 15px); /* IE10+ */
+	background: linear-gradient(top,  rgba(232,232,232,1) 0px,rgba(247,247,247,1) 7px,rgba(255,255,255,1) 15px); /* W3C */
+}
+
+.rdOgContentHeading, .rdDgContentHeading, .rdCgContentHeading
+{
+	color: #444;
+	font-weight: bold;
+	font-size: 110%;
+}
+
+.rdOgSubContentHeading, .rdDgSubContentHeading
+{
+	color: #444;
+	font-weight: bold;
+}
+
+.rdOgPositionCell, .rdOgPositionCellXAxis, .rdOgPositionCellYAxis, .rdCgPositionCellYAxis, .rdCgPositionCellXAxis {
+	background-image: none;
+	color: #444;
+	font-weight: normal;
+	border-top: 0px;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.rdOgSortColumn {
+	background-image: none;
+	padding: 4px;
+}
+
+#lblLeft, #lblTop, #lblMeasure, #lblExport {
+	font-family: helvetica;
+}
+
+.rdAgUnselectedTab, .rdOgUnselectedTab
+{
+	background-image: none;
+	border: none;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #777;
+	border-right: 1px solid #777;
+	border-left: 1px solid #ddd;
+	text-decoration: none;
+	margin-left: 0px;
+}
+
+.rdAgSelectedTab, .rdOgSelectedTab
+{
+	border-style: solid;
+    border-bottom-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+    background-color: #00558e;
+    color: #fff;
+    font-weight: bold;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    padding: 5px;
+    border-color: #164666;
+    border-width: 1px;
+}
+
+.rdAgSelectedTabOn
+{
+    background-image: none;
+}
+.rdAgUnselectedTabOn
+{
+    background-image: none;
+	background-color: #feffde;
+}
+
+.rdAgCommand, .rdOgCommand, .rdAcCommand , span.rdCgCommand
+{
+	background-image: none;
+	background-position: bottom;
+	background-color: #f9f9f9;
+	border: 1px solid #bbb;
+	text-decoration: none;
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	cursor: pointer;
+}
+
+.rdAcCommandMiddle
+{
+	border-left:0;
+}
+.rdAcCommandRight
+{
+	border-left:0;
+}
+
+.rdAgCaptionRow, .rdOgCaptionRow, .rdAcCaptionRow, .rdDgCaptionRow, .rdCgCaptionRow {
+	background-image: none;
+	color: #0f0f0f;
+	font-size: 14px;
+	font-weight:bold;
+	padding: 3px 7px;
+}
+.rdAgCaptionRow td, .rdOgCaptionRow td, .rdAcCaptionRow td, .rdDgCaptionRow td, .rdCgCaptionRow td {
+	background-color: #fff;
+}
+
+.rdAgError, .rdOgError, .rdDgError, .rdCgError {
+	color: #dc642a;
+	font-weight: normal;
+}
+
+.rdDgSelected, .rdCgSelected
+{
+	background-color: #bacbdd;
+	color: #fff;
+}
+
+.rdBackgroundLevel7 {
+      background-color: #c0c0c0;
+}
+.rdBackgroundLevel6 {
+      background-color: #c8c8c8;
+}
+.rdBackgroundLevel5 {
+      background-color: #d0d0d0;
+}
+.rdBackgroundLevel4 {
+      background-color: #d8d8d8;
+}
+.rdBackgroundLevel3 {
+      background-color: #e0e0e0;
+}
+.rdBackgroundLevel2 {
+      background-color: #e8e8e8;
+}
+.rdBackgroundLevel1 {
+      background-color: #f0f0f0;
+}
+.rdBackgroundLevel0 {
+      background-color: #f8f8f8;
+}
+
+/* Dashboard */
+
+.rdDashboard
+{
+	font-family: helvetica;
+}
+
+.rdDashboardMenu
+{
+	padding-top: 4px;
+}
+tr.rdDashboardMenu
+{
+	padding-top: 4px;
+	text-align: left;
+}
+
+.rdDashboardColumn
+{
+	vertical-align: top;
+	padding: 5px;
+}
+
+td.rdDashboardParamsSave
+{
+	vertical-align: bottom;
+	text-align: right;
+	padding-right: 3px;
+	padding-left: 3px;
+}
+
+.rdDashboardCommand, .rdPopupPanelCommand
+{
+	background-color: #f9f9f9;
+	background-image: none;
+	text-decoration: none;
+	cursor: pointer;
+	white-space: nowrap;
+	border-style: solid;
+	line-height: 28px;
+    padding: 5px;
+    border-color: #d1d1d1;
+}
+
+span:hover.rdDashboardCommand {
+    background-color: #f1f1f1;
+}
+
+td.rdDashboardMenu {
+    background-color: #f9f9f9;
+}
+
+td.rdDashboardColumn.yui3-dd-drop {
+    background-color: #f9f9f9;
+    border-style: none;
+}
+
+#rowChangeTab td {
+    background-color: #f9f9f9;
+    border-style: none;
+}
+
+td.rdDashboard {
+    background-color: #f9f9f9;
+}
+
+li.selected a {
+    background-color: #f9f9f9;
+    border-color: #ccc;
+    border-style: solid;
+}
+
+span.rdDashboardTab {
+    color: #00558e;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 18px;
+}
+
+#rdTabAddNewTab a {
+    border-style: none;
+    padding: 0;
+}
+
+table.rdDashboardTitle {
+    background-color: #fff;
+    border-style: none;
+}
+
+td.rdDashboardTitle {
+    background-color: #fff;
+}
+
+#rdTabAddNewTab a em {
+    margin-bottom: 4px;
+}
+
+span.rdDashboardCommand {
+    background-color: #fff;
+    font-size: 13px;
+    color: #999999;
+}
+
+span.rdDashboardCommand:active {
+    background-color: #ccc;
+    color: #fff;
+}
+
+/* Dashboard Dropzone */
+
+.rdDashboardDropZone
+{
+	height: 15px;
+}
+
+.rdDashboardDropZoneActive,
+.rdAgDropZoneActive {
+    background-color: #feffde;
+    border: dashed 1px #ccc;
+}
+.rdAgDropZoneActive { height: 5px; }
+
+/* DataCalendar/TimePicker */
+
+.rdDataCalendarFont
+{
+	font-family: helvetica;
+	font-weight: normal;
+}
+
+.rdDataCalendarWeekdayCaption, .rdTimePickerTableHeaderCaption
+{
+	text-align: center;
+	font-weight: bold;
+}
+
+.rdDataCalendarDay
+{
+	padding-bottom: 15px;
+	background-image: none;
+	vertical-align: top;
+	background-color: #fff;
+}
+
+.rdTimePickerCell, .rdTimePickerAMPMCell
+{
+	vertical-align: top;
+	background-color: #fff;
+}
+
+.rdDataCalendarDayLabelHighlight, .rdTimePickerLabelHighlight
+ {
+	background-color: #a6cee3;
+}
+
+.rdDataCalendarDayOutsideMonth
+{
+	background-image: none;
+	background-color: #fff;
+	height: 32px; /*Issue 22365*/
+}
+
+tr.rdDataCalendarWeekdayCaption td {
+    background-color: #eee;
+    color: #666;
+}
+
+span.rdDataCalendarDayLabel {
+    color: #5e5e5e;
+}
+
+td.rdDataCalendarDay.rdDataCalendarToday {
+    background-color: #f1f1f1;
+}
+
+span.rdDataCalendarPagingLabel {
+    color: #5c5c5c;
+}
+
+table.rdDataCalendar {
+    background-color: #ccc;
+}
+
+td.rdTimePickerTableHeaderCaption {
+    background-color: #f1f1f1;
+    color: #666;
+}
+
+table.rdTimePicker {
+    background-color: #cccccc;
+}
+
+span.rdTimePickerLabel {
+    color: #666;
+}
+
+#lblAm {
+    font-size: 11px;
+    font-weight: bold;
+    color: #666;
+}
+
+#lblPm {
+    font-size: 11px;
+    color: #666;
+    font-weight: bold;
+}
+
+#Cal-2-CaptionCell.rdDataCalendarCaption,
+#Cal-3-CaptionCell.rdDataCalendarCaption {
+	line-height: 28px; /*Issue 22365*/
+}
+
+/* Tabs */
+
+.yui-nav A:link {
+	color: #fff;
+	background-image: none;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-decoration: none;
+	text-align: center;
+}
+.yui-nav A:visited {
+	color: #fff;
+}
+.yui-nav A:hover {
+	color: #0f0f0f;
+	background-image: none;
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.yui-navset .yui-nav .selected A {
+	color: #0000ee;
+	background-image: none;
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.yui-navset .yui-content {
+	padding: 5px 5px 5px 5px;
+}
+
+/* Popup Panels and Menus (shadow) */
+.rdPopupPanel, .rdPopupMenu, .rd-checkboxlist-popup
+{
+	box-shadow: 6px 6px 5px #808080;
+	-moz-box-shadow: 6px 6px 5px #808080;
+	-webkit-box-shadow: 6px 6px 5px #555;
+}
+
+/* WaitPage */
+.rdThemeWaitPanel {
+	border: 1px solid #bbb;
+	background-color: #f9f9f9;
+	padding: 10px;
+}
+.rdThemeWaitCaption {
+	font-size: 18px;
+}
+
+.rdWaitMainTable {
+	background-color: #f6f6f6;
+}
+.rdWaitContainerBorder {
+	background-color: #6694e3;
+}
+.rdWaitContainer {
+	background-color: #fff;
+}
+#rdWaitMsg  {
+	vertical-align: absmiddle;
+	margin-left: 5px;
+	margin-right: 15px;
+}
+
+/* Additional Overrides */
+tr.rdDragHeaderRow td a {
+    color: #00558e;
+}
+td.rdAgUnselectedTab {
+    border-style: solid;
+    padding: 5px;
+    border-color: #d1d1d1;
+}
+#lblTitle {
+    font-size: 24px;
+}
+table[style].rdAgContentHeadingRow:hover {
+    background-color: #feffde;
+    border: dashed 1px #ccc;
+}
+a:-webkit-any-link {
+    color: #00558e;
+    text-decoration: none;
+    cursor: auto;
+}
+img.rdHighlightOn {
+    display: none;
+}
+
+img.rdHighlightOff {
+    display: none;
+}
+
+/*img.rdAgContentHeading {
+    display: none;
+}*/
+span.rdAgCommand.rdAgCommandHightlight {
+    background-color: #00558e;
+    color: #fff;
+    border-color: #164666;
+}
+
+img.rdThemePaging.rdAgPaging {
+    border-width: 1px;
+    border-color: #ccc;
+}
+img.rdThemePaging.rdAgPaging:hover {
+    background-color: #f1f1f1;
+}
+
+img.rdThemePaging.rdAgPaging:active {
+    background-color: #ddd;
+}
+.rdAgSelectedTab {
+    border-style: solid;
+    border-bottom-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+    background-color: #00558e;
+    background-image: none;
+    color: #fff;
+    font-weight: bold;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    padding: 5px;
+    border-color: #164666;
+    border-width: 1px;
+}
+
+img.rdThemePaging.rdThemePaging.report {
+    border-style: solid;
+    background-color: #f1f1f1;
+    border-color: #d1d1d1;
+    border-width: 1px;
+}
+
+img.rdThemePaging.rdThemePaging.report:hover {
+    background-color: #ddd;
+}
+
+img.rdThemePaging.rdThemePaging.report:active {
+    background-color: #ccc;
+}
+
+div.rdDashboardPanel.yui3-dd-draggable {
+    border-style: solid;
+    border-color: #ccc;
+    -webkit-box-shadow: 0px 0px 4px 0px #ddd;
+    box-shadow: 0px 0px 4px 0px #ddd;
+}
+
+#rdDashboardPanelInnerTable {
+    border-style: none;
+}
+
+table.rdDashboardPanel {
+    border-color: #ccc;
+}
+
+tr td hr {
+    border-style: solid;
+    border-top-width: 1px;
+    border-color: #ccc;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+}
+
+input.rdThemeInput.rdDashboardText {
+    background-color: #feffde;
+}
+
+tr.rdDashboardParams td {
+    background-color: #feffde;
+    padding: 3px;
+}
+
+td.rdDashboardParams {
+	border-color: #ccc;
+    border-style: solid;
+	border-top-width: 1px;
+    border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+
+span.rdDashboardParams {
+    background-color: #feffde;
+}
+.rdDashboardParams a{
+	float: right;
+}
+
+li.yui3-dd-drop a {
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+
+/* General Element Styling */
+
+div.ThemeContainerShaded {
+    background-color: #f0f0f0;
+}
+
+div.ThemeContainerBordered {
+    border-width: 1px;
+    border-color: #bbb;
+}
+
+div.ThemeContainerShadedAndBordered {
+    border-color: #bbbbbb;
+    background-color: #f0f0f0;
+}
+
+span.ThemeErrorText {
+    padding: 2px;
+}
+
+tr td li {
+    color: #808080;
+}
+
+html.yui3-js-enabled body form {
+    color: #333;
+}
+
+#NormalLink {
+    color: #00558E;
+}
+
+#NormalLink:hover {
+    color: #424242;
+}
+
+input.ThemeLinkButton:active {
+    background-color: #ddd;
+}
+
+input.ThemeLinkButton {
+    font-size: 13px;
+    border-style: solid;
+    padding: 5px;
+    border-color: #d1d1d1;
+}
+
+a.ThemeLinkButtonSmall {
+    font-size: 13px;
+    border-style: solid;
+    padding: 5px;
+    border-color: #d1d1d1;
+    color: #666666;
+}
+
+a.ThemeLinkButtonSmall:active {
+    background-color: #ddd;
+}
+
+a.ThemeLinkButton:hover {
+    color: #424242;
+}
+
+a.ThemeLinkButton:active {
+    background-color: #ddd;
+}
+
+td.ThemePadding {
+    padding: 5px;
+}
+
+table.ThemeContainerBordered {
+    padding: 0;
+    border-width: 1px;
+    border-color: #bbb;
+}
+
+input.rdThemeInput:focus {
+    background-color: #feffde;
+}
+
+span.rd-checkboxlist-icon {
+    margin-right: 3px;
+}
+
+button.rd-checkboxlist-dropdown {
+    font-size: 13px;
+}
+
+td.rdPopupPanelTitle {
+    background-color: #ffffff;
+}
+
+td.rdPopupPanelControl {
+    background-color: #ffffff;
+}
+
+span.rdPopupPanelTitleCaption {
+    font-size: 13px;
+/*    font-weight: normal;*/
+    color: #666;
+}
+
+table.rdPopupPanel.rdDataCalendarPopUp {
+    -webkit-box-shadow: 2px 2px 6px 0px #a3a3a3;
+    box-shadow: 2px 2px 6px 0px #a3a3a3;
+}
+
+div.rd-checkboxlist.rd-checkboxlist-popup {
+    -webkit-box-shadow: 2px 2px 6px 0px #a3a3a3;
+    box-shadow: 2px 2px 6px 0px #a3a3a3;
+}
+
+table.rdPopupPanel.rdTimePickerPopup {
+    -webkit-box-shadow: 2px 2px 6px 0px #a3a3a3;
+    box-shadow: 2px 2px 6px 0px #a3a3a3;
+}
+
+/* Analysis Chart */
+
+span.rdAcCommand.rdAcCommandMiddle {
+    padding: 5px;
+}
+
+span.rdAcCommand.rdAcCommandRight {
+    padding: 5px;
+}
+
+span.rdAcCommandHighlight.rdAcCommandLeft {
+    padding: 5px;
+}
+
+span.rdAcCommandHighlight.rdAcCommandRight {
+    padding: 5px;
+}
+
+span.rdAcCommand.rdAcCommandLeft {
+    padding: 5px;
+}
+
+span.rdAcCommandHighlight.rdAcCommandMiddle {
+    padding: 5px;
+}
+
+#rowsChartLists {
+    margin-top: 10px;
+}
+
+img.yui3-resize {
+    margin-top: 10px;
+}
+
+/* Chart Grid */
+
+span.rdAcCommand.rdAcCommandMiddle {
+}
+
+div.rdDgSelectedNot:hover,
+div.rdCgSelectedNot:hover {
+    background-color: #f1f1f1;
+}
+
+div.rdCgSelected {
+    background-color: #00558E;
+}
+
+th.rdThemeDataTableHeader.rdCgPositionCellYAxis {
+    background-color: #ffffff;
+    border-style: none;
+}
+
+td.rdThemeDataTableCell.rdCgPositionCellXAxis {
+    background-color: #ffffff;
+    border-style: none;
+}
+
+.rdCgTable {
+    background-color: #ffffff;
+}
+
+td.rdThemeDataTableCell.rdCgDataCell a img {
+}
+
+a.rdCgSelected {
+    background-color: #00558E;
+}
+
+table.rdPopupPanel {
+    -webkit-box-shadow: 2px 2px 10px 0px #333;
+    box-shadow: 2px 2px 10px 0px #333;
+}
+
+/* Dimension Grid */
+
+div.rdDgSelected {
+    background-color: #00558E;
+}
+
+a.rdDgSelected {
+    background-color: #00558E;
+}
+
+th.rdOgPositionCellXAxis {
+    background-color: #ffffff;
+    border-style: none;
+}
+
+th.rdOgPositionCellYAxis {
+    background-color: #ffffff;
+}
+
+td.rdOgPositionCellXAxis {
+    background-color: #ffffff;
+}
+
+td.rdOgDataCell.rdBackgroundLevel0 {
+    background-color: #f1f1f1;
+}
+
+td.rdOgDataCell.rdBackgroundLevel1:hover {
+    background-color: #f1f1f1;
+}
+
+#yui_3_5_0_1_1342031507040_296 {
+    background-color: #ffffff;
+}
+
+th.rdOgSortColumn {
+    background-color: #ffffff;
+}
+
+table.rdDgOlapTable {
+    background-color: #dddddd;
+}
+
+table.rdPopupPanel {
+    -webkit-box-shadow: 2px 2px 10px 0px #333;
+    box-shadow: 2px 2px 10px 0px #333;
+}
+
+/* OLAP Grid */
+
+td.rdOgUnselectedTab {
+    padding: 5px;
+    border-style: solid;
+    border-color: #ccc;
+}
+
+td.rdOgSelectedTab {
+    background-image: none;
+}
+
+img.rdOgContentHeading {
+    display: none;
+}
+
+table.rdThemeDataTable.rdRemoveTableStyle {
+    background-color: #ffffff;
+    width: 120%;
+}
+
+/* Tables */
+rdThemeDataTableCell.#colRequiredDate_Row2{
+	background-color: #ccc;
+}
+th.rdThemeDataTableHeader {
+    background-color: #f1f1f1;
+}
+
+th.rdThemeDataTableHeader a {
+    color: #3b3b3b;
+}
+
+img.rdThemePaging:hover {
+    background-color: #ddd;
+}
+
+img.rdThemePaging:active {
+    background-color: #ccc;
+}
+
+img.rdThemePaging {
+    background-image: none;
+    border-width: 1px;
+    background-color: #f1f1f1;
+    border-style: solid;
+    border-color: #ddd;
+}
+
+
+
+form #rdMainBody hr {
+    border-style: none;
+}
+
+th.rdThemeDataTableCell {
+    background-color: #f1f1f1;
+    color: #333;
+    font-weight: bold;
+}
+
+colOrderDate_Row1 {
+    background-color: #c28ec2;
+}
+
+td.colOrderDate_Row1 {
+    background-color: #b379b3;
+}
+
+/*rdElement: DataList | rdElement: ListItem*/
+
+.ThemeULNone {
+	list-style-type: none;
+}
+
+.ThemeULDisc {
+	list-style-type: disc;
+}
+
+.ThemeULCircle {
+	list-style-type: circle;
+}
+
+.ThemeULSquare {
+	list-style-type: square;
+}
+
+.ThemeOLDecimal {
+	list-style-type: decimal;
+}
+
+.ThemeOLLowerAlpha {
+	list-style-type: lower-alpha;
+}
+
+.ThemeOLUpperAlpha {
+	list-style-type: upper-alpha;
+}
+
+.ThemeOLLowerRoman {
+	list-style-type: lower-roman;
+}
+
+.ThemeOLUpperRoman {
+	list-style-type: upper-roman;
+}
+
+/*End Element*/
+
+/*ReportAuthor*/
+.rdAcCommandHighlight {
+font-weight: normal;
+color: #FFFFFF;
+background-image: url(../rdButtonIn.png);
+background-repeat: repeat-x;
+background-color: #8C8C8D;
+border-top: 1px solid #DDDDDD;
+border-bottom: 1px solid #777777;
+border-right: 1px solid #777777;
+border-left: 1px solid #DDDDDD;
+text-decoration: none;
+padding-right: 3px;
+padding-left: 3px;
+padding-top: 2px;
+padding-bottom: 2px;
+line-height: 24px;
+}
+.rdAcCommand{
+background-image: none;
+background-position: bottom;
+background-color: #f9f9f9;
+border: 1px solid #bbb;
+text-decoration: none;
+cursor: pointer;
+color: #555555;
+line-height: 24px;
+}
+.rdReportAuthor_CommandLeft, .rdReportAuthor_CommandMiddle{
+    padding: 5px 12px!important;
+    margin: 0px;
+    border-radius: 0;
+}
+/*buttom menu*/
+.rdAcCommand{
+padding-top: 2px!important;
+text-decoration: none!important;
+}
+.rdAgPanel span a:hover{
+    text-decoration: none!important;
+}
+
+#divSwitchToPreviewModeFalse_Report a,
+#divSwitchToDesignModeFalse_Report a{
+text-decoration: none!important;
+}
+
+.rd-element-editor-header-droppable {
+    background-color: #f1f1f1;
+    border-right: 1px solid #EFEFEF;
+}
+
+.rd-element-editor {
+    border: solid 1px #EFEFEF;
+}
+
+    .rd-element-editor:hover {
+        border-color: #d4d5d6;
+    }
+
+.rd-element-editor-header {
+    background-color: #f8f8f8;
+}
+
+.rd-element-editor-droppable {
+    border: solid 1px #EFEFEF;
+}
+
+    .rd-element-editor-droppable:hover {
+        border-color: #d4d5d6;
+    }
+
+.column-with-droppable {
+    border-right: 1px solid #EFEFEF;
+}
+
+
+/* ingoGo - Table for Share Bookmarks list */
+table #dtBookmarkSharedWith.rdThemeDataTable{
+	border-collapse: collapse !important;
+	border: none;
+}
+
+#rowBookmarkSharedWith {
+  min-height: 185px;
+  height: 185px;
+}
+
+
+table #dtBookmarkSharedWith a{
+  display: inline-block;
+  line-height: 28px;
+  padding-right: 25px;
+  background: transparent url("../../rdBookmarkOrganizer/deleteOn.png") top right no-repeat; 
+}
+
+table #dtBookmarkSharedWith td:first-of-type > span{
+  display: inline-block;
+  line-height: 28px;
+  padding-left: 25px;
+  background: transparent url("../../rdBookmarkOrganizer/rdBookmarkSharingOn.png") top left no-repeat; 
+}
+
+.iconAddUser{
+  background: transparent url("../../rdBookmarkOrganizer/rdBookmarkSharingAdd.png") top left no-repeat; 
+  height: 24px;
+  display: block;
+}
+
+#dtBookmarkSharedWith a, #dtBookmarkSharedWith a:hover,
+#rdDivBookmarkShareTemplate a, #rdDivBookmarkShareTemplate a:hover{
+	text-decoration: none;
+}
+
+#DpForInputDate_txtOrderDate_rdInputDateElement td{ /*Issue 22365*/
+	vertical-align: top;
+}
+.rdDataCalendar .rdDataCalendarDropdown{ /*Issue 22365*/
+	margin-bottom: 2px;
+    margin-top: 2px;
+}
+

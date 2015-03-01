@@ -1,0 +1,13 @@
+.yui3-widget-mask {
+    background-color: black;
+    zoom: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=10)";
+    filter: alpha(opacity=10);
+    opacity: 0;
+}
+
+.yui3-panel-content {
+    -webkit-box-shadow: 0 0 5px #333;
+    -moz-box-shadow: 0 0 5px #333;
+    box-shadow: 0 0 5px #333;    
+}

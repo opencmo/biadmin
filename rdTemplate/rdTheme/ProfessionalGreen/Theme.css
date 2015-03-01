@@ -1,0 +1,1230 @@
+/*Global Style Settings */
+body {
+	font-family: arial, sans-serif;
+	font-size: 11px;
+	color: #333;
+}
+
+table {
+	font-family: arial, sans-serif;
+	font-size: 100%;
+	color: #333;
+}
+
+img{
+	border: 0px;
+}
+
+a:link {
+	color: #084d24;
+	text-decoration: none;
+}
+a:active {
+	color: #3d6c50;
+	text-decoration: none;
+}
+a:visited {
+	color: #4e6357;
+	text-decoration: none;
+}
+a:hover {
+	color: #084d24;
+	text-decoration: underline;
+}
+
+a:hover.ThemeLinkButton,
+a:hover.ThemeLinkButtonSmall,
+a:link.ThemeLinkButton,
+a:link.ThemeLinkButtonSmall,
+a:visited.ThemeLinkButton,
+a:visited.ThemeLinkButtonSmall,
+a:active.ThemeLinkButton,
+a:active.ThemeLinkButtonSmall {
+	color: #333;
+	text-decoration: none;
+}
+
+.ThemeLinkButton:hover,
+.ThemeLinkButtonSmall:hover,
+img:hover.rdThemePaging,
+td:hover.rdAgUnselectedTab,
+td:hover.rdOgUnselectedTab,
+span:hover.rdAgCommand,
+span:hover.rdOgCommand,
+span:hover.rdCgCommand {
+	background-image: url(rdButtonHover.png);
+	border-top: 1px Solid #bac385;
+	border-left: 1px Solid #bac385;
+	border-bottom: 1px Solid #9f9d8d;
+	border-right: 1px Solid #9f9d8d;
+}
+.ThemeLinkButton:active,
+.ThemeLinkButtonSmall:active,
+img:active.rdThemePaging,
+span:active.rdAgCommand,
+span:active.rdOgCommand,
+span:active.rdCgCommand {
+	background-image: url(rdButton.png);
+}
+
+span:hover.rdDashboardCommand,
+span:hover.rdPopupPanelCommand {
+	background-color: #cde87f;
+	border: 1px solid #bac385;
+}
+span:active.rdDashboardCommand,
+span:active.rdPopupPanelCommand {
+	background-color: #dcefa0;
+}
+
+img:hover.rdThemePaging {
+	margin: -1px;
+}
+td:hover.rdAgUnselectedTabOn {
+	background-image: url(rdButtonOutOnHover.png);
+}
+span:hover.rdAcCommand {
+	background-image: url(rdButtonHover.png);
+}
+
+input.ThemeLinkButton, input.ThemeLinkButtonSmall {
+	line-height: 10px;
+}
+
+/*User classes*/
+
+.ThemeHeaderLargest {
+	font-weight: bold;
+	font-size: 220%;
+	color: #75830f;
+	padding-bottom: 1px;
+}
+
+.ThemeHeaderLarger {
+	font-weight: bold;
+	font-size: 169%;
+	color: #75830f;
+	padding-bottom: 1px;
+}
+
+.ThemeHeaderLarge {
+	font-weight: bold;
+	font-size: 130%;
+	color: #75830f;
+	padding-bottom: 1px;
+}
+
+.ThemeHeader {
+	font-weight: bold;
+	color: #7b7f62;
+	padding-bottom: 1px;
+}
+
+.ThemeHeaderSmall {
+	font-weight: bold;
+	font-size: 85%;
+	color: #7b7f62;
+	padding-bottom: 1px;
+}
+
+.ThemeHeaderSmaller {
+	font-weight: bold;
+	font-size: 75%;
+	color: #7b7f62;
+	padding-bottom: 1px;
+}
+
+.ThemeHeaderSmallest {
+	font-weight: bold;
+	font-size: 60%;
+	color: #7b7f62;
+	padding-bottom: 1px;
+}
+
+.ThemeTextLargest {
+	font-size: 160%;
+}
+
+.ThemeTextLarger {
+	font-size: 145%;
+}
+
+.ThemeTextLarge {
+	font-size: 130%;
+}
+
+.ThemeTextSmall {
+	font-size: 85%;
+}
+
+.ThemeTextSmaller {
+	font-size: 75%;
+}
+
+.ThemeTextSmallest {
+	font-size: 60%;
+}
+
+.ThemeMarginLargest {
+	margin: 25px;
+}
+
+.ThemeMarginLarger {
+	margin: 20px;
+}
+
+.ThemeMarginLarge {
+	margin: 15px;
+}
+
+.ThemeMargin {
+	margin: 5px;
+}
+
+.ThemePaddingLargest {
+	padding: 25px;
+}
+
+.ThemePaddingLarger {
+	padding: 20px;
+}
+
+.ThemePaddingLarge {
+	padding: 15px;
+}
+
+.ThemePadding {
+	padding: 5px;
+}
+
+.ThemeBold {
+	font-weight: bold;
+}
+
+.ThemeItalic {
+	font-style: italic;
+}
+
+.ThemeTextPositive {
+	color: #008000;
+}
+
+.ThemeTextNegative {
+	color: #8b0000;
+}
+
+.ThemeTextNormal {
+	font-size: 11px;
+	color: #333;
+}
+
+.ThemeErrorText {
+	color: #790619 !important;
+	font-family: arial, sans-serif;
+	font-size: 100%;
+	border: 1px solid #d8000c !important;
+	background-color: #ffbaba !important;
+}
+
+.ThemeNoWrap {
+	white-space: nowrap;
+}
+
+.ThemeHidden {
+	display: none;
+}
+
+.ThemeContainerBordered {
+	border: solid 2px #dddac8;
+	padding: 3px;
+}
+
+.ThemeContainerShaded {
+	background-color: #f0efef;
+	padding: 3px;
+}
+
+.ThemeContainerShadedAndBordered {
+	background-image: url(AgFadeContentRow.png);
+	background-repeat: repeat-x;
+	background-color: #f1f6d7;
+	color: #777462;
+	vertical-align: top;
+	border: 1px solid #c1c1c1;
+	padding: 3px;
+}
+
+tr.ThemeAlternatingRow td.rdThemeDataTableCell {
+	background-color: #eef1e4;
+	padding: 4px;
+}
+
+.ThemeLinkButton {
+	background-image: url(rdButton.png);
+	background-repeat: repeat-x;
+	background-color: #c6d88a;
+	color: #333;
+	text-decoration: none;
+	border-top: 1px solid #ced5a4;
+	border-left: 1px solid #ced5a4;
+	border-right: 1px solid #bab8ab;
+	border-bottom: 1px solid #bab8ab;
+	padding-left: 11px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-right: 7px;
+	margin-bottom: 2px;
+	line-height: 24px;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.ThemeLinkButtonSmall {
+	background-image: url(rdButton.png);
+	background-repeat: repeat-x;
+	color: #333;
+	text-decoration: none;
+	border-top: 1px solid #ced5a4;
+	border-left: 1px solid #ced5a4;
+	border-right: 1px solid #bab8ab;
+	border-bottom: 1px solid #bab8ab;
+	margin-left: 3px;
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	vertical-align: middle;
+	line-height: 24px;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.ThemeAlignCenter {
+	text-align: center;
+}
+
+.ThemeAlignLeft {
+	text-align: left;
+}
+
+.ThemeAlignRight {
+	text-align: right;
+}
+
+.ThemeAlignTop {
+	vertical-align: top;
+}
+
+.ThemeAlignTopLeft {
+	vertical-align: top;
+	text-align: left;
+}
+
+.ThemeAlignTopRight {
+	vertical-align: top;
+	text-align: right;
+}
+
+.ThemeAlignBottom {
+	vertical-align: bottom;
+}
+
+.ThemeAlignBottomLeft {
+	vertical-align: bottom;
+	text-align: left;
+}
+
+.ThemeAlignBottomRight {
+	vertical-align: bottom;
+	text-align: right;
+}
+
+/*User classes*/
+
+/*Datatable, Crosstab Table, AnalysisGrid*/
+.rdThemeDataTable , .rdAgDataTable, .rdOgOlapTable, .rdDgOlapTable {
+	border: none;
+	background-color: #d9dec6;
+}
+
+.rdThemeDataTableMainHeader {
+	background-image: url(rdThemeDataTableMainHeader.png);
+	background-repeat: repeat-x;
+	color: #666;
+	border-left: 1px solid #c2c2c2;
+	border-top: 1px solid #c2c2c2;
+	border-right: 1px solid #c2c2c2;
+	font-size: 115%;
+	font-weight: bold;
+	text-align: left;
+	padding-left: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/* Hide from IE5-mac. Only IE-win sees this. */
+* html .rdThemeDataTableMainHeader {
+	background-image: url(rdThemeDataTableMainHeader.png);
+	background-repeat: repeat-x;
+	color: #666;
+	border-left: 1px solid #c2c2c2;
+	border-top: 1px solid #c2c2c2;
+	border-right: 1px solid #c2c2c2;
+	font-size: 115%;
+	font-weight: bold;
+	height: 25px;
+	text-align: left;
+	padding-left: 15px;
+	padding-top: 7px;
+}
+/* End Hide from IE5-mac. */
+
+
+.rdThemeDataTableHeader, table.rdAgDataTable th, tr.rdAgHeaderRow th  {
+	background-image: url(rdThemeHeaderFade.png);
+	background-repeat: repeat-x;
+	background-color: #cce18c;
+	color: #777462;
+	font-weight: bold;
+	border-top: 1px Solid #fff;
+}
+.rdThemeDataTableHeader {
+	padding: 4px;
+}
+
+.rdThemeDataTableCell  {
+	background-color: #fefdfb;
+	padding: 4px;
+}
+
+table.rdAgDataTable TD, .rdOgDataCell  {
+	background-color: #fefdfb;
+}
+
+.rdThemeDataTableHeaderRow, th.rdThemeDataTableCell {
+	background-image: url(rdThemeDataTableHeaderRow.png);
+	background-repeat: repeat-x;
+	background-color: #8eac33;
+	color: #fff;
+}
+
+.rdThemeDataTableSummaryRow td {
+	background-color: #98b43e;
+	padding-left: 10px;
+	color: #fff;
+	font-weight: bold;
+}
+
+.rdThemeDataTableGroupHeaderRow0 td, tr.rdAgGroup0HeaderRow td {
+	background-image: url(rdThemeDTGroupHeaderRow.png);
+	background-repeat: repeat-x;
+	color: #746e57;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow1 td, tr.rdAgGroup1HeaderRow td {
+	background-color: #e7e3cb;
+	color: #746e57;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow2 td, tr.rdAgGroup2HeaderRow td {
+	background-color: #f7f3de;
+	color: #746e57;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow3 td, tr.rdAgGroup3HeaderRow td {
+	background-color: #fffbe5;
+	color: #746e57;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupHeaderRow4 td, tr.rdAgGroup4HeaderRow td {
+	background-color: #fff5e5;
+	color: #746e57;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.rdThemeDataTableGroupSummaryRow td {
+	background-image: url(rdThemeDTGroupSummaryRow.png);
+	background-repeat: repeat-x;
+	background-color: #f5eeda;
+	color: #746e57;
+	font-weight: normal;
+	padding: 4px;
+}
+
+.rdThemeDataTableMoreInfoRow {
+	background-color: #fff;
+	border-top: 1px Solid #d8d9d9;
+	color: #655d3c;
+	font-weight: normal;
+	padding-left: 7px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.rdRemoveTableStyle td, .rdRemoveTableStyle th  {
+	background-image: none;
+	background-color: transparent;
+	height: 5px;
+	border: 0px;
+}
+
+/*SubDataTable*/
+
+.rdThemeSubDataTable {
+	background-color: #beb9ad;	/* This is used as the border for the subtable */
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+TABLE.rdThemeSubDataTable th, .rdThemeSubDataTable th {
+	background-color: #888;
+	color: #fff;
+	padding-left: 4px;
+	padding-top: 2px;
+	padding-right: 3px;
+	padding-bottom: 2px;
+}
+
+.rdThemeSubDataTableGroupHeaderRow td {
+	background-color: #a5a5a5;
+	color: #fff;
+	padding-left: 3px;
+}
+
+.rdThemeSubDataTableDataTableCell {
+	background-color: #dbdbdb;
+	color: #333;
+}
+
+.rdThemeSubDataTableMoreInfoRow {
+	background-color: #eeeded;
+	border-top: 2px Solid #d1d0d0;
+	color: #333;
+	padding-left: 3px;
+}
+
+.rdThemeSubDataTableGroupSummaryRow td {
+	background-color: #b1b1b1;
+	color: #fff;
+	padding-left: 3px;
+	border-bottom: 2px Solid #888;
+}
+
+.rdThemeSubDataTableSummaryRow td {
+	background-color: #767676;
+	color: #fff;
+	font-weight: bold;
+	padding-left: 3px;
+	border-bottom: 1px Solid #fff;
+}
+
+/* Paging */
+.rdThemePaging {
+	color: #63703a;
+	vertical-align : text-bottom;
+}
+
+.rdThemePagingCurrent {
+	background-color: #98b43e;
+	color: #fff;
+	font-weight: bold;
+	padding-bottom: 2px;
+    padding-top: 2px;
+    padding-left: 3px;
+    padding-right: 3px;
+	text-align: center;
+}
+
+input.rdThemePagingCurrent {
+	font-size: 100%;
+	font-weight: normal;
+	color: #333;
+	background-color: #fefffb;
+	border: 1px solid #ccc;
+	padding: 2px;
+}
+
+img.rdThemePaging {
+	background-image: url(rdButton.png);
+	background-repeat: repeat-x;
+	background-color: #c6d88a;
+	border-top: 1px solid #ced5a4;
+	border-left: 1px solid #ced5a4;
+	border-right: 1px solid #bab8ab;
+	border-bottom: 1px solid #bab8ab;
+	margin: -1px;
+}
+
+/* User Input Controls */
+.rdThemeInputCaption {
+	padding-right: 10px;
+	vertical-align: middle;
+}
+
+input.rdThemeInput, textarea.rdThemeInput, select.rdThemeInput, select.rdDataCalendarDropdown {
+	font-family: arial, sans-serif;
+	font-size: 100%;
+	background-color: #fefffb;
+	border: 1px solid #ccc;
+	padding: 2px;
+}
+
+/* Input checkbox list */
+.rd-checkboxlist, .rd-checkboxlist-dropdown {
+	font-family: arial, sans-serif;
+	background-color: #fefffb;
+	border: 1px solid #ccc;
+	color: #333;
+}
+
+.rd-checkboxlist-popup {
+	border: 2px solid #ccc;
+	background-color: #fefffb;
+	padding: 2px;
+}
+
+/* Quicktip */
+.rdquicktip-content {
+	background-color: #54612c;
+	border-color: #333;
+	color: #fff;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+	filter: alpha(opacity=90);
+	opacity: 0.9;
+}
+
+.rdquicktip-content .rdquicktip-table {
+	color: #fff;
+}
+
+.quicktip-pointer {
+	border-color: #333 transparent;
+}
+
+.quicktip-pointer-inner {
+	border-color: #54612c transparent;
+}
+
+.rdquicktip-content .header {
+	background-color: #54612c;
+}
+
+/* PopupPanel */
+
+.rdPopupPanel
+{
+	border: 2px Solid #ced5b9;
+	background-color: #fff;
+}
+
+.rdPopupPanelTitle
+{
+	background-color: #f1f4e7;
+	background-image: none;
+	font-weight: bold;
+
+}
+
+td.rdPopupPanelControl
+{
+	background-color: #f1f4e7;
+	font-weight: bolder;
+	text-align: right;
+	color: #fff;
+	border: 0px 0px 0px 0px;
+}
+
+/* PopupMenu */
+
+.yuimenubaritemlabel, .yuimenuitemlabel, .yuimenubaritem, .yuimenuitem
+{
+    color: #0000cc;
+}
+
+.yuimenubaritemlabel-selected, .yuimenuitemlabel-selected, .yuimenubaritem-selected, .yuimenuitem-selected
+{
+    color: #0000cc;
+    background-color: #e4ef9e;
+    text-decoration: none;
+}
+
+/* Analysis/OLAP Grid, Chart */
+
+.rdAg table, .rdAc table, .rdOg table, .rdDg table, .rdCg table {
+	color: #777462;
+}
+
+.rdAgContentHeadingRow, .rdOgContentHeadingRow, .rdDgContentHeadingRow, .rdCgContentHeadingRow
+{
+	background-color: #fbfdf1;
+}
+
+.rdAcContentRow, .rdAgPanel, .rdOgPanel, .rdDgPanel, .rdCgPanel {
+	background-image: url(AgFadeContentRow.png);
+	background-repeat: repeat-x;
+	background-color: #f1f6d7;
+	color: #777462;
+	vertical-align: top;
+	border: 1px solid #c1c1c1;
+}
+
+.rdOgContentHeading, .rdDgContentHeading, .rdCgContentHeading
+{
+	color: #777462;
+	font-weight: bold;
+	font-size: 110%;
+}
+
+.rdOgSubContentHeading, .rdDgSubContentHeading
+{
+	color: #777462;
+	font-weight: bold;
+}
+
+.rdOgPositionCell, .rdOgPositionCellXAxis, .rdOgPositionCellYAxis, .rdCgPositionCellYAxis, .rdCgPositionCellXAxis {
+	background-image: none;
+	background-color: #f3ead0;
+	color: #4d4a3b;
+	font-weight: normal;
+	border-top: 0px;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.rdOgPositionCellXAxis, .rdOgPositionCellYAxis  {
+	font-weight: normal;
+}
+
+.rdOgSortColumn {
+	background-image: url(rdThemeHeaderFade.png);
+	background-repeat: repeat-x;
+	padding: 4px;
+}
+
+.rdOgDataCell, .rdCgDataCell {
+	background-color: #fcfaf5;
+	color: #4d4a3b;
+	font-weight: normal;
+	padding: 4px;
+}
+
+#lblLeft, #lblTop, #lblMeasure, #lblExport {
+	color: #777462;
+	font-family: arial, sans-serif;
+}
+
+.rdAgCaptionRow, .rdOgCaptionRow, .rdAcCaptionRow, .rdDgCaptionRow, .rdCgCaptionRow {
+	background-image: none;
+	color: #fff;
+	font-size: 115%;
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	text-align: left;
+}
+.rdAgCaptionRow td, .rdOgCaptionRow td, .rdAcCaptionRow td, .rdDgCaptionRow td, .rdCgCaptionRow td {
+	background-color: #8eac33;
+}
+
+.rdAgUnselectedTab, .rdOgUnselectedTab
+{
+	background-image: url(rdButton.png);
+	background-repeat: repeat-x;
+	border: none;
+	border-top: 1px solid #ced5a4;
+	border-left: 1px solid #ced5a4;
+	border-right: 1px solid #bab8ab;
+	border-bottom: 1px solid #bab8ab;
+	text-decoration: none;
+	margin-left: 0px;
+}
+
+.rdAgSelectedTab, .rdOgSelectedTab
+{
+	background-image: url(rdButtonIn.png);
+	background-repeat: repeat-x;
+	background-color: transparent;
+	border: none;
+	border-top: 1px solid #ced5a4;
+	border-left: 1px solid #ced5a4;
+	border-right: 1px solid #bab8ab;
+	border-bottom: 1px solid #bab8ab;
+	text-decoration: none;
+	margin-left: 0px;
+}
+
+.rdAgSelectedTabOn
+{
+    background-image: url(rdButtonInOn.png);
+}
+.rdAgUnselectedTabOn
+{
+    background-image: url(rdButtonOutOn.png);
+}
+
+.rdAgCommand, .rdOgCommand, .rdAcCommand, span.rdCgCommand  {
+	background-image: url(rdButton.png);
+	color: #333;
+	text-decoration: none;
+	border-top: 1px solid #ced5a4;
+	border-left: 1px solid #ced5a4;
+	border-right: 1px solid #bab8ab;
+	border-bottom: 1px solid #bab8ab;
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	cursor: pointer;
+}
+
+.rdAcCommandHighlight {
+	background-image: url(rdButtonIn.png);
+	color: #fff;
+	text-decoration: none;
+	border-top: 1px Solid #d6dbdf;
+	border-left: 1px Solid #c1c5c9;
+	border-bottom: 1px Solid #5d6165;
+	border-right: 1px Solid #5d6165;
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	cursor: pointer;
+}
+
+.rdAcCommandMiddle
+{
+	border-left:0;
+}
+.rdAcCommandRight
+{
+	border-left:0;
+}
+
+.rdAgError, .rdOgError, .rdDgError, .rdCgError {
+	color: #dc642a;
+	font-weight: normal;
+}
+
+div.rdDgSelectedNot:hover,
+div.rdCgSelectedNot:hover {
+    background-color: #dfeabe;
+}
+
+.rdDgSelected, .rdCgSelected
+{
+	background-color: #8eac33;
+	color: #fff;
+}
+
+.rdAc table
+{
+	border: none;
+}
+
+.rdBackgroundLevel7 {
+      background-color: #c0c0c0;
+}
+.rdBackgroundLevel6 {
+      background-color: #c8c8c8;
+}
+.rdBackgroundLevel5 {
+      background-color: #d0d0d0;
+}
+.rdBackgroundLevel4 {
+      background-color: #d8d8d8;
+}
+.rdBackgroundLevel3 {
+      background-color: #e0e0e0;
+}
+.rdBackgroundLevel2 {
+      background-color: #e8e8e8;
+}
+.rdBackgroundLevel1 {
+      background-color: #f0f0f0;
+}
+.rdBackgroundLevel0 {
+      background-color: #f8f8f8;
+}
+
+
+/* Dashboard */
+
+.rdDashboard
+{
+	font-family: arial, sans-serif;
+}
+
+.rdDashboard table
+{
+	font-family: arial, sans-serif;
+}
+
+td.rdDashboard
+{
+	background-color: #e4ef9e;
+}
+
+.rdDashboardMenu
+{
+	background-color: #e4ef9e;
+	padding-top: 4px;
+}
+
+tr.rdDashboardMenu
+{
+	background-color: #e4ef9e;
+	color: #fff;
+	text-align: left;
+}
+
+.rdDashboardColumn
+{
+	vertical-align: top;
+	padding: 5px;
+	background-color: #e4ef9e;
+}
+
+.rdDashboardPanel
+{
+	border: 2px solid #dddac8;
+}
+
+td.rdDashboardTitle
+{
+	background-image: none;
+	background-color: #f1f4e7;
+	color: #464646;
+}
+
+.rdDashboardParams
+{
+	background-color: #e4ef9e;
+	color: #464646;
+}
+
+td.rdDashboardParams
+{
+	background-color:#e4ef9e;
+	color: #464646
+}
+
+td.rdDashboardParamsSave
+{
+	background-color: #e4ef9e;
+	vertical-align: bottom;
+	text-align: right;
+	color: #464646;
+	padding-right: 3px;
+	padding-left: 3px;
+}
+
+.rdDashboardCommand, .rdPopupPanelCommand
+{
+	background-color: #dcefa0;
+	color: #333;
+	border: 1px solid #ced5a4;
+	text-decoration: none;
+	margin-left: 3px;
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+/* Dashboard Dropzone */
+
+.rdDashboardDropZone
+{
+	height: 15px;
+}
+
+.rdDashboardDropZoneActive, .rdAgDropZoneActive
+{
+    background-image: none;
+	background-color: #dddac8;
+    border-color: #9999aa;
+    border-width: 1px;
+	height: 15px;
+}
+.rdAgDropZoneActive { height: 5px; }
+
+/* DataCalendar/TimePicker */
+
+.rdDataCalendar, .rdTimePicker
+{
+	color: #333;
+}
+
+.rdDataCalendarFont
+{
+	font-family: arial, sans-serif;
+	font-weight: normal;
+}
+
+.rdDataCalendarWeekdayCaption, .rdTimePickerTableHeaderCaption
+{
+	background-image: none;
+	background-repeat: repeat-x;
+	background-color: #e1ef91;
+	text-align: center;
+	font-weight: bold;
+}
+
+.rdDataCalendarDay, .rdTimePickerCell, .rdTimePickerAMPMCell
+{
+	vertical-align: top;
+	background-color: #fefff9;
+}
+
+.rdDataCalendarToday
+{
+	background-color: #e7e3cb;
+}
+
+.rdDataCalendarDayLabelHighlight, .rdTimePickerLabelHighlight
+ {
+	background-color: #aed434;
+}
+
+.rdDataCalendarDayOutsideMonth
+{
+	background-color: #d5e69d;
+	height: 18px; /*Issue 22365*/
+}
+
+#Cal-2-CaptionCell.rdDataCalendarCaption,
+#Cal-3-CaptionCell.rdDataCalendarCaption {
+	line-height: 26px; /*Issue 22365*/
+}
+
+/* Tabs */
+
+.yui-nav a:link {
+	background-image: url(rdThemeTabBg.png);
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.yui-nav a:visited {
+	color: #fff;
+}
+.yui-navset-left .yui-nav a:link {
+	background-image: url(rdThemeLeftTabBg.png);
+	background-repeat: repeat-y;
+}
+.yui-navset-right .yui-nav a:link  {
+	background-image: url(rdThemeRightTabBg.png);
+	background-repeat: repeat-y;
+	background-position: right;
+}
+.yui-navset-bottom .yui-nav a:link {
+	background-image: url(rdThemeBottomTabBg.png);
+	background-position: bottom;
+}
+
+.yui-nav a:hover {
+	background-image: url(rdThemeTabBgOn.png);
+	color: #333;
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.yui-navset .yui-nav .selected a {
+	color: #627624;
+	background-image: url(rdThemeTabBgOn.png);
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.yui-navset-left .yui-nav a:hover , .yui-navset-left .yui-nav .selected a {
+	background-image: url(rdThemeLeftTabBgOn.png);
+	background-repeat: repeat-y;
+}
+.yui-navset-right .yui-nav a:hover, .yui-navset-right .yui-nav .selected a {
+	background-image: url(rdThemeRightTabBgOn.png);
+	background-repeat: repeat-y;
+	background-position: right;
+}
+.yui-navset-bottom .yui-nav a:hover, .yui-navset-bottom  .yui-nav .selected a {
+	background-image: url(rdThemeBottomTabBgOn.png);
+	background-position: bottom;
+}
+
+.yui-navset .yui-content {
+	padding: 5px 5px 5px 5px;
+}
+
+/* Popup Panels and Menus (shadow) */
+.rdPopupPanel, .rdPopupMenu, .rd-checkboxlist-popup
+{
+	box-shadow: 6px 6px 5px #808080;
+	-moz-box-shadow: 6px 6px 5px #808080;
+	-webkit-box-shadow: 6px 6px 5px #555;
+}
+
+/* WaitPage */
+.rdThemeWaitPanel {
+	border: 1px solid  #dddac8;
+	background-color: #f6f6f6;
+	padding: 10px;
+}
+.rdThemeWaitCaption {
+	font-size: 18px;
+}
+
+.rdWaitMainTable {
+	background-color: #f6f6f6;
+}
+.rdWaitContainerBorder {
+	background-color: #dddac8;
+}
+.rdWaitContainer {
+	background-color: #fff;
+}
+#rdWaitMsg  {
+	vertical-align: absmiddle;
+	margin-left: 5px;
+	margin-right: 15px;
+}
+
+/*rdElement: DataList | rdElement: ListItem*/
+
+.ThemeULNone {
+	list-style-type: none;
+}
+
+.ThemeULDisc {
+	list-style-type: disc;
+}
+
+.ThemeULCircle {
+	list-style-type: circle;
+}
+
+.ThemeULSquare {
+	list-style-type: square;
+}
+
+.ThemeOLDecimal {
+	list-style-type: decimal;
+}
+
+.ThemeOLLowerAlpha {
+	list-style-type: lower-alpha;
+}
+
+.ThemeOLUpperAlpha {
+	list-style-type: upper-alpha;
+}
+
+.ThemeOLLowerRoman {
+	list-style-type: lower-roman;
+}
+
+.ThemeOLUpperRoman {
+	list-style-type: upper-roman;
+}
+
+/*End Element*/
+/*ReportAuthor*/
+.rdReportAuthor_CommandLeft, .rdReportAuthor_CommandMiddle{
+    padding: 5px 12px!important;
+    margin: 0px;
+    border-radius: 0;
+}
+/*buttom menu*/
+.rdAcCommand{
+padding-top: 0px!important;
+text-decoration: none!important;
+}
+.rdAgPanel span a:hover{
+    text-decoration: none!important;
+}
+
+.reportAuthorHeightMenu{
+height: 22px!important;
+padding-top: 1px;
+}
+.reportAuthorbgc{
+  background-color: #E3F1B2;
+}
+.rd-element-editor {
+    border: solid 1px #E3F1B2;
+}
+
+    .rd-element-editor:hover {
+        border-color: #C4E571;
+    }
+
+.rd-element-editor-header {
+    background-color: #f8f8f8;
+}
+
+.rd-element-editor-droppable {
+    border: solid 1px #D4D4D5;
+}
+
+    .rd-element-editor-droppable:hover {
+        border-color: #C4E571;
+    }
+
+.column-with-droppable {
+    border-right: 1px solid #E3F1B2;
+}
+
+/* ingoGo - Table for Share Bookmarks list */
+table #dtBookmarkSharedWith.rdThemeDataTable{
+	border-collapse: collapse !important;
+	border: none;
+}
+
+#rowBookmarkSharedWith {
+  min-height: 185px;
+  height: 185px;
+}
+
+
+table #dtBookmarkSharedWith a{
+  display: inline-block;
+  line-height: 28px;
+  padding-right: 25px;
+  background: transparent url("../../rdBookmarkOrganizer/deleteOn.png") top right no-repeat; 
+}
+
+table #dtBookmarkSharedWith td:first-of-type > span{
+  display: inline-block;
+  line-height: 28px;
+  padding-left: 25px;
+  background: transparent url("../../rdBookmarkOrganizer/rdBookmarkSharingOn.png") top left no-repeat; 
+}
+
+.iconAddUser{
+  background: transparent url("../../rdBookmarkOrganizer/rdBookmarkSharingAdd.png") top left no-repeat; 
+  height: 24px;
+  display: block;
+}
+
+#dtBookmarkSharedWith a, #dtBookmarkSharedWith a:hover,
+#rdDivBookmarkShareTemplate a, #rdDivBookmarkShareTemplate a:hover{
+	text-decoration: none;
+}
+
+#DpForInputDate_txtOrderDate_rdInputDateElement td{ /*Issue 22365*/
+	vertical-align: top;
+}
+.rdDataCalendar .rdDataCalendarDropdown{ /*Issue 22365*/
+	margin-bottom: 2px;
+    margin-top: 2px;
+}

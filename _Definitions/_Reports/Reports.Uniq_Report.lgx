@@ -1,0 +1,1175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="Unique user Report "
+	ID="Reports.Uniq_Report"
+	>
+	<ReportCenterItem
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<StyleSheet
+		ID="themeTransit"
+		Theme="Transit"
+	/>
+	<DefaultRequestParams
+		camid="0"
+		dateFrom="@Date.ThisMonthStart~"
+		dateTo="@Date.ThisMonthEnd~"
+		tsid="0"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Unique user Report "
+				Class="ThemeHeaderLarger"
+			/>
+		</Division>
+		<HR/>
+		<IncludeSharedElement
+			DefinitionFile="SharedElements"
+			SharedElementID="DatePicker"
+		/>
+	</ReportHeader>
+	<Body>
+		<Tabs
+			ID="MainTab"
+			TabbingStyle="Ajax"
+			>
+			<TabPanel
+				Caption="Campaign"
+				ID="tabCamp"
+				>
+				<Label
+					Caption="Campaign Filter"
+				/>
+				<LineBreak/>
+				<InputSelectList
+					DefaultValue="@Request.camid~"
+					ID="camid"
+					MultiSelect="True"
+					OptionCaptionColumn="name"
+					OptionValueColumn="campaign_id"
+					SaveInCookie="True"
+					>
+					<DataLayer
+						ConnectionID="OpenDSP"
+						ID="camidSql"
+						Source="Select Distinct c.campaign_id, 
+concat(c.campaign_id,&apos; - &apos;,c.name) name
+From opendsp.ld_campaign c
+join opendsp.ld_campaign_lineitem cl on c.campaign_id=cl.campaign_id
+join opendsp.ld_targeting_strategy ts on cl.campaign_lineitem_id = ts.campaign_lineitem_id
+Where c.start_date &gt; &apos;2015-06-01&apos;
+Order By c.campaign_id desc"
+						Type="SQL"
+					/>
+					<EventHandler
+						DhtmlEvent="onchange"
+						>
+						<Action
+							ElementID="campDaily"
+							ID="actRefCamId"
+							RequestForwarding="True"
+							Type="RefreshElement"
+							>
+							<WaitPage/>
+						</Action>
+					</EventHandler>
+				</InputSelectList>
+				<LineBreak/>
+				<Label
+					Caption="Clear selection"
+					Class="ThemeTextSmall "
+					>
+					<Action
+						ID="actRef"
+						Type="Report"
+						>
+						<LinkParams
+							camid="0"
+							dateFrom="@Request.dateFrom~"
+							dateTo="@Request.dateTo~"
+						/>
+						<Target
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+					</Action>
+				</Label>
+				<Division>
+					<Tabs
+						ID="CampTab"
+						TabbingStyle="Static"
+						>
+						<TabPanel
+							Caption="Daily"
+							ID="tabDaily"
+							>
+							<Button
+								Caption="Export to Excel"
+								Class="ThemeContainerShadedAndBordered"
+								ID="btnExport"
+								>
+								<Action
+									ID="actExport"
+									Type="NativeExcel"
+									>
+									<Target
+										ExcelOutputFormat="Excel2007"
+										ExportDataTableID="dtCampDaily"
+										ExportFilename="UU_CampDaily_@Request.dateFrom~_@Request.dateTo~"
+										ShowGridlines="True"
+										Type="NativeExcel"
+									/>
+								</Action>
+							</Button>
+							<LineBreak
+								LineCount="2"
+							/>
+							<DataTable
+								Caption="Daily"
+								ID="dtCampDaily"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="dlCampDaily"
+									Source="SELECT DATE(cd.report_datetime) report_datetime,
+c.`name` Campaign,
+cd.visit,
+cd.unique_user
+FROM stat.impression_unique_user_campaign_visit_daily cd
+left join opendsp.ld_campaign c on cd.campaign_id = c.campaign_id
+Where cd.report_datetime between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (0 in (&apos;@Request.camid~&apos;) or cd.campaign_id in (@Request.camid~))
+Order by cd.campaign_id, cd.visit"
+									Type="SQL"
+								/>
+								<DataTableColumn
+									Header="Date"
+									ID="colreport_datetime"
+									>
+									<Label
+										Caption="@Data.report_datetime~"
+										Format="Short Date"
+										ID="lblreport_datetime"
+									/>
+									<DataColumnSort
+										DataColumn="report_datetime"
+										DataType="Date"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Campaign"
+									ID="colCampaign"
+									>
+									<Label
+										Caption="@Data.Campaign~"
+										ID="lblCampaign"
+									/>
+									<DataColumnSort
+										DataColumn="Campaign"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Impressions"
+									ID="colvisit"
+									>
+									<Label
+										Caption="@Data.visit~"
+										Format="###,###,##0"
+										ID="lblvisit"
+									/>
+									<DataColumnSort
+										DataColumn="visit"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Unique User"
+									ID="colunique_user"
+									>
+									<Label
+										Caption="@Data.unique_user~"
+										Format="###,###,##0"
+										ID="lblunique_user"
+									/>
+									<DataColumnSort
+										DataColumn="unique_user"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Bottom"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</TabPanel>
+						<TabPanel
+							Caption="Hourly"
+							ID="tabHourly"
+							>
+							<Button
+								Caption="Export to Excel"
+								Class="ThemeContainerShadedAndBordered"
+								ID="btnExport"
+								>
+								<Action
+									ID="actExport"
+									Type="NativeExcel"
+									>
+									<Target
+										ExcelOutputFormat="Excel2007"
+										ExportDataTableID="dtCampHourly"
+										ExportFilename="UU_CampHourly_@Request.dateFrom~_@Request.dateTo~"
+										ShowGridlines="True"
+										Type="NativeExcel"
+									/>
+								</Action>
+							</Button>
+							<LineBreak
+								LineCount="2"
+							/>
+							<DataTable
+								Caption="Hourly"
+								ID="dtCampHourly"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="dlCampHourly"
+									Source="SELECT Date(ch.report_date) report_date,
+time(ch.report_date) times,
+c.`name` Campaign,
+ch.campaign_id,
+ch.user_count
+FROM stat.impression_unique_user_hll_campaign_hourly ch
+left join opendsp.ld_campaign c on ch.campaign_id = c.campaign_id 
+WHERE ch.campaign_id IS NOT NULL
+and ch.report_date between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (0 in (&apos;@Request.camid~&apos;) or ch.campaign_id in (@Request.camid~))
+order by Date(ch.report_date), time(ch.report_date), ch.user_count "
+									Type="SQL"
+								/>
+								<DataTableColumn
+									Header="Date"
+									ID="colreport_date"
+									>
+									<Label
+										Caption="@Data.report_date~"
+										Format="Short Date"
+										ID="lblreport_date"
+									/>
+									<DataColumnSort
+										DataColumn="report_date"
+										DataType="Date"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Time"
+									ID="coltimes"
+									>
+									<Label
+										Caption="@Data.times~"
+										ID="lbltimes"
+									/>
+									<DataColumnSort
+										DataColumn="times"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Campaign"
+									ID="colCampaign"
+									>
+									<Label
+										Caption="@Data.Campaign~"
+										ID="lblCampaign"
+									/>
+									<DataColumnSort
+										DataColumn="Campaign"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Unique User"
+									ID="coluser_count"
+									>
+									<Label
+										Caption="@Data.user_count~"
+										Format="###,###,##0"
+										ID="lbluser_count"
+									/>
+									<DataColumnSort
+										DataColumn="user_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Bottom"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</TabPanel>
+						<TabPanel
+							Caption="Weekly"
+							ID="tabWeekly"
+							>
+							<Button
+								Caption="Export to Excel"
+								Class="ThemeContainerShadedAndBordered"
+								ID="btnExport"
+								>
+								<Action
+									ID="actExport"
+									Type="NativeExcel"
+									>
+									<Target
+										ExcelOutputFormat="Excel2007"
+										ExportDataTableID="dtCampWeekly"
+										ExportFilename="UU_CampWeekly_@Request.dateFrom~_@Request.dateTo~"
+										ShowGridlines="True"
+										Type="NativeExcel"
+									/>
+								</Action>
+							</Button>
+							<LineBreak
+								LineCount="2"
+							/>
+							<DataTable
+								Caption="Weekly"
+								ID="dtCampWeekly"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="dlCampWeekly"
+									Source="SELECT Date(cw.report_date) report_date,
+c.name Campaign,
+cw.campaign_id,
+cw.user_count
+FROM stat.impression_unique_user_hll_campaign_weekly cw
+left join opendsp.ld_campaign c on cw.campaign_id = c.campaign_id 
+WHERE cw.campaign_id IS NOT NULL
+and cw.report_date between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (0 in (&apos;@Request.camid~&apos;) or cw.campaign_id in (@Request.camid~))
+order by cw.report_date"
+									Type="SQL"
+								/>
+								<DataTableColumn
+									Header="Date"
+									ID="colreport_date"
+									>
+									<Label
+										Caption="@Data.report_date~"
+										Format="Short Date"
+										ID="lblreport_date"
+									/>
+									<DataColumnSort
+										DataColumn="report_date"
+										DataType="Date"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Campaign"
+									ID="colCampaign"
+									>
+									<Label
+										Caption="@Data.Campaign~"
+										ID="lblCampaign"
+									/>
+									<DataColumnSort
+										DataColumn="Campaign"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Unique User"
+									ID="coluser_count"
+									>
+									<Label
+										Caption="@Data.user_count~"
+										Format="###,###,##0"
+										ID="lbluser_count"
+									/>
+									<DataColumnSort
+										DataColumn="user_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Bottom"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</TabPanel>
+						<TabPanel
+							Caption="Monthly"
+							ID="tabMonthly"
+							>
+							<Button
+								Caption="Export to Excel"
+								Class="ThemeContainerShadedAndBordered"
+								ID="btnExport"
+								>
+								<Action
+									ID="actExport"
+									Type="NativeExcel"
+									>
+									<Target
+										ExcelOutputFormat="Excel2007"
+										ExportDataTableID="dtCampMonthly"
+										ExportFilename="UU_CampMonthly_@Request.dateFrom~_@Request.dateTo~"
+										ShowGridlines="True"
+										Type="NativeExcel"
+									/>
+								</Action>
+							</Button>
+							<LineBreak
+								LineCount="2"
+							/>
+							<DataTable
+								Caption="Monthly"
+								ID="dtCampMonthly"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="dlCampMonthly"
+									Source="SELECT DATE(cm.report_date) report_date,
+MONTHNAME(cm.report_date) report_month,
+c.`name` Campaign,
+cm.campaign_id,
+cm.user_count
+FROM stat.impression_unique_user_hll_campaign_monthly cm
+left join opendsp.ld_campaign c on cm.campaign_id = c.campaign_id 
+WHERE cm.campaign_id IS NOT NULL
+and cm.report_date between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (0 in (&apos;@Request.camid~&apos;) or cm.campaign_id in (@Request.camid~))
+order by cm.report_date"
+									Type="SQL"
+								/>
+								<DataTableColumn
+									Header="Date"
+									ID="colreport_date"
+									>
+									<Label
+										Caption="@Data.report_date~"
+										Format="Short Date"
+										ID="lblreport_date"
+									/>
+									<DataColumnSort
+										DataColumn="report_date"
+										DataType="Date"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Month"
+									ID="colreport_month"
+									>
+									<Label
+										Caption="@Data.report_month~"
+										ID="lblreport_month"
+									/>
+									<DataColumnSort
+										DataColumn="report_month"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Campaign"
+									ID="colCampaign"
+									>
+									<Label
+										Caption="@Data.Campaign~"
+										ID="lblCampaign"
+									/>
+									<DataColumnSort
+										DataColumn="Campaign"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Unique User"
+									ID="coluser_count"
+									>
+									<Label
+										Caption="@Data.user_count~"
+										Format="###,###,##0"
+										ID="lbluser_count"
+									/>
+									<DataColumnSort
+										DataColumn="user_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Bottom"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</TabPanel>
+						<TabPanel
+							Caption="Life Time"
+							ID="tabLifeTime"
+							>
+							<Button
+								Caption="Export to Excel"
+								Class="ThemeContainerShadedAndBordered"
+								ID="btnExport"
+								>
+								<Action
+									ID="actExport"
+									Type="NativeExcel"
+									>
+									<Target
+										ExcelOutputFormat="Excel2007"
+										ExportDataTableID="dtCampLifeTime"
+										ExportFilename="UU_CampLifeTime_@Request.dateFrom~_@Request.dateTo~"
+										ShowGridlines="True"
+										Type="NativeExcel"
+									/>
+								</Action>
+							</Button>
+							<LineBreak
+								LineCount="2"
+							/>
+							<DataTable
+								Caption="Life Time"
+								ID="dtCampLifeTime"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="dlCampLifeTime"
+									Source="SELECT c.name Campaign,
+cl.campaign_id,
+cl.user_count
+FROM stat.impression_unique_user_hll_campaign_life cl
+left join opendsp.ld_campaign c on cl.campaign_id = c.campaign_id 
+WHERE cl.campaign_id IS NOT NULL
+and (0 in (&apos;@Request.camid~&apos;) or cl.campaign_id in (@Request.camid~))
+order by c.name"
+									Type="SQL"
+								/>
+								<DataTableColumn
+									Header="Campaign"
+									ID="colCampaign"
+									>
+									<Label
+										Caption="@Data.Campaign~"
+										ID="lblCampaign"
+									/>
+									<DataColumnSort
+										DataColumn="Campaign"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Unique User"
+									ID="coluser_count"
+									>
+									<Label
+										Caption="@Data.user_count~"
+										ID="lbluser_count"
+									/>
+									<DataColumnSort
+										DataColumn="user_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Bottom"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</TabPanel>
+					</Tabs>
+				</Division>
+			</TabPanel>
+			<TabPanel
+				Caption="Targeting Strategy"
+				ID="tabTS"
+				>
+				<Label
+					Caption="Targeting Strategy Filter"
+				/>
+				<LineBreak/>
+				<InputSelectList
+					DefaultValue="@Request.tsid~"
+					ID="tsid"
+					MultiSelect="True"
+					OptionCaptionColumn="name"
+					OptionValueColumn="targeting_strategy_id"
+					SaveInCookie="True"
+					>
+					<DataLayer
+						ConnectionID="OpenDSP"
+						ID="tsidSql"
+						Source="Select ts.targeting_strategy_id, 
+concat(ts.targeting_strategy_id,&apos; - &apos;,ts.name) name
+From opendsp.ld_targeting_strategy ts
+left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+Where ts.targeting_strategy_id &gt; 500
+Order By ts.targeting_strategy_id Desc"
+						Type="SQL"
+					/>
+					<EventHandler
+						DhtmlEvent="onchange"
+						>
+						<Action
+							ElementID="tsDaily"
+							ID="actRefTSid"
+							RequestForwarding="True"
+							Type="RefreshElement"
+							>
+							<WaitPage/>
+						</Action>
+					</EventHandler>
+				</InputSelectList>
+				<LineBreak/>
+				<Label
+					Caption="Clear selection"
+					Class="ThemeTextSmall "
+					>
+					<Action
+						ID="actRef"
+						Type="Report"
+						>
+						<LinkParams
+							dateFrom="@Request.dateFrom~"
+							dateTo="@Request.dateTo~"
+							tsid="0"
+						/>
+						<Target
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+					</Action>
+				</Label>
+				<Division>
+					<Tabs
+						ID="TsTab"
+						TabbingStyle="Static"
+						>
+						<TabPanel
+							Caption="Daily"
+							ID="tabDaily"
+							>
+							<Button
+								Caption="Export to Excel"
+								Class="ThemeContainerShadedAndBordered"
+								ID="btnExport"
+								>
+								<Action
+									ID="actExport"
+									Type="NativeExcel"
+									>
+									<Target
+										ExcelOutputFormat="Excel2007"
+										ExportDataTableID="dtTSDaily"
+										ExportFilename="UU_TSDaily_@Request.dateFrom~_@Request.dateTo~"
+										ShowGridlines="True"
+										Type="NativeExcel"
+									/>
+								</Action>
+							</Button>
+							<LineBreak
+								LineCount="2"
+							/>
+							<DataTable
+								Caption="Daily"
+								ID="dtTSDaily"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="dlTSDaily"
+									Source="Select Date(tsd.report_datetime) report_datetime,
+  ts.name,
+  tsd.visit,
+  tsd.unique_user
+From stat.impression_unique_user_targeting_strategy_daily tsd
+  left join opendsp.ld_targeting_strategy ts ON tsd.targeting_strategy_id = ts.targeting_strategy_id
+Where tsd.targeting_strategy_id&gt;500
+and tsd.report_datetime between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (0 in (&apos;@Request.tsid~&apos;) or tsd.targeting_strategy_id in (@Request.tsid~))
+Order by tsd.targeting_strategy_id, tsd.visit"
+									Type="SQL"
+								/>
+								<DataTableColumn
+									Header="Date"
+									ID="colreport_datetime"
+									>
+									<Label
+										Caption="@Data.report_datetime~"
+										Format="Short Date"
+										ID="lblreport_datetime"
+									/>
+									<DataColumnSort
+										DataColumn="report_datetime"
+										DataType="Date"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Targeting Strategy"
+									ID="colname"
+									>
+									<Label
+										Caption="@Data.name~"
+										ID="lblname"
+									/>
+									<DataColumnSort
+										DataColumn="name"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Impressions"
+									ID="colvisit"
+									>
+									<Label
+										Caption="@Data.visit~"
+										Format="###,###,##0"
+										ID="lblvisit"
+									/>
+									<DataColumnSort
+										DataColumn="visit"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Unique User"
+									ID="colunique_user"
+									>
+									<Label
+										Caption="@Data.unique_user~"
+										Format="###,###,##0"
+										ID="lblunique_user"
+									/>
+									<DataColumnSort
+										DataColumn="unique_user"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Both"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</TabPanel>
+						<TabPanel
+							Caption="Hourly"
+							ID="tabHourly"
+							>
+							<Button
+								Caption="Export to Excel"
+								Class="ThemeContainerShadedAndBordered"
+								ID="btnExport"
+								>
+								<Action
+									ID="actExport"
+									Type="NativeExcel"
+									>
+									<Target
+										ExcelOutputFormat="Excel2007"
+										ExportDataTableID="dtTSHourly"
+										ExportFilename="UU_TSHourly_@Request.dateFrom~_@Request.dateTo~"
+										ShowGridlines="True"
+										Type="NativeExcel"
+									/>
+								</Action>
+							</Button>
+							<LineBreak
+								LineCount="2"
+							/>
+							<DataTable
+								Caption="Hourly"
+								ID="dtTSHourly"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="dlTSHourly"
+									Source="Select Date(tsh.report_date) report_datetime,
+  TIME(tsh.report_date) times,
+  ts.name,
+  tsh.user_count
+From stat.impression_unique_user_hll_campaign_targeting_strategy_hourly tsh
+	left join opendsp.ld_targeting_strategy ts ON tsh.targeting_strategy_id = ts.targeting_strategy_id
+Where tsh.targeting_strategy_id&gt;500
+and tsh.report_date between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (0 in (&apos;@Request.tsid~&apos;) or tsh.targeting_strategy_id in (@Request.tsid~))
+order by tsh.report_date"
+									Type="SQL"
+								/>
+								<DataTableColumn
+									Header="Date"
+									ID="colreport_datetime"
+									>
+									<Label
+										Caption="@Data.report_datetime~"
+										Format="Short Date"
+										ID="lblreport_datetime"
+									/>
+									<DataColumnSort
+										DataColumn="report_datetime"
+										DataType="Date"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Time"
+									ID="coltimes"
+									>
+									<Label
+										Caption="@Data.times~"
+										ID="lbltimes"
+									/>
+									<DataColumnSort
+										DataColumn="times"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Targeting Strategy"
+									ID="colname"
+									>
+									<Label
+										Caption="@Data.name~"
+										ID="lblname"
+									/>
+									<DataColumnSort
+										DataColumn="name"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Unique User"
+									ID="coluser_count"
+									>
+									<Label
+										Caption="@Data.user_count~"
+										Format="###,###,##0"
+										ID="lbluser_count"
+									/>
+									<DataColumnSort
+										DataColumn="user_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Bottom"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</TabPanel>
+						<TabPanel
+							Caption="Weekly"
+							ID="tabWeekly"
+							>
+							<Button
+								Caption="Export to Excel"
+								Class="ThemeContainerShadedAndBordered"
+								ID="btnExport"
+								>
+								<Action
+									ID="actExport"
+									Type="NativeExcel"
+									>
+									<Target
+										ExcelOutputFormat="Excel2007"
+										ExportDataTableID="dtTSWeekly"
+										ExportFilename="UU_TSWeekly_@Request.dateFrom~_@Request.dateTo~"
+										ShowGridlines="True"
+										Type="NativeExcel"
+									/>
+								</Action>
+							</Button>
+							<LineBreak
+								LineCount="2"
+							/>
+							<DataTable
+								Caption="Weekly"
+								ID="dtTSWeekly"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="dlTSWeekly"
+									Source="Select DATE(tsw.report_date) report_datetime,
+	ts.name,
+	tsw.user_count
+From stat.impression_unique_user_hll_campaign_targeting_strategy_weekly tsw
+	left join opendsp.ld_targeting_strategy ts ON tsw.targeting_strategy_id = ts.targeting_strategy_id
+Where tsw.targeting_strategy_id&gt;500
+and tsw.report_date between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (0 in (&apos;@Request.tsid~&apos;) or tsw.targeting_strategy_id in (@Request.tsid~))
+order by tsw.report_date"
+									Type="SQL"
+								/>
+								<DataTableColumn
+									Header="Date"
+									ID="colreport_datetime"
+									>
+									<Label
+										Caption="@Data.report_datetime~"
+										Format="Short Date"
+										ID="lblreport_datetime"
+									/>
+									<DataColumnSort
+										DataColumn="report_datetime"
+										DataType="Date"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Targeting Strategy"
+									ID="colname"
+									>
+									<Label
+										Caption="@Data.name~"
+										ID="lblname"
+										>
+										<ConditionalClass
+											Class="ThemeTextNegative"
+											Condition="&quot;@Data.name~&quot; = &quot;- n/a -&quot;"
+										/>
+									</Label>
+									<DataColumnSort
+										DataColumn="name"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Unique User"
+									ID="coluser_count"
+									>
+									<Label
+										Caption="@Data.user_count~"
+										Format="###,###,##0"
+										ID="lbluser_count"
+									/>
+									<DataColumnSort
+										DataColumn="user_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Bottom"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</TabPanel>
+						<TabPanel
+							Caption="Monthly"
+							ID="tabMonthly"
+							>
+							<Button
+								Caption="Export to Excel"
+								Class="ThemeContainerShadedAndBordered"
+								ID="btnExport"
+								>
+								<Action
+									ID="actExport"
+									Type="NativeExcel"
+									>
+									<Target
+										ExcelOutputFormat="Excel2007"
+										ExportDataTableID="dtTSMounthly"
+										ExportFilename="UU_TSMounthly_@Request.dateFrom~_@Request.dateTo~"
+										ShowGridlines="True"
+										Type="NativeExcel"
+									/>
+								</Action>
+							</Button>
+							<LineBreak
+								LineCount="2"
+							/>
+							<DataTable
+								Caption="Mounthly"
+								ID="dtTSMounthly"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="dlTSMounthly"
+									Source="Select DATE(tsm.report_date) report_datetime,
+	MONTHNAME(tsm.report_date) report_month,
+	ts.name,
+	tsm.user_count
+From stat.impression_unique_user_hll_campaign_targeting_strategy_monthly tsm
+	left join opendsp.ld_targeting_strategy ts ON tsm.targeting_strategy_id = ts.targeting_strategy_id
+Where tsm.targeting_strategy_id&gt;500
+and tsm.report_date between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (0 in (&apos;@Request.tsid~&apos;) or tsm.targeting_strategy_id in (@Request.tsid~))
+order by tsm.report_date"
+									Type="SQL"
+								/>
+								<DataTableColumn
+									Header="Date"
+									ID="colreport_datetime"
+									>
+									<Label
+										Caption="@Data.report_datetime~"
+										Format="Short Date"
+										ID="lblreport_datetime"
+									/>
+									<DataColumnSort
+										DataColumn="report_datetime"
+										DataType="Date"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Month"
+									ID="colreport_month"
+									>
+									<Label
+										Caption="@Data.report_month~"
+										ID="lblreport_month"
+									/>
+									<DataColumnSort
+										DataColumn="report_month"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Targeting Strategy"
+									ID="colname"
+									>
+									<Label
+										Caption="@Data.name~"
+										ID="lblname"
+									/>
+									<DataColumnSort
+										DataColumn="name"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Unique User"
+									ID="coluser_count"
+									>
+									<Label
+										Caption="@Data.user_count~"
+										Format="###,###,##0"
+										ID="lbluser_count"
+									/>
+									<DataColumnSort
+										DataColumn="user_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Bottom"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</TabPanel>
+						<TabPanel
+							Caption="Life Time"
+							ID="tabLifeTime"
+							>
+							<Button
+								Caption="Export to Excel"
+								Class="ThemeContainerShadedAndBordered"
+								ID="btnExport"
+								>
+								<Action
+									ID="actExport"
+									Type="NativeExcel"
+									>
+									<Target
+										ExcelOutputFormat="Excel2007"
+										ExportDataTableID="dtTSLifeTime"
+										ExportFilename="UU_TSLifeTime_@Request.dateFrom~_@Request.dateTo~"
+										ShowGridlines="True"
+										Type="NativeExcel"
+									/>
+								</Action>
+							</Button>
+							<LineBreak
+								LineCount="2"
+							/>
+							<DataTable
+								Caption="Life Time"
+								ID="dtTSLifeTime"
+								SortArrows="True"
+								>
+								<DataLayer
+									ConnectionID="OpenDSP"
+									ID="dlTSLifeTime"
+									Source="Select ts.name,
+  tsl.user_count
+From stat.impression_unique_user_hll_campaign_targeting_strategy_life tsl
+	left join opendsp.ld_targeting_strategy ts ON tsl.targeting_strategy_id = ts.targeting_strategy_id
+Where tsl.targeting_strategy_id&gt;500
+and (0 in (&apos;@Request.tsid~&apos;) or tsl.targeting_strategy_id in (@Request.tsid~))"
+									Type="SQL"
+								/>
+								<DataTableColumn
+									Header="Targeting Strategy"
+									ID="colname"
+									>
+									<Label
+										Caption="@Data.name~"
+										ID="lblname"
+									/>
+									<DataColumnSort
+										DataColumn="name"
+									/>
+								</DataTableColumn>
+								<DataTableColumn
+									Header="Unique User"
+									ID="coluser_count"
+									>
+									<Label
+										Caption="@Data.user_count~"
+										Format="###,###,##0"
+										ID="lbluser_count"
+									/>
+									<DataColumnSort
+										DataColumn="user_count"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+								<InteractivePaging
+									CaptionType="Image"
+									HideWhenOnePage="True"
+									Location="Bottom"
+									PageRowCount="50"
+									ShowPageNumber="True"
+								/>
+							</DataTable>
+						</TabPanel>
+					</Tabs>
+				</Division>
+			</TabPanel>
+		</Tabs>
+	</Body>
+	<ideTestParams
+		camid="0"
+		dateFrom=""
+		dateTo=""
+		tsid="0"
+	/>
+</Report>

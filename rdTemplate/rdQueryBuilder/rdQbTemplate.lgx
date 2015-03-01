@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report ID="rdQbTemplate">
+	<Body>
+		<Division ID="rdQbID" Class="rdAg">
+			<Rows ID="rowsQbContainer" Width="100" WidthScale="%">
+				<Row ID="rowNoColumnsContainer" Class="rdQueryRow"/>
+				<Row ID="rowMetadata" Class="rdQueryRow">
+					<Column ID="colMetadata" Class="rdQueryColumn">
+						<Rows>
+							<Row>
+								<Column>
+									<Label ID="lblMetadataCaption" Caption="Select Source " />
+									<LineBreak ID="lbMetadata"/>
+									<InputSelectList ID="rdMetadata" OptionCaptionColumn="MetadataName" OptionValueColumn="MetadataID" OptionTooltipColumn="MetadataDescription" IncludeBlank="True">
+										<DataLayer Type="Static" ID="dlMetadatas">
+											<SortFilter SortColumn="MetadataName" />
+										</DataLayer>
+										<EventHandler DhtmlEvent="onchange">
+											<Action Type="Report" ID="actUpdateQueryBuilder">
+												<Target Type="Report" ID="tgtUpdateQueryBuilder">
+													<WaitPage Class="rdThemeWaitPanel" CaptionClass="rdThemeWaitCaption" />
+												</Target>
+												<LinkParams rdQbCommand="UpdateQb" rdAgCommand="UpdateAgFromQb" rdAgCommandID="@Function.GUID~" rdQbControlNr="0" />
+											</Action>
+										</EventHandler>
+									</InputSelectList>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+				<Row ID="rowStartTable" Class="rdQueryRow">
+					<Column ID="colStartTable" Class="rdQueryColumn">
+						<Rows>
+							<Row>
+								<Column>
+									<Label ID="lblStartTableCaption" Caption="Select Data " />
+									<LineBreak ID="lbStartTable" />
+									<InputSelectList ID="rdStartTable" OptionCaptionColumn="TableFriendlyName" OptionValueColumn="TableID" OptionTooltipColumn="ColumnFriendlyNames" IncludeBlank="True">
+										<DataLayer Type="Static" ID="dlTables">
+											<SortFilter SortColumn="TableFriendlyName" />
+										</DataLayer>
+										<EventHandler DhtmlEvent="onchange">
+											<Action Type="Report" ID="actUpdateQueryBuilder">
+												<Target Type="Report" ID="tgtUpdateQueryBuilder">
+													<WaitPage Class="rdThemeWaitPanel" CaptionClass="rdThemeWaitCaption" />
+												</Target>
+												<LinkParams rdQbCommand="UpdateQb" rdAgCommand="UpdateAgFromQb" rdAgCommandID="@Function.GUID~" rdQbControlNr="1" />
+											</Action>
+										</EventHandler>
+									</InputSelectList>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+
+				<Row ID="rowOk" ShowModes="None">
+					<Column>
+						<Label Caption="Apply Column Selection" ID="lblQbOk" Class="rdAgCommand">
+							<Action Type="Report" ID="actQbOk">
+								<Target Type="Report" ID="tgtQbOk">
+									<WaitPage Class="rdThemeWaitPanel" CaptionClass="rdThemeWaitCaption" />
+								</Target>
+								<LinkParams rdAgCommand="UpdateAgFromQb" rdQbCommand="UpdateQb" rdAgCommandID="@Function.GUID~" />
+							</Action>
+						</Label>
+					</Column>
+					<Column Class="rdAgAlignRight">
+						<Label Caption="Select: " ID="lblColumnSelect"/>
+						<Label Caption="All" ID="lblLayoutSelectAll" Class="rdAgCommand">
+							<Action Type="Link">
+								<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdQbColumnSelect('All')" />
+							</Action>
+						</Label>
+						<Label Caption="None" ID="lblColumnSelectNone" Class="rdAgCommand">
+							<Action Type="Link">
+								<Target Type="Link" Link="javascript: LogiXML.AnalysisGrid.rdQbColumnSelect('None')" />
+							</Action>
+						</Label>
+					</Column>
+				</Row>
+				
+				<ElementTemplate ID="templateJoin">
+					<Row ID="rowJoin" Class="rdQueryRow">
+						<Column Class="rdQueryColumn">
+							<Rows>
+								<Row>
+									<Column>
+										<Label ID="lblJoinTableCaption" Caption="Select Data " />
+										<LineBreak ID="lbJoinTable"/>
+										<InputSelectList ID="rdJoin" OptionCaptionColumn="JoinFriendlyName" OptionValueColumn="JoinID" IncludeBlank="True">
+											<DataLayer Type="Static" ID="dlJoins">
+												<SortFilter SortColumn="JoinFriendlyName" />
+											</DataLayer>
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="Report" ID="actUpdateQueryBuilderJoin">
+													<Target Type="Report" ID="tgtUpdateQueryBuilderJoin">
+													</Target>
+													<LinkParams rdQbCommand="UpdateQb" rdAgCommand="UpdateAgFromQb" rdAgCommandID="@Function.GUID~" rdQbControlNr="rdVariable" />
+												</Action>
+											</EventHandler>
+										</InputSelectList>
+									</Column>
+								</Row>
+							</Rows>
+						</Column>
+					</Row>
+				</ElementTemplate>
+
+				<ElementTemplate ID="templateQbColumns">
+					<DataMultiColumnList ID="mclQbColumns" MultiListColumns="4" MultiListDirection="Down">
+						<DataLayer Type="Static" ID="dlQbColumns" />
+						<InputCheckbox ID="chkQbColumn" DefaultValue="@Data.ColumnChecked~" CheckedValue="True" Class="rdAgColSelect"/>
+						<Label Caption="@Data.ColumnFriendlyName~" ID="lblColFriendlyName"/>
+						<InputHidden ID="hidQbColumn" DefaultValue="@Data.ColumnName~" />
+					</DataMultiColumnList>
+				
+				</ElementTemplate>
+
+				
+			</Rows>
+
+
+
+
+		</Division>
+
+	</Body>
+
+
+</Report>

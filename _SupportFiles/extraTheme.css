@@ -1,0 +1,22 @@
+.middle {
+    margin: 0px auto;
+    max-width: 1200px;
+    padding: 5px 5px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.scrollingTableDiv { height: 25em; overflow: auto; } /* height of scrolling area */
+.scrollingTableDivDomain { height: 50em; overflow: auto; } /* height of scrolling area */
+
+.clr:after{display:table;clear:both;content:''}
+
+.PullRight {
+	float: right;
+	padding: 5px;
+}
+.spoiler {
+    display:none;
+}
+.specialTable { height: 633px; border-collapse: collapse; }  /* table width less scrollbar width */
+.specialTable TD { color: #000; }
+.specialTable TH { text-align: left; }

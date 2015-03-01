@@ -1,0 +1,933 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="by Device"
+	ID="Reports.MetricsByDevice"
+	>
+	<ReportCenterItem
+		ReportCenterFolder="Metrics Reports"
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<StyleSheet
+		ID="themeTransit"
+		Theme="Transit"
+	/>
+	<DefaultRequestParams
+		brow="0"
+		camid="0"
+		dateFrom="@Date.ThisMonthStart~"
+		dateTo="@Date.ThisMonthEnd~"
+		devmak="0"
+		devmod="0"
+		exchanid="0"
+		groupby="rbd.device_make"
+		lang="0"
+		linit="0"
+		os="0"
+		tsid="0"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Metrics by Device"
+				Class="ThemeHeaderLarger"
+			/>
+		</Division>
+		<HR/>
+	</ReportHeader>
+	<Body>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			ID="DatePickRRow"
+			>
+			<ResponsiveColumn
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="6"
+				ColspanSmallScreen="4"
+				>
+				<FieldsetBox
+					Caption="Filter by Date"
+					>
+					<IncludeSharedElement
+						DefinitionFile="SharedElements"
+						SharedElementID="DatePickerAC"
+					/>
+				</FieldsetBox>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			ID="GoupRRow"
+			>
+			<ResponsiveColumn
+				ColspanLargeScreen="5"
+				ColspanMediumScreen="5"
+				ColspanSmallScreen="4"
+				ID="GroupByRCol"
+				>
+				<FieldsetBox
+					Caption="Group by"
+					>
+					<InputCheckboxList
+						CheckboxListDropdown="True"
+						Class="ThemeAlignLeft"
+						DefaultValue="@Request.groupby~"
+						ID="groupby"
+						MultiSelect="True"
+						OptionCaptionColumn="Name"
+						OptionValueColumn="value"
+						>
+						<DataLayer
+							Type="Static"
+							>
+							<StaticDataRow
+								Name="Date"
+								value="DATE(rbd.process_date)"
+							/>
+							<StaticDataRow
+								Name="Targeting Strategy"
+								value="ts.name"
+							/>
+							<StaticDataRow
+								Name="LineItem"
+								value="cl.name"
+							/>
+							<StaticDataRow
+								Name="Campaign"
+								value="c.name"
+							/>
+							<StaticDataRow
+								Name="Exchanges"
+								value="rbd.exchange_name"
+							/>
+							<StaticDataRow
+								Name="DeviceMake"
+								value="rbd.device_make"
+							/>
+							<StaticDataRow
+								Name="DeviceModel"
+								value="rbd.device_model"
+							/>
+							<StaticDataRow
+								Name="OS"
+								value="CONCAT(rbd.device_os,&apos; &apos;,rbd.device_os_ver)"
+							/>
+							<StaticDataRow
+								Name="Language"
+								value="rbd.device_lang"
+							/>
+							<StaticDataRow
+								Name="Browser"
+								value="rbd.device_browser"
+							/>
+						</DataLayer>
+					</InputCheckboxList>
+				</FieldsetBox>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			ID="FilterRRow"
+			>
+			<ResponsiveColumn
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="6"
+				ColspanSmallScreen="4"
+				ID="FilterByRCol"
+				>
+				<FieldsetBox
+					Caption="Filter by"
+					>
+					<Rows>
+						<Row>
+							<Column
+								ID="colTsId"
+								>
+								<Label
+									Caption="Targeting Strategy:"
+									Class="ThemeAlignRight"
+								/>
+								<LineBreak/>
+								<InputCheckboxList
+									CheckboxListDropdown="True"
+									DefaultValue="@Request.tsid~"
+									ID="tsid"
+									OptionCaptionColumn="name"
+									OptionValueColumn="targeting_strategy_id"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="tsidSql"
+										Source="Select ts.name, ts.targeting_strategy_id
+From opendsp.ld_targeting_strategy ts
+Where ts.targeting_strategy_id &gt; 500
+Order By ts.name
+"
+										Type="SQL"
+									/>
+								</InputCheckboxList>
+							</Column>
+							<Column
+								ID="colLinIt"
+								>
+								<Label
+									Caption="Line Item:"
+									Class="ThemeAlignRight"
+								/>
+								<LineBreak/>
+								<InputCheckboxList
+									CheckboxListDropdown="True"
+									DefaultValue="@Request.linit~"
+									ID="linit"
+									OptionCaptionColumn="name"
+									OptionValueColumn="campaign_lineitem_id"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="linitSql"
+										Source="Select cl.name, cl.campaign_lineitem_id
+From opendsp.ld_campaign_lineitem cl 
+Where cl.campaign_lineitem_id&gt;0 
+group by cl.name
+Order By cl.name"
+										Type="SQL"
+									/>
+								</InputCheckboxList>
+							</Column>
+							<Column
+								ID="colCamId"
+								>
+								<Label
+									Caption="Campaign:"
+									Class="ThemeAlignRight"
+								/>
+								<LineBreak/>
+								<InputCheckboxList
+									CheckboxListDropdown="True"
+									DefaultValue="@Request.camid~"
+									ID="camid"
+									OptionCaptionColumn="name"
+									OptionValueColumn="campaign_id"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="camidSql"
+										Source="Select c.campaign_id, c.name
+From opendsp.ld_campaign c
+Where c.campaign_id&gt;0 
+Order By c.name"
+										Type="SQL"
+									/>
+								</InputCheckboxList>
+							</Column>
+						</Row>
+						<Row>
+							<Column
+								ID="colExch"
+								>
+								<Label
+									Caption="Exchanges:"
+									Class="ThemeAlignRight"
+								/>
+								<LineBreak/>
+								<InputCheckboxList
+									CheckboxListDropdown="True"
+									Class="ThemeAlignLeft"
+									DefaultValue="@Request.exchanid~"
+									ID="exchanid"
+									OptionCaptionColumn="exchange_name"
+									OptionValueColumn="exchange_name"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="exchanidSql"
+										Source="Select rbd.exchange_name
+From hive_stats.st_report_by_device rbd
+Group By rbd.exchange_name
+Order By rbd.exchange_name"
+										Type="SQL"
+									/>
+								</InputCheckboxList>
+							</Column>
+							<Column
+								ID="colDevMak"
+								>
+								<Label
+									Caption="Device Make:"
+									Class="ThemeAlignRight"
+								/>
+								<LineBreak/>
+								<InputCheckboxList
+									CheckboxListDropdown="True"
+									Class="ThemeAlignLeft"
+									DefaultValue="@Request.devmak~"
+									ID="devmak"
+									OptionCaptionColumn="device_make"
+									OptionValueColumn="device_make"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="devmakSql"
+										Source="Select rbd.device_make
+From hive_stats.st_report_by_device rbd
+Group By rbd.device_make
+Order By rbd.device_make"
+										Type="SQL"
+									/>
+								</InputCheckboxList>
+							</Column>
+							<Column
+								ID="colDevMod"
+								>
+								<Label
+									Caption="Device Model:"
+									Class="ThemeAlignRight"
+								/>
+								<LineBreak/>
+								<InputCheckboxList
+									CheckboxListDropdown="True"
+									Class="ThemeAlignLeft"
+									DefaultValue="@Request.devmod~"
+									ID="devmod"
+									OptionCaptionColumn="device_model"
+									OptionValueColumn="device_model"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="devmodSql"
+										Source="Select rbd.device_model
+From hive_stats.st_report_by_device rbd
+Group By rbd.device_model
+Order By rbd.device_model"
+										Type="SQL"
+									/>
+								</InputCheckboxList>
+							</Column>
+						</Row>
+						<Row>
+							<Column
+								ID="colOS"
+								>
+								<Label
+									Caption="OS: "
+									Class="ThemeAlignRight"
+								/>
+								<LineBreak/>
+								<InputCheckboxList
+									CheckboxListDropdown="True"
+									Class="ThemeAlignLeft"
+									DefaultValue="@Request.os~"
+									ID="os"
+									OptionCaptionColumn="CONCAT(rbd.device_os,&apos; &apos;,rbd.device_os_ver)"
+									OptionValueColumn="CONCAT(rbd.device_os,&apos; &apos;,rbd.device_os_ver)"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="osSql"
+										Source="Select CONCAT(rbd.device_os,&apos; &apos;,rbd.device_os_ver)
+From hive_stats.st_report_by_device rbd
+Group By CONCAT(rbd.device_os,&apos; &apos;,rbd.device_os_ver)
+Order By CONCAT(rbd.device_os,&apos; &apos;,rbd.device_os_ver)"
+										Type="SQL"
+									/>
+								</InputCheckboxList>
+							</Column>
+							<Column
+								ID="colLang"
+								>
+								<Label
+									Caption="Language:"
+									Class="ThemeAlignRight"
+								/>
+								<LineBreak/>
+								<InputCheckboxList
+									CheckboxListDropdown="True"
+									Class="ThemeAlignLeft"
+									DefaultValue="@Request.lang~"
+									ID="lang"
+									OptionCaptionColumn="device_lang"
+									OptionValueColumn="device_lang"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="langSql"
+										Source="Select rbd.device_lang
+From hive_stats.st_report_by_device rbd
+Group By rbd.device_lang
+Order By rbd.device_lang
+"
+										Type="SQL"
+									/>
+								</InputCheckboxList>
+							</Column>
+							<Column
+								ID="colBrow"
+								>
+								<Label
+									Caption="Browser:"
+									Class="ThemeAlignRight"
+								/>
+								<LineBreak/>
+								<InputCheckboxList
+									CheckboxListDropdown="True"
+									Class="ThemeAlignLeft"
+									DefaultValue="@Request.brow~"
+									ID="brow"
+									OptionCaptionColumn="device_browser"
+									OptionValueColumn="device_browser"
+									>
+									<DataLayer
+										ConnectionID="OpenDSP"
+										ID="browSql"
+										Source="Select rbd.device_browser
+From hive_stats.st_report_by_device rbd
+Group By rbd.device_browser
+Order By rbd.device_browser"
+										Type="SQL"
+									/>
+								</InputCheckboxList>
+							</Column>
+						</Row>
+					</Rows>
+				</FieldsetBox>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<Division
+			Class="ThemeAlignRight"
+			HtmlDiv="True"
+			ID="expRow"
+			>
+			<Button
+				Caption="Export to Excel"
+				Class="ThemeContainerShadedAndBordered"
+				ID="exportBtn"
+				>
+				<Action
+					ID="actExport"
+					Type="NativeExcel"
+					>
+					<Target
+						ExcelOutputFormat="Excel2007"
+						ExportDataTableID="dtMetrics"
+						ExportFilename="Stats by Client @Request.dateFrom~_@Request.dateTo~"
+						ShowGridlines="True"
+						Type="NativeExcel"
+					/>
+				</Action>
+			</Button>
+		</Division>
+		<DataTable
+			AjaxPaging="True"
+			ID="dtMetrics"
+			Layout="Auto"
+			SortArrows="True"
+			>
+			<DataLayer
+				ConnectionID="OpenDSP"
+				ID="dlMetrics"
+				Source="SELECT 
+DATE(rbd.process_date) Date,
+ifnull(ts.name, &apos;- n/a -&apos;) TargetingStrategy,
+ifnull(cl.name, &apos;- n/a -&apos;) LineItem,
+ifnull(c.name, &apos;- n/a -&apos;) Campaign,
+ifnull(rbd.exchange_name, &apos;- n/a -&apos;) Exchanges, 
+ifnull(rbd.device_make, &apos;- n/a -&apos;) DeviceMake, 
+ifnull(rbd.device_model, &apos;- n/a -&apos;) DeviceModel, 
+ifnull(CONCAT(rbd.device_os,&apos; &apos;,rbd.device_os_ver), &apos;- n/a -&apos;) OS, 
+ifnull(rbd.device_lang, &apos;- n/a -&apos;) Language, 
+ifnull(rbd.device_browser, &apos;- n/a -&apos;) Browser, 
+ifnull(sum(rbd.bids), 0) Bids, 
+ifnull(sum(rbd.wins), 0) Wins,
+ifnull(sum(rbd.impressions), 0) Impressions, 
+ifnull(sum(rbd.clicks), 0) Clicks,
+ifnull(sum(rbd.cost / 1000000), 0) Cost
+
+FROM hive_stats.st_report_by_device rbd
+	left join opendsp.ld_targeting_strategy ts ON rbd.targeting_id = ts.targeting_strategy_id
+    left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+	left join opendsp.ld_campaign c on cl.campaign_id = c.campaign_id 
+	/*left join opendsp.ld_advertiser adv ON c.advertiser_id=adv.advertiser_id
+	left join opendsp.ld_client cli On adv.client_id = cli.client_id*/
+	
+Where DATE(rbd.process_date) between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (&apos;0&apos; IN (&apos;@Request.tsid~&apos;) or ts.targeting_strategy_id IN (@SingleQuote.Request.tsid~))
+and (&apos;0&apos; IN (&apos;@Request.linit~&apos;) or cl.campaign_lineitem_id IN (@SingleQuote.Request.linit~))
+and (&apos;0&apos; IN (&apos;@Request.camid~&apos;) or c.campaign_id IN (@SingleQuote.Request.camid~))
+and (&apos;0&apos; IN (&apos;@Request.exchanid~&apos;) or rbd.exchange_name IN (@SingleQuote.Request.exchanid~))
+and (&apos;0&apos; IN (&apos;@Request.devmak~&apos;) or rbd.device_make IN (@SingleQuote.Request.devmak~))
+and (&apos;0&apos; IN (&apos;@Request.devmod~&apos;) or rbd.device_model IN (@SingleQuote.Request.devmod~))
+and (&apos;0&apos; IN (&apos;@Request.os~&apos;) or CONCAT(rbd.device_os,&apos; &apos;,rbd.device_os_ver) IN (@SingleQuote.Request.os~))
+and (&apos;0&apos; IN (&apos;@Request.lang~&apos;) or rbd.device_lang IN (@SingleQuote.Request.lang~))
+and (&apos;0&apos; IN (&apos;@Request.brow~&apos;) or rbd.device_browser IN (@SingleQuote.Request.brow~))
+
+group by @Request.groupby~ 
+order by @Request.groupby~ ;"
+				Type="SQL"
+			/>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;DATE(rbd.process_date)&apos;) &gt; -1"
+				Header="Date"
+				ID="colDate"
+				>
+				<Label
+					Caption="@Data.Date~"
+					Format="Short Date"
+					ID="lblDate"
+				/>
+				<DataColumnSort
+					DataColumn="Date"
+					DataType="Date"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;ts.name&apos;) &gt; -1"
+				Header="Targeting Strategy"
+				ID="colTargetingStrategy"
+				>
+				<Label
+					Caption="@Data.TargetingStrategy~"
+					ID="lblTargetingStrategy"
+				/>
+				<DataColumnSort
+					DataColumn="TargetingStrategy"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;cl.name&apos;) &gt; -1"
+				Header="Line Item"
+				ID="colLineItem"
+				>
+				<Label
+					Caption="@Data.LineItem~"
+					ID="lblLineItem"
+				/>
+				<DataColumnSort
+					DataColumn="LineItem"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;c.name&apos;) &gt; -1"
+				Header="Campaign"
+				ID="colCampaign"
+				>
+				<Label
+					Caption="@Data.Campaign~"
+					ID="lblCampaign"
+				/>
+				<DataColumnSort
+					DataColumn="Campaign"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbd.exchange_name&apos;) &gt; -1"
+				Header="Exchanges"
+				ID="colExchanges"
+				>
+				<Label
+					Caption="@Data.Exchanges~"
+					ID="lblExchanges"
+				/>
+				<DataColumnSort
+					DataColumn="Exchanges"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbd.device_make&apos;) &gt; -1"
+				Header="Device Make"
+				ID="colDeviceMake"
+				>
+				<Label
+					Caption="@Data.DeviceMake~"
+					ID="lblDeviceMake"
+				/>
+				<DataColumnSort
+					DataColumn="DeviceMake"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbd.device_model&apos;) &gt; -1"
+				Header="Device Model"
+				ID="colDeviceModel"
+				>
+				<Label
+					Caption="@Data.DeviceModel~"
+					ID="lblDeviceModel"
+				/>
+				<DataColumnSort
+					DataColumn="DeviceModel"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbd.device_os&apos;) &gt; -1"
+				Header="OS"
+				ID="colOS"
+				>
+				<Label
+					Caption="@Data.OS~"
+					ID="lblOS"
+				/>
+				<DataColumnSort
+					DataColumn="OS"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbd.device_lang&apos;) &gt; -1"
+				Header="Language"
+				ID="colLanguage"
+				>
+				<Label
+					Caption="@Data.Language~"
+					ID="lblLanguage"
+				/>
+				<DataColumnSort
+					DataColumn="Language"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbd.device_browser&apos;) &gt; -1"
+				Header="Browser"
+				ID="colBrowser"
+				>
+				<Label
+					Caption="@Data.Browser~"
+					ID="lblBrowser"
+				/>
+				<DataColumnSort
+					DataColumn="Browser"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Bids"
+				ID="colBids"
+				>
+				<Label
+					Caption="@Data.Bids~"
+					Format="###,###,##0"
+					ID="lblBids"
+				/>
+				<DataColumnSort
+					DataColumn="Bids"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Bids"
+					Function="Sum"
+					ID="sumBids"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Wins"
+				ID="colWins"
+				>
+				<Label
+					Caption="@Data.Wins~"
+					Format="###,###,##0"
+					ID="lblWins"
+				/>
+				<DataColumnSort
+					DataColumn="Wins"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Wins"
+					Function="Sum"
+					ID="sumWins"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Impressions"
+				ID="colImpressions"
+				>
+				<Label
+					Caption="@Data.Impressions~"
+					Format="###,###,##0"
+					ID="lblImpressions"
+				/>
+				<DataColumnSort
+					DataColumn="Impressions"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Impressions"
+					Function="Sum"
+					ID="sumImps"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Clicks"
+				ID="colClicks"
+				>
+				<Label
+					Caption="@Data.Clicks~"
+					Format="###,###,##0"
+					ID="lblClicks"
+				/>
+				<DataColumnSort
+					DataColumn="Clicks"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Clicks"
+					Function="Sum"
+					ID="sumClicks"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Cost"
+				ID="colCost"
+				>
+				<Label
+					Caption="@Data.Cost~"
+					Format="$###,###,##0.00"
+					ID="lblCost"
+				/>
+				<DataColumnSort
+					DataColumn="Cost"
+					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="Cost"
+					Function="Sum"
+					ID="sumCost"
+				/>
+			</DataTableColumn>
+			<SummaryRow
+				Caption="Total"
+			/>
+			<InteractivePaging
+				CaptionType="Image"
+				HideWhenOnePage="True"
+				Location="Both"
+				PageRowCount="100"
+				ShowPageNumber="True"
+			/>
+		</DataTable>
+		<Remark>
+			<Division
+				HtmlDiv="True"
+				ID="divChart1BasicSQL"
+				>
+				<LineBreak
+					LineCount="2"
+				/>
+				<Label
+					Caption="Test Analysis Chart"
+					Class="ThemeTextLargest"
+					ID="lblDesc"
+				/>
+				<LineBreak
+					LineCount="3"
+				/>
+				<AnalysisChart
+					ChartHeight="350"
+					ChartWidth="640"
+					Class="centerSuperEle"
+					ControlPanelLocation="Left"
+					ID="Chart1Basic"
+					>
+					<DataLayer
+						ConnectionID="OpenDSP"
+						ID="dlMetricsAC"
+						Source="SELECT 
+DATE(rbd.process_date) Date,
+ifnull(ts.name, &apos;- n/a -&apos;) TargetingStrategy,
+ifnull(cl.name, &apos;- n/a -&apos;) LineItem,
+ifnull(c.name, &apos;- n/a -&apos;) Campaign,
+ifnull(rbd.exchange_name, &apos;- n/a -&apos;) Exchanges, 
+ifnull(rbd.device_make, &apos;- n/a -&apos;) DeviceMake, 
+ifnull(rbd.device_model, &apos;- n/a -&apos;) DeviceModel, 
+ifnull(CONCAT(rbd.device_os,&apos; &apos;,rbd.device_os_ver), &apos;- n/a -&apos;) OS, 
+ifnull(rbd.device_lang, &apos;- n/a -&apos;) Language, 
+ifnull(rbd.device_browser, &apos;- n/a -&apos;) Browser, 
+ifnull(sum(rbd.bids), 0) Bids, 
+ifnull(sum(rbd.wins), 0) Wins,
+ifnull(sum(rbd.impressions), 0) Impressions, 
+ifnull(sum(rbd.clicks), 0) Clicks,
+ifnull(sum(rbd.cost / 1000000), 0) Cost
+
+FROM hive_stats.st_report_by_device rbd
+	left join opendsp.ld_targeting_strategy ts ON rbd.targeting_id = ts.targeting_strategy_id
+    left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+	left join opendsp.ld_campaign c on cl.campaign_id = c.campaign_id 
+	/*left join opendsp.ld_advertiser adv ON c.advertiser_id=adv.advertiser_id
+	left join opendsp.ld_client cli On adv.client_id = cli.client_id*/
+	
+Where DATE(rbd.process_date) between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (&apos;0&apos; IN (&apos;@Request.tsid~&apos;) or rbd.targeting_id IN (@SingleQuote.Request.tsid~))
+and (&apos;0&apos; IN (&apos;@Request.linit~&apos;) or cl.name IN (@SingleQuote.Request.linit~))
+and (&apos;0&apos; IN (&apos;@Request.camid~&apos;) or c.name IN (@SingleQuote.Request.camid~))
+and (&apos;0&apos; IN (&apos;@Request.exchanid~&apos;) or rbd.exchange_name IN (@SingleQuote.Request.exchanid~))
+and (&apos;0&apos; IN (&apos;@Request.devmak~&apos;) or rbd.device_make IN (@SingleQuote.Request.devmak~))
+and (&apos;0&apos; IN (&apos;@Request.devmod~&apos;) or rbd.device_model IN (@SingleQuote.Request.devmod~))
+and (&apos;0&apos; IN (&apos;@Request.os~&apos;) or CONCAT(rbd.device_os,&apos; &apos;,rbd.device_os_ver) IN (@SingleQuote.Request.os~))
+and (&apos;0&apos; IN (&apos;@Request.lang~&apos;) or rbd.device_lang IN (@SingleQuote.Request.lang~))
+and (&apos;0&apos; IN (&apos;@Request.brow~&apos;) or rbd.device_browser IN (@SingleQuote.Request.brow~))
+
+group by @Request.groupby~ 
+order by @Request.groupby~ ;"
+						Type="SQL"
+					/>
+					<AnalysisChartColumn
+						DataColumn="Date"
+						DataType="Date"
+						Format="Short Date"
+						Header="Date"
+						ID="colDate"
+					/>
+					<AnalysisChartColumn
+						DataColumn="TargetingStrategy"
+						DataType="Text"
+						Header="TargetingStrategy"
+						ID="colTargetingStrategy"
+					/>
+					<AnalysisChartColumn
+						DataColumn="LineItem"
+						DataType="Text"
+						Header="LineItem"
+						ID="colLineItem"
+					/>
+					<AnalysisChartColumn
+						DataColumn="Campaign"
+						DataType="Text"
+						Header="Campaign"
+						ID="colCampaign"
+					/>
+					<AnalysisChartColumn
+						DataColumn="Exchanges"
+						DataType="Text"
+						Header="Exchanges"
+						ID="colExchanges"
+					/>
+					<AnalysisChartColumn
+						DataColumn="DeviceMake"
+						DataType="Text"
+						Header="DeviceMake"
+						ID="colDeviceMake"
+					/>
+					<AnalysisChartColumn
+						DataColumn="DeviceModel"
+						DataType="Text"
+						Header="DeviceModel"
+						ID="colDeviceModel"
+					/>
+					<AnalysisChartColumn
+						DataColumn="OS"
+						DataType="Text"
+						Header="OS"
+						ID="colOS"
+					/>
+					<AnalysisChartColumn
+						DataColumn="Language"
+						DataType="Text"
+						Header="Language"
+						ID="colLanguage"
+					/>
+					<AnalysisChartColumn
+						DataColumn="Browser"
+						DataType="Text"
+						Header="Browser"
+						ID="colBrowser"
+					/>
+					<AnalysisChartColumn
+						DataColumn="Bids"
+						DataType="Number"
+						Format="###,###,##0"
+						Header="Bids"
+						ID="colBids"
+					/>
+					<AnalysisChartColumn
+						DataColumn="Wins"
+						DataType="Number"
+						Format="###,###,##0"
+						Header="Wins"
+						ID="colWins"
+					/>
+					<AnalysisChartColumn
+						DataColumn="Impressions"
+						DataType="Number"
+						Format="###,###,##0"
+						Header="Impressions"
+						ID="colImpressions"
+					/>
+					<AnalysisChartColumn
+						DataColumn="Clicks"
+						DataType="Number"
+						Format="###,###,##0"
+						Header="Clicks"
+						ID="colClicks"
+					/>
+					<AnalysisChartColumn
+						DataColumn="Cost"
+						DataType="Number"
+						Format="$###,###,##0.00"
+						Header="Cost"
+						ID="colCost"
+					/>
+				</AnalysisChart>
+			</Division>
+		</Remark>
+		<Remark>
+			<Division
+				ID="divSaveMenu"
+				>
+				<LineBreak
+					LineCount="2"
+				/>
+				<Label
+					Caption="View Report Center"
+					Class="ThemeLinkButton"
+					ID="lblViewBookmarks"
+					>
+					<Action
+						Type="Report"
+						>
+						<Target
+							Report="Default"
+							Type="Report"
+						/>
+						<LinkParams
+							cid="@Request.cid~"
+						/>
+					</Action>
+				</Label>
+				<Spaces
+					Size="4"
+				/>
+				<Label
+					Caption="Save to Report Center"
+					Class="ThemeLinkButton"
+					ID="lblSaveBookmark"
+					>
+					<Action
+						BookmarkCollection="MyBookmarks"
+						BookmarkDescription=""
+						BookmarkDescriptionMessage="Bookmark Description:"
+						BookmarkDescriptionPrompt="Please enter a description for this bookmark."
+						BookmarkName="Metrics by Device"
+						BookmarkRequestIDs="inpCustID"
+						ID="actionBookmark"
+						Type="AddBookmark"
+					/>
+				</Label>
+			</Division>
+		</Remark>
+	</Body>
+	<ReportFooter/>
+	<ideTestParams
+		brow="0"
+		camid="0"
+		dateFrom="2015-06-20"
+		dateTo="2015-06-28"
+		devmak="0"
+		devmod="0"
+		exchanid="0"
+		groupby="rbd.device_make"
+		lang="0"
+		linit="0"
+		os="0"
+		tsid="0"
+	/>
+</Report>

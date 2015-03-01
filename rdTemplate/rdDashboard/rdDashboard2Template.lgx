@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report ID="Dashboard.rdDashboard2Template">
+	<StyleSheet StyleSheet="rdTemplate/rdDashboard/rdDashboard2.css"/>
+	<Body>
+		<Tabs ID="rdDashboardTabs" TabbingStyle="RefreshPage" Class="rdDashboard rdDashboardTabs" ActiveTabBackgroundColor="#EEEEEE" BorderColor="#888888" Width="100" WidthScale="%">
+			<TabPanel ID="rdTabTemplate" Caption="" Class="rdDashboardTab" rdNewTabCaption="New Tab">
+			</TabPanel>
+			<TabPanel ID="rdTabAddNewTab" Caption="Add a New Tab" rdNewTabCaption="New Tab">
+			</TabPanel>
+		</Tabs>
+		<Division ID="rdDashboardRoot" Class="rdDashboard">
+			<InputHidden ID="rdDashboardSingleInstanceOnlyPanelsList" DefaultValue=""/>
+			<InputHidden ID="rdDraggableTabs" DefaultValue="True"/>
+			<InputHidden ID="DashboardIdentifier" DefaultValue="rdDashboardId"/>
+			<InputHidden ID="ActiveTabIdentifier" DefaultValue="rdActiveTabId"/>
+			<InputHidden ID="rdUseGalleryFile" DefaultValue="False"/>
+			<Label Class="rdDashboardHidden" ID="rdDashboardAdjustable" Caption="True"/>
+			<Rows Width="100" WidthScale="%" CellSpacing="0" Class="rdDashboardPanelContainer">
+				<Row ID="rdDashboardMenu">
+					<Column Class="rdDashboardMenu">
+						<Rows TableBorder="0" CellSpacing="0" Width="100" WidthScale="%">
+							<Row ID="rowChangeTab">
+								<Column>
+									<Division ID="rdDivMobileDashboardTabs">
+										<PopupPanel ID="pnlMobileDashboardTabs" Caption="Dashboard Tabs" Class="ThemeTextLarge" CloseButtonCaption="X" Draggable="True" PopupModal="True" PopupPanelLocation="left, top" Width="100" WidthScale="%">
+											<DataMenu ID="menuDashboardTabs" ActionIDColumn="Action" CaptionColumn="Caption" HideDataMenuArrows="True" Class="ThemeTextLarge">
+												<DataLayer Type="Static" ID="dlDashboardTabs">
+												</DataLayer>
+												<Action ID="actionLink" Type="Link">
+													<Target ID="targetLink" Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdNavigateBetweenDashboardTabs('@Data.Value~', pnlMobileDashboardTabs)"/>
+												</Action>
+											</DataMenu>
+										</PopupPanel>
+									</Division>
+									<Division ID="rdAjaxFeedback" ShowModes="None">
+										<Label ID="lblAjaxFeedback" Caption="Working..." />
+									</Division>
+								</Column>
+							</Row>
+						</Rows>
+					</Column>
+				</Row>
+				<Row ID="rdDashboardPanels">
+					<Column Class="rdDashboard">
+						<Division ID="rdAddTabCog" ShowModes="None">
+							<Image Caption="../rdTemplate/rdDashboard/rdAddNewTab.png" AltText="Add Tab" Tooltip="Add Tab" ID="rdAddNewTabCog" Width="24" Height="24">
+								<Action Type="Javascript" ID="actRenamethisTab" Javascript="LogiXML.Dashboard.pageDashboard.rdAddNewTab();" />
+							</Image>
+
+						</Division>
+						<Division ID="rdRenameTabDiv" ShowModes="None">
+							<InputText ID="txtRenameTab" Class="rdDashboardText" >
+								<EventHandler DhtmlEvent="onblur">
+									<Action Type="Link" ID="actionRenameTab">
+										<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdRenameDashboardTab();" />
+									</Action>
+								</EventHandler>
+							</InputText>
+						</Division>
+						<Division ID="rdSettingsCog"  ShowModes="None">
+							<Image Caption="../rdTemplate/rdDashboard/rdSettingsCog.png" AltText="Settings" Tooltip="Settings" ID="rdTabSettingsCog" Width="16" Height="16">
+								<Action Type="Popup" ID="ppMenu">
+									<PopupOption Caption="Add Panels" ID="ppoAddPanels">
+										<Action Type="Javascript" ID="actAddPanels" Javascript="LogiXML.Dashboard.pageDashboard.rdSetAddPanelsPopupSize(); ShowElement(this.id, 'ppChangeDashboard', 'Show');LogiXML.Dashboard.pageDashboard.rdAddRefreshEventForAddPanelsPopupCloseButton();" />
+									</PopupOption>
+									<PopupOption Caption="Change Layout" ID="ppoChangeLayout">
+										<Action Type="Javascript" ID="actChangeLayout" Javascript="LogiXML.Dashboard.pageDashboard.rdSetDashboardColumns('rdChangeLayout');; ShowElement(this.id, 'ppChangeLayout', 'Show');" />
+									</PopupOption>
+									<PopupOption Caption="Rename Tab" ID="ppoRenamethisTab">
+										<Action Type="Javascript" ID="actRenamethisTab" Javascript="LogiXML.Dashboard.pageDashboard.rdShowRenameTab();" />
+									</PopupOption>
+									<PopupOption Caption="Remove Tab" ID="ppoRemovethisTab">
+										<Action Type="Report" ID="actionRemoveTab" ConfirmMessage="Remove?  Are you sure?">
+											<Target Type="Report" ID="targetRemoveTab" RequestForwarding="True" />
+											<LinkParams rdDashboardRemoveTab="" />
+										</Action>
+									</PopupOption>
+								</Action>
+							</Image>
+						</Division>
+						<Division ID="divChangeLayout">
+							<PopupPanel ID="ppChangeLayout" PopupModal="True" Draggable="True" PopupPanelLocation="Center" Caption="Tab Layout">
+								<Rows ID="rdTabChangeTable" TableBorder="0" CellSpacing="2" Width="100" WidthScale="%">
+									<Row ID="rowTabChange">
+										<Column>
+											<Rows Class="rdDashboardPanel" Width="100" WidthScale="%" ID="rowsTabChange">
+												<Row>
+													<Column>
+														<Rows CellSpacing="10">
+															<Row ShowModes="None">
+																<Column>
+                                                                   <Label ID="lblRenameTabSave" Caption="Rename this Tab:" Class="rdDashboardText" For="txtRenameTab" />
+																</Column>
+															</Row>
+															<Row ID="rowTabColumnCount">
+																<Column>
+                                                                   <Label ID="lblColumnCount" Caption="Number of Panel Columns: " Class="rdDashboardText" For="lstColumnCount" />
+																</Column>
+																<Column>
+																	<InputSelectList ID="lstColumnCount" OptionValueColumn="ColumnCount" OptionCaptionColumn="ColumnCount">
+																		<DataLayer Type="Static" ID="dlColumnCnt">
+																			<StaticDataRow ColumnCount="1" />
+																			<StaticDataRow ColumnCount="2" />
+																			<StaticDataRow ColumnCount="3" />
+																			<StaticDataRow ColumnCount="4" />
+																			<StaticDataRow ColumnCount="5" />
+																			<StaticDataRow ColumnCount="6" />
+																			<StaticDataRow ColumnCount="7" />
+																			<StaticDataRow ColumnCount="8" />
+																		</DataLayer>
+																		<EventHandler DhtmlEvent="onchange">
+																			<Action Type="Link" ID="actionSetWideColumn">
+																				<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdSetDashboardColumns('rdChangeLayout');" />
+																			</Action>
+																		</EventHandler>
+																	</InputSelectList>
+																	<Spaces Size="8" />
+																	<Division ID="divFreeformPanels" ShowModes="None">
+																		<Image Caption="../rdTemplate/rdDashboard/rdFreeformLayout.gif" ID="rdImgFreeformLayout" Tooltip="Freeform Layout." />
+																	</Division>
+																	<Division ID="divWideColumn">
+																		<InputRadioButtons ID="radWideColumn" DefaultValue="1" CaptionType="Image" OptionValueColumn="WideColumnNr" OptionCaptionColumn="Image" OptionTooltipColumn="Tooltip" RadioButtonDirection="Across">
+																			<DataLayer Type="Static" ID="dlWideColumn">
+																				<StaticDataRow WideColumnNr="0" Image="../rdTemplate/rdDashboard/rdLayout2.gif" Tooltip="No wide columns." />
+																				<StaticDataRow WideColumnNr="1" Image="../rdTemplate/rdDashboard/rdLayout2WL.gif" Tooltip="Wide column on the left." />
+																				<StaticDataRow WideColumnNr="999" Image="../rdTemplate/rdDashboard/rdLayout2WR.gif" Tooltip="Wide column on the right." />
+																			</DataLayer>
+																		</InputRadioButtons>
+																	</Division>
+																</Column>
+															</Row>
+														</Rows>
+													</Column>
+												</Row>
+											</Rows>
+										</Column>
+									</Row>
+								</Rows>
+								<Rows Width="100" WidthScale="%">
+									<Row>
+										<Column Width="100" WidthScale="%" Class="rdDashboardControl">
+											<Label Caption="Done" Class="rdDashboardCommand rdDashboardControl" ID="tabLayoutDoneButton">
+												<EventHandler DhtmlEvent="onmousedown">
+													<Action Type="Link" ID="actionSetWideColumn">
+														<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdSetDashboardColumns();" />
+													</Action>
+												</EventHandler>
+												<EventHandler DhtmlEvent="onmouseup">
+													<Action Type="ShowElement" ElementID="ppChangeLayout" ID="actHidePopupLayout" Display="Hide" />
+												</EventHandler>
+												<Action Type="RefreshElement" ElementID="rdDashboardId,rdDashboardTabs" ID="actRefreshDasboardOnLayoutChange">
+													<LinkParams rdRefreshDashboard="True" />
+												</Action>
+											</Label>
+										</Column>
+									</Row>
+								</Rows>
+							</PopupPanel>
+						</Division>
+						<Division HtmlDiv="True" ID="rdDivDashboardPanelTable" Class="dashboardPanelContainer">
+							<Rows TableBorder="0" ID="rdDashboardPanelTable" CellSpacing="0" Width="100" WidthScale="%">
+								<Row ID="rowPanels">
+									<Column>
+										<Division ID="rdDashboardPanelID" HtmlDiv="True" Class="rdDashboardPanel" >
+											<Rows ID="rdDashboardPanelInnerTable" Class="panelInnerTable">
+												<Row ID="rdDashboardPanelTitleID" Class="panelTitle">
+													<Column Class="rdDashboardTitle">
+														<Rows Width="100" WidthScale="%" Class="rdDashboardTitle">
+															<Row>
+																<Column ID="rdDashboardCaptionBarID">
+																	<Division ID="rdDashboardPanelCaptionDivID" >
+																		<Label ID="rdDashboardCaptionID" Caption="Caption" Class="rdDashboardTitleCaption" For="rdDashboardPanelRenameID" />
+																	</Division>
+																	<Division ID="rdDashboardPanelRenameDivID" ShowModes="None">
+																		<InputText ID="rdDashboardPanelRenameID" Class="rdDashboardText panelTitleRename" Value="Caption" InputSize="20" >
+																			<EventHandler DhtmlEvent="onblur">
+																				<Action Type="Link" ID="actionRenamePanel">
+																					<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdSaveDashboardParams('rdDashboardPanelID', true);" />
+																				</Action>
+																			</EventHandler>
+																		</InputText>
+																	</Division>
+																</Column>
+																<Column ID="rdDashboardControl" Class="rdDashboardControl">
+																	<Image Caption="../rdTemplate/rdDashboard/rdSettingsCog.png" AltText="Settings" Tooltip="Settings" ID="rdPanelSettingsCog_rdPnlInstanceID"
+																		 Width="16" Height="16">
+																		<Action Type="Popup" ID="ppPanelMenu_rdPnlInstanceID" PopupLocation="Left">
+																			<PopupOption Caption="Edit" ID="ppoEdit_rdPnlInstanceID">
+																				<Action ID="actDashboardEditPanel" Type="Link">
+																					<Target Type="Link" Link="javascript: ShowElement(null, 'ppPanelParamsID', 'Show');LogiXML.Dashboard.pageDashboard.rdAddRefreshEventForPanelEditPopupCloseButton('rdDashboardPanelID', 'rdRefreshForCancel');" ID="tgtRenamepanel" />
+																				</Action>
+																			</PopupOption>
+																			<PopupOption Caption="Rename" ID="ppoRename_rdPnlInstanceID">
+																				<Action ID="actDashboardRenamePanel" Type="Link">
+																					<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdShowRenamePanel('rdDashboardPanelID', 'rdPnlInstanceID');" ID="tgtRenamepanel" />
+																				</Action>
+																			</PopupOption>
+																			<PopupOption Caption="Remove" ID="ppoRemove_rdPnlInstanceID">
+																				<Action ID="actDashboardRemovePanel" Type="Link" ConfirmMessage="Remove?  Are you sure?">
+																					<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdRemoveDashboardPanel('rdDashboardPanelID');" />
+																				</Action>
+																			</PopupOption>
+																		</Action>
+																	</Image>
+																</Column>
+															</Row>
+														</Rows>
+													</Column>
+												</Row>
+												<Row ID="rdMobileDashboardPanelTitleID" Class="panelTitle">
+													<Note Note="This Row element is specific to Mobile Dashboards, almost similar to the Row element above with a few changes. The one above gets replaced with this one in Dashboard.vb code." />
+													<Column Class="rdDashboardTitle">
+														<Rows Width="100" WidthScale="%" Class="rdDashboardTitle">
+															<Row>
+																<Column ID="rdDashboardCaptionBarID">
+																	<Division ID="rdDashboardPanelCaptionDivID" >
+																		<Label ID="rdDashboardCaptionID" Caption="Caption" Class="rdDashboardTitleCaption" For="rdDashboardPanelRenameID" />
+																	</Division>
+																	<Division ID="rdDashboardPanelRenameDivID" ShowModes="None">
+																		<InputText ID="rdDashboardPanelRenameID" Class="rdDashboardText" Value="Caption" InputSize="20" >
+																			<EventHandler DhtmlEvent="onblur">
+																				<Action Type="Link" ID="actionRenamePanel">
+																					<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdSaveDashboardParams('rdDashboardPanelID', true);" />
+																				</Action>
+																			</EventHandler>
+																		</InputText>
+																	</Division>
+																</Column>
+																<Column Width="33" WidthScale="%"  ID="rdDashboardChangePanelID" Class="rdDashboardControl">
+																	<Division HtmlDiv="True">
+																		<Action Type="Javascript" ID="showChange_rdPnlInstanceID" Javascript="LogiXML.Dashboard.pageDashboard.rdShowChangePanelMenu('ppPanelMenu_rdPnlInstanceID', 'rdDashboardPanelID')" />
+																		<Division HtmlDiv="True">
+																			<Image Caption="../rdTemplate/rdDashboard/rdSettingsCog.png" AltText="Settings" Tooltip="Settings" ID="rdPanelSettingsCog_rdPnlInstanceID" Width="16" Height="16">
+																				<Action Type="Popup" ID="ppPanelMenu_rdPnlInstanceID" PopupLocation="Left" rdMobileDashboard="True">
+																					<PopupOption Caption="Edit" ID="ppoEdit_rdPnlInstanceID">
+																						<Action ID="actDashboardEditPanel" Type="Link">
+																							<Target Type="Link" Link="javascript: ShowElement(null, 'ppPanelParamsID', 'Show');LogiXML.Dashboard.pageDashboard.rdAddRefreshEventForPanelEditPopupCloseButton('rdDashboardPanelID', 'rdPnlInstanceID');" ID="tgtRenamepanel" />
+																						</Action>
+																					</PopupOption>
+																					<PopupOption Caption="Rename" ID="ppoRename_rdPnlInstanceID">
+																						<Action ID="actDashboardRenamePanel" Type="Link">
+																							<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdShowRenamePanel('rdDashboardPanelID', 'rdPnlInstanceID');" ID="tgtRenamepanel" />
+																						</Action>
+																					</PopupOption>
+																					<PopupOption Caption="Remove" ID="ppoRemove_rdPnlInstanceID">
+																						<Action ID="actDashboardRemovePanel" Type="Link" ConfirmMessage="Remove?  Are you sure?">
+																							<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdRemoveDashboardPanel('rdDashboardPanelID');" />
+																						</Action>
+																					</PopupOption>
+																					<PopupOption Caption="Move Up" ID="ppoMoveUp_rdPnlInstanceID">
+																						<Action ID="actDashboardMovePanelUp" Type="Link">
+																							<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdMoveMobileDashboardPanel('rdDashboardPanelID', 'MoveUp', 'pnlChangePanelsID')" />
+																						</Action>
+																					</PopupOption>
+																					<PopupOption Caption="Move Down" ID="ppoMoveDown_rdPnlInstanceID">
+																						<Action ID="actDashboardMovePanelDown" Type="Link">
+																							<Target Type="Link" Link="javascript: LogiXML.Dashboard.pageDashboard.rdMoveMobileDashboardPanel('rdDashboardPanelID', 'MoveDown', 'pnlChangePanelsID')"/>
+																						</Action>
+																					</PopupOption>
+																				</Action>
+																			</Image>
+																		</Division>
+																	</Division>
+																</Column>
+															</Row>
+														</Rows>
+													</Column>
+												</Row>
+												<Row ID="rdDashboard2PanelParamsID" Class="rdDashboardParams" ShowModes="None">
+													<Column>
+														<PopupPanel ID="ppPanelParamsID" PopupModal="True" Draggable="True" PopupPanelLocation="Mouse" CloseButtonCaption="x" Caption="Panel Parameters">
+															<Rows TableBorder="0" CellSpacing="0" Width="100" WidthScale="%">
+																<Row Width="100" WidthScale="%">
+																	<Column ID="rdDashboardParamsID" Class="rdDashboardParams" ColSpan="2">
+																	</Column>
+																</Row>
+																<Row>
+																	<Column Width="100" WidthScale="%" Class="rdDashboardControl">
+																		<Division ID="rdDashboardSaveID" Class="rdDashboardParamsSave">
+																			<Label ID="lblSavePanel" Caption="Done" Class="rdDashboardCommand">
+																				<EventHandler DhtmlEvent="onclick">
+																					<Action Type="Javascript" ID="actSaveParams" Javascript="LogiXML.Dashboard.pageDashboard.rdSaveDashboardParams('rdDashboardPanelID');ShowElement(null, 'ppPanelParamsID', 'Hide');" Validate="True" />
+																				</EventHandler>
+																			</Label>
+																		</Division>
+																	</Column>
+																</Row>
+															</Rows>
+														</PopupPanel>
+													</Column>
+												</Row>
+												<Row ID="Dashboard2PanelContent" Class="rdDashboardContent">
+													<Column>
+														<Division HtmlDiv="True" rdDashboardContent="True" Class="panelBody">
+														</Division>
+													</Column>
+												</Row>
+											</Rows>
+											<Resizer/>
+										</Division>
+									</Column>
+								</Row>
+							</Rows>
+						</Division>
+					</Column>
+				</Row>
+			</Rows>
+			<IncludeSharedElement ID="includeSharedAddPanelsGallery" DefinitionFile="rdDashboard/rdAddPanelsGallery.lgx" SharedElementID="AddPanelsGallery" />
+		</Division>
+	</Body>
+</Report>

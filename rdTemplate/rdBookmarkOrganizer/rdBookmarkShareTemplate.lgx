@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="rdBookmarkShareTemplate" rdBookmarkOrganizerVersion="0.0" >
+	<IncludeScriptFile IncludedScriptFile="../rdTemplate/rdBookmarkOrganizer/rdBookmarkShareJavascriptFix.js" />
+	<Body ID="bodyMain">
+    <InputHidden ID="rdCannotShareWithSelf" DefaultValue="You cannot share with yourself." />
+    <InputHidden ID="rdAlreadySharedWith" DefaultValue="Already shared with {UserName}." />
+    <InputHidden ID="rdUserDoesNotExist" DefaultValue="User {UserName} was not found with an existing collection of bookmarks." />
+		<Division ID="rdDivBookmarkShareTemplate">
+			<Rows Width="100" WidthScale="%">
+				<Row ID="rowNonSharingList">
+					<Column Class="yui3-skin-sam">
+						<InputText ID="InpUser" AutoComplete="True" Class="rdAutoCompleteElement rdThemeInput  &quot; placeholder=&quot;Type user name..." InputSize="60">
+							<AutoComplete ColumnName="BookmarkUserName" ID="acText">
+								<DataLayer Type="Bookmarks" BookmarkCollection="@Request.rdBookmarkCollection~" ListSharedWithCollections="True" ID="dlAllSharedWiths" />
+							</AutoComplete>
+							<EventHandler DhtmlEvent="onkeydown">
+								<Action Type="Javascript" Javascript="if (event.keyCode == 13){ document.getElementById('actShare').click(); return false;}" ID="interceptEnterForSubmit" />
+							</EventHandler>
+						</InputText>
+					</Column>
+					<Column ID="colTableAddUser" Class="ThemeAlignLeft" Width="50" WidthScale="%">
+						<Label Caption=" &amp;nbsp;" ID="lblAddUser" Class="iconAddUser" Format="HTML" Tooltip="Add User">
+							<Action Type="ShareBookmark" BookmarkCollection="@Request.rdBookmarkCollection~" BookmarkID="@Request.rdBookmarkID~" FolderID="@Request.rdFolderID~" SharedWith="InpUser" RefreshDTID="dtBookmarkOwner" ID="actShare" />
+						</Label>
+					</Column>
+				</Row>
+				<Row ID="rowSharingList">
+					<Division ID="divShareUsersPopup">
+						<Division ID="divAddSysUsers">
+							<Rows Width="100" WidthScale="%">
+								<Row>
+									<Column>
+										<Label Caption="Find  " Class="ThemeHeader" />
+									</Column>
+									<Column>
+										<InputText ID="InpUser" DefaultValue="@Request.InpUser~" Class="rdThemeInput &quot; placeholder=&quot;Type to search..." InputSize="55">
+											<EventHandler DhtmlEvent="onkeyup">
+												<Action Type="RefreshElement" ID="actFind" ElementID="dtUserList">
+													<LinkParams rdBookmarkCollection="@Request.rdBookmarkCollection~" rdFolderID="@Request.rdFolderID~" rdBookmarkID="@Request.rdBookmarkID~"
+
+/>
+												</Action>
+											</EventHandler>
+										</InputText>
+									</Column>
+								</Row>
+							</Rows>
+							<Division ID="divSysUsersListContainer">
+								<Rows Width="100" WidthScale="%">
+									<Row>
+										<Column>
+											<DataTable ID="dtUserList" Width="100" WidthScale="%" AjaxPaging="True" >
+												<Note Note="This is the data layer that is replaced with the child of the action.showbookmarksharing (if there is one)" />
+												<DataLayer Type="Static" ID="DummyDataLayer">
+													<Remark>
+														<ConditionFilter Condition="(&quot;@Request.InpUser~&quot;.length &lt;&gt; 0) &amp;&amp; 
+
+(&quot;@Data.rdSharingCollectionColumn~&quot;.toLowerCase().indexOf(&quot;@Request.InpUser~&quot;) &lt;&gt; -1)" />
+													</Remark>
+													<CompareFilter DataColumn="rdSharingCollectionColumn" ID="compareIsFind" CompareType="Contains" DataType="Text" CaseSensitive="False"
+
+						  CompareValue="@Request.InpUser~" IncludeCondition="&quot;@Request.InpUser~&quot;.length &gt; 0" />
+													<CompareFilter DataColumn="rdSharingCollectionColumn" ID="compareExcludeOwner" CaseSensitive="False" CompareType="&lt;&gt;"
+
+						  CompareValue="@Function.UserName~" DataType="Text" />
+												</DataLayer>
+												<DataTableColumn ID="colAddUser" Width="39" WidthScale="px">
+													<Label Caption=" &amp;nbsp;" ID="lblAddUser" Format="HTML" Class="iconAddUser" Tooltip="Add User">
+														<Action Type="ShareBookmark" BookmarkCollection="@Request.rdBookmarkCollection~" FolderID="@Request.rdFolderID~"
+
+							BookmarkID="@Request.rdBookmarkID~" SharedWith="@Data.rdSharingCollectionColumn~" RefreshDTID="dtBookmarkOwner" ID="actShare" />
+													</Label>
+												</DataTableColumn>
+												<InteractivePaging PageRowCount="4" ShowPageNumber="Numbered" Location="Bottom" HideShowPrevNextCaptions="True" HideWhenOnePage="True" CaptionType="Image" />
+											</DataTable>
+										</Column>
+									</Row>
+								</Rows>
+							</Division>
+						</Division>
+					</Division>
+				</Row>
+			</Rows>
+			<LineBreak />
+			<HR/>
+			<Division ID="divHaveAccess">
+				<Note Note="List of users who already have access" />
+				<Rows Width="100" WidthScale="%">
+					<Row>
+						<Column>
+							<Label Caption="Shared With " Class="ThemeHeader" />
+						</Column>
+					</Row>
+					<Row ID="rowBookmarkSharedWith" Class="ThemeAlignTop">
+						<Column>
+							<DataTable ID="dtBookmarkSharedWith" Width="100" WidthScale="%" AjaxPaging="True">
+								<DataLayer Type="Bookmarks" BookmarkCollection="@Request.rdBookmarkCollection~" ListSharedWithCollections="True" FilterByID="True"
+
+				ID="dlAllSharedWiths" />
+								<DataTableColumn Width="85" WidthScale="%">
+									<Label Caption="@Data.BookmarkUserName~" ID="lblSharedUserName" />
+								</DataTableColumn>
+								<DataTableColumn Width="15" WidthScale="%">
+									<Division ID="divCondition">
+										<Label ID="lblUnshare" Caption=" &amp;nbsp;" Format="HTML" Tooltip="Remove User">
+											<Action Type="UnShareBookmark" BookmarkCollection="@Request.rdBookmarkCollection~" BookmarkID="@Request.rdBookmarkID~"
+
+					  FolderID="@Request.rdFolderID~" UnSharedWith="lblSharedUserName_Row@Function.RowNumber~" ID="Unsharebookmark" />
+										</Label>
+									</Division>
+								</DataTableColumn>
+								<InteractivePaging PageRowCount="4" ShowPageNumber="Numbered" Location="Bottom" HideShowPrevNextCaptions="True" HideWhenOnePage="True" CaptionType="Image" />							</DataTable>
+						</Column>
+					</Row>
+				</Rows>
+				<LineBreak />
+			</Division>
+			<Division ID="DivBMarkShareHidden">
+				<InputHidden ID="rdBookmarkCollection" DefaultValue="@Request.rdBookmarkCollection~" />
+				<InputHidden ID="rdBookmarkID" DefaultValue="@Request.rdBookmarkID~" />
+				<InputHidden ID="rdFolderID" DefaultValue="@Request.rdFolderID~" />
+				<InputHidden ID="rdShareFailure" DefaultValue="False" />
+			</Division>
+		</Division>
+	</Body>
+	<ideTestParams rdBookmarkCollection="" rdBookmarkID="" rdFolderID="" InpUser="" />
+</Report>

@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="ReportAuthorDev.Templates.LabelEditorTemplate" SavedBy="FELIPE-SURFACE\fblanco" SavedAt="10/2/2014 10:42:38 AM" EngineVersion="11.4.026-T">
+  <StyleSheet StyleSheet="rdTemplate/rdReportAuthor/reportauthor.css" />
+  <Body>
+    <DraggableDivision HtmlDiv="True" ID="LabelEditorTemplate" rdReportAuthorEditorFor="Label" Class="rd-element-editor" DragHandlerElementID="imgDragHandler_rdElementID">
+      <ProxyDivision MoveOnEnd="True" HideOnEnd="True" HideOnStart="True" />
+      <LinkedParams action="Y.LogiXML.ReportAuthor.updateDeleteLink('rdElementID','rdNewParentID');rdAjaxRequestWithFormVars('rdAjaxCommand=RefreshElement&amp;rdRefreshElementID=rdReportAuthorID,rdReturnElementID&amp;rdReportAuthorAction=move&amp;rdReportAuthorElementID=rdElementID&amp;rdReportAuthorParentID=rdNewParentID&amp;rdReportAuthorSiblingElementID=rdSiblingID&amp;rdReportAuthorRefreshElementID=rdReturnElementID&amp;rdReport=rdCurrentReport&amp;rdReportAuthorSilentUpdate=True','false','',null,null,null,['','',''])" />
+      <Division HtmlDiv="True">
+        <Division HtmlDiv="True" ID="editorHeaderRow_rdElementID">
+          <Division HtmlDiv="True" Class="ThemeAlignRight rd-element-editor-header">
+            <Division Class="rd-drag-block">
+              <Division ID="divDragHandlerBox_rdElementID">
+                <Image ID="imgDragHandler_rdElementID" Caption="../rdTemplate/rdReportAuthor/drag-handler-light.png" Class="rd-drag-handler" />
+              </Division>
+            </Division>
+            <Division Class="rd-header-buttons">
+              <Image ID="imgSettings_rdElementID" Caption="../rdTemplate/rdReportAuthor/rdSettingsCog.png">
+                <Action Type="ShowElement" ElementID="LabelSettingsPopup_rdElementID" ID="actShowLabelSettingsPopup_rdElementID" />
+              </Image>
+              <Division Class="separator-horizontal" />
+              <Image ID="imgDelete_rdElementID" Caption="../rdTemplate/rdReportAuthor/close.png">
+                <Action Type="RefreshElement" ElementID="rdReportAuthorID, rdParentID" ID="actDeleteElement_rdElementID" ConfirmMessage="Remove? Are you sure?">
+                  <LinkParams rdReportAuthorAction="delete" rdReportAuthorElementID="rdElementID" rdElementType="Label" />
+                  <WaitPage />
+                </Action>
+              </Image>
+            </Division>
+          </Division>
+        </Division>
+        <Division HtmlDiv="True">
+          <Division HtmlDiv="True" Class="rd-editable">
+            <Image ID="editPencil_rdElementID" Tooltip="Click to edit" Caption="../rdTemplate/rdReportAuthor/pencilEdior.png" >
+              <Action Type="Javascript" Class="inlineEditPencil" ID="inlineEditPencil" Javascript="clickOnPencil(this);" />
+            </Image>
+            <Division HtmlDiv="True" ID="divEditorContainer_rdElementID">
+              <EventHandler DhtmlEvent="onclick">
+                <Action Type="Javascript" ID="inlineEdit" Javascript="toggleInlineEdit(this);" />
+              </EventHandler>
+            </Division>
+          </Division>
+        </Division>
+      </Division>
+      <PopupPanel ID="LabelSettingsPopup_rdElementID" PopupModal="True" Caption="Settings" PopupPanelLocation="Center" Width="400" WidthScale="px" ShowOnPageLoad="False" Class="rd-settings-popup">
+        <Division HtmlDiv="True" Class="rd-popup-content">
+          <Rows Width="100" WidthScale="%">
+            <Row>
+              <Column>
+                <Rows>
+                  <Row Class="backgroundButtons">
+                    <Column ColSpan="2">
+                      <Division ID="divSpacer" Class="ThemeMargin" />
+                      <Division ID="divAlignment_rdElementID" IdeDisplayStatus="Collapsed">
+                        <Division ID="divAlignLeft_rdElementID">
+                          <Division ID="divAlignLeftFalse_rdElementID" ShowModes="None">
+                            <Image Caption="../rdTemplate/rdReportAuthor/align-left.png" ID="imgAlignLeftFalse_rdElementID">
+                              <Action Type="Javascript" Javascript="ShowElement(this.id,'divAlignLeftFalse_rdElementID,divAlignCenterTrue_rdElementID,divAlignRightTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divAlignLeftTrue_rdElementID,divAlignCenterFalse_rdElementID,divAlignRightFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('Alignment_rdElementID').setAttribute('value', 'left');&#xD;&#xA;" />
+                            </Image>
+                          </Division>
+                          <Division ID="divAlignLeftTrue_rdElementID">
+                            <Image ID="imgAlignLeftTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/align-left-active.png" />
+                          </Division>
+                        </Division>
+                        <Division ID="divAlignCenter_rdElementID" IdeDisplayStatus="Collapsed">
+                          <Division ID="divAlignCenterFalse_rdElementID">
+                            <Image Caption="../rdTemplate/rdReportAuthor/align-center.png" ID="imgAlignCenterFalse_rdElementID">
+                              <Action Type="Javascript" Javascript="ShowElement(this.id,'divAlignLeftTrue_rdElementID,divAlignCenterFalse_rdElementID,divAlignRightTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divAlignLeftFalse_rdElementID,divAlignCenterTrue_rdElementID,divAlignRightFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('Alignment_rdElementID').setAttribute('value', 'center');&#xD;&#xA;" />
+                            </Image>
+                          </Division>
+                          <Division ID="divAlignCenterTrue_rdElementID" ShowModes="None" IdeDisplayStatus="Collapsed">
+                            <Image ID="imgAlignCenterTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/align-center-active.png" />
+                          </Division>
+                        </Division>
+                        <Division ID="divAlignRight_rdElementID" IdeDisplayStatus="Collapsed">
+                          <Division ID="divAlignRightFalse_rdElementID">
+                            <Image Caption="../rdTemplate/rdReportAuthor/align-right.png" ID="imgAlignRightFalse_rdElementID">
+                              <Action Type="Javascript" Javascript="ShowElement(this.id,'divAlignLeftTrue_rdElementID,divAlignCenterTrue_rdElementID,divAlignRightFalse_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divAlignLeftFalse_rdElementID,divAlignCenterFalse_rdElementID,divAlignRightTrue_rdElementID','Show','');&#xD;&#xA;document.getElementById('Alignment_rdElementID').setAttribute('value', 'right');&#xD;&#xA;" />
+                            </Image>
+                          </Division>
+                          <Division ID="divAlignRightTrue_rdElementID" ShowModes="None" IdeDisplayStatus="Collapsed">
+                            <Image ID="imgAlignRightTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/align-right-active.png" />
+                          </Division>
+                        </Division>
+                        <InputHidden ID="Alignment_rdElementID" DefaultValue="left" />
+                      </Division>
+                      <Division ID="divSpacer" Class="ThemeMargin" />
+                      <Division ID="divFontBold_rdElementID" IdeDisplayStatus="Collapsed">
+                        <Division ID="divFontBoldFalse_rdElementID">
+                          <Image Caption="../rdTemplate/rdReportAuthor/font-b.png" ID="imgFontBoldFalse_rdElementID">
+                            <Action Type="Javascript" Javascript="ShowElement(this.id,'divFontBoldFalse_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divFontBoldTrue_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtFontBold_rdElementID').setAttribute('value', 'True');" />
+                          </Image>
+                        </Division>
+                        <Division ID="divFontBoldTrue_rdElementID" ShowModes="None">
+                          <Image ID="imgFontBoldTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/font-b-active.png">
+                            <Action Type="Javascript" Javascript="ShowElement(this.id,'divFontBoldTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divFontBoldFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtFontBold_rdElementID').setAttribute('value', '');" />
+                          </Image>
+                        </Division>
+                        <InputHidden ID="txtFontBold_rdElementID" />
+                      </Division>
+                      <Division ID="divFontItalic_rdElementID" IdeDisplayStatus="Collapsed">
+                        <Division ID="divFontItalicFalse_rdElementID">
+                          <Image Caption="../rdTemplate/rdReportAuthor/font-i.png" ID="imgFontItalicFalse_rdElementID">
+                            <Action Type="Javascript" Javascript="ShowElement(this.id,'divFontItalicFalse_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divFontItalicTrue_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtFontItalic_rdElementID').setAttribute('value', 'True');" />
+                          </Image>
+                        </Division>
+                        <Division ID="divFontItalicTrue_rdElementID" ShowModes="None">
+                          <Image ID="imgFontItalicTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/font-i-active.png">
+                            <Action Type="Javascript" Javascript="ShowElement(this.id,'divFontItalicTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divFontItalicFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtFontItalic_rdElementID').setAttribute('value', '');" />
+                          </Image>
+                        </Division>
+                        <InputHidden ID="txtFontItalic_rdElementID" />
+                      </Division>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column ColSpan="2">
+                      <InputTextArea InputRows="3" InputColumns="70" ID="txtLabelText_rdElementID" Class="rdThemeInput" />
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column>
+                      <Label Caption="Insert a Formula: " />
+                    </Column>
+                    <Column>
+                      <InputSelectList OptionCaptionColumn="Column2" OptionValueColumn="Column1" ID="islTokens_rdElementID" Class="rdThemeInput">
+                        <DataLayer Type="Static" ID="TokensDataLayer">
+                          <StaticDataRow Column1="[Date]" Column2="Date" />
+                          <StaticDataRow Column1="[Time]" Column2="Time" />
+                          <StaticDataRow Column1="[DateTime]" Column2="DateTime" />
+                        </DataLayer>
+                      </InputSelectList>
+                      <Spaces Size="5" />
+                      <Button ID="btnAddToken" Caption="Insert" Class="ThemeMargin ThemeLinkButton">
+                        <Action Type="Javascript" ID="actAddTokens" Javascript="document.getElementById('txtLabelText_rdElementID').value=document.getElementById('txtLabelText_rdElementID').value.concat(document.getElementById('islTokens_rdElementID').value);" />
+                      </Button>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column>
+                      <Label Caption="Font Size: " />
+                    </Column>
+                    <Column IdeDisplayStatus="Collapsed">
+                      <InputSelectList ID="slctLabelFontSize_rdElementID" OptionCaptionColumn="Caption" OptionValueColumn="Value" DefaultValue="14px" Class="rdThemeInput">
+                        <DataLayer Type="Static">
+                          <StaticDataRow Caption="" Value="" />
+                          <StaticDataRow Caption="10px" Value="10px" />
+                          <StaticDataRow Caption="14px" Value="14px" />
+                          <StaticDataRow Caption="20px" Value="20px" />
+                          <StaticDataRow Caption="30px" Value="30px" />
+                          <StaticDataRow Caption="40px" Value="40px" />
+                          <StaticDataRow Caption="50px" Value="50px" />
+                        </DataLayer>
+                      </InputSelectList>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column>
+                      <Label Caption="Font Color:" />
+                    </Column>
+                    <Column IdeDisplayStatus="Collapsed">
+                      <Division ID="ColorPickerWraper_rdElementID" Class="rd-color-picker-popup">
+                        <InputHidden ID="slctLabelFontColor_rdElementID" DefaultValue="" />
+                        <Rows>
+                          <Row>
+                            <Column>
+                              <Rectangle ID="rectColor_rdElementID" Height="10" Width="10" BorderThickness="1" BackgroundColor="#6AA84F" Color="#ABACAC"/>
+                            </Column>
+                            <Column>
+                              <PopupPanel ID="ppLabelFontColors_rdElementID" PopupPanelLocation="Mouse">
+                                <Rows>
+                                  <Row>
+                                    <Column Class="rdAgKPIColor1" ID="colColor1">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor1" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClickColor" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                    <Column Class="rdAgKPIColor2" ID="colColor2">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor2" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                    <Column Class="rdAgKPIColor3" ID="colColor3">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor3" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                    <Column Class="rdAgKPIColor10" ID="colColor10">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor10" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                  </Row>
+                                  <Row>
+                                    <Column Class="rdAgKPIColor4" ID="colColor4">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor4" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClickColor" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                    <Column Class="rdAgKPIColor5" ID="colColor5">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor5" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                    <Column Class="rdAgKPIColor6" ID="colColor6">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor6" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                    <Column Class="rdAgKPIColor11" ID="colColor11">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor11" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                  </Row>
+                                  <Row>
+                                    <Column Class="rdAgKPIColor7" ID="colColor7">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor7" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClickColor" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                    <Column Class="rdAgKPIColor8" ID="colColor8">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor8" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                    <Column Class="rdAgKPIColor9" ID="colColor9">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor9" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                    <Column Class="rdAgKPIColor12" ID="colColor12">
+                                      <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor12" BorderThickness="0" />
+                                      <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                        <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this);" />
+                                      </EventHandler>
+                                    </Column>
+                                  </Row>
+                                </Rows>
+                              </PopupPanel>
+                              <Image Caption="rdTemplate/rdAnalysisGrid/ColorPicker.png" ID="colorPicker_rdElementID" Tooltip="Pick Color." Class="rd-colorpicker-image" IdeDisplayStatus="Collapsed">
+                                <EventHandler DhtmlEvent="onclick">
+                                  <Action Type="Javascript" ID="actClickColor" Javascript="ShowElement(this.id,'ppLabelFontColors_rdElementID','Toggle'); GetColorPicker('colorPickerValue_rdElementID', this);" />
+                                </EventHandler>
+                              </Image>
+                            </Column>
+                          </Row>
+                        </Rows>
+                      </Division>
+                    </Column>
+                  </Row>
+                </Rows>
+              </Column>
+            </Row>
+            <Row>
+              <Column>
+                <FieldsetBox Caption="  Border Settings" CaptionClass="ThemeTextNormal">
+                  <Rows>
+                    <Row>
+                      <Column>
+                        <Label Caption="Thickness:" />
+                      </Column>
+                      <Column>
+                        <InputSelectList ID="slctBorderThickness_rdElementID" OptionCaptionColumn="Caption" OptionValueColumn="Value" DefaultValue="1px" IdeDisplayStatus="Collapsed" Class="rdThemeInput">
+                          <DataLayer Type="Static">
+                            <StaticDataRow Caption="1px" Value="1px" />
+                            <StaticDataRow Caption="2px" Value="2px" />
+                            <StaticDataRow Caption="3px" Value="3px" />
+                          </DataLayer>
+                        </InputSelectList>
+                      </Column>
+                    </Row>
+                    <Row Caption="Border Tckness:">
+                      <Column>
+                        <Label Caption="Color:" />
+                      </Column>
+                      <Column>
+                        <Division ID="BorderColorPickerWraper_rdElementID" Class="rd-color-picker-popup">
+                          <InputHidden ID="slctBorderColor_rdElementID" DefaultValue="" />
+                          <Rows>
+                            <Row>
+                              <Column>
+                                <Rectangle ID="rectBorderColor_rdElementID" Height="10" Width="10" BorderThickness="1" BackgroundColor="#6AA84F" Color="#ABACAC" />
+                              </Column>
+                              <Column>
+                                <PopupPanel ID="ppLabelBorderColors_rdElementID" PopupPanelLocation="Mouse" IdeDisplayStatus="Collapsed">
+                                  <Rows IdeDisplayStatus="Collapsed">
+                                    <Row>
+                                      <Column Class="rdAgKPIColor1" ID="colColor1">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor1" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClickColor" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                      <Column Class="rdAgKPIColor2" ID="colColor2">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor2" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                      <Column Class="rdAgKPIColor3" ID="colColor3">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor3" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                      <Column Class="rdAgKPIColor10" ID="colColor10">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor10" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                    </Row>
+                                    <Row>
+                                      <Column Class="rdAgKPIColor4" ID="colColor4">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor4" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClickColor" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                      <Column Class="rdAgKPIColor5" ID="colColor5">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor5" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                      <Column Class="rdAgKPIColor6" ID="colColor6">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor6" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                      <Column Class="rdAgKPIColor11" ID="colColor11">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor11" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                    </Row>
+                                    <Row>
+                                      <Column Class="rdAgKPIColor7" ID="colColor7">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor7" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClickColor" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                      <Column Class="rdAgKPIColor8" ID="colColor8">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor8" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                      <Column Class="rdAgKPIColor9" ID="colColor9">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor9" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                      <Column Class="rdAgKPIColor12" ID="colColor12">
+                                        <Rectangle ID="rectColor" Height="10" Width="10" Class="rdAgKPIColor12" BorderThickness="0" />
+                                        <EventHandler DhtmlEvent="onclick" ID="evtColor">
+                                          <Action Type="Javascript" ID="actClick" Javascript="Y.LogiXML.ReportAuthor.pg(this,true);" />
+                                        </EventHandler>
+                                      </Column>
+                                    </Row>
+                                  </Rows>
+                                </PopupPanel>
+                                <Image Caption="rdTemplate/rdAnalysisGrid/ColorPicker.png" ID="colorBorderPicker_rdElementID" Tooltip="Pick Color." Class="rd-colorpicker-image" IdeDisplayStatus="Collapsed">
+                                  <EventHandler DhtmlEvent="onclick">
+                                    <Action Type="Javascript" ID="actClickColor" Javascript="ShowElement(this.id,'ppLabelBorderColors_rdElementID','Toggle'); GetColorPicker('BorderColorPicker_rdElementID', this);" />
+                                  </EventHandler>
+                                </Image>
+                              </Column>
+                            </Row>
+                          </Rows>
+                        </Division>
+                      </Column>
+                    </Row>
+                  </Rows>
+                  <Division ID="divBorderSettings_rdElementID">
+                    <Division ID="divBorderNoneFalse_rdElementID" Class="ThemeMargin">
+                      <Image Caption="../rdTemplate/rdReportAuthor/border-none.png" ID="imgBorderNoneFalse_rdElementID">
+                        <Action Type="Javascript" Javascript="ShowElement(this.id,'divBorderNoneFalse_rdElementID,divBorderLeftTrue_rdElementID,divBorderTopTrue_rdElementID,divBorderRightTrue_rdElementID,divBorderBottomTrue_rdElementID,divBorderAllTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divBorderNoneTrue_rdElementID,divBorderLeftFalse_rdElementID,divBorderTopFalse_rdElementID,divBorderRightFalse_rdElementID,divBorderBottomFalse_rdElementID,divBorderAllFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtBorderAll_rdElementID').setAttribute('value', 'False');&#xD;&#xA;document.getElementById('txtBorderLeft_rdElementID').setAttribute('value', '');&#xD;&#xA;document.getElementById('txtBorderTop_rdElementID').setAttribute('value', '');&#xD;&#xA;document.getElementById('txtBorderRight_rdElementID').setAttribute('value', '');&#xD;&#xA;document.getElementById('txtBorderBottom_rdElementID').setAttribute('value', '');&#xD;&#xA;" />
+                      </Image>
+                    </Division>
+                    <Division ID="divBorderNoneTrue_rdElementID" ShowModes="None" Class="ThemeMargin">
+                      <Image ID="imgBorderNoneTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/border-none-active.png" />
+                    </Division>
+                    <Division ID="divBorderLeftFalse_rdElementID" Class="ThemeMargin">
+                      <Image Caption="../rdTemplate/rdReportAuthor/border-left.png" ID="imgBorderLeftFalse_rdElementID">
+                        <Action Type="Javascript" Javascript="ShowElement(this.id,'divBorderLeftFalse_rdElementID,divBorderNoneTrue_rdElementID,divBorderAllTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divBorderLeftTrue_rdElementID,divBorderNoneFalse_rdElementID,divBorderAllFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtBorderLeft_rdElementID').setAttribute('value', 'True');&#xD;&#xA;document.getElementById('txtBorderAll_rdElementID').setAttribute('value', '');" />
+                      </Image>
+                    </Division>
+                    <Division ID="divBorderLeftTrue_rdElementID" ShowModes="None" Class="ThemeMargin">
+                      <Image ID="imgBorderLeftTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/border-left-active.png">
+                        <Action Type="Javascript" Javascript="ShowElement(this.id,'divBorderLeftTrue_rdElementID,divBorderNoneTrue_rdElementID,divBorderAllTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divBorderLeftFalse_rdElementID,divBorderNoneFalse_rdElementID,divBorderAllFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtBorderLeft_rdElementID').setAttribute('value', '');&#xD;&#xA;document.getElementById('txtBorderAll_rdElementID').setAttribute('value', '');" />
+                      </Image>
+                    </Division>
+                    <Division ID="divBorderTopFalse_rdElementID" Class="ThemeMargin">
+                      <Image Caption="../rdTemplate/rdReportAuthor/border-top.png" ID="imgBorderTopFalse_rdElementID">
+                        <Action Type="Javascript" Javascript="ShowElement(this.id,'divBorderTopFalse_rdElementID,divBorderNoneTrue_rdElementID,divBorderAllTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divBorderTopTrue_rdElementID,divBorderNoneFalse_rdElementID,divBorderAllFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtBorderTop_rdElementID').setAttribute('value', 'True');&#xD;&#xA;document.getElementById('txtBorderAll_rdElementID').setAttribute('value', '');" />
+                      </Image>
+                    </Division>
+                    <Division ID="divBorderTopTrue_rdElementID" ShowModes="None" Class="ThemeMargin">
+                      <Image ID="imgBorderTopTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/border-top-active.png">
+                        <Action Type="Javascript" Javascript="ShowElement(this.id,'divBorderTopTrue_rdElementID,divBorderNoneTrue_rdElementID,divBorderAllTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divBorderTopFalse_rdElementID,divBorderNoneFalse_rdElementID,divBorderAllFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtBorderTop_rdElementID').setAttribute('value', '');&#xD;&#xA;document.getElementById('txtBorderAll_rdElementID').setAttribute('value', '');" />
+                      </Image>
+                    </Division>
+                    <Division ID="divBorderRightFalse_rdElementID" Class="ThemeMargin">
+                      <Image Caption="../rdTemplate/rdReportAuthor/border-right.png" ID="imgBorderRightFalse_rdElementID">
+                        <Action Type="Javascript" Javascript="ShowElement(this.id,'divBorderRightFalse_rdElementID,divBorderNoneTrue_rdElementID,divBorderAllTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divBorderRightTrue_rdElementID,divBorderNoneFalse_rdElementID,divBorderAllFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtBorderRight_rdElementID').setAttribute('value', 'True');&#xD;&#xA;document.getElementById('txtBorderAll_rdElementID').setAttribute('value', '');" />
+                      </Image>
+                    </Division>
+                    <Division ID="divBorderRightTrue_rdElementID" ShowModes="None" Class="ThemeMargin">
+                      <Image ID="imgBorderRightTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/border-right-active.png">
+                        <Action Type="Javascript" Javascript="ShowElement(this.id,'divBorderRightTrue_rdElementID,divBorderNoneTrue_rdElementID,divBorderAllTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divBorderRightFalse_rdElementID,divBorderNoneFalse_rdElementID,divBorderAllFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtBorderRight_rdElementID').setAttribute('value', '');&#xD;&#xA;document.getElementById('txtBorderAll_rdElementID').setAttribute('value', '');" />
+                      </Image>
+                    </Division>
+                    <Division ID="divBorderBottomFalse_rdElementID" Class="ThemeMargin">
+                      <Image Caption="../rdTemplate/rdReportAuthor/border-bottom.png" ID="imgBorderBottomFalse_rdElementID">
+                        <Action Type="Javascript" Javascript="ShowElement(this.id,'divBorderBottomFalse_rdElementID,divBorderNoneTrue_rdElementID,divBorderAllTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divBorderBottomTrue_rdElementID,divBorderNoneFalse_rdElementID,divBorderAllFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtBorderBottom_rdElementID').setAttribute('value', 'True');&#xD;&#xA;document.getElementById('txtBorderAll_rdElementID').setAttribute('value', '');" />
+                      </Image>
+                    </Division>
+                    <Division ID="divBorderBottomTrue_rdElementID" ShowModes="None" Class="ThemeMargin">
+                      <Image ID="imgBorderBottomTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/border-bottom-active.png">
+                        <Action Type="Javascript" Javascript="ShowElement(this.id,'divBorderBottomTrue_rdElementID,divBorderNoneTrue_rdElementID,divBorderAllTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divBorderBottomFalse_rdElementID,divBorderNoneFalse_rdElementID,divBorderAllFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtBorderBottom_rdElementID').setAttribute('value', '');&#xD;&#xA;document.getElementById('txtBorderAll_rdElementID').setAttribute('value', '');" />
+                      </Image>
+                    </Division>
+                    <Division ID="divBorderAllFalse_rdElementID" Class="ThemeMargin">
+                      <Image Caption="../rdTemplate/rdReportAuthor/border-all.png" ID="imgBorderAllFalse_rdElementID">
+                        <Action Type="Javascript" Javascript="ShowElement(this.id,'divBorderAllFalse_rdElementID,divBorderLeftTrue_rdElementID,divBorderTopTrue_rdElementID,divBorderRightTrue_rdElementID,divBorderBottomTrue_rdElementID,divBorderNoneTrue_rdElementID','Hide','');&#xD;&#xA;ShowElement(this.id,'divBorderAllTrue_rdElementID,divBorderLeftFalse_rdElementID,divBorderTopFalse_rdElementID,divBorderRightFalse_rdElementID,divBorderBottomFalse_rdElementID,divBorderNoneFalse_rdElementID','Show','');&#xD;&#xA;document.getElementById('txtBorderAll_rdElementID').setAttribute('value', 'True');&#xD;&#xA;document.getElementById('txtBorderLeft_rdElementID').setAttribute('value', '');&#xD;&#xA;document.getElementById('txtBorderTop_rdElementID').setAttribute('value', '');&#xD;&#xA;document.getElementById('txtBorderRight_rdElementID').setAttribute('value', '');&#xD;&#xA;document.getElementById('txtBorderBottom_rdElementID').setAttribute('value', '');&#xD;&#xA;" />
+                      </Image>
+                    </Division>
+                    <Division ID="divBorderAllTrue_rdElementID" ShowModes="None" Class="ThemeMargin">
+                      <Image ID="imgBorderAllTrue_rdElementID" Caption="../rdTemplate/rdReportAuthor/border-all-active.png" />
+                    </Division>
+                    <InputHidden ID="txtBorderAll_rdElementID" />
+                    <InputHidden ID="txtBorderLeft_rdElementID" />
+                    <InputHidden ID="txtBorderTop_rdElementID" />
+                    <InputHidden ID="txtBorderRight_rdElementID" />
+                    <InputHidden ID="txtBorderBottom_rdElementID" />
+                  </Division>
+                </FieldsetBox>
+              </Column>
+            </Row>
+            <Row>
+              <Column />
+            </Row>
+            <Row>
+              <Column Class="ThemeAlignRight">
+                <Button ID="btnSaveLabelSettings_rdElementID" Caption="Set" Class="ThemeMargin ThemeLinkButton">
+                  <Action Type="RefreshElement" ElementID="rdReportAuthorID,EditorFor_rdElementID" ID="actSetSettings_rdElementID">
+                    <LinkParams rdReportAuthorAction="setSettings" rdReportAuthorElementID="rdElementID" />
+                    <WaitPage />
+                  </Action>
+                </Button>
+              </Column>
+            </Row>
+          </Rows>
+        </Division>
+      </PopupPanel>
+    </DraggableDivision>
+  </Body>
+</Report>

@@ -1,0 +1,127 @@
+<Report ID="ReportCenter.rdRcScheduleTemplate" SavedBy="LOGIXML\dave" SavedAt="8/25/2011 6:41:18 PM" EngineVersion="8.2.26">
+	<FormulaScriptFile ScriptFile="rdTemplate/rdBookmark.js" />
+	<LocalData>
+		<DataLayer Type="Scheduler" ID="dlScheduledTask" SchedulerTaskID="" ConnectionID="" />
+	</LocalData>
+	<Body>
+		<IncludeHtml Html="&lt;SCRIPT LANGUAGE=&quot;JAVASCRIPT&quot; src=&quot;rdTemplate/rdBookmark.js&quot;&gt;&lt;/SCRIPT&gt;" />
+		<Rows ID="rowsOlapGrid" CellSpacing="4" Class="rdOg rdOgPanel">
+			<Row ID="rowRcScheduleTitle" Class="rdOgCaptionRow">
+				<Column ID="colRcScheduleTitle" ColSpan="2">
+					<Label ID="lblRcScheduleTitle" Caption="Schedule" />
+				</Column>
+			</Row>
+			<Row ID="rowTable" Class="rdRcContentRow">
+				<Column ColSpan="2">
+					<Division ID="divHeader">
+						<Rows>
+							<Row ID="rowFrom">
+								<Column>
+									<Label Caption="From " ID="lblFrom" />
+								</Column>
+								<Column ColSpan="2">
+									<InputEmail ID="rdFrom_rdActionID" SaveInLocalStorage="True" InputSize="50" Tooltip="Enter an email address.">
+										<Validation Type="Required" ErrorMsg="Missing the From email address." Class="ThemeErrorText" />
+										<Validation Type="Email" ErrorMsg="Invalid From email address." Class="ThemeErrorText" />
+									</InputEmail>
+									<LineBreak />
+								</Column>
+							</Row>
+							<Row ID="rowTo">
+								<Column>
+									<Label Caption="To " ID="lblTo" />
+								</Column>
+								<Column>
+									<InputEmail InputSize="50" ID="rdTo_rdActionID" SaveInLocalStorage="True" MultipleAddresses="True" Tooltip="Enter email addresses, separated by semi-colons.">
+										<Validation Type="Required" ErrorMsg="Missing a To email address." Class="ThemeErrorText" />
+										<Validation Type="Email" ErrorMsg="Invalid To email address." Class="ThemeErrorText" />
+									</InputEmail>
+								</Column>
+								<Column>
+									<Label ID="lblAddCc_rdActionID" Caption="Add Cc">
+										<Action Type="ShowElement" ID="actionAddCc" ElementID="lblAddCc_rdActionID, rowCc_rdActionID" />
+									</Label>
+									<LineBreak />
+									<Label ID="lblAddBcc_rdActionID" Caption="Add Bcc">
+										<Action Type="ShowElement" ID="actionAddBcc" ElementID="lblAddBcc_rdActionID, rowBcc_rdActionID" />
+									</Label>
+								</Column>
+							</Row>
+							<Row ID="rowCc_rdActionID" ShowModes="None">
+								<Column>
+									<Label Caption="Cc " ID="lblCc" />
+								</Column>
+								<Column ColSpan="2">
+									<InputEmail InputSize="50" ID="rdCc_rdActionID" MultipleAddresses="True" Tooltip="Enter email addresses, separated by semi-colons.">
+										<Validation Type="Email" ErrorMsg="Invalid Cc email address." Class="ThemeErrorText" />
+									</InputEmail>
+								</Column>
+							</Row>
+							<Row ID="rowBcc_rdActionID" ShowModes="None">
+								<Column>
+									<Label Caption="Bcc " ID="lblBcc" />
+								</Column>
+								<Column ColSpan="2">
+									<InputEmail InputSize="50" ID="rdBcc_rdActionID" MultipleAddresses="True" Tooltip="Enter email addresses, separated by semi-colons.">
+										<Validation Type="Email" ErrorMsg="Invalid Bcc email address." Class="ThemeErrorText" />
+									</InputEmail>
+								</Column>
+							</Row>
+							<Row ID="rowSubject">
+								<Column>
+									<Label Caption="Subject " ID="lblSubject" />
+								</Column>
+								<Column ColSpan="2">
+									<InputText ID="rdSubject_rdActionID" InputSize="60" Tooltip="Enter the subject.">
+										<Validation Type="Required" ErrorMsg="Enter the Subject." Class="ThemeErrorText" />
+									</InputText>
+								</Column>
+							</Row>
+							<Row ID="rowMessage">
+								<Column>
+									<Label Caption="Message " ID="lblSubject" />
+								</Column>
+								<Column ColSpan="2">
+									<InputTextArea ID="rdBody_rdActionID" InputRows="4" InputColumns="60" Tooltip="Include a personal message." />
+								</Column>
+							</Row>
+							<Row ID="rowSpacer">
+								<Column ColSpan="3">
+									<HR />
+								</Column>
+							</Row>
+							<Row ID="rowSchedule">
+								<Column ColSpan="3">
+									<Schedule ID="rdSchedule" ScheduleXml="@Local.ScheduleXml~" xxxxShowScheduleXml="" xxxxScheduleIntervals="Daily,Weekly,Monthly,MonthlyDayOfWeek" Format="yyyy-MM-dd" Layout="Fixed" Orientation="Horizontal" />
+									<InputHidden ID="rdSchedulerTaskID" DefaultValue="@Local.TaskID~" />
+								</Column>
+							</Row>
+							<Row ID="rowSpacer">
+								<Column ColSpan="3">
+									<HR />
+								</Column>
+							</Row>
+							<Row ID="rowDone">
+								<Column ColSpan="3">
+									<Division ID="divDone_rdActionID">
+										<Label Caption="Done" ID="lblDone_rdActionID" Class="ThemeLinkButton">
+											<Action Type="Javascript" Javascript="rdScheduleReport()" ID="rdActionDoneEmail" />
+										</Label>
+									</Division>
+									<Division ID="divWait_rdActionID" ShowModes="None">
+										<Image Caption="rdTemplate/rdWait.gif" />
+									</Division>
+									<Spaces />
+									<Label Caption="Cancel" ID="lblCancel" Class="ThemeLinkButton">
+										<Action Type="Javascript" Javascript="history.go(-1);" />
+									</Label>
+								</Column>
+							</Row>
+						</Rows>
+					</Division>
+				</Column>
+			</Row>
+		</Rows>
+	</Body>
+	<StyleSheet StyleSheet="rdTemplate/rdOlapGrid/rdOgStyle.css" />
+</Report>

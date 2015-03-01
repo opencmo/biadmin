@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report ID="AnalysisChart.rdAcTemplate" rdAcVersion="10.0">
+	<Body>
+		<Rows ID="rowsAcControlsTop" Class="rdAc rdAcContentRow">
+			<Row>
+				<Column ID="cellAcControls" >
+					<Division ID="divAddToDashboardPanel" Class="rdAcAlignRight">
+						<Label Caption="Add to Dashboard" Class="rdAcCommand" ID="lblACAddToDashboard">
+							<Action ID="actAddToDashboard" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="rdAcChart_rdAcID" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Panel Title.." AddPanelDescription="Panel Description..." MultipleInstances="False" AcAddToDashboard="True" AddPanelSkipLocalData="False">
+								<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+							</Action>
+						</Label>
+					</Division>									
+				</Column>
+			</Row>
+			<Row>
+				<Column>
+					<Division ID="cellAcChart_rdAcID" >
+					</Division>
+				</Column>
+			</Row>
+		</Rows>
+		<Rows ID="rowsAcControlsLeft" Class="rdAc rdAcContentRow">
+			<Row>
+				<Column ID="cellAcControls" Class="rdAcControlsLeft" >
+					<Division ID="divAddToDashboardPanel">
+						<Label Caption="Add to Dashboard" Class="rdAcCommand" ID="lblACAddToDashboard">
+							<Action ID="actAddToDashboard" Type="AddDashboardPanel" DashboardSaveFile="@Request.DashboardSaveFile~" AddPanelContentElementID="rdAcChart_rdAcID" AddPanelPopupCaption="Add a Dashboard Panel" AddPanelButtonCaption="Done" AddPanelTitle="Panel Title.." AddPanelDescription="Panel Description..." MultipleInstances="False" AcAddToDashboard="True" AddPanelSkipLocalData="False">
+								<BookmarkLinkback Caption="Run the original report." BookmarkCollection="@Request.BookmarkCollection~" FrameID="Self" />
+							</Action>
+						</Label>
+					</Division>
+				</Column>				
+				<Column>
+					<Division ID="cellAcChart_rdAcID">
+					</Division>
+				</Column>
+			</Row>
+		</Rows>
+		<Rows ID="rowsAnalysisChart">
+			<Row>
+				<Column>
+					<Division ID="divAcControls">
+						<LineBreak LineCount="1" ID="nlNewLine"/>
+						<Division ID="divAcChartTypes" Class="rdAc">
+							<InputHidden ID="rdAcId" DefaultValue="rdAcID" />
+							<InputHidden ID="rdAcChartType_rdAcID" />
+							<InputHidden ID="rdAcDataColumnDetails_rdAcID" DefaultValue=""/>
+							<InputHidden ID="rdAcPickDateColumnsForGrouping_rdAcID" DefaultValue=""/>
+							<Label Caption="Pie" ID="lblChartPie_rdAcID" Class="rdAcCommand">
+								<Action Type="Link" ID="actionShowPie">
+									<Target Type="Link" Link="javascript:document.getElementById('rdAcChartType_rdAcID').value='Pie';rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" ID="tgtShowPie" />
+								</Action>
+							</Label>
+							<Label Caption="Bar" ID="lblChartBar_rdAcID" Class="rdAcCommand">
+								<Action Type="Link" ID="actionShowBar">
+									<Target Type="Link" Link="javascript:document.getElementById('rdAcChartType_rdAcID').value='Bar';rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" ID="tgtShowBar" />
+								</Action>
+							</Label>
+							<Label Caption="Line" ID="lblChartLine_rdAcID" Class="rdAcCommand">
+								<Action Type="Link" ID="actionShowLine">
+									<Target Type="Link" Link="javascript:document.getElementById('rdAcChartType_rdAcID').value='Line';rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" ID="tgtShowLine" IdeDisplayStatus="Collapsed" />
+								</Action>
+							</Label>
+							<Label Caption="Curved&#160;Line" ID="lblChartSpline_rdAcID" Class="rdAcCommand" Format="HTML">
+								<Action Type="Link" ID="actionShowSpline">
+									<Target Type="Link" Link="javascript:document.getElementById('rdAcChartType_rdAcID').value='Spline';rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" ID="tgtShowSpline" />
+								</Action>
+							</Label>
+							<Label Caption="Scatter&#160;Plot" ID="lblChartScatter_rdAcID" Class="rdAcCommand" Format="HTML">
+								<Action Type="Link" ID="actionShowScatter">
+									<Target Type="Link" Link="javascript:document.getElementById('rdAcChartType_rdAcID').value='Scatter';rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" ID="tgtShowScatter" />
+								</Action>
+							</Label>
+							<Label Caption="Heatmap" ID="lblChartHeatmap_rdAcID" Class="rdAcCommand">
+								<Action Type="Link" ID="actionShowHeatmap">
+									<Target Type="Link" Link="javascript:document.getElementById('rdAcChartType_rdAcID').value='Heatmap';rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" ID="tgtShowPie" />
+								</Action>
+							</Label>
+							<LineBreak LineCount="1" ID="nlNewLine"/>
+						</Division>
+						<Division ID="divChartLists">
+							<Rows ID="rowsChartLists">
+								<Row ID="rowChartXColumn_rdAcID" IdeDisplayStatus="Collapsed">
+									<Column ID="colChartXColumnCell1">
+										<Label ID="lblChartXLabelColumn_rdAcID" Caption="Label Column " For="rdAcChartXLabelColumn_rdAcID" />
+										<Label ID="lblChartXAxisColumn_rdAcID" Caption="X-Axis Column" For="rdAcChartXDataColumn_rdAcID" />
+									</Column>
+									<Column ID="colChartXColumnCell2">
+										<InputSelectList OptionValueColumn="DataColumn" ID="rdAcChartXLabelColumn_rdAcID" OptionCaptionColumn="ColumnHeader">
+											<DataLayer Type="Static" ID="dlChartXLabelColumns" />
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="Javascript" ID="actSelectXDataColumn" Javascript="rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');rdAcGetGroupByDateOperatorDiv(this.value, 'rdAcID')" />
+											</EventHandler>
+										</InputSelectList>
+										<InputSelectList OptionValueColumn="DataColumn" ID="rdAcChartXDataColumn_rdAcID" OptionCaptionColumn="ColumnHeader">
+											<DataLayer Type="Static" ID="dlChartXDataColumns" />
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="Javascript" ID="actSelectXDataColumn" Javascript="rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');rdAcModifyAggregationAvailability(this.value, 'rdAcID')" />
+											</EventHandler>
+										</InputSelectList>
+										<Spaces Size="3" />
+									</Column>
+									<Column ID="colDateGroupByColumnCell2">
+										<InputSelectList OptionValueColumn="GroupByDateOperatorValue" ID="rdAcChartsDateGroupBy_rdAcID" IncludeBlank="True"  OptionCaptionColumn="GroupByDateOperator" DefaultValue="@Request.rdAcChartsDateGroupBy_rdAcID~" Caption="by ">
+											<DataLayer Type="Static" ID="dlGroupByDateOperators">
+												<StaticDataRow GroupByDateOperator="Year" GroupByDateOperatorValue="FirstDayOfYear"/>
+												<StaticDataRow GroupByDateOperator="Quarter" GroupByDateOperatorValue="FirstDayOfQuarter"/>
+												<StaticDataRow GroupByDateOperator="Month" GroupByDateOperatorValue="FirstDayOfMonth"/>
+												<StaticDataRow GroupByDateOperator="Day" GroupByDateOperatorValue="Date"/>
+											</DataLayer>
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="Javascript" ID="actSelectXDataColumn" Javascript="rdModifyTimeSeriesCycleLengthOptions(this,'rdAcID');rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" />
+											</EventHandler>
+										</InputSelectList>
+									</Column>
+								</Row>
+								<Row ID="rowChartYColumn_rdAcID" IdeDisplayStatus="Collapsed">
+									<Column ID="colChartYColumnCell1">
+										<Label ID="lblChartYDataColumn_rdAcID" Caption="Data Column " For="rdAcChartYColumn_rdAcID" />
+										<Label ID="lblChartYAxisColumn_rdAcID" Caption="Y-Axis Column " For="rdAcChartYColumn_rdAcID" />
+										<Label ID="lblChartSizeColumn_rdAcID" Caption="Size Column " For="rdAcChartYColumn_rdAcID" />
+									</Column>
+									<Column ID="colChartYColumnCell2">
+										<InputSelectList OptionValueColumn="DataColumn" ID="rdAcChartYColumn_rdAcID" OptionCaptionColumn="ColumnHeader">
+											<DataLayer Type="Static" ID="dlChartYColumns" />
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="Javascript" ID="actSelectYDataColumn" Javascript="rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" />
+											</EventHandler>
+										</InputSelectList>
+									</Column>
+								</Row>
+								<Row ID="rowChartYAggr_rdAcID" IdeDisplayStatus="Collapsed">
+									<Column ID="colChartYColumnCell1">
+										<Label ID="rdAcChartYAggrLabel_rdAcID" Caption="Data Aggregation " For="rdAcChartYAggrList_rdAcID" />
+										<Label ID="rdAcChartSizeAggrLabel_rdAcID" Caption="Size Column Aggregation " For="rdAcChartYAggrList_rdAcID" />
+									</Column>
+									<Column ID="colChartYColumnCell3">
+										<InputSelectList OptionValueColumn="Function" ID="rdAcChartYAggrList_rdAcID" OptionCaptionColumn="Name">
+											<DataLayer Type="Static" ID="dlChartYAggrs">
+												<StaticDataRow Function="SUM" Name="Sum" />
+												<StaticDataRow Function="AVERAGE" Name="Average" />
+												<StaticDataRow Function="STDEV" Name="Standard Deviation" />
+												<StaticDataRow Function="COUNT" Name="Count" />
+												<StaticDataRow Function="DISTINCTCOUNT" Name="Distinct Count" />
+												<StaticDataRow Function="MIN" Name="Minimum" />
+												<StaticDataRow Function="MAX" Name="Maximum" />
+											</DataLayer>
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="Javascript" ID="actSelectXDataColumn" Javascript="rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" />
+											</EventHandler>
+										</InputSelectList>
+									</Column>
+								</Row>
+								<Row ID="rowChartExtraDataColumn_rdAcID" IdeDisplayStatus="Collapsed">
+									<Column ID="colChartExtraDataColumnCell1">
+										<Label ID="lblChartColorColumn_rdAcID" Caption="Color Column " For="rdAcChartExtraDataColumn_rdAcID" />
+									</Column>
+									<Column ID="colChartExtraDataColumnCell2">
+										<InputSelectList OptionValueColumn="DataColumn" ID="rdAcChartExtraDataColumn_rdAcID" OptionCaptionColumn="ColumnHeader">
+											<DataLayer Type="Static" ID="dlChartExtraColumns" />
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="RefreshElement" ElementID="rdAcID,cellAcChart_rdAcID">
+													<LinkParams rdAnalysisChartRefresh="True" />
+												</Action>
+											</EventHandler>
+										</InputSelectList>
+									</Column>
+								</Row>
+								<Row ID="rowChartExtraAggr_rdAcID" IdeDisplayStatus="Collapsed">
+									<Column ID="colChartExtraColumnCell1">
+										<Label ID="rdAcChartColorAggrLabel_rdAcID" Caption="Color Column Aggregation " For="rdAcChartExtraAggrList_rdAcID" />
+									</Column>
+									<Column ID="colChartExtraColumnCell3">
+										<InputSelectList OptionValueColumn="Function" ID="rdAcChartExtraAggrList_rdAcID" OptionCaptionColumn="Name">
+											<DataLayer Type="Static" ID="dlChartExtraAggrs">
+												<StaticDataRow Function="SUM" Name="Sum" />
+												<StaticDataRow Function="AVERAGE" Name="Average" />
+												<StaticDataRow Function="STDEV" Name="Standard Deviation" />
+												<StaticDataRow Function="COUNT" Name="Count" />
+												<StaticDataRow Function="DISTINCTCOUNT" Name="Distinct Count" />
+												<StaticDataRow Function="MIN" Name="Minimum" />
+												<StaticDataRow Function="MAX" Name="Maximum" />
+											</DataLayer>
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="Javascript" ID="actSelectXDataColumn" Javascript="rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" />
+											</EventHandler>
+										</InputSelectList>
+									</Column>
+								</Row>
+								<Row ID="rowChartForecast_rdAcID">
+									<Column ID="colChartForecastColumnCell1">
+										<Label ID="rdAcChartForecastLabel_rdAcID" Caption="Forecast " For="IslForecastType_rdAcID" />
+									</Column>
+									<Column ID="colChartForecastColumnCell2">
+										<InputSelectList OptionValueColumn="ForeccastType" ID="IslForecastType_rdAcID" OptionCaptionColumn="ForecastName" DefaultValue="@Request.IslForecastType_rdAcID~">
+											<DataLayer Type="Static" ID="dlForecastType">
+												<StaticDataRow ForeccastType="None" ForecastName="" />
+												<StaticDataRow ForeccastType="TimeSeriesDecomposition" ForecastName="Time Series" />
+												<StaticDataRow ForeccastType="Regression" ForecastName="Regression" />
+											</DataLayer>
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="Javascript" ID="actShowForecast" Javascript="rdShowForecast('rdAcID');rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" />
+											</EventHandler>
+										</InputSelectList>
+									</Column>
+									<Column ID="colChartForecastColumnCell3">
+										<InputSelectList OptionValueColumn="RegressionValue" ID="IslRegressionType_rdAcID" OptionCaptionColumn="RegressionName" Caption="Type " DefaultValue="@Request.IslRegressionType_rdAcID~">
+											<DataLayer Type="Static" ID="dlRegressionType">
+												<StaticDataRow RegressionName="Linear/Trend" RegressionValue="Linear" />
+												<StaticDataRow RegressionName="Autoregressive" RegressionValue="Autoregressive" />
+												<StaticDataRow RegressionName="Exponential" RegressionValue="Exponential" />
+												<StaticDataRow RegressionName="Logarithmic" RegressionValue="Logarithmic" />
+												<StaticDataRow RegressionName="Polynomial 2" RegressionValue="Polynomial2" />
+												<StaticDataRow RegressionName="Polynomial 3" RegressionValue="Polynomial3" />
+												<StaticDataRow RegressionName="Polynomial 4" RegressionValue="Polynomial4" />
+												<StaticDataRow RegressionName="Polynomial 5" RegressionValue="Polynomial5" />
+												<StaticDataRow RegressionName="Power" RegressionValue="Power" />
+											</DataLayer>
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="Javascript" ID="actSelectRegression" Javascript="rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" />
+											</EventHandler>
+										</InputSelectList>
+										<InputSelectList OptionValueColumn="TimeSeriesCycleValue" ID="IslTimeSeriesCycleLength_rdAcID" OptionCaptionColumn="TimeSeriesCycleName" Caption="Cycle " DefaultValue="@Request.IslTimeSeriesCycleLength_rdAcID~" IncludeBlank="True">
+											<DataLayer Type="Static" ID="dlTimeSeriesCycleLength">
+												<StaticDataRow TimeSeriesCycleName="Year" TimeSeriesCycleValue="Year" />
+												<StaticDataRow TimeSeriesCycleName="Quarter" TimeSeriesCycleValue="Quarter" />
+												<StaticDataRow TimeSeriesCycleName="Month" TimeSeriesCycleValue="Month" />
+												<StaticDataRow TimeSeriesCycleName="Week" TimeSeriesCycleValue="Week" />
+												<StaticDataRow TimeSeriesCycleName="Day" TimeSeriesCycleValue="Day" />
+											</DataLayer>
+											<EventHandler DhtmlEvent="onchange">
+												<Action Type="Javascript" ID="actSelectTimeSeries" Javascript="rdAcUpdateControls(true,'@Request.rdReport~','rdAcID');" />
+											</EventHandler>
+										</InputSelectList>
+										<Spaces Size="2" />
+									</Column>
+								</Row>
+							</Rows>
+						</Division>					
+						<IncludeHtml Html="&lt;SCRIPT rdAjaxRunOnLoad=&quot;True&quot;&gt;if(typeof rdAcUpdateControls !== 'undefined'){rdAcUpdateControls(false,'','rdAcID')}&lt;/SCRIPT&gt;" />
+					</Division>
+				</Column>
+			</Row>
+		</Rows>
+		<ChartTemplates>
+			<Chart Type="Pie" ChartHeight="300" ChartWidth="500" OuterBorderColor="#7A7A7A" RoundedBorder="4" YAxisTitle="Unit Price" LabelLayout="SideLayout" D3="5" ShowDataValues="False" Transparency="1" ID="ChartPie" LabelRoundedBorder="False" LabelShading="SoftLight" D3Angle="10" ChartTexture="RoundedEdge" MaxLabelLength="20" >
+				<FontChartTitle FontFilename="arial bold" FontSize="11" />
+				<HoverHighlight />
+				<Quicktip ID="rdAcPieChartQuicktip">
+					<QuicktipRow ID="rdAcPieChartQuicktipRow1" Caption=""/>
+				</Quicktip>
+				<RelevanceFilter ID="rdAcPieChartRelevanceFilter" RelevanceValue="8" RelevanceType="NumberOfRows" IrrelevanceLabel="Other" DataColumn="" LabelColumn=""/>
+			</Chart>
+			<Chart Type="XY" XYChartType="Bar" ChartHeight="300" ChartWidth="500" OuterBorderColor="#7A7A7A" RoundedBorder="4" Transparency="2" LineWidth="2" BarShape="Square" BarShading="BottomLight" D3="3" ChartBackgroundColor="#FFFFFF" ChartBackgroundGradientColor="#FFFFFF" MaxLabelLength="20" ID="ChartBar">
+				<FontLabel FontAngle="90" />
+				<FontChartTitle FontFilename="arial bold" FontSize="11" />
+				<HoverHighlight />
+				<Quicktip ID="rdAcBarChartQuicktip">
+					<QuicktipRow ID="rdAcBarChartQuicktipRow1" Caption=""/>
+				</Quicktip>
+				<RelevanceFilter ID="rdAcBarChartRelevanceFilter" RelevanceValue="8" RelevanceType="NumberOfRows" IrrelevanceLabel="Other" DataColumn="" LabelColumn=""/>
+			</Chart>
+			<Chart Type="Scatter" ChartHeight="300" ChartWidth="600" OuterBorderColor="#7A7A7A" RoundedBorder="4" Transparency="7" ChartSymbolFillColor="LightBlue" ChartSymbolEdgeColor="Blue" ChartSymbol="SymbolCircle" ChartBackgroundColor="#FFFFFF" ChartBackgroundGradientColor="#FFFFFF" ID="ChartScatter">
+				<FontLabel FontAngle="90" />
+				<FontChartTitle FontFilename="arial bold" FontSize="11" />
+				<ChartTrendLine Color="#111111" LineWidth="2" />
+				<HoverHighlight />
+				<Quicktip ID="rdAcScatterChartQuicktip">
+					<QuicktipRow ID="rdAcScatterChartQuicktipRow1" Caption=""/>
+				</Quicktip>
+			</Chart>
+			<Chart Type="XY" XYChartType="Spline" ChartHeight="300" ChartWidth="500" OuterBorderColor="#7A7A7A" RoundedBorder="4" Transparency="7" LineWidth="1" ChartBackgroundColor="#FFFFFF" ChartBackgroundGradientColor="#FFFFFF" MaxLabelLength="20" ID="ChartSpline">
+				<FontLabel FontAngle="90" />
+				<FontChartTitle FontFilename="arial bold" FontSize="11" />				
+				<Quicktip ID="rdAcSplineChartQuicktip">
+					<QuicktipRow ID="rdAcSplineChartQuicktipRow1" Caption=""/>
+				</Quicktip>
+			</Chart>
+			<Chart Type="XY" XYChartType="Line" ChartHeight="300" ChartWidth="500" OuterBorderColor="#7A7A7A" RoundedBorder="4" Transparency="7" LineWidth="1" ChartBackgroundColor="#FFFFFF" ChartBackgroundGradientColor="#FFFFFF" MaxLabelLength="20" ID="ChartLine">
+				<FontLabel FontAngle="90" />				
+				<FontChartTitle FontFilename="arial bold" FontSize="11" />
+				<HoverHighlight />
+				<Quicktip ID="rdAcLineChartQuicktip">
+					<QuicktipRow ID="rdAcLineChartQuicktipRow1" Caption=""/>			
+				</Quicktip>
+			</Chart>
+			<Chart Type="Heatmap" ChartHeight="300" ChartWidth="500" OuterBorderColor="#7A7A7A" RoundedBorder="4" ID="ChartHeatmap" >
+				<HeatmapFontTitle FontName="arial" FontFilename="arial bold" FontBold="True" FontSize="11" />
+				<HoverHighlight />
+				<Quicktip ID="rdAcHeatmapChartQuicktip">
+					<QuicktipRow ID="rdAcHeatmapChartQuicktipRow1" Caption=""/>
+					<QuicktipRow ID="rdAcHeatmapChartQuicktipRow2" Caption=""/>
+					<QuicktipRow ID="rdAcHeatmapChartQuicktipRow3" Caption=""/>
+				</Quicktip>
+			</Chart>
+		</ChartTemplates>
+		<ElementTemplate>
+			<Resizer ID="rdChartResizerTemplate" MinWidth="250" MinHeight="250" />
+			<AutoSizer ID="rdChartAutoSizerTemplate" />
+		</ElementTemplate>
+		<ElementTemplate>
+			<ExtraXYLayer ID="rdBarForecast" XYChartType="Line" ChartDataColumn="rdForecastValue" Color="Red" LineStyle="DotLine">
+				<Quicktip ID="rdAcBarChartQuicktip">
+					<QuicktipRow ID="rdAcBarChartQuicktipRow1" Caption=""/>
+				</Quicktip>
+			</ExtraXYLayer>
+		</ElementTemplate>
+	</Body>
+</Report>

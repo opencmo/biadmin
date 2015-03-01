@@ -1,0 +1,692 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="by Category"
+	ID="Reports.MetricsByCategory"
+	>
+	<ReportCenterItem
+		ReportCenterFolder="Metrics Reports"
+		ReportCenterTargetFrameID="_blank"
+	/>
+	<StyleSheet
+		ID="themeTransit"
+		StyleSheet="extraTheme.css"
+		Theme="Transit"
+	/>
+	<DefaultRequestParams
+		camid="0"
+		conid="0"
+		dateFrom="@Date.ThisMonthStart~"
+		dateTo="@Date.ThisMonthEnd~"
+		groupby="DATE(rbc.process_date),rbc.site_category"
+		pageid="0"
+		siteid="0"
+		tsid="0"
+	/>
+	<ReportHeader>
+		<Division
+			Class="ThemeAlignLeft"
+			HtmlDiv="True"
+			ID="repName"
+			>
+			<Label
+				Caption="Metrics by Category"
+				Class="ThemeHeaderLarger"
+			/>
+		</Division>
+		<HR/>
+	</ReportHeader>
+	<Body>
+		<Division
+			HtmlDiv="True"
+			>
+			<Division
+				Class="PullRight"
+				HtmlDiv="True"
+				ID="expRow"
+				>
+				<Button
+					Caption="Export to Excel"
+					Class="ThemeContainerShadedAndBordered"
+					ID="exportExcel"
+					>
+					<Action
+						ID="actExport"
+						Type="NativeExcel"
+						>
+						<Target
+							ExcelOutputFormat="Excel2007"
+							ExportDataTableID="dtMetrics"
+							ExportFilename="Stats by Category @Request.dateFrom~_@Request.dateTo~"
+							ShowGridlines="True"
+							Type="NativeExcel"
+						/>
+						<LinkParams
+							dateFrom="@Request.dateFrom~"
+							dateTo="@Request.dateTo~"
+						/>
+					</Action>
+				</Button>
+			</Division>
+			<IncludeHtml
+				Html="&lt;a href=&quot;a3&quot; class = &quot;spoilerButton&quot;&gt;Show/Hide Filters&lt;/a&gt;"
+				ID="htmlHideFilters"
+			/>
+			<Division
+				Class="spoiler"
+				HtmlDiv="True"
+				ID="a3"
+				>
+				<ResponsiveRow
+					CollisionBehavior="Wrap"
+					ID="DatePickRRow"
+					>
+					<ResponsiveColumn
+						ColspanLargeScreen="6"
+						ColspanMediumScreen="6"
+						ColspanSmallScreen="4"
+						>
+						<FieldsetBox
+							Caption="Filter by Date"
+							>
+							<IncludeSharedElement
+								DefinitionFile="SharedElements"
+								SharedElementID="DatePickerAC"
+							/>
+						</FieldsetBox>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow
+					CollisionBehavior="Wrap"
+					ID="GoupRRow"
+					>
+					<ResponsiveColumn
+						ColspanLargeScreen="5"
+						ColspanMediumScreen="5"
+						ColspanSmallScreen="4"
+						ID="GroupByRCol"
+						>
+						<FieldsetBox
+							Caption="Group by"
+							>
+							<InputCheckboxList
+								CheckboxListDropdown="True"
+								Class="ThemeAlignLeft"
+								DefaultValue="@Request.groupby~"
+								ID="groupby"
+								MultiSelect="True"
+								OptionCaptionColumn="Name"
+								OptionValueColumn="value"
+								>
+								<DataLayer
+									Type="Static"
+									>
+									<StaticDataRow
+										Name="Date"
+										value="DATE(rbc.process_date)"
+									/>
+									<StaticDataRow
+										Name="Targeting Strategy"
+										value="ts.name"
+									/>
+									<StaticDataRow
+										Name="Campaign"
+										value="c.name"
+									/>
+									<StaticDataRow
+										Name="Site"
+										value="rbc.site_category"
+									/>
+									<StaticDataRow
+										Name="Page"
+										value="rbc.page_categogy"
+									/>
+									<Remark>
+										<StaticDataRow
+											Name="Content"
+											value="rbc.content_category"
+										/>
+									</Remark>
+								</DataLayer>
+							</InputCheckboxList>
+						</FieldsetBox>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow
+					CollisionBehavior="Wrap"
+					ID="FilterRRow"
+					>
+					<ResponsiveColumn
+						ColspanLargeScreen="6"
+						ColspanMediumScreen="6"
+						ColspanSmallScreen="4"
+						ID="FilterByRCol"
+						>
+						<FieldsetBox
+							Caption="Filter by"
+							>
+							<Rows>
+								<Row>
+									<Column
+										ID="colTsId"
+										>
+										<Label
+											Caption="Targeting Strategy:"
+											Class="ThemeAlignRight"
+										/>
+										<LineBreak/>
+										<InputCheckboxList
+											CheckboxListDropdown="True"
+											DefaultValue="@Request.tsid~"
+											ID="tsid"
+											OptionCaptionColumn="name"
+											OptionValueColumn="targeting_strategy_id"
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="tsidSql"
+												Source="Select ts.name, ts.targeting_strategy_id
+From opendsp.ld_targeting_strategy ts
+Where ts.targeting_strategy_id &gt; 500
+Order By ts.name
+"
+												Type="SQL"
+											/>
+										</InputCheckboxList>
+									</Column>
+									<Column
+										ID="colCamId"
+										>
+										<Label
+											Caption="Campaign:"
+											Class="ThemeAlignRight"
+										/>
+										<LineBreak/>
+										<InputCheckboxList
+											CheckboxListDropdown="True"
+											DefaultValue="@Request.camid~"
+											ID="camid"
+											OptionCaptionColumn="name"
+											OptionValueColumn="campaign_id"
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="camidSql"
+												Source="Select c.campaign_id, c.name
+From opendsp.ld_campaign c
+Where c.campaign_id&gt;0 
+Order By c.name"
+												Type="SQL"
+											/>
+										</InputCheckboxList>
+									</Column>
+								</Row>
+								<Row>
+									<Column
+										ID="colSite"
+										>
+										<Label
+											Caption="Site: "
+											Class="ThemeAlignLeft"
+										/>
+										<LineBreak/>
+										<InputCheckboxList
+											CheckboxListDropdown="True"
+											Class="ThemeAlignLeft"
+											DefaultValue="@Request.siteid~"
+											ID="siteid"
+											OptionCaptionColumn="site_category"
+											OptionValueColumn="site_category"
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="siteSql"
+												Source="Select rbc.site_category
+From hive_stats.st_report_by_category rbc
+Group By rbc.site_category
+Order By rbc.site_category"
+												Type="SQL"
+											/>
+										</InputCheckboxList>
+									</Column>
+									<Remark>
+										<Column
+											ID="colCon"
+											>
+											<Label
+												Caption="Content:"
+												Class="ThemeAlignLeft"
+											/>
+											<LineBreak/>
+											<InputCheckboxList
+												CheckboxListDropdown="True"
+												Class="ThemeAlignLeft"
+												DefaultValue="@Request.conid~"
+												ID="conid"
+												OptionCaptionColumn="content_category"
+												OptionValueColumn="content_category"
+												>
+												<DataLayer
+													ConnectionID="OpenDSP"
+													ID="conSql"
+													Source="Select rbc.content_category
+From hive_stats.st_report_by_category rbc
+Group By rbc.content_category
+Order By rbc.content_category"
+													Type="SQL"
+												/>
+											</InputCheckboxList>
+										</Column>
+									</Remark>
+									<Column
+										ID="colPage"
+										>
+										<Label
+											Caption="Page:"
+											Class="ThemeAlignLeft"
+										/>
+										<LineBreak/>
+										<InputCheckboxList
+											CheckboxListDropdown="True"
+											Class="ThemeAlignLeft"
+											DefaultValue="@Request.pageid~"
+											ID="pageid"
+											OptionCaptionColumn="site_category"
+											OptionValueColumn="id"
+											>
+											<DataLayer
+												ConnectionID="OpenDSP"
+												ID="pageSql"
+												Source="Select rbc.page_categogy
+From hive_stats.st_report_by_category rbc
+Group By rbc.page_categogy
+Order By rbc.page_categogy"
+												Type="SQL"
+											/>
+										</InputCheckboxList>
+									</Column>
+								</Row>
+							</Rows>
+						</FieldsetBox>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+			</Division>
+		</Division>
+		<LineBreak
+			ID="LineUnderButton"
+		/>
+		<Division
+			HtmlDiv="True"
+			ID="divContainer"
+			>
+			<Division
+				HtmlDiv="True"
+				ID="divInnerContainer"
+				>
+				<DataTable
+					ID="dtMetricss"
+					Width="98"
+					WidthScale="%"
+					>
+					<DataLayer
+						ConnectionID="OpenDSP"
+						ID="dlMetricss"
+						MaxRows="0"
+						Source="SELECT 1;"
+						Type="SQL"
+					/>
+					<DataTableColumn
+						Header="Date"
+						ID="colDate"
+						Width="12"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;ts.name&apos;) &gt; -1"
+						Header="Targeting Strategy"
+						ID="colTargetingStrategy"
+						Width="15"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;c.name&apos;) &gt; -1"
+						Header="Campaign"
+						ID="colCampaign"
+						Width="15"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbc.site_category&apos;) &gt; -1"
+						Header="Site"
+						ID="colSite"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbc.page_categogy&apos;) &gt; -1"
+						Header="Page"
+						ID="colPage"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Bids"
+						ID="colBids"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Wins"
+						ID="colWins"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Impressions"
+						ID="colImpressions"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Clicks"
+						ID="colClicks"
+						Width="7"
+						WidthScale="%"
+					/>
+					<DataTableColumn
+						Header="Cost"
+						ID="colCost"
+						Width="7"
+						WidthScale="%"
+					/>
+				</DataTable>
+			</Division>
+			<Division
+				Class="scrollingTableDiv"
+				HtmlDiv="True"
+				ID="divDataTable"
+				>
+				<DataTable
+					AltRowClass="ThemeAlternatingRow"
+					Class="specialTable"
+					ID="dtMetrics"
+					Width="99"
+					WidthScale="%"
+					>
+					<DataLayer
+						ConnectionID="OpenDSP"
+						ID="dlMetrics"
+						Source="SELECT 
+DATE(rbc.process_date) Date,
+ifnull(ts.name, &apos;- n/a -&apos;) TargetingStrategy,
+ifnull(c.name, &apos;- n/a -&apos;) Campaign,
+ifnull(rbc.site_category, &apos;- n/a -&apos;) Site, 
+ifnull(rbc.page_categogy, &apos;- n/a -&apos;) Page, 
+ifnull(rbc.content_category, &apos;- n/a -&apos;) Content, 
+ifnull(sum(rbc.bids), 0) Bids, 
+ifnull(sum(rbc.wins), 0) Wins,
+ifnull(sum(rbc.impressions), 0) Impressions, 
+ifnull(sum(rbc.clicks), 0) Clicks,
+ifnull(sum(rbc.cost / 1000000), 0) Cost
+
+FROM hive_stats.st_report_by_category rbc
+	left join opendsp.ld_targeting_strategy ts ON rbc.targeting_id = ts.targeting_strategy_id
+    left join opendsp.ld_campaign_lineitem cl on ts.campaign_lineitem_id = cl.campaign_lineitem_id
+	left join opendsp.ld_campaign c on cl.campaign_id = c.campaign_id
+	
+Where DATE(rbc.process_date) between &apos;@Request.dateFrom~&apos; and &apos;@Request.dateTo~&apos;
+and (&apos;0&apos; IN (&apos;@Request.tsid~&apos;) or ts.targeting_strategy_id IN (@SingleQuote.Request.tsid~))
+and (&apos;0&apos; IN (&apos;@Request.camid~&apos;) or c.campaign_id IN (@SingleQuote.Request.camid~))
+and (&apos;0&apos; IN (&apos;@Request.siteid~&apos;) or rbc.site_category IN (@SingleQuote.Request.siteid~))
+and (&apos;0&apos; IN (&apos;@Request.pageid~&apos;) or rbc.page_categogy IN (@SingleQuote.Request.pageid~))
+and (&apos;0&apos; IN (&apos;@Request.conid~&apos;) or rbc.content_category IN (@SingleQuote.Request.conid~))
+
+group by @Request.groupby~ 
+order by @Request.groupby~ ;
+"
+						Type="SQL"
+					/>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colDate"
+						Width="12"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Date~"
+							Format="Short Date"
+							ID="lblDate"
+						/>
+						<DataColumnSort
+							DataColumn="Date"
+							DataType="Date"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;ts.name&apos;) &gt; -1"
+						ID="colTargetingStrategy"
+						Width="15"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.TargetingStrategy~"
+							ID="lblTargetingStrategy"
+						/>
+						<DataColumnSort
+							DataColumn="TargetingStrategy"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;c.name&apos;) &gt; -1"
+						ID="colCampaign"
+						Width="15"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Campaign~"
+							ID="lblCampaign"
+						/>
+						<DataColumnSort
+							DataColumn="Campaign"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbc.site_category&apos;) &gt; -1"
+						ID="colSite"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Site~"
+							ID="lblSite"
+							>
+							<ConditionalClass
+								Class="ThemeTextNegative"
+								Condition="&quot;@Data.Site~&quot; == &quot;- n/a -&quot;"
+							/>
+						</Label>
+						<DataColumnSort
+							DataColumn="Site"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						Condition="&apos;@Request.groupby~&apos;.indexOf(&apos;rbc.page_categogy&apos;) &gt; -1"
+						ID="colPage"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Page~"
+							ID="lblPage"
+							>
+							<ConditionalClass
+								Class="ThemeTextNegative"
+								Condition="&quot;@Data.Page~&quot; == &quot;- n/a -&quot;"
+							/>
+						</Label>
+						<DataColumnSort
+							DataColumn="Page"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colBids"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Bids~"
+							Format="###,###,##0"
+							ID="lblBids"
+						/>
+						<DataColumnSort
+							DataColumn="Bids"
+							DataType="Number"
+						/>
+						<DataColumnSummary
+							DataColumn="Bids"
+							Function="Sum"
+							ID="sumBids"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colWins"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Wins~"
+							Format="###,###,##0"
+							ID="lblWins"
+						/>
+						<DataColumnSort
+							DataColumn="Wins"
+							DataType="Number"
+						/>
+						<DataColumnSummary
+							DataColumn="Wins"
+							Function="Sum"
+							ID="sumWins"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colImpressions"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Impressions~"
+							Format="###,###,##0"
+							ID="lblImpressions"
+						/>
+						<DataColumnSort
+							DataColumn="Impressions"
+							DataType="Number"
+						/>
+						<DataColumnSummary
+							DataColumn="Impressions"
+							Function="Sum"
+							ID="sumImpressions"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colClicks"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Clicks~"
+							Format="###,###,##0"
+							ID="lblClicks"
+						/>
+						<DataColumnSort
+							DataColumn="Clicks"
+							DataType="Number"
+						/>
+						<DataColumnSummary
+							DataColumn="Clicks"
+							Function="Sum"
+							ID="sumClicks"
+						/>
+					</DataTableColumn>
+					<DataTableColumn
+						Class="ThemeAlignLeft"
+						ID="colCost"
+						Width="7"
+						WidthScale="%"
+						>
+						<Label
+							Caption="@Data.Cost~"
+							Format="$###,###,##0.00"
+							ID="lblCost"
+						/>
+						<DataColumnSort
+							DataColumn="Cost"
+							DataType="Number"
+						/>
+						<DataColumnSummary
+							DataColumn="Cost"
+							Function="Sum"
+							ID="sumCost"
+						/>
+					</DataTableColumn>
+					<SummaryRow
+						Caption="Total"
+					/>
+					<InteractivePaging
+						CaptionType="Image"
+						HideWhenOnePage="True"
+						Location="Bottom"
+						PageRowCount="100"
+						ShowPageNumber="True"
+					/>
+				</DataTable>
+			</Division>
+		</Division>
+	</Body>
+	<ReportFooter>
+		<IncludeHtml
+			Html="&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+    
+	&lt;script type=&quot;text/javascript&quot;&gt;
+    $(document).ready(function(){
+        $(&quot;.spoilerButton&quot;).click(function (e) { 
+            e.preventDefault()
+            var foo=$(this).attr(&apos;href&apos;)
+            $(&apos;#&apos;+foo).slideToggle(1000); 
+        });
+		$(&quot;.spoiler&quot;).show();
+    });
+    &lt;/script&gt;"
+		/>
+		<IncludeScript
+			IncludedScript="$(document).ready(function() {
+  function setHeight() {
+    windowHeight = $(window).innerHeight();
+    $(&apos;.scrollingTableDiv&apos;).css(&apos;min-height&apos;, windowHeight-139);
+  };
+  setHeight();
+  
+  $(window).resize(function() {
+    setHeight();
+  });
+});"
+		/>
+	</ReportFooter>
+	<ideTestParams
+		camid="0"
+		conid="0"
+		dateFrom="2015-06-20"
+		dateTo="2015-06-28"
+		groupby="DATE(rbc.process_date),rbc.site_category"
+		pageid="0"
+		siteid="0"
+		tsid="0"
+	/>
+</Report>

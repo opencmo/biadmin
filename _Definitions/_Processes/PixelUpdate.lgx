@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Process
+	ID="PixelUpdate"
+	>
+	<Task
+		ID="insertConv"
+		>
+		<Procedure
+			ConnectionID="OpenDSP.JDBC"
+			ID="insrSql1"
+			SqlCommand="INSERT INTO ld_data_collection (client_id, name, description)
+VALUES (@Request.inpCID~, &apos;@Request.inpPN~&apos;, &apos;@Request.inpDesc~&apos;);
+
+SELECT LAST_INSERT_ID() INTO @dcId;
+
+INSERT INTO ld_pixel 
+(name, type, created_datetime, advertiser_id, data_collection_id, campaign_id) 
+VALUES
+(&apos;@Request.inpPN~&apos;, &apos;Conversion&apos;, NOW(), @Request.inpAID~, @dcId, @Request.inpCamID~);
+
+SELECT 1 INTO @orderNum;
+
+INSERT INTO opendsp.ld_data_collection_attribute
+(data_collection_id, name, code, attribute_source_id, order_index, version_added_in)
+VALUES
+(@dcId, &apos;uid_got&apos;, &apos;$uid_got&apos;, 30, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;uid_set&apos;, &apos;$uid_set&apos;, 31, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;uid_reset&apos;, &apos;$uid_reset&apos;, 32, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;time_iso8601&apos;, &apos;$time_iso8601&apos;, 33, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;enr_usec&apos;, &apos;$enr_usec&apos;, 29, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;enr_device&apos;, &apos;$enr_device&apos;, 17, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;enr_device&apos;, &apos;$enr_os&apos;, 16, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_area_code&apos;, &apos;$geoip_area_code&apos;, 12, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_city&apos;, &apos;$geoip_city&apos;, 8, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_city_country_code&apos;, &apos;$geoip_city_country_code&apos;, 7, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_latitude&apos;, &apos;$geoip_latitude&apos;, 13, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_longitude&apos;, &apos;$geoip_longitude&apos;, 14, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_region&apos;, &apos;$geoip_region&apos;, 9, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;enr_scheme&apos;, &apos;$enr_scheme&apos;, 34, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;http_referer&apos;, &apos;$http_referer&apos;, 5, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;http_user_agent&apos;, &apos;$http_user_agent&apos;, 6, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;remote_addr&apos;, &apos;$remote_addr&apos;, 2, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;request_time&apos;,&apos;$request_time&apos;, 4, @orderNum:=@orderNum+1,0);
+
+INSERT INTO opendsp.ld_data_collection_attribute
+(data_collection_id, name, code, attribute_source_id, default_value, order_index, version_added_in)
+VALUES
+(@dcId, &apos;client_id&apos;, &apos;@Request.inpCID~&apos;, 35, &apos;@Request.inpCID~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;data_collection_id&apos;, @dcId, 35, @dcId, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;name&apos;, &apos;@Request.inpPN~&apos;, 35, &apos;@Request.inpPN~&apos;, @orderNum:=@orderNum+1,0);
+
+INSERT INTO opendsp.ld_data_collection_attribute
+(data_collection_id, name, code, attribute_source_id, default_value, order_index, version_added_in)
+VALUES
+(@dcId, &apos;scid&apos;, &apos;$arg_scid&apos;, 35, &apos;@Request.inpCID~&apos;, @orderNum:=@orderNum+1,0);
+
+
+INSERT INTO opendsp.ld_data_collection_attribute
+(data_collection_id, name, code, attribute_source_id, default_value, order_index, version_added_in)
+VALUES
+(@dcId, &apos;@Request.nam1~&apos;, &apos;$arg_@Request.nam1~&apos;, 35, &apos;@Request.val1~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam2~&apos;, &apos;$arg_@Request.nam2~&apos;, 35, &apos;@Request.val2~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam3~&apos;, &apos;$arg_@Request.nam3~&apos;, 35, &apos;@Request.val3~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam4~&apos;, &apos;$arg_@Request.nam4~&apos;, 35, &apos;@Request.val4~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam5~&apos;, &apos;$arg_@Request.nam5~&apos;, 35, &apos;@Request.val5~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam6~&apos;, &apos;$arg_@Request.nam6~&apos;, 35, &apos;@Request.val6~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam7~&apos;, &apos;$arg_@Request.nam7~&apos;, 35, &apos;@Request.val7~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam8~&apos;, &apos;$arg_@Request.nam8~&apos;, 35, &apos;@Request.val8~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam9~&apos;, &apos;$arg_@Request.nam9~&apos;, 35, &apos;@Request.val9~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam10~&apos;, &apos;$arg_@Request.nam10~&apos;, 35, &apos;@Request.val10~&apos;, @orderNum:=@orderNum+1,0);
+
+/*INSERT INTO opendsp.ld_data_collection_payload
+(data_collection_id, http_code, code_type, redirect_uri)
+VALUES
+(@dcId, &apos;302&apos;, &apos;redirect&apos;, &apos;/man/conversion/?scid=@Request.inpCamID~&apos;);*/"
+			Type="SQL"
+		/>
+		<Response
+			Type="Report"
+			>
+			<Target
+				Report="Pixel_UI"
+				Type="Report"
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="insrRetarg"
+		>
+		<Procedure
+			ConnectionID="OpenDSP.JDBC"
+			ID="insrSql2"
+			SqlCommand="INSERT INTO ld_data_collection (client_id, name, description)
+VALUES (@Request.inpCID~, &apos;@Request.inpPN~&apos;, &apos;@Request.inpDesc~&apos;);
+
+SELECT LAST_INSERT_ID() INTO @dcId;
+
+INSERT INTO ld_pixel 
+(name, type, created_datetime, advertiser_id, data_collection_id)
+VALUES
+(&apos;@Request.inpPN~&apos;, &apos;Retargeting&apos;, NOW(), @Request.inpAID~, @dcId);
+
+SELECT 1 INTO @orderNum;
+
+INSERT INTO opendsp.ld_data_collection_attribute
+(data_collection_id, name, code, attribute_source_id, order_index, version_added_in)
+VALUES
+(@dcId, &apos;uid_got&apos;, &apos;$uid_got&apos;, 30, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;uid_set&apos;, &apos;$uid_set&apos;, 31, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;uid_reset&apos;, &apos;$uid_reset&apos;, 32, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;time_iso8601&apos;, &apos;$time_iso8601&apos;, 33, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;enr_usec&apos;, &apos;$enr_usec&apos;, 29, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;enr_device&apos;, &apos;$enr_device&apos;, 17, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;enr_device&apos;, &apos;$enr_os&apos;, 16, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_area_code&apos;, &apos;$geoip_area_code&apos;, 12, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_city&apos;, &apos;$geoip_city&apos;, 8, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_city_country_code&apos;, &apos;$geoip_city_country_code&apos;, 7, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_latitude&apos;, &apos;$geoip_latitude&apos;, 13, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_longitude&apos;, &apos;$geoip_longitude&apos;, 14, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;geoip_region&apos;, &apos;$geoip_region&apos;, 9, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;enr_scheme&apos;, &apos;$enr_scheme&apos;, 34, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;http_referer&apos;, &apos;$http_referer&apos;, 5, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;http_user_agent&apos;, &apos;$http_user_agent&apos;, 6, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;remote_addr&apos;, &apos;$remote_addr&apos;, 2, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;request_time&apos;,&apos;$request_time&apos;, 4, @orderNum:=@orderNum+1,0);
+
+INSERT INTO opendsp.ld_data_collection_attribute
+(data_collection_id, name, code, attribute_source_id, default_value, order_index, version_added_in)
+VALUES
+(@dcId, &apos;client_id&apos;, &apos;@Request.inpCID~&apos;, 35, &apos;@Request.inpCID~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;data_collection_id&apos;, @dcId, 35, @dcId, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;name&apos;, &apos;@Request.inpPN~&apos;, 35, &apos;@Request.inpPN~&apos;, @orderNum:=@orderNum+1,0);
+
+INSERT INTO opendsp.ld_data_collection_attribute
+(data_collection_id, name, code, attribute_source_id, default_value, order_index, version_added_in)
+VALUES
+(@dcId, &apos;@Request.nam1~&apos;, &apos;$arg_@Request.nam1~&apos;, 35, &apos;@Request.val1~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam2~&apos;, &apos;$arg_@Request.nam2~&apos;, 35, &apos;@Request.val2~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam3~&apos;, &apos;$arg_@Request.nam3~&apos;, 35, &apos;@Request.val3~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam4~&apos;, &apos;$arg_@Request.nam4~&apos;, 35, &apos;@Request.val4~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam5~&apos;, &apos;$arg_@Request.nam5~&apos;, 35, &apos;@Request.val5~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam6~&apos;, &apos;$arg_@Request.nam6~&apos;, 35, &apos;@Request.val6~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam7~&apos;, &apos;$arg_@Request.nam7~&apos;, 35, &apos;@Request.val7~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam8~&apos;, &apos;$arg_@Request.nam8~&apos;, 35, &apos;@Request.val8~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam9~&apos;, &apos;$arg_@Request.nam9~&apos;, 35, &apos;@Request.val9~&apos;, @orderNum:=@orderNum+1,0),
+(@dcId, &apos;@Request.nam10~&apos;, &apos;$arg_@Request.nam10~&apos;, 35, &apos;@Request.val10~&apos;, @orderNum:=@orderNum+1,0);
+
+/*INSERT INTO opendsp.ld_data_collection_payload
+(data_collection_id, http_code, code_type)
+VALUES
+(@dcId, &apos;200&apos;, &apos;image&apos;);
+*/
+
+INSERT INTO opendsp.ld_first_party_audience_segment
+(name,advertiser_id,description,expiry_days)
+VALUES (&apos;@Request.inpPN~&apos;, @Request.inpAID~, &apos;@Request.inpDesc~&apos;,31);
+
+SELECT LAST_INSERT_ID() INTO @lastSegment;
+
+INSERT INTO opendsp.ld_segment_rule_data_collection (data_collection_id,first_party_audience_segment_id) 
+VALUES (@dcId, @lastSegment);
+"
+			Type="SQL"
+		/>
+		<Response
+			Type="Report"
+			>
+			<Target
+				Report="Pixel_UI"
+				Type="Report"
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="insrOther"
+		>
+		<Procedure
+			ConnectionID="OpenDSP.JDBC"
+			ID="insrSql3"
+			SqlCommand="INSERT INTO ld_data_collection (client_id, name, description)
+VALUES (@Request.inpCID~, &apos;@Request.inpPN~&apos;, &apos;@Request.inpDesc~&apos;);
+
+SELECT LAST_INSERT_ID() INTO @dcId;
+
+INSERT INTO ld_pixel 
+(name, type, created_datetime, advertiser_id, data_collection_id)
+VALUES
+(&apos;@Request.inpPN~&apos;, &apos;Other&apos;, NOW(), @Request.inpAID~, @dcId);
+
+SELECT 1 INTO @orderNum;
+
+INSERT INTO opendsp.ld_data_collection_attribute
+(data_collection_id, name, code, attribute_source_id, order_index)
+VALUES
+(@dcId, &apos;uid_got&apos;, &apos;$uid_got&apos;, 30, @orderNum:=@orderNum+1),
+(@dcId, &apos;uid_set&apos;, &apos;$uid_set&apos;, 31, @orderNum:=@orderNum+1),
+(@dcId, &apos;uid_reset&apos;, &apos;$uid_reset&apos;, 32, @orderNum:=@orderNum+1),
+(@dcId, &apos;time_iso8601&apos;, &apos;$time_iso8601&apos;, 33, @orderNum:=@orderNum+1),
+(@dcId, &apos;enr_usec&apos;, &apos;$enr_usec&apos;, 29, @orderNum:=@orderNum+1),
+(@dcId, &apos;enr_device&apos;, &apos;$enr_device&apos;, 17, @orderNum:=@orderNum+1),
+(@dcId, &apos;enr_device&apos;, &apos;$enr_os&apos;, 16, @orderNum:=@orderNum+1),
+(@dcId, &apos;geoip_area_code&apos;, &apos;$geoip_area_code&apos;, 12, @orderNum:=@orderNum+1),
+(@dcId, &apos;geoip_city&apos;, &apos;$geoip_city&apos;, 8, @orderNum:=@orderNum+1),
+(@dcId, &apos;geoip_city_country_code&apos;, &apos;$geoip_city_country_code&apos;, 7, @orderNum:=@orderNum+1),
+(@dcId, &apos;geoip_latitude&apos;, &apos;$geoip_latitude&apos;, 13, @orderNum:=@orderNum+1),
+(@dcId, &apos;geoip_longitude&apos;, &apos;$geoip_longitude&apos;, 14, @orderNum:=@orderNum+1),
+(@dcId, &apos;geoip_region&apos;, &apos;$geoip_region&apos;, 9, @orderNum:=@orderNum+1),
+(@dcId, &apos;enr_scheme&apos;, &apos;$enr_scheme&apos;, 34, @orderNum:=@orderNum+1),
+(@dcId, &apos;http_referer&apos;, &apos;$http_referer&apos;, 5, @orderNum:=@orderNum+1),
+(@dcId, &apos;http_user_agent&apos;, &apos;$http_user_agent&apos;, 6, @orderNum:=@orderNum+1),
+(@dcId, &apos;remote_addr&apos;, &apos;$remote_addr&apos;, 2, @orderNum:=@orderNum+1),
+(@dcId, &apos;request_time&apos;,&apos;$request_time&apos;, 4, @orderNum:=@orderNum+1);
+
+INSERT INTO opendsp.ld_data_collection_attribute
+(data_collection_id, name, code, attribute_source_id, default_value, order_index)
+VALUES
+(@dcId, &apos;client_id&apos;, &apos;@Request.inpCID~&apos;, 35, &apos;@Request.inpCID~&apos;, @orderNum:=@orderNum+1),
+(@dcId, &apos;data_collection_id&apos;, @dcId, 35, @dcId, @orderNum:=@orderNum+1),
+(@dcId, &apos;name&apos;, &apos;@Request.inpPN~&apos;, 35, &apos;@Request.inpPN~&apos;, @orderNum:=@orderNum+1);
+
+INSERT INTO opendsp.ld_data_collection_attribute
+(data_collection_id, name, code, attribute_source_id, default_value, order_index)
+VALUES
+(@dcId, &apos;@Request.nam1~&apos;, &apos;$arg_@Request.nam1~&apos;, 35, &apos;@Request.val1~&apos;, @orderNum:=@orderNum+1),
+(@dcId, &apos;@Request.nam2~&apos;, &apos;$arg_@Request.nam2~&apos;, 35, &apos;@Request.val2~&apos;, @orderNum:=@orderNum+1),
+(@dcId, &apos;@Request.nam3~&apos;, &apos;$arg_@Request.nam3~&apos;, 35, &apos;@Request.val3~&apos;, @orderNum:=@orderNum+1),
+(@dcId, &apos;@Request.nam4~&apos;, &apos;$arg_@Request.nam4~&apos;, 35, &apos;@Request.val4~&apos;, @orderNum:=@orderNum+1),
+(@dcId, &apos;@Request.nam5~&apos;, &apos;$arg_@Request.nam5~&apos;, 35, &apos;@Request.val5~&apos;, @orderNum:=@orderNum+1),
+(@dcId, &apos;@Request.nam6~&apos;, &apos;$arg_@Request.nam6~&apos;, 35, &apos;@Request.val6~&apos;, @orderNum:=@orderNum+1),
+(@dcId, &apos;@Request.nam7~&apos;, &apos;$arg_@Request.nam7~&apos;, 35, &apos;@Request.val7~&apos;, @orderNum:=@orderNum+1),
+(@dcId, &apos;@Request.nam8~&apos;, &apos;$arg_@Request.nam8~&apos;, 35, &apos;@Request.val8~&apos;, @orderNum:=@orderNum+1),
+(@dcId, &apos;@Request.nam9~&apos;, &apos;$arg_@Request.nam9~&apos;, 35, &apos;@Request.val9~&apos;, @orderNum:=@orderNum+1),
+(@dcId, &apos;@Request.nam10~&apos;, &apos;$arg_@Request.nam10~&apos;, 35, &apos;@Request.val10~&apos;, @orderNum:=@orderNum+1);
+
+INSERT INTO opendsp.ld_data_collection_payload
+(data_collection_id, http_code, code_type)
+VALUES
+(@dcId, &apos;200&apos;, &apos;image&apos;);
+
+
+INSERT INTO opendsp.ld_first_party_audience_segment
+(name,advertiser_id,description,expiry_days)
+VALUES
+(&apos;@Request.inpPN~&apos;, @Request.inpAID~, &apos;@Request.inpDesc~&apos;, 31);
+
+SELECT LAST_INSERT_ID() INTO @lastSegment;
+
+INSERT INTO opendsp.ld_segment_rule_data_collection (data_collection_id,first_party_audience_segment_id) 
+VALUES (@dcId, @lastSegment);"
+			Type="SQL"
+		/>
+		<Response
+			Type="Report"
+			>
+			<Target
+				Report="Pixel_UI"
+				Type="Report"
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="ExcludeVendors"
+		>
+		<Procedure
+			Expression="&apos;@Request.inpVendList~&apos; = &apos;&apos;"
+			ID="ifVendListEmpty"
+			Type="If"
+			>
+			<Procedure
+				ConnectionID="OpenDSP.JDBC"
+				ID="exldVendors"
+				SqlCommand="Delete from opendsp.ld_pixel_exclude_data_sync_provider
+where `pixel_id` = &apos;@Request.inpPixList~&apos;;"
+				Type="SQL"
+			/>
+			<Response
+				Type="Report"
+				>
+				<Target
+					Report="Pixel_UI"
+					Type="Report"
+				/>
+			</Response>
+		</Procedure>
+		<Procedure
+			Expression="&apos;@Request.inpVendList~&apos; != &apos;&apos;"
+			ID="ifVendListNotEmpty"
+			Type="If"
+			>
+			<Procedure
+				ConnectionID="OpenDSP.JDBC"
+				ID="exldVendors"
+				SqlCommand="Delete from opendsp.ld_pixel_exclude_data_sync_provider
+where `pixel_id` = &apos;@Request.inpPixList~&apos;;
+
+#Задаём начальные переменные:
+SET @pixel_id = &apos;@Request.inpPixList~&apos;;
+SET @data_sync_partner_id=&apos;@Request.inpVendList~&apos;;
+
+#Готовим строку типа (278,1),(278,2),(278,3),(278,4),(278,5)
+SET @insert_string = CONCAT(&apos;(&apos;,@pixel_id,&apos;,&apos;,REPLACE(@data_sync_partner_id,&apos;,&apos;,CONCAT(&apos;),(&apos;,@pixel_id,&apos;,&apos;)),&apos;)&apos;);
+
+#Готовим SQL-запрос:
+SET @query = CONCAT(&apos;INSERT INTO `opendsp`.`ld_pixel_exclude_data_sync_provider` (`pixel_id`,`data_sync_partner_id`) VALUES &apos;,@insert_string);
+
+#Готовим запрос к запуску:
+PREPARE insert_string FROM @query;
+
+#Выполняем:
+EXECUTE insert_string;"
+				Type="SQL"
+			/>
+			<Response
+				Type="Report"
+				>
+				<Target
+					Report="Pixel_UI"
+					Type="Report"
+				/>
+			</Response>
+		</Procedure>
+	</Task>
+	<ideTestParams
+		inpAID=""
+		inpCamID=""
+		inpCID=""
+		inpDesc=""
+		inpPixList=""
+		inpPN=""
+		inpVendList=""
+		nam1=""
+		nam10=""
+		nam2=""
+		nam3=""
+		nam4=""
+		nam5=""
+		nam6=""
+		nam7=""
+		nam8=""
+		nam9=""
+		rdTaskID="insertConv"
+		val1=""
+		val10=""
+		val2=""
+		val3=""
+		val4=""
+		val5=""
+		val6=""
+		val7=""
+		val8=""
+		val9=""
+	/>
+</Process>

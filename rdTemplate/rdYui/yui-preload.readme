@@ -1,0 +1,6 @@
+YUI Preload is based off concepts from Simple YUI(http://ericmiraglia.com/yui/demos/quickyui.php)
+
+We want quick and easy access to cross-browser javascript utilities.  Therefore we built a prepackaged YUI
+instance with several modules already preloaded and made them available in the global space.
+
+Refer to README in ThirdParty/YUI-Preload repos for more information

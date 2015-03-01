@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="ElementSamples.AnalysisCrosstab" >
+  <Body>
+    <Division ID="rdAxID" HtmlDiv="True">
+      <ToggleImage ID="toggleShowControls" ElementID="divAxControls_rdAxID" FalseImage="rdTemplate/rdMinus.gif" TrueImage="rdTemplate/rdPlus.gif" />
+      <Division HtmlDiv="True" ID="divAxControls_rdAxID">
+        <InputHidden ID="rdAxDataColumnDetails_rdAxID" DefaultValue="" />
+        <InputHidden ID="rdAxPickDateColumnsForGrouping_rdAxID" DefaultValue="" />
+        <Rows ID="rowsAxControls">
+          <Row ID="rowAxHeaderColumn">
+            <Column ID="colCrosstabHeaderColumnCell1">
+              <Label ID="lblAxHeaderColumn" Caption="Header Values Column" For="rdAxHeaderColumn_rdAxID" />
+            </Column>
+            <Column ID="colCrosstabHeaderColumnCell2" Class="rdCrosstabDropdownColumn">
+              <InputSelectList OptionValueColumn="DataColumn" ID="rdAxHeaderColumn_rdAxID" IncludeBlank="False" OptionCaptionColumn="ColumnHeader" Class="validateble" DefaultValue="@Request.rdAxHeaderColumn_rdAxID~">
+                <DataLayer Type="Static" ID="rdAgCrosstabHeaderColumnDL_rdAxID" />
+                <EventHandler DhtmlEvent="onchange" IdeDisplayStatus="Collapsed">
+                  <Action Type="Javascript" Javascript="LogiXML.rdAnalysisCrosstab.updateControls(false,'@Request.rdReport~', 'rdAxID')" />
+                </EventHandler>
+              </InputSelectList>
+              <Division ID="divAxHeaderGroupByDateOperator_rdAxID" ShowModes="None" IdeDisplayStatus="Collapsed">
+                <Spaces Size="3" />
+                <Label ID="lblAxHeaderGroupByDateOperator_rdAxID_Caption" Caption="by " For="rdAxHeaderDateGroupBy_rdAxID" />
+                <InputSelectList OptionValueColumn="CrosstabHeaderGroupByDateOperatorValue" ID="rdAxHeaderDateGroupBy_rdAxID" IncludeBlank="True" OptionCaptionColumn="CrosstabHeaderGroupByDateOperator" InitialValue="FirstDayOfYear" DefaultValue="@Request.rdAxHeaderDateGroupBy_rdAxID~">
+                  <DataLayer Type="Static" ID="dlCrosstabHeaderGroupByDateOperators_rdAxID">
+                    <StaticDataRow CrosstabHeaderGroupByDateOperator="Year" CrosstabHeaderGroupByDateOperatorValue="FirstDayOfYear" />
+                    <StaticDataRow CrosstabHeaderGroupByDateOperator="Quarter" CrosstabHeaderGroupByDateOperatorValue="FirstDayOfQuarter" />
+                    <StaticDataRow CrosstabHeaderGroupByDateOperator="Month" CrosstabHeaderGroupByDateOperatorValue="FirstDayOfMonth" />
+                    <StaticDataRow CrosstabHeaderGroupByDateOperator="Day" CrosstabHeaderGroupByDateOperatorValue="Date" />
+                  </DataLayer>
+                  <EventHandler DhtmlEvent="onchange">
+                    <Action Type="Javascript" Javascript="LogiXML.rdAnalysisCrosstab.updateControls(false,'@Request.rdReport~', 'rdAxID')" />
+                  </EventHandler>
+                </InputSelectList>
+              </Division>
+            </Column>
+            <Column ID="colCrosstabHeaderColumnCell3" Class="rdAgInstruct" IdeDisplayStatus="Collapsed">
+              <Label Caption="The crosstab will have one column for each unique value." ID="lblDescHeader" />
+            </Column>
+          </Row>
+          <Row ID="rowAxLabelColumn">
+            <Column ID="colCrosstabLabelColumnCell1">
+              <Label ID="lblCrosstabLabelColumn" Caption="Label Values Column" For="rdAgCrosstabLabelColumn_rdAxID" />
+            </Column>
+            <Column ID="colCrosstabLabelColumnCell2" Class="rdCrosstabDropdownColumn">
+              <InputSelectList OptionValueColumn="DataColumn" ID="rdAxLabelColumn_rdAxID" IncludeBlank="False" OptionCaptionColumn="ColumnHeader" DefaultValue="@Request.rdAxLabelColumn_rdAxID~" Class="validateble">
+                <DataLayer Type="Static" ID="rdAgCrosstabLabelColumnDL_rdAxID" />
+                <EventHandler DhtmlEvent="onchange">
+                  <Action Type="Javascript" Javascript="LogiXML.rdAnalysisCrosstab.updateControls(false,'@Request.rdReport~', 'rdAxID')" />
+                </EventHandler>
+              </InputSelectList>
+              <Division ID="divAxLabelGroupByDateOperator_rdAxID" ShowModes="None" IdeDisplayStatus="Collapsed">
+                <Spaces Size="3" />
+                <Label ID="lblAxLabelGroupByDateOperatorCaption" Caption="by " For="rdAxLabelDateGroupBy_rdAxID" />
+                <InputSelectList OptionValueColumn="CrosstabLabelGroupByDateOperatorValue" ID="rdAxLabelDateGroupBy_rdAxID" IncludeBlank="True" OptionCaptionColumn="CrosstabLabelGroupByDateOperator" InitialValue="FirstDayOfYear" DefaultValue="@Request.rdAxLabelDateGroupBy_rdAxID~">
+                  <DataLayer Type="Static" ID="dlCrosstabLabelGroupByDateOperators_rdAxID">
+                    <StaticDataRow CrosstabLabelGroupByDateOperator="Year" CrosstabLabelGroupByDateOperatorValue="FirstDayOfYear" />
+                    <StaticDataRow CrosstabLabelGroupByDateOperator="Quarter" CrosstabLabelGroupByDateOperatorValue="FirstDayOfQuarter" />
+                    <StaticDataRow CrosstabLabelGroupByDateOperator="Month" CrosstabLabelGroupByDateOperatorValue="FirstDayOfMonth" />
+                    <StaticDataRow CrosstabLabelGroupByDateOperator="Day" CrosstabLabelGroupByDateOperatorValue="Date" />
+                  </DataLayer>
+                  <EventHandler DhtmlEvent="onchange">
+                    <Action Type="Javascript" Javascript="LogiXML.rdAnalysisCrosstab.updateControls(false,'@Request.rdReport~', 'rdAxID')" />
+                  </EventHandler>
+                </InputSelectList>
+              </Division>
+            </Column>
+            <Column ID="colCrosstabLabelColumnCell3" Class="rdAgInstruct">
+              <Label Caption="The crosstab will have one row for each unique value." ID="lblDescLabel" />
+            </Column>
+          </Row>
+          <Row ID="rowAxAggrColumn">
+            <Column ID="colCrosstabAggrColumnCell1">
+              <Label ID="lblAxAggrColumn" Caption="Aggregate Values Column" For="rdAxAggrColumn_rdAxID" />
+            </Column>
+            <Column ID="colCrosstabAggrColumnCell2">
+              <InputSelectList OptionValueColumn="DataColumn" ID="rdAxAggrColumn_rdAxID" IncludeBlank="False" OptionCaptionColumn="ColumnHeader" DefaultValue="@Request.rdAxAggrColumn_rdAxID~" Class="validateble">
+                <DataLayer Type="Static" ID="rdAgCrosstabAggrColumnDL_rdAxID" />
+                <EventHandler DhtmlEvent="onchange">
+                  <Action Type="Javascript" Javascript="LogiXML.rdAnalysisCrosstab.updateControls(false,'@Request.rdReport~', 'rdAxID')" />
+                </EventHandler>
+              </InputSelectList>
+            </Column>
+            <Column ID="colCrosstabAggrColumnCell3" Class="rdAgInstruct">
+              <Label Caption="The contents of the crosstab as the Sum, Average, Standard Deviation or Count of the Header and Label columns." ID="lblDescAggr" />
+            </Column>
+          </Row>
+          <Row ID="rowCrosstabAggrFunction">
+            <Column ID="colCrosstabAggrFunctionCell1">
+              <Label ID="lblAxAggrFunction" Caption="Aggregate Function" For="rdAxAggrFunction_rdAxID" />
+            </Column>
+            <Column ID="colCrosstabAggrFunctionCell2">
+              <InputSelectList OptionValueColumn="Function" ID="rdAxAggrFunction_rdAxID" IncludeBlank="False" OptionCaptionColumn="Name" DefaultValue="@Request.rdAxAggrFunction_rdAxID~" Class="validateble">
+                <DataLayer Type="Static" ID="dlCrosstabAggrFunctions_rdAxID">
+                  <StaticDataRow Function="SUM" Name="Sum" />
+                  <StaticDataRow Function="AVERAGE" Name="Average" />
+                  <StaticDataRow Function="STDEV" Name="Standard Deviation" />
+                  <StaticDataRow Function="COUNT" Name="Count" />
+                  <StaticDataRow Function="DISTINCTCOUNT" Name="Distinct Count" />
+                </DataLayer>
+                <EventHandler DhtmlEvent="onchange">
+                  <Action Type="Javascript" Javascript="LogiXML.rdAnalysisCrosstab.updateControls(false,'@Request.rdReport~', 'rdAxID')" />
+                </EventHandler>
+              </InputSelectList>
+            </Column>
+            <Column ID="colCrosstabAggrFunctionCell3" Class="rdAgInstruct">
+              <Label Caption="The function used to aggregate the values in the crosstab cells." ID="lblDescAggrFunction" />
+            </Column>
+          </Row>         
+          <Row ID="rowCrosstabComparison_rdAxID">
+            <Column ID="colCrosstabComparison">
+              <Label Caption="Compare Label Columns" ID="lblCompareColumns" For="rdAxComparisionCheckbox" />
+            </Column>
+            <Column ID="colCrosstabComparisonCheckbox">
+              <InputCheckbox ID="rdAxComparisionCheckbox_rdAxID" DefaultValue="@Request.rdAxComparisionCheckbox_rdAxID~" CheckedValue="True" />
+              <EventHandler DhtmlEvent="onchange">
+                <Action Type="Javascript" Javascript="LogiXML.rdAnalysisCrosstab.updateControls(false,'@Request.rdReport~', 'rdAxID')" />
+              </EventHandler>
+            </Column>
+            <Column ID="colCrosstabComparison">
+              <Label Caption="Use color to highlight how values differ between columns." ID="lblCompareColumnsShow" />
+            </Column>
+          </Row>
+          <Row ID="rowAxComparisonColors_rdAxID">
+            <Column ID="colCrosstabComparisonColors">
+              <Label Caption="Reverse Compare Colors" ID="lblCompareColumns" For="rdAxComparisionCheckbox" />
+            </Column>
+            <Column ID="colCrosstabComparisonColorsCheckbox">
+              <InputSelectList OptionValueColumn="Value" ID="rdAxSwitchColors_rdAxID" IncludeBlank="False" OptionCaptionColumn="Caption" DefaultValue="@Request.rdAxSwitchColors_rdAxID~">
+                <DataLayer Type="Static" ID="dlAxSwitchColors_rdAxID">
+                  <StaticDataRow Value="Red|Green" Caption="Red to Green" />
+                  <StaticDataRow Value="Green|Red" Caption="Green to Red" />
+                </DataLayer>
+                <EventHandler DhtmlEvent="onchange">
+                  <Action Type="Javascript" Javascript="LogiXML.rdAnalysisCrosstab.updateControls(false,'@Request.rdReport~', 'rdAxID')" />
+                </EventHandler>
+              </InputSelectList>
+            </Column>
+            <Column ID="colCrosstabComparisonColorsTooltip">
+              <Label Caption="Swap comparison colors." ID="lblCompareColorsShow" />
+            </Column>
+          </Row>
+          <Row ID="rowErrors">
+			  <Column>
+				  <Label Caption="OK" ID="lblBatchSelection_rdAxID" Class="rdAcCommand" Tooltip="Update the table with the changes.">
+					  <Action Type="Javascript" Javascript="LogiXML.rdAnalysisCrosstab.updateControls(true,'@Request.rdReport~','rdAxID')" />
+				  </Label>
+			  </Column>
+            <Column ColSpan="2">
+              <Division ID="divAxError-DuplicateColumn_rdAxID" ShowModes="None" HtmlDiv="True">
+                <Label ID="lblCrosstabError-DuplicateColumn_rdAxID" Class="rdAgError" Caption="All three columns must be different." />
+              </Division>
+            </Column>
+          </Row>
+			<Row ID="rowSpacer">
+				<Column />
+			</Row>
+
+		</Rows>
+        <IncludeHtml Html="&lt;SCRIPT rdAjaxRunOnLoad=&quot;True&quot;&gt;if(typeof LogiXML.rdAnalysisCrosstab !== 'undefined'){LogiXML.rdAnalysisCrosstab.updateControls(false,'','rdAxID',true)}&lt;/SCRIPT&gt;" />
+		<Division ShowModes="None" Note="This same element is defined in the AG.  The AG's gets replaced with this with RefreshElement.">
+			<Label ID="lblHeadingAnalCrosstab_rdAxID" Caption="@Session.rdPanelCaption_rdAxID~" Class="rdAgContentHeading" />
+		</Division>
+	  </Division>
+		<Division ID="cellAxCrosstab_rdAxID">
+			<CrosstabTable ID="axTable_rdAxID" AjaxPaging="True" DraggableColumns="True" ResizableColumns="True" AccessibleSummary="AnalysisGrid CrossTabTable">
+				<CrosstabTableLabelColumn ID="colAxLabel">
+					<Label ID="lblAxLabl"/>
+					<DataColumnSort DataColumn="" DataType="" />
+				</CrosstabTableLabelColumn>
+				<CrosstabTableValueColumns ID="colAxValue" Header="@Data.rdCrosstabColumn~">
+					<Label ID="lblAxValue" Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)" />
+					<CrosstabValueColumnSort DataType="Number" />
+				</CrosstabTableValueColumns>
+			</CrosstabTable>
+		</Division>
+    </Division>
+  </Body>
+</Report>

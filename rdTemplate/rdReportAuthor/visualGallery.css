@@ -1,0 +1,177 @@
+﻿.ThemeLinkButton:hover,
+.ThemeLinkButtonSmall:hover,
+/*.ThemeLinkButton:hover span,
+.ThemeLinkButtonSmall:hover span,*/
+span:hover.rdAgCommand,
+span:hover.rdAcCommand,
+span:hover.rdOgCommand,
+span:hover.rdCgCommand,
+span:hover.rdDashboardCommand,
+#rowChangeTab span:hover.rdDashboardCommand,
+/*span:hover.rdPopupPanelCommand,*/
+.rdAgUnselectedTab:hover,
+.rdOgUnselectedTab:hover {
+    /*color: #fff;*/
+    text-decoration: none;
+}
+
+/*.ThemeLinkButton,
+.ThemeLinkButtonSmall,*/
+.rdAgCommand,
+.rdOgCommand,
+.rdAcCommand,
+span.rdCgCommand,
+.rdDashboardCommand {
+    color: #fff;
+    font-family: 'Segoe UI', 'Avenir Next', 'Avenir', 'Helvetica Neue', Helvetica, 'Arial', 'sans-serif';
+    font-weight: normal;
+    /*    text-shadow:1px 1px 0px #ffffff;*/
+    background-image: none;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #363b42), color-stop(1, #454d59) );
+    background: -moz-linear-gradient( center top, #363b42 5%, #454d59 100% );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#363b42', endColorstr='#454d59');
+    background-color: #363b42;
+    border: none;
+    border-radius: 2px;
+    text-decoration: none!important;
+    cursor: pointer;
+    white-space: nowrap;
+    vertical-align: baseline;
+    /*  display:inline-block;
+  text-align:center;*/
+}
+
+.rdAgCommand, .rdOgCommand, .rdAcCommand, span.rdCgCommand, .rdDashboardCommand {
+    /*font-size: 15px;*/
+    margin-left: 0;
+    padding: 3px 12px;
+    vertical-align: baseline;
+}
+
+/* Add Panels + Visual Gallery */
+
+/*.rdPopupPanelTitleCaption {
+    font-size: 24px;
+}
+*/
+.rdDashboardPanelDescription {
+    padding: 0 12px 24px 12px;
+}
+
+    /*.rdDashboardPanelDescription .rdDashboardTitleCaption {
+        font-size: 18px;
+    }*/
+
+    .rdDashboardPanelDescription .rdDashboardPanelImage,
+    .rdDashboardPanelDescription .rdDashboardTitleCaption,
+    .rdDashboardPanelDescription .rdDashboardText {
+        margin-bottom: 12px;
+    }
+
+.rdNewAnalysisText {
+    font-size: 15px;
+}
+
+/*.rdPopupContent a span.rdNewAnalysisLink {
+    color: #86cac3;
+}
+
+.rdPopupContent a:hover span.rdNewAnalysisLink {
+    color: #abe4de;
+    text-decoration: underline;
+}*/
+
+/* Popup Panel */
+
+/*.rdPopupPanel {
+    font-size: 15px;
+    background-color: #fff !important;
+    border-color: #888888;
+    border-radius: 2px;
+    padding: 12px;
+    -webkit-box-shadow: 0 1px 2px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 1px 2px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 2px 0px rgba(0,0,0,0.2);
+}
+*/
+#PopupPanelContent {
+    margin: 0 !important;
+}
+
+    #PopupPanelContent td.rdDashboardControl {
+        padding: 12px;
+        /* background-color: #e1e1e1;      /* add background for just bottom bar */
+    }
+
+/*    #PopupPanelContent .rdDashboard {  eliminate the gray container background 
+        background-color: #fff;
+    }*/
+
+    #PopupPanelContent a {
+        text-align: right;
+    }
+
+/*.rdPopupContent .rdThemeInputCaption,
+.rdPopupContent td,
+.rdPopupContent span,
+.rdPopupContent a span {
+    color: #363b42;
+}*/
+
+/*.rdPopupPanelTitle,
+.rdPopupPanelTitle td,
+.rdPopupPanelTitle span {
+    background-color: #fff;
+    background-image: none;
+    color: #363b42;
+}*/
+
+/*.rdPopupPanelTitle {
+    padding-bottom: 6px;
+}
+
+    .rdPopupPanelTitle .rdPopupPanelTitle {
+        padding-bottom: 0;
+    }
+
+    .rdPopupPanelTitle .rdPopupPanelCommand {
+        border: none !important;
+        border-radius: 2px;
+    }
+
+.rdPopupPanelTitleCaption {
+    font-family: 'Segoe UI Light', 'Segoe UI', 'Avenir Next', 'Avenir', 'Helvetica Neue', Helvetica, 'Arial', 'sans-serif';
+    font-weight: 300;
+    /*    font-size: 2em;*/
+}*/
+
+/*.rdPopupPanelCommand {
+    font-size: 24px;
+    background: none;
+    text-decoration: none !important;
+    color: #363b42;
+    border-color: transparent;
+    font-family: 'Segoe UI', 'Avenir Next', 'Avenir', 'Helvetica Neue', Helvetica, 'Arial', 'sans-serif';
+    font-weight: bold;
+    padding: 0 3px;
+}*/
+
+.rdPopupPanel .rdDashboardPanel {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none;
+}
+
+
+.ppAddToDashboardPanel {
+    font-size: 12px;
+}
+
+/* PopupMenu */
+
+.rdPopupMenu .yuimenuitemlabel {
+    font-size: 100%;
+    font-family: 'Segoe UI', 'Avenir Next', 'Avenir', 'Helvetica Neue', Helvetica, 'Arial', 'sans-serif';
+    font-weight: normal;
+}

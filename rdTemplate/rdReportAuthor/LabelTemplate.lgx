@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="ReportAuthorDev.Templates.LabelTemplate" SavedBy="CREAMTEC-NB6\viacheslav" SavedAt="22/08/2014 16:18:30" EngineVersion="8.2.26">
+  <Body>
+    <Division ID="rdElementID" HtmlDiv="True" rdReportAuthorElementType="Label" Class="rd-report-author-element">
+      <Label ID="label_rdElementID" Caption="" Format="Preserve Line Feeds"/>      
+    </Division>
+  </Body>
+</Report>

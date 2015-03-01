@@ -1,0 +1,14 @@
+<Report ID="rdMobileDetect">
+  <DefaultRequestParams rdRedirectReport="MissingParameter-rdRedirectReport" />
+  <Body>
+	  <Division ShowModes="None">
+		  <Button ID="rdButtonRedirect">
+			  <Action Type="Report">
+				  <Target Type="Report" Report="rdRequestedReport" />
+				  <LinkParams rdRequestForwarding="Cache" />
+			  </Action>
+		  </Button>
+	  </Division>
+	  <IncludeHtml Html="&lt;script&gt;&#xD;&#xA;	sReqCacheHtml = document.getElementById(&quot;rdButtonRedirect&quot;).parentNode.parentNode.innerHTML&#xD;&#xA;	sReqCacheHtml = sReqCacheHtml.substring(sReqCacheHtml.indexOf(&quot;rdRequestCache=&quot;))&#xD;&#xA;	sReqCacheHtml = sReqCacheHtml.substring(0,sReqCacheHtml.indexOf(&quot;'&quot;))&#xD;&#xA;	if (sReqCacheHtml.indexOf(&quot;&amp;&quot;)!=-1) {&#xD;&#xA;		sReqCacheHtml = sReqCacheHtml.substring(0,sReqCacheHtml.indexOf(&quot;&amp;&quot;))&#xD;&#xA;	}&#xD;&#xA;	&#xD;&#xA;	var sHref = window.location.href&#xD;&#xA;	if (sHref.indexOf(&quot;?&quot;)==-1) {&#xD;&#xA;		sHref += &quot;?&quot;&#xD;&#xA;	}&#xD;&#xA;	sHref += &quot;&amp;rdMobile=&quot;&#xD;&#xA;	var nMaxSize = Math.max(screen.width,screen.width)&#xD;&#xA;	if (nMaxSize &gt; rdMaxMobileScreenSize) {&#xD;&#xA;		sHref += &quot;False&quot;&#xD;&#xA;	}else{&#xD;&#xA;		sHref += &quot;True&quot;&#xD;&#xA;	}&#xD;&#xA;	sHref += &quot;&amp;&quot; + sReqCacheHtml&#xD;&#xA;&#xD;&#xA;	window.location.replace(sHref)&#xD;&#xA;&lt;/script&gt;" />
+  </Body>
+</Report>

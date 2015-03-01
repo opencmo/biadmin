@@ -1,0 +1,83 @@
+<Report>
+	<Body>
+		<Rows ID="rowsDrillGrid" CellSpacing="4">
+			<Row>
+				<Label Caption="Back" ID="lblGoback" Class="ThemeLinkButtonSmall">
+					<Action Type="Report">
+						<Target Type="Report" Report="@Request.rdParentReport~" RequestForwarding="True"/>
+					</Action>
+				</Label>
+			</Row>
+			<Row ID="rowDrillthroughTitle">
+				<Column ID="colDrillthroughTitle" ColSpan="2">
+					<Label ID="lblDrillthroughTitle" Caption="Drillthrough" Class="ThemeHeaderLargest" />
+				</Column>
+			</Row>
+			<Row ID="rowTable">
+				<Column ColSpan="2">
+					<Division ID="divHeader">
+						<Rows>
+							<Row>
+								<Column Width="20" />
+								<Column>
+									<Label Caption="Drill down by:" ID="lblDrillDownBy" Class="ThemeBold" />
+								</Column>
+								<Column>
+									<Label ID="lblDrillDownByValue" />
+								</Column>
+							</Row>
+							<Row ID="rowExport" ShowModes="rdBrowser" >
+								<Column Width="20" />
+								<Column>
+									<Label Caption="Export: " ID="lblExportTypes" Class="ThemeBold" />
+								</Column>
+								<Column>
+									<Division ID="divEXCEL" ShowModes="None">
+										<Label Caption="Excel" ID="lblExportExcel" Class="ThemeLinkButtonSmall">
+											<Action Type="NativeExcel" ID="exportExcell">
+												<Target Type="NativeExcel" ExportDataTableID="dtDrillthrough" RequestForwarding="True" />
+											</Action>
+										</Label>
+										<Spaces Size="2" />
+									</Division>
+									<Division ID="divWORD" ShowModes="None">
+										<Label Caption="Word" ID="lblExportWord" Class="ThemeLinkButtonSmall">
+											<Action Type="NativeWord" ID="exportWord">
+												<Target Type="NativeWord" RequestForwarding="True" />
+											</Action>
+										</Label>
+										<Spaces Size="2" />
+									</Division>
+									<Division ID="divPDF" ShowModes="None">
+										<Label Caption="PDF" ID="lblExportPDF" Class="ThemeLinkButtonSmall">
+											<Action Type="PDF" ID="exportPDF">
+												<Target Type="PDF" RequestForwarding="True" ID="targetPDF" />
+												<LinkParams rdGroupDrillthroughId="" />
+											</Action>
+										</Label>
+										<Spaces Size="2" />
+									</Division>
+									<Division ID="divCSV" ShowModes="None">
+										<Label Caption="CSV" ID="lblExportCSV" Class="ThemeLinkButtonSmall">
+											<Action Type="CSV" ID="exportCSV">
+												<Target Type="CSV" ExportDataTableID="dtDrillthrough" RequestForwarding="True" />
+											</Action>
+										</Label>
+										<Spaces Size="2" />
+									</Division>
+								</Column>
+							</Row>
+						</Rows>
+					</Division>
+					<LineBreak Lines="2" />
+					<DataTable CellSpacing="1" TableBorder="0" ID="dtDrillthrough" AltRowClass="ThemeAlternatingRow TD" ColumnHeaderClass="ThemeBold" AjaxPaging="True">
+						<DataLayer Type="Static" ID="dlDrillthrough" />
+						<AutoColumns Class="ThemeTextNormal" />
+						<InteractivePaging ShowPageNumber="Numbered" IDnotSupportedHere="pagingTableNumbered" HideShowPrevNextCaptions="False" PageRowCount="1000" HideWhenOnePage="True" Location="Top" CaptionType="Image" />
+					</DataTable>					
+				</Column>
+			</Row>
+		</Rows>
+	</Body>
+	<StyleSheet Theme="ProfessionalBlue" ID="rdTemplateStyle" />
+</Report>

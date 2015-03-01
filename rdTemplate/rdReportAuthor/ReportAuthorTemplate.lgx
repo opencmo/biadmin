@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="ReportAuthorDev.Templates.ReportAuthorTemplate" SavedBy="AGILEENGINE-39\dzhangirov" SavedAt="01/09/2014 11:45:21" EngineVersion="8.2.26">
+  <StyleSheet StyleSheet="rdTemplate/rdReportAuthor/reportAuthor.css" Theme="Clarity" />
+  <Body>
+    <Division HtmlDiv="True" ID="rdReportAuthor" Class="rdReportAuthor" ReportAuthorTemplate="True">
+      <Rows Width="100" WidthScale="%">
+        <Row ID="rowReportAuthorHeader" ShowModes="rdBrowser" Class="rdReportAuthor_BackgroundMenu">
+          <Column ID="colReportAuthorHeader" ColSpan="2"  Class="rdAgPanel reportAuthorHeightMenu reportAuthorbgcmenu">
+            <Division>
+              <Division ID="divSwitchToDesignModeTrue_rdReportAuthorID">
+                <Label Caption="Design" ID="lblSwitchToDesignModeTrue" Class="rdAcCommandHighlight rdAcCommandLeft" />
+              </Division>
+              <Division ID="divSwitchToDesignModeFalse_rdReportAuthorID">
+                <Label Caption="Design" ID="lblSwitchToDesignModeFalse" Class="rdAcCommand rdAcCommandLeft">
+                  <Action Type="Report" ID="actSwitchToDesign">
+                  <LinkParams rdReportAuthorViewMode="DesignEdit" />
+                  <Target Type="Report">
+                    <WaitPage />
+                  </Target>
+                  </Action>
+              </Label>
+              </Division>
+              <Division ID="divSwitchToPreviewModeTrue_rdReportAuthorID">
+                <Label Caption="View" ID="lblSwitchToPreviewModeTrue" Class="rdAcCommandHighlight rdAcCommandMiddle" />
+              </Division>
+              <Division ID="divSwitchToPreviewModeFalse_rdReportAuthorID">
+                <Label Caption="View" ID="lblSwitchToPreviewModeFalse" Class="rdAcCommand rdAcCommandMiddle">
+                  <Action Type="Report" ID="actSwitchToView">
+                  <LinkParams rdReportAuthorViewMode="ViewEdit" />
+                  <Target Type="Report">
+                    <WaitPage />
+                  </Target>
+                </Action>
+                </Label>
+              </Division>
+            </Division>
+          </Column>
+        </Row>
+        <Row ID="rowReportAuthorMainContainer">
+          <Column ID="colReportAuthorToolbox" Width="200" WidthScale="px" Class="ThemeAlignCenter ThemeAlignTop">
+            <DraggableDivision ID="dragAddRow" Class="rdReportAuthorToolboxItem" DropStubID="ReportAuthorDropStub">
+              <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                <Division Class="rd-toolbox-element-image rd-image-rowxsmall">
+                  <Image Caption="../rdTemplate/rdColumnDragHandle.png" />
+                </Division>                
+                <Division Class="rd-toolbox-element-image rd-image-row">
+                  <Image ID="imgAddRow" Caption="../rdTemplate/rdReportAuthor/addRow.png" />
+                </Division>
+                <Division Class="rd-toolbox-element-text rd-text-row">
+                  <Label Caption="New Split Row" />
+                </Division>
+                <Division Class="clear-both" HtmlDiv="True" />
+              </Division>
+              <ProxyDivision MoveOnEnd="False" ID="proxyDragAddRow" HideOnEnd="" Class="rdReportAuthorToolboxItemDraggableProxy rd-toolbox-element-proxy">
+                <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                  <Division Class="rd-toolbox-element-image rd-image-row">
+                    <Image ID="imgAddRow" Caption="../rdTemplate/rdReportAuthor/addRow.png" />
+                  </Division>
+                  <Division Class="rd-toolbox-element-text rd-text-row">
+                    <Label Caption="Add Row" />
+                  </Division>
+                  <Division Class="clear-both" HtmlDiv="True" />
+                </Division>
+              </ProxyDivision>
+              <LinkedParams action="rdAjaxRequestWithFormVars('rdAjaxCommand=RefreshElement&amp;rdRefreshElementID=rdReportAuthorID,rdReturnElementID&amp;rdReportAuthorAction=add&amp;rdElementType=Row&amp;rdReportAuthorElementID=rdElementID&amp;rdReportAuthorParentID=rdNewParentID&amp;rdReportAuthorSiblingElementID=rdSiblingID&amp;rdReportAuthorRefreshElementID=rdReturnElementID&amp;rdReport=rdCurrentReport','false','',null,null,null,['','',''])" />
+            </DraggableDivision>
+            <DraggableDivision ID="dragAddSpace" Class="rdReportAuthorToolboxItem" DropStubID="ReportAuthorDropStub">
+              <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                <Division Class="rd-toolbox-element-image rd-image-rowxsmall-AddSpace">
+                  <Image Caption="../rdTemplate/rdColumnDragHandle.png" />
+                </Division>  
+                <Division Class="rd-toolbox-element-image rd-image-element" IdeDisplayStatus="Collapsed">
+                  <Image ID="imgAddSpace" Caption="../rdTemplate/rdReportAuthor/addSpace.png" />
+                </Division>
+                <Division Class="rd-toolbox-element-text rd-text-element" IdeDisplayStatus="Collapsed">
+                  <Label Caption="Add Space" />
+                </Division>
+                <Division Class="clear-both" HtmlDiv="True" />
+              </Division>
+              <ProxyDivision MoveOnEnd="False" ID="proxyDragAddSpace" HideOnEnd="" Class="rdReportAuthorToolboxItemDraggableProxy rd-toolbox-element-proxy">
+                <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                  <Division Class="rd-toolbox-element-image rd-image-element" IdeDisplayStatus="Collapsed">
+                    <Image ID="imgAddSpace" Caption="../rdTemplate/rdReportAuthor/addSpace.png" />
+                  </Division>
+                  <Division Class="rd-toolbox-element-text rd-text-element" IdeDisplayStatus="Collapsed">
+                    <Label Caption="Add Space" />
+                  </Division>
+                  <Division Class="clear-both" HtmlDiv="True" />
+                </Division>
+              </ProxyDivision>
+              <LinkedParams action="rdAjaxRequestWithFormVars('rdAjaxCommand=RefreshElement&amp;rdRefreshElementID=rdReportAuthorID,rdReturnElementID&amp;rdReportAuthorAction=add&amp;rdElementType=Space&amp;rdReportAuthorElementID=rdElementID&amp;rdReportAuthorParentID=rdNewParentID&amp;rdReportAuthorSiblingElementID=rdSiblingID&amp;rdReportAuthorRefreshElementID=rdReturnElementID&amp;rdReport=rdCurrentReport','false','',null,null,null,['','',''])" />
+            </DraggableDivision>
+            <DraggableDivision ID="dragVisualGallery" Class="rdReportAuthorToolboxItem" PreventCloneNode="True" IdeDisplayStatus="Collapsed" DropStubID="ReportAuthorDropStub">
+
+              <Division HtmlDiv="True" Class="rd-toolbox-gallery-text" IdeDisplayStatus="Collapsed">
+                <Label Caption="New Visual" />
+              </Division>
+            <Division Class="rd-toolbox-element-image rd-image-rowxsmall-newVisual">
+              <Image Caption="../rdTemplate/rdColumnDragHandle.png" />
+            </Division>               
+            <Division Class="rd-overflow-hidden imgNewVisualwidth" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                <Image ID="imgAddVisualgallery" Caption="../rdTemplate/rdReportAuthor/visualGallery.png" Class="rd-toolbox-gallery-image" />
+              </Division>
+              <ProxyDivision MoveOnEnd="False" ID="proxyDragVisualGallery" HideOnEnd="" Class="rdReportAuthorToolboxItemDraggableProxy rd-toolbox-element-proxy">
+                <Division HtmlDiv="True" Class="rd-toolbox-gallery-text" IdeDisplayStatus="Collapsed">
+                  <Label Caption="New Visual" />
+                </Division>
+                <Division Class="rd-overflow-hidden" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                  <Image ID="imgAddVisualgallery" Caption="../rdTemplate/rdReportAuthor/visualGallery.png" Class="rd-toolbox-gallery-image" />
+                </Division>
+              </ProxyDivision>
+              <LinkedParams action="Y.one('#rdReportAuthorID').getData('rdReportAuthor').initAddVisualizations('rdNewParentID', 'rdSiblingID','rdReturnElementID');&#xD;&#xA;ShowElement(this.id,'ppChangeDashboard','','')" />
+            </DraggableDivision>
+            <DraggableDivision ID="dragAddLabel" Class="rdReportAuthorToolboxItem" DropStubID="ReportAuthorDropStub">
+              <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                <Division Class="rd-toolbox-element-image rd-image-rowxsmall-Newtext">
+                  <Image Caption="../rdTemplate/rdColumnDragHandle.png" />
+                </Division>                 
+                <Division Class="rd-toolbox-element-image rd-image-element" IdeDisplayStatus="Collapsed">
+                  <Image ID="imgAddLabel" Caption="../rdTemplate/rdReportAuthor/addLabel.png" />
+                </Division>
+                <Division Class="rd-toolbox-element-text rd-text-element" IdeDisplayStatus="Collapsed">
+                  <Label Caption="New Text" />
+                </Division>
+                <Division Class="clear-both" HtmlDiv="True" />
+              </Division>
+              <ProxyDivision MoveOnEnd="False" ID="proxyDragAddLabel" HideOnEnd="" Class="rdReportAuthorToolboxItemDraggableProxy rd-toolbox-element-proxy">
+                <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                  <Division Class="rd-toolbox-element-image rd-image-element" IdeDisplayStatus="Collapsed">
+                    <Image ID="imgAddLabel" Caption="../rdTemplate/rdReportAuthor/addLabel.png" />
+                  </Division>
+                  <Division Class="rd-toolbox-element-text rd-text-element" IdeDisplayStatus="Collapsed">
+                    <Label Caption="New Text" />
+                  </Division>
+                  <Division Class="clear-both" HtmlDiv="True" />
+                </Division>
+              </ProxyDivision>
+              <LinkedParams action="rdAjaxRequestWithFormVars('rdAjaxCommand=RefreshElement&amp;rdRefreshElementID=rdReportAuthorID,rdReturnElementID&amp;rdReportAuthorAction=add&amp;rdElementType=Label&amp;rdReportAuthorElementID=rdElementID&amp;rdReportAuthorParentID=rdNewParentID&amp;rdReportAuthorSiblingElementID=rdSiblingID&amp;rdReportAuthorRefreshElementID=rdReturnElementID&amp;rdReport=rdCurrentReport','false','',null,null,null,null)" />
+            </DraggableDivision>
+            <DraggableDivision ID="dragAddImage" Class="rdReportAuthorToolboxItem" DropStubID="ReportAuthorDropStub">
+              <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                <Division Class="rd-toolbox-element-image rd-image-rowxsmall-Newtext">
+                  <Image Caption="../rdTemplate/rdColumnDragHandle.png" />
+                </Division>                 
+                <Division Class="rd-toolbox-element-image rd-image-element" IdeDisplayStatus="Collapsed">
+                  <Image ID="imgAddImage" Caption="../rdTemplate/rdReportAuthor/addImage.png" />
+                </Division>
+                <Division Class="rd-toolbox-element-text rd-text-element" IdeDisplayStatus="Collapsed">
+                  <Label Caption="New Image" />
+                </Division>
+                <Division Class="clear-both" HtmlDiv="True" />
+              </Division>
+              <ProxyDivision MoveOnEnd="False" ID="proxyDragAddImage" HideOnEnd="" Class="rdReportAuthorToolboxItemDraggableProxy rd-toolbox-element-proxy">
+                <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                  <Division Class="rd-toolbox-element-image rd-image-element" IdeDisplayStatus="Collapsed">
+                    <Image ID="imgAddImage" Caption="../rdTemplate/rdReportAuthor/addImage.png" />
+                  </Division>
+                  <Division Class="rd-toolbox-element-text rd-text-element" IdeDisplayStatus="Collapsed">
+                    <Label Caption="New Image" />
+                  </Division>
+                  <Division Class="clear-both" HtmlDiv="True" />
+                </Division>
+              </ProxyDivision>
+              <LinkedParams action="rdAjaxRequestWithFormVars('rdAjaxCommand=RefreshElement&amp;rdRefreshElementID=rdReportAuthorID,rdReturnElementID&amp;rdReportAuthorAction=add&amp;rdElementType=Image&amp;rdReportAuthorElementID=rdElementID&amp;rdReportAuthorParentID=rdNewParentID&amp;rdReportAuthorSiblingElementID=rdSiblingID&amp;rdReportAuthorRefreshElementID=rdReturnElementID&amp;rdReport=rdCurrentReport','false','',null,null,null,['','',''])" />
+            </DraggableDivision>
+            <DraggableDivision ID="dragAddLink" Class="rdReportAuthorToolboxItem" DropStubID="ReportAuthorDropStub">
+              <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                <Division Class="rd-toolbox-element-image rd-image-rowxsmall-Newtext">
+                  <Image Caption="../rdTemplate/rdColumnDragHandle.png" />
+                </Division>                 
+                <Division Class="rd-toolbox-element-image rd-image-element" IdeDisplayStatus="Collapsed">
+                  <Image ID="imgAddLink" Caption="../rdTemplate/rdReportAuthor/addLink.png" />
+                </Division>
+                <Division Class="rd-toolbox-element-text rd-text-element" IdeDisplayStatus="Collapsed">
+                  <Label Caption="New Link" />
+                </Division>
+                <Division Class="clear-both" HtmlDiv="True" />
+              </Division>
+              <ProxyDivision MoveOnEnd="False" ID="proxyDragAddLink" HideOnEnd="" Class="rdReportAuthorToolboxItemDraggableProxy rd-toolbox-element-proxy">
+                <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                  <Division Class="rd-toolbox-element-image rd-image-element" IdeDisplayStatus="Collapsed">
+                    <Image ID="imgAddLink" Caption="../rdTemplate/rdReportAuthor/addLink.png" />
+                  </Division>
+                  <Division Class="rd-toolbox-element-text rd-text-element" IdeDisplayStatus="Collapsed">
+                    <Label Caption="New Link" />
+                  </Division>
+                  <Division Class="clear-both" HtmlDiv="True" />
+                </Division>
+              </ProxyDivision>
+              <LinkedParams action="rdAjaxRequestWithFormVars('rdAjaxCommand=RefreshElement&amp;rdRefreshElementID=rdReportAuthorID,rdReturnElementID&amp;rdReportAuthorAction=add&amp;rdElementType=Link&amp;rdReportAuthorElementID=rdElementID&amp;rdReportAuthorParentID=rdNewParentID&amp;rdReportAuthorSiblingElementID=rdSiblingID&amp;rdReportAuthorRefreshElementID=rdReturnElementID&amp;rdReport=rdCurrentReport','false','',null,null,null,['','',''])" />
+            </DraggableDivision>
+            <DraggableDivision ID="dragAddPdfButton" Class="rdReportAuthorToolboxItem" DropStubID="ReportAuthorDropStub">
+              <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                <Division Class="rd-toolbox-element-image rd-image-rowxsmall-Newtext">
+                  <Image Caption="../rdTemplate/rdColumnDragHandle.png" />
+                </Division>                 
+                <Division Class="rd-toolbox-element-image rd-image-element" IdeDisplayStatus="Collapsed">
+                  <Image ID="imgPdfButton" Caption="../rdTemplate/rdReportAuthor/addPdfButton.png" />
+                </Division>
+                <Division Class="rd-toolbox-element-text rd-text-element" IdeDisplayStatus="Collapsed">
+                  <Label Caption="New PDF Link" />
+                </Division>
+                <Division Class="clear-both" HtmlDiv="True" />
+              </Division>
+              <ProxyDivision MoveOnEnd="False" ID="proxyDragAddPdfButton" HideOnEnd="" Class="rdReportAuthorToolboxItemDraggableProxy rd-toolbox-element-proxy">
+                <Division Class="rd-toolbox-element" HtmlDiv="True" IdeDisplayStatus="Collapsed">
+                  <Division Class="rd-toolbox-element-image rd-image-element" IdeDisplayStatus="Collapsed">
+                    <Image ID="imgPdfButton" Caption="../rdTemplate/rdReportAuthor/addPdfButton.png" />
+                  </Division>
+                  <Division Class="rd-toolbox-element-text rd-text-element" IdeDisplayStatus="Collapsed">
+                    <Label Caption="New PDF Link" />
+                  </Division>
+                  <Division Class="clear-both" HtmlDiv="True" />
+                </Division>
+              </ProxyDivision>
+              <LinkedParams action="rdAjaxRequestWithFormVars('rdAjaxCommand=RefreshElement&amp;rdRefreshElementID=rdReportAuthorID,rdReturnElementID&amp;rdReportAuthorAction=add&amp;rdElementType=PdfButton&amp;rdReportAuthorElementID=rdElementID&amp;rdReportAuthorParentID=rdNewParentID&amp;rdReportAuthorSiblingElementID=rdSiblingID&amp;rdReportAuthorRefreshElementID=rdReturnElementID&amp;rdReport=rdCurrentReport','false','',null,null,null,['','',''])" />
+            </DraggableDivision>
+            <LineBreak LineCount="1" />
+          </Column>
+          <Column ID="colReportAuthorWorkingArea" Class="ThemeAlignTop rdReportAuthor_Background">
+            <Division ID="rdFreeformLayout" ShowModes="None" />
+            <DroppableDivision ID="divReportAuthorWorkContainer" Class="" DragGroup="">
+              <Division Class="rdDropPlaceholder" HtmlDiv="True" ShowModes="None">
+                <Label Caption="DRAG CONTENT HERE" />
+              </Division>
+            </DroppableDivision>
+          </Column>
+        </Row>
+      </Rows>
+      <InputHidden DefaultValue="rdCurrentReport" ID="hiddenCurrentReport" />
+      <InputHidden ID="rdReportAuthorViewMode" />
+      <IncludeSharedElement ID="includeSharedAddPanelsGallery" DefinitionFile="rdDashboard/rdAddPanelsGallery.lgx" SharedElementID="AddPanelsGallery" />
+      <Division Class="rdDropStub" ID="ReportAuthorDropStub" HtmlDiv="True" ShowModes="None">
+        <Image Caption="rdTemplate/rdWait.gif" />
+      </Division>
+    </Division>
+    <PopupPanel ID="hiddenPopup_weNeeditToLoadPopupScripts" ShowOnPageLoad="False">
+      <Button ID="hiddenButton">
+        <Action Type="Popup" ID="hiddenPopupMenu">
+          <PopupOption ID="hiddenPopupOption">
+            <Action Type="Javascript" ID="hiddenJavascriptAction" Javascript="return 0" />
+          </PopupOption>
+        </Action>
+      </Button>
+    </PopupPanel>
+  </Body>
+</Report>
